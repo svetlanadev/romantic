@@ -1,7 +1,7 @@
 MANAGE=django-admin.py
 
 test:
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=settings $(MANAGE) test blog
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=settings $(MANAGE) test hike
 
 run:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=settings $(MANAGE) runserver
