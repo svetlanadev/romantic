@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.conf.urls import patterns, include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
+from django.views.generic.base import RedirectView
 
 from mezzanine.core.views import direct_to_template
 
@@ -31,7 +32,9 @@ urlpatterns += patterns('',
     # one homepage pattern, so if you use a different one, comment this
     # one out.
 
-    url("^$", direct_to_template, {"template": "index.html"}, name="home"),
+    #url("^$", direct_to_template, {"template": "index.html"}, name="home"),
+    url(r"^$", RedirectView.as_view(url='/blog/'), name='home'),
+    url(r'^', include('hike.urls')),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

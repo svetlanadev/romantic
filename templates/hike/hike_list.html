@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<h1>Hello</h1>
+<!-- Походы -->
+{% for hike in hikes %}
+
+
+{{ hike.user.first_name }} {{ hike.user.last_name }}<br>
+{{ hike.type_hike }}<br>
+{{ hike.difficulty }}<br>
+{{ hike.region }}<br>
+{{ hike.requirements }}<br>
+
+{% endfor %}
+
+
+{% endblock %}
