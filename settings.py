@@ -106,7 +106,7 @@ ALLOWED_HOSTS = ['127.0.0.1:8000']
 TIME_ZONE = 'Europe/Kiev'
 
 # If you set this to True, Django will use timezone-aware datetimes.
-USE_TZ = False
+USE_TZ = True
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -266,6 +266,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.core.context_processors.tz",
     "mezzanine.conf.context_processors.settings",
+    'hike.context_processor.contex_hike',
 )
 
 # List of middleware classes to use. Order is important; in the request phase,

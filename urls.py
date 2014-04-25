@@ -34,6 +34,7 @@ urlpatterns += patterns('',
 
     #url("^$", direct_to_template, {"template": "index.html"}, name="home"),
     url(r"^$", RedirectView.as_view(url='/blog/'), name='home'),
+    url(r'^', include('hike.urls')),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------
