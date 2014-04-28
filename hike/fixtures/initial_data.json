@@ -1,0 +1,101 @@
+[
+{
+  "pk": 1, 
+  "model": "hike.hike", 
+  "fields": {
+    "state_group": 1, 
+    "status": 0, 
+    "requirements": "\u041f\u0440\u043e\u0441\u0442\u043e \u043f\u043e\u0445\u043e\u0434 \u043d\u0430 \u041a\u0430\u0432\u043a\u0430\u0437!", 
+    "region": 1, 
+    "date_start": "2014-04-26", 
+    "data_finish": "2014-04-30", 
+    "creation_date": "2014-04-25T21:29:19.791Z", 
+    "difficulty": 1, 
+    "comments_count": 2, 
+    "user": 1, 
+    "type_hike": 1
+  }
+},
+{
+  "pk": 2, 
+  "model": "hike.hike", 
+  "fields": {
+    "state_group": 2, 
+    "status": 0, 
+    "requirements": "\u0412\u0435\u0434\u0443 \u043f\u043e\u0445\u043e\u0434 \u0432 \u043d\u043e\u0432\u044b\u0439 \u0440\u0430\u0439\u043e\u043d - \u0422\u0443\u0440\u0446\u0438\u044f. \u0411\u0443\u0434\u0435\u0442 \u0438\u043d\u0442\u0435\u0440\u0435\u0441\u043d\u044b\u0439 \u0438 \u043d\u0435\u043e\u0431\u044b\u0447\u043d\u044b\u0439 \u043f\u043e\u0445\u043e\u0434, \u043c\u0438\u043b\u043e\u0441\u0442\u0438 \u043f\u0440\u043e\u0448\u0443", 
+    "region": 2, 
+    "date_start": "2014-04-26", 
+    "data_finish": "2014-05-11", 
+    "creation_date": "2014-04-25T22:11:27.061Z", 
+    "difficulty": 3, 
+    "comments_count": 0, 
+    "user": 2, 
+    "type_hike": 1
+  }
+},
+{
+  "pk": 1, 
+  "model": "hike.typehike", 
+  "fields": {
+    "type_hike": "\u0413\u043e\u0440\u043d\u044b\u0439 \u043f\u043e\u0445\u043e\u0434"
+  }
+},
+{
+  "pk": 1, 
+  "model": "hike.region", 
+  "fields": {
+    "region": "\u041a\u0430\u0432\u043a\u0430\u0437"
+  }
+},
+{
+  "pk": 2, 
+  "model": "hike.region", 
+  "fields": {
+    "region": "\u0422\u0443\u0440\u0446\u0438\u044f"
+  }
+},
+{
+  "pk": 1, 
+  "model": "hike.stategroup", 
+  "fields": {
+    "state_group": "\u0413\u0440\u0443\u043f\u043f\u0430 \u043d\u0430\u0431\u0438\u0440\u0430\u0435\u0442\u0441\u044f"
+  }
+},
+{
+  "pk": 2, 
+  "model": "hike.stategroup", 
+  "fields": {
+    "state_group": "\u0413\u0440\u0443\u043f\u043f\u0430 \u043d\u0430\u0431\u0440\u0430\u043d\u0430"
+  }
+},
+{
+  "pk": 1, 
+  "model": "hike.difficulty", 
+  "fields": {
+    "difficulty": "\u041f\u0412\u0414"
+  }
+},
+{
+  "pk": 2, 
+  "model": "hike.difficulty", 
+  "fields": {
+    "difficulty": "1 \u043a.\u0441."
+  }
+},
+{
+  "pk": 3, 
+  "model": "hike.difficulty", 
+  "fields": {
+    "difficulty": "2 \u043a.\u0441."
+  }
+},
+{
+  "pk": 1, 
+  "model": "hike.banner", 
+  "fields": {
+    "text": "\u0421\u0430\u043d\u044b", 
+    "image": "banners/2.jpg", 
+    "state": 1
+  }
+}
+]
