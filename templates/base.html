@@ -41,7 +41,7 @@
     }
     #right_banner{ 
         position: absolute;
-        top: 60px;
+        top: 20px;
         right: 30px;
         height:350px;
     }
@@ -69,24 +69,6 @@
 </head>
 
 <body id="{% block body_id %}body{% endblock %}">
-<!-- <div class="navbar navbar-default navbar-fixed-top" role="navigation"> -->
-<div class="container">
-<div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">{% trans "Toggle Navigation" %}</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </button>
-    {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-    {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
-</div>
-<div class="navbar-collapse collapse">
-    {% search_form "all" %}
-    {% page_menu "pages/menus/dropdown.html" %}
-</div>
-</div>
-<!-- </div> -->
 
 <div class="bannerSection">
 <div class="slider-inner">
@@ -101,17 +83,19 @@
         </div>
         
         <div class="da-slide da-slide-toleft">
-            <h2><i>Cоревнования памяти А. Котлова </i> <br> <i>7-8 июня, Куяльницкая стенка</i></h2>
+            <h2><i><strong>Cоревнования памяти</strong></i> <br> <i><strong>А. Котлова, 7-8 июня,</strong></i> <br> <i><strong>Куяльницкая стенка</strong></i></h2>
             <p>
                 <i>Соревнования для повышения техники горных групп.</i><br> 
                 <i>Традиционно соревнования проводятся в трех дисциплинах: </i><br>
                 <i>спас.работы, работа в связках и"скалы".</i>
             </p>
-            <div class="da-img"><img src="{{ STATIC_URL }}img/kotlova.png" alt=""></div>
+            <div class="da-img"><img src="{{ STATIC_URL }}img/kotlova2.png" alt=""></div>
         </div>
 
         <div class="da-slide da-slide-toleft">
-            <h2><i>Выезд по </i> <br> <i>переправам </i> <br> <i>14-15 июня</i></h2>
+            <h2><i><strong> Выезд по </strong></i> <br> <i><strong>переправам</strong></i> <br> <i><strong> 14-15 июня</strong>
+
+                       </i></h2>
             <p><i>Спортивное мероприятие, которое проходит</i> <br> <i>в рамках подготовки к горному сезону.</i> <br> <i>Mordern technology in use</i></p>
             <div class="da-img"><img src="{{ STATIC_URL }}img/pereprava.png" alt="" width="80%"></div>
         </div>
@@ -129,62 +113,69 @@
 <!--=== End Slider ===-->
 </div>
 
+<div class="navbar navbar-default" role="navigation">
 <div class="container">
-    {% nevercache %}
-    {% if messages %}
-    <div class="messages">
-    {% for message in messages %}
-    <div class="alert alert-dismissable alert-{{ message.tags }}" data-alert="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        {{ message }}
-    </div>
-    {% endfor %}
-    </div>
-    {% endif %}
-    {% endnevercache %}
-
-    <!-- 
-    <h1>{% block title %}{% endblock %}</h1>
-    -->
-    <!-- ЕЩЕ ОДНА КОЛОНКА -->
-    <ul class="breadcrumb">
-        {% spaceless %}
-        {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
-        {% endspaceless %}
-    </ul>
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">{% trans "Toggle Navigation" %}</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
+    {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
 </div>
-
-
+<div class="navbar-collapse collapse">
+    {% search_form "all" %}
+    {% page_menu "pages/menus/dropdown.html" %}
+</div>
+</div>
+</div>
 
 <div class="container">
 <div class="row">
 
-<div class="col-md-2 left">
-    {% block left_panel %}
-    <div class="panel panel-default tree">{% page_menu "pages/menus/tree.html" %}</div>
-    {% endblock %}
-</div>
-
-<div class="col-md-7 middle">
-
-    
+<div class="col-md-7 left">
+<div class="panel panel-default">
+  <div class="panel-body">
     {% block main %}{% endblock %}
+  </div>
+</div>
 </div>
 
 <!-- FEED/RSS -->
-<div class="col-md-3 right">
+<div class="col-md-5 right">
     {% nevercache %}
     {% include "includes/user_panel.html" %}
     {% endnevercache %}
     <div class="panel panel-default">
       <div class="panel-heading">
+        <h3 class="panel-title" align="center">Календарь</h3>
+      </div>
+      <div class="panel-body">
+        <blockquote>
+          <a href="#"><p>23-24 мая - Соревновая А.Котлова</p></a>
+          Традиционные соревнования которые проводятся на Куяльнике.
+        </blockquote>
+        <blockquote>
+          <a href="#"><p>09-11 Июня - Выезд по переправам</p></a>
+          выезд на котором будет отточено техника навязки переправ.
+        </blockquote>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
         <h3 class="panel-title" align="center">Спонсоры</h3>
       </div>
       <div class="panel-body">
-        <img src="http://images.ua.prom.st/20330498_w0_h120_logotip.jpg" width="100%">
-        <p><strong>Телефон:</strong> +380 (95) 124-63-48</p>                    
-        <p><strong>Адрес:</strong> ул. Базарная 84</p>
-        <p><strong>Email:</strong> samsport@list.ru</p>
+        <div class="col-md-6 left">
+            <img src="http://images.ua.prom.st/20330498_w0_h120_logotip.jpg" width="100%">
+        </div>
+        <div class="col-md-6 middle">
+            <p><strong>Телефон:</strong> +380 (95) 124-63-48</p>                    
+            <p><strong>Адрес:</strong> ул. Базарная 84</p>
+            <p><strong>Email:</strong> samsport@list.ru</p>
+        </div>
       </div>
     </div>
 <!--     <div class="panel panel-default">

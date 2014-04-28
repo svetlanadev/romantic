@@ -2,22 +2,37 @@
 
 from django.contrib.auth.models import User
 from django.db import models
+from mezzanine.generic.fields import CommentsField
 
 
 class Hike(models.Model):
-    user = models.OneToOneField(User,  verbose_name=u'Руководитель')
+    PROCESS = 0
+    COMPLETE = 1
+    FAIL = 2
+
+    STATE_CHOICE = (
+        (COMPLETE, 'Поход завершен'),
+        (PROCESS, 'В процессе'),
+        (FAIL, 'Поход не пройден'),
+    )
+
+    user = models.ForeignKey(User,  verbose_name=u'Руководитель')
     type_hike = models.ForeignKey('TypeHike',  verbose_name=u'Тип похода')
     creation_date = models.DateTimeField(auto_now_add=True)
     date_start = models.DateField(verbose_name=u'Начало похода')
     data_finish = models.DateField(verbose_name=u'Конец похода')
     difficulty = models.ForeignKey('Difficulty', verbose_name=u'Категория')
     requirements = models.TextField(verbose_name=u'Рекомендации')
-    state_group = models.ForeignKey('StateGroup', verbose_name=u'Статус')
+    state_group = models.ForeignKey('StateGroup', verbose_name=u'Группа')
     region = models.ForeignKey('Region', verbose_name=u'Район похода')
-    # status = Пройден или тд
+    status = models.SmallIntegerField(default=PROCESS, choices=STATE_CHOICE, verbose_name=u'Статус')
+    comments = CommentsField()
 
     class Meta:
         ordering = ["-creation_date"]
+
+    def get_absolute_url(self):
+        return u'/hikes/%s' % self.id
 
     def __unicode__(self):
         return u'%s %s - %s, %s' % (self.user.first_name,

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block main %}
+{% load comment_tags %}
+<!-- Походы -->
+<div id="hike">
+<div class="col-md-6 right">
+	<h3>Руководитель</h3>
+	<img src="{{ STATIC_URL }}img/lyapun.jpg" width="70%" height="100%"><br>
+	ФИО - {{ hike.user.first_name }} {{ hike.user.last_name }}<br>
+	email - <a href="mailto:{{ hike.user.email }}">{{ hike.user.email }}</a><br>
+	Телефон - 093-40-99-362<br>
+	Опыт - руководство 2к.с. Кавказ 2012.
+</div>
+<div class="col-md-6 left">
+	<h3>Поход</h3>
+	<strong>Тип</strong> -  {{ hike.type_hike }}<br>
+	<strong>Категория</strong> - {{ hike.difficulty }}<br>
+	<strong>Район</strong> - {{ hike.region }}<br>
+	<strong>Описание</strong> - {{ hike.requirements }}<br>
+	{{ hike.state_group }}<br>
+	<h4>Сроки</h4>
+	С {{ hike.date_start }} по {{ hike.data_finish }}<br>
+</div>
+<div class="col-md-12">
+	{% comments_for hike %}
+</div>
+
+</div>
+{% endblock %}
