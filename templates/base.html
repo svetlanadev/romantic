@@ -16,7 +16,7 @@
 {% endifinstalled %}
 
 {% compress css %}
-<link href="{{ STATIC_URL }}css/bootstrap1.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/bootstrap2.css" rel="stylesheet">
 <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
 <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
 <!-- CSS Implementing Plugins -->
@@ -57,7 +57,7 @@
         background-image: url({{ MEDIA_URL }}/{{ banner.image }});
         background-size: cover;
     }
-    .post-meta > a {
+    /*.post-meta > a {
         color: #8B8BCC;
     }
     a {
@@ -67,7 +67,7 @@
     a:hover, a:focus {
         color: #0086FF;
         text-decoration: underline;
-    }
+    }*/
 </style>
 <script type="text/javascript">
     $('.bxslider').bxSlider({
@@ -139,7 +139,7 @@
 <!--=== End Slider ===-->
 </div>
 
-<div class="navbar navbar-inverse" role="navigation">
+<div class="navbar navbar-default" role="navigation">
     <div class="container">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
