@@ -16,7 +16,7 @@
 {% endifinstalled %}
 
 {% compress css %}
-<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+<link href="{{ STATIC_URL }}css/bootstrap1.css" rel="stylesheet">
 <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
 <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
 <!-- CSS Implementing Plugins -->
@@ -56,7 +56,17 @@
     .background_banner{
         background-image: url({{ MEDIA_URL }}/{{ banner.image }});
         background-size: cover;
-        opacity: 0.7;
+    }
+    .post-meta > a {
+        color: #8B8BCC;
+    }
+    a {
+    color: #6CB9FF;
+    text-decoration: none;
+    }
+    a:hover, a:focus {
+        color: #0086FF;
+        text-decoration: underline;
     }
 </style>
 <script type="text/javascript">
@@ -71,65 +81,97 @@
 <body id="{% block body_id %}body{% endblock %}">
 
 <div class="bannerSection">
-<div class="slider-inner">
-    <div id="da-slider" class="da-slider" style="background-position: 0% 0%;">
-        <div class="da-slider background_banner"></div>
-        <div class="da-slide da-slide-fromright da-slide-current">
-            <h2><i>Поздравляем участников</i> <br> <i>Одесской Сотки!</i></h2>
-            <p><i>И снова завершился традиционный забег</i> <br> <i>по поясу Славы, приуроченной к 60 освобождения Одессы!</i></p>
+    <div class="slider-inner">
+    <div id="da-slider" class="da-slider background_banner">
+        <div class="da-slide">
+            <h2>
+            <i>
+                Поздравляем участников
+            </i><br> 
+            <i>
+                Одесской Сотки!
+                <div align="center">
+                <button type="button" class="btn">Узнать подробнее / Обсудить</button>
+                </div>
+            </i>
+            </h2>
+            <p>
+                <i>И снова завершился традиционный забег</i> <br> 
+                <i>по поясу Славы, приуроченной к 60 освобождения Одессы!</i>
+            </p>
             <div class="da-img">
-                    <iframe width="440" height="260" src="//www.youtube.com/embed/QGF6ZHpsKP0?rel=0" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
         
-        <div class="da-slide da-slide-toleft">
-            <h2><i><strong>Cоревнования памяти</strong></i> <br> <i><strong>А. Котлова, 7-8 июня,</strong></i> <br> <i><strong>Куяльницкая стенка</strong></i></h2>
+        <div class="da-slide">
+            <h2>
+            <i><strong>
+                Cоревнования памяти
+            </strong></i><br> 
+            <i><strong>
+                А. Котлова, 7-8 июня,
+                <div align="center">
+                <button type="button" class="btn">Узнать подробнее / Обсудить</button>
+                </div>
+            </strong></i><br> 
+            <i>
+                
+            </i>
+            </h2>
             <p>
                 <i>Соревнования для повышения техники горных групп.</i><br> 
                 <i>Традиционно соревнования проводятся в трех дисциплинах: </i><br>
                 <i>спас.работы, работа в связках и"скалы".</i>
             </p>
-            <div class="da-img"><img src="{{ STATIC_URL }}img/kotlova2.png" alt=""></div>
+            <div class="da-img"></div>
         </div>
-
-        <div class="da-slide da-slide-toleft">
-            <h2><i><strong> Выезд по </strong></i> <br> <i><strong>переправам</strong></i> <br> <i><strong> 14-15 июня</strong>
-
-                       </i></h2>
-            <p><i>Спортивное мероприятие, которое проходит</i> <br> <i>в рамках подготовки к горному сезону.</i> <br> <i>Mordern technology in use</i></p>
-            <div class="da-img"><img src="{{ STATIC_URL }}img/pereprava.png" alt="" width="80%"></div>
-        </div>
-
         <nav class="da-arrows">
             <span class="da-arrows-prev"></span>
             <span class="da-arrows-next"></span>        
         </nav>
-        <nav class="da-dots"><span class="da-dots-current"></span><span class=""></span><span class=""></span></nav>
-    </div><!--/da-slider-->
-</div><!--/slider-->
+    </div>
+    </div>
+</div>
+
 <div id="right_banner">
         <img src="{{ MEDIA_URL }}/icons/banner2.png" alt="картинка" width="150" />
     </div>
 <!--=== End Slider ===-->
 </div>
 
-<div class="navbar navbar-default" role="navigation">
-<div class="container">
-<div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">{% trans "Toggle Navigation" %}</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </button>
-    {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-    {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
-</div>
-<div class="navbar-collapse collapse">
-    {% search_form "all" %}
-    {% page_menu "pages/menus/dropdown.html" %}
-</div>
-</div>
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">{% trans "Toggle Navigation" %}</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
+        {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
+    </div>
+    <div class="navbar-collapse collapse">
+    <form action="/search/" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+            <input class="form-control" placeholder="Search" type="text" name="q" value="">
+        </div>  
+        <div class="form-group">
+            <select class="form-control" name="type">
+                <option value="">Everything</option>        
+                <option value="blog.BlogPost">
+                    Blog posts
+                </option>        
+                <option value="pages.Page">
+                    Pages
+                </option>        
+            </select>
+        </div>
+        <input type="submit" class="btn btn-sm" value="Go">
+    </form>
+        {% page_menu "pages/menus/dropdown.html" %}
+    </div>
+    </div>
 </div>
 
 <div class="container">
@@ -149,10 +191,8 @@
     {% include "includes/user_panel.html" %}
     {% endnevercache %}
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title" align="center">Календарь</h3>
-      </div>
       <div class="panel-body">
+        <h2 align="center">Календарь</h2>
         <blockquote>
           <a href="#"><p>23-24 мая - Соревновая А.Котлова</p></a>
           Традиционные соревнования которые проводятся на Куяльнике.
@@ -164,10 +204,8 @@
       </div>
     </div>
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title" align="center">Спонсоры</h3>
-      </div>
       <div class="panel-body">
+        <h2 align="center">Спонсоры</h2>
         <div class="col-md-6 left">
             <img src="http://images.ua.prom.st/20330498_w0_h120_logotip.jpg" width="100%">
         </div>
