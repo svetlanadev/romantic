@@ -41,9 +41,9 @@
     }
     #right_banner{ 
         position: absolute;
-        top: 20px;
-        right: 30px;
-        height:350px;
+        top: 5px;
+        right: 5px;
+        height:370px;
     }
     #right_banner_text{
         font-size: 25px; 
@@ -80,6 +80,8 @@
 
 <body id="{% block body_id %}body{% endblock %}">
 
+
+
 <div class="bannerSection">
     <div class="slider-inner">
     <div id="da-slider" class="da-slider background_banner">
@@ -111,7 +113,7 @@
             <i><strong>
                 А. Котлова, 7-8 июня,
                 <div align="center">
-                <button type="button" class="btn">Узнать подробнее / Обсудить</button>
+                <button type="button" class="btn btn-info">Узнать подробнее / Обсудить</button>
                 </div>
             </strong></i><br> 
             <i>
@@ -133,6 +135,9 @@
     </div>
 </div>
 
+<div id="right_banner">
+    <img src="{{ MEDIA_URL }}/icons/banner2.png" alt="картинка" width="150" />
+</div>
 
 <div class="navbar navbar-default" role="navigation">
     <div class="container">
