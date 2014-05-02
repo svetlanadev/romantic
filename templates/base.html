@@ -91,7 +91,7 @@
             <i>
                 Одесской Сотки!
                 <div align="center">
-                <button type="button" class="btn">Узнать подробнее / Обсудить</button>
+                <button type="button" class="btn btn-info">Узнать подробнее / Обсудить</button>
                 </div>
             </i>
             </h2>
@@ -133,11 +133,6 @@
     </div>
 </div>
 
-<div id="right_banner">
-        <img src="{{ MEDIA_URL }}/icons/banner2.png" alt="картинка" width="150" />
-    </div>
-<!--=== End Slider ===-->
-</div>
 
 <div class="navbar navbar-default" role="navigation">
     <div class="container">
@@ -195,12 +190,14 @@
         <h2 align="center">Календарь</h2>
         <blockquote>
           <a href="#"><p>23-24 мая - Соревновая А.Котлова</p></a>
+          </blockquote>
           Традиционные соревнования которые проводятся на Куяльнике.
-        </blockquote>
+        
         <blockquote>
           <a href="#"><p>09-11 Июня - Выезд по переправам</p></a>
+          </blockquote>
           выезд на котором будет отточено техника навязки переправ.
-        </blockquote>
+        
       </div>
     </div>
     <div class="panel panel-default">
@@ -215,6 +212,16 @@
             <p><strong>Email:</strong> samsport@list.ru</p>
         </div>
       </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <!-- VK Widget -->
+            <script type="text/javascript" src="//vk.com/js/api/openapi.js?112"></script>
+            <div id="vk_groups"></div>
+            <script type="text/javascript">
+            VK.Widgets.Group("vk_groups", {mode: 2, width: "420", height: "400"}, 1025962);
+            </script>
+        </div>
     </div>
 <!--     <div class="panel panel-default">
     <div class="panel-body">
@@ -276,7 +283,6 @@
 <!-- JS Page Level -->           
 <script type="text/javascript" src="{% static "js/app.js" %}"></script>
 <script type="text/javascript" src="{% static "js/index.js" %}"></script>
-
 
 <script type="text/javascript">
     jQuery(document).ready(function() {
