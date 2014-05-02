@@ -365,3 +365,7 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+
+
+FACEBOOK_APP_ID = '721222201233223'
+FACEBOOK_API_SECRET = '8ee1434a4578ea543d319ba2a4005f22'
