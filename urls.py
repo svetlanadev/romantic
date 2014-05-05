@@ -36,6 +36,7 @@ urlpatterns += patterns('',
     url(r"^$", RedirectView.as_view(url='/blog/'), name='home'),
     url(r'^', include('hike.urls')),
     url(r'^', include('government.urls')),
+    url(r'^summernote/', include('django_summernote.urls')),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

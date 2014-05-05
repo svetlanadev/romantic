@@ -5,5 +5,5 @@ from government.views import GovernmentListView, GovernmentDetailView
 
 urlpatterns = patterns('government.views',
     url(r'^team/$', GovernmentListView.as_view()),
-    url(r'^team/(?P<pk>\d+)/$', GovernmentDetailView.as_view())
+    url(r'^team/(?P<pk>\d+)/$', GovernmentDetailView.as_view()),
 )
