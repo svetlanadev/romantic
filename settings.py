@@ -225,6 +225,10 @@ ROOT_URLCONF = "%s.urls" % PROJECT_DIRNAME
 # Don't forget to use absolute paths, not relative paths.
 TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
 
+for root, dirs, files in os.walk(PROJECT_ROOT):
+    if 'templates' in dirs:
+        TEMPLATE_DIRS += (os.path.join(root, 'templates'),)
+
 
 ################
 # APPLICATIONS #
@@ -251,6 +255,8 @@ INSTALLED_APPS = (
     #"mezzanine.accounts",
     #"mezzanine.mobile",
     'hike',
+    'government',
+    'imagekit',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -365,3 +371,9 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+
+
+FACEBOOK_APP_ID = '721222201233223'
+FACEBOOK_API_SECRET = '8ee1434a4578ea543d319ba2a4005f22'
+
+AUTH_PROFILE_MODULE = "government.CustomUser"
