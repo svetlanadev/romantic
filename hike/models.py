@@ -92,7 +92,6 @@ class Banner(models.Model):
             for banner in banners:
                 banner.state = 0
                 banner.save()
-                print banner
         super(Banner, self).save()
 
     def __unicode__(self):
