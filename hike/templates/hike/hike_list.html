@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<h1 align="center"><strong>Ближайшие походы:</strong></h1>
+<!-- Походы -->
+{% for hike in hikes %}
+<div>
+	<hr>
+	<div class="col-md-2">
+		<img src="{{ STATIC_URL }}img/lyapun.jpg" width="80px">
+	</div>
+
+	<div class="col-md-6">
+		{{ hike.user.first_name }} {{ hike.user.last_name }}<br>
+		email - <a href="mailto:{{ hike.user.email }}">{{ hike.user.email }}</a><br>
+		Телефон - 093-40-99-362<br>
+		Сроки - {{ hike.date_start }} по {{ hike.data_finish }}<br>
+	</div>
+	<div class="col-md-4" align="center">
+		<strong>Тип</strong> -  {{ hike.type_hike }}<br>
+		<strong>Категория</strong> - {{ hike.difficulty }}<br>
+		<strong>Район</strong> - {{ hike.region }}<br>
+		<div align="center"><a href="/hikes/{{ hike.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a></div>
+	</div>
+</div>
+<p>.</p>
+{% endfor %}
+{% endblock %}
