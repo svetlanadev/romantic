@@ -18,6 +18,9 @@ class Party(models.Model):
     text = models.TextField(verbose_name=u'Страничка')
     files = models.ManyToManyField('Files', blank=True, null=True)
 
+    def get_absolute_url(self):
+        return u'/party/%s' % self.id
+
     def __unicode__(self):
         return self.name
 
@@ -25,6 +28,9 @@ class Party(models.Model):
 class Files(models.Model):
     file_name = models.CharField(max_length=50)
     one_file = models.FileField(upload_to='files/')
+
+    def get_absolute_url(self):
+        return u'/files/%s' % self.id
 
     def __unicode__(self):
         return self.file_name

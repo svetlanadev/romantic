@@ -37,6 +37,7 @@ urlpatterns += patterns('',
     url(r'^', include('hike.urls')),
     url(r'^', include('government.urls')),
     url(r'^summernote/', include('django_summernote.urls')),
+    url(r'^', include('party.urls')),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

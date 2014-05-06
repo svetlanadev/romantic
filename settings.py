@@ -258,6 +258,7 @@ INSTALLED_APPS = (
     'government',
     'imagekit',
     'django_summernote',
+    'party',
 )
 
 # List of processors used by RequestContext to populate the context.

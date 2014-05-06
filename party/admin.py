@@ -2,15 +2,13 @@
 
 from party.models import Party, Files
 from django.contrib import admin
+from django_summernote.admin import SummernoteModelAdmin
 
 
-class PartyAdmin(admin.ModelAdmin):
+class PartyAdmin(SummernoteModelAdmin):
+    filter_horizontal = ('files',)
     list_display = ('name', 'date', 'state')
 
 
-class FilesAdmin(admin.ModelAdmin):
-    list_display = ('name', 'one_file')
-
-
 admin.site.register(Party, PartyAdmin)
-admin.site.register(Files, FilesAdmin)
+admin.site.register(Files)

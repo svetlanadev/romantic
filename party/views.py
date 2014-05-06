@@ -1,3 +1,15 @@
-from django.shortcuts import render
+# coding: utf-8
+# author: dlyapun
 
-# Create your views here.
+from django.views.generic import ListView, DetailView
+from party.models import Party
+
+
+class PartyListView(ListView):
+    model = Party
+
+    context_object_name = 'partys'
+
+
+class PartyDetailView(DetailView):
+    model = Party
