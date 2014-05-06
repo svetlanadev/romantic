@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block main %}
+{% load comment_tags %}
+<!-- Походы -->
+<div id="hike">
+	<div>{{ party.text|safe }}</div>
+
+	{% for file in party.files.all %}
+	<div class="well">
+        <img src="http://avelino.ru/assets/templates/main/img/doc.png" width="25px"><a href="{{ file.one_file }}">{{ file.file_name }}</a><br>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

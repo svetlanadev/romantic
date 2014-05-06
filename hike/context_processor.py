@@ -10,5 +10,5 @@ def contex_hike(request):
     except ObjectDoesNotExist:
         banner = "ERROR"
     except MultipleObjectsReturned:
-        banner = "ERROR"
+        banner = Banner.objects.get()
     return {'banner': banner}

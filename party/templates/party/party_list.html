@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block main %}
+{% load imagekit %}
+<h1 align="center"><strong>Мероприятия Клуба</strong></h1>
+{% for party in partys %}
+	<div class="col-md-12">
+			<h4>{{ party.name }}, {{ party.date }}
+			<a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a></h4>
+	</div>
+	<p><small>.</small></p><hr>
+{% endfor %}
+{% endblock %}

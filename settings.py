@@ -257,6 +257,8 @@ INSTALLED_APPS = (
     'hike',
     'government',
     'imagekit',
+    'django_summernote',
+    'party',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -273,6 +275,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "mezzanine.conf.context_processors.settings",
     'hike.context_processor.contex_hike',
+    'party.context_processor.contex_party',
 )
 
 # List of middleware classes to use. Order is important; in the request phase,
