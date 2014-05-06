@@ -193,9 +193,11 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <h2 align="center">Календарь</h2>
-        <blockquote>
-          <a href="#"><p>23-24 мая - Соревновая А.Котлова</p></a>
-          </blockquote>
+        {% for party in calendar %}
+            <blockquote>
+            {{ party.date }} <a href="/party/{{ party.id }}">{{ party.name }}</a>
+            </blockquote>
+        {% endfor %}
           Традиционные соревнования которые проводятся на Куяльнике.
         
         <blockquote>
