@@ -260,6 +260,7 @@ INSTALLED_APPS = (
     'django_summernote',
     'party',
     'force_blog',
+    'bootstrap_pagination',
 )
 
 # List of processors used by RequestContext to populate the context.

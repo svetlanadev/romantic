@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main %}
+{% load imagekit %}
+{% load urltag %}
+{% load bootstrap_pagination %}
+<div class="blog">
+	{% for blog_post in blog_posts %}
+		<h2><a href="{{ blog_post.get_absolute_url }}">
+			<strong>{{ blog_post.title }}</strong></a>
+			 {% if user.is_superuser %}
+			 	<a href="{% url_edit blog_post %}">Edit</a>
+			 {% endif %}
+		</h2>
+		<!-- {{ blog_post.text|safe|truncatewords:110 }} -->
+		{{ blog_post.text|safe }}
+		<hr>
+	{% endfor %}
+	{% bootstrap_pager page_obj %}
+</div>
+
+{% endblock %}
