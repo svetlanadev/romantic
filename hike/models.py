@@ -30,6 +30,8 @@ class Hike(models.Model):
 
     class Meta:
         ordering = ["-creation_date"]
+        verbose_name = 'Поход'
+        verbose_name_plural = 'Походы'
 
     def get_absolute_url(self):
         return u'/hikes/%s' % self.id
@@ -45,6 +47,10 @@ class Hike(models.Model):
 class TypeHike(models.Model):
     type_hike = models.CharField(max_length=50)
 
+    class Meta:
+        verbose_name = 'Тип похода'
+        verbose_name_plural = 'Типы походов'
+
     def __unicode__(self):
         return self.type_hike
 
@@ -52,6 +58,10 @@ class TypeHike(models.Model):
 # Регион похода - Кавказ, Крым тд
 class Region(models.Model):
     region = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = 'Регион'
+        verbose_name_plural = 'Регионы'
 
     def __unicode__(self):
         return self.region
@@ -61,6 +71,10 @@ class Region(models.Model):
 class StateGroup(models.Model):
     state_group = models.TextField()
 
+    class Meta:
+        verbose_name = 'Состояние группы'
+        verbose_name_plural = 'Состояния группы'
+
     def __unicode__(self):
         return self.state_group
 
@@ -68,6 +82,10 @@ class StateGroup(models.Model):
 # Сложность похода
 class Difficulty(models.Model):
     difficulty = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = 'Сложность'
+        verbose_name_plural = 'Сложность'
 
     def __unicode__(self):
         return self.difficulty
@@ -85,6 +103,10 @@ class Banner(models.Model):
     image = models.ImageField(upload_to='banners/')
     text = models.TextField()
     state = models.SmallIntegerField(default=DISABLE, choices=STATE_CHOICE)
+
+    class Meta:
+        verbose_name = 'Баннер'
+        verbose_name_plural = 'Баннеры'
 
     def save(self, force_insert=False, force_update=False, using=None):
         if self.state == 1:
