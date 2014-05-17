@@ -247,18 +247,19 @@ INSTALLED_APPS = (
     "mezzanine.conf",
     "mezzanine.core",
     "mezzanine.generic",
-    "mezzanine.blog",
+    # "mezzanine.blog",
     "mezzanine.forms",
     "mezzanine.pages",
     "mezzanine.galleries",
     "mezzanine.twitter",
-    #"mezzanine.accounts",
-    #"mezzanine.mobile",
+    # "mezzanine.accounts",
+    # "mezzanine.mobile",
     'hike',
     'government',
     'imagekit',
     'django_summernote',
     'party',
+    'force_blog',
 )
 
 # List of processors used by RequestContext to populate the context.
