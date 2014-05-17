@@ -259,6 +259,7 @@ INSTALLED_APPS = (
     'imagekit',
     'django_summernote',
     'party',
+    'force_blog',
 )
 
 # List of processors used by RequestContext to populate the context.
