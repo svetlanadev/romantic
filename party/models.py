@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from django.db import models
+from force_blog.models import AttachedFiles
 
 
 class Party(models.Model):
@@ -18,7 +19,7 @@ class Party(models.Model):
     data_finish = models.DateField(verbose_name=u'Конец похода')
     state = models.SmallIntegerField(default=DISABLE, choices=STATE_CHOICE)
     text = models.TextField(verbose_name=u'Страничка')
-    files = models.ManyToManyField('Files', blank=True, null=True)
+    files = models.ManyToManyField(AttachedFiles, blank=True, null=True)
 
     class Meta:
         ordering = ["-date_creation"]
