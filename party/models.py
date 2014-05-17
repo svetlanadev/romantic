@@ -13,24 +13,20 @@ class Party(models.Model):
     )
 
     name = models.CharField(max_length=50, verbose_name=u'Мероприятие')
-    date = models.CharField(max_length=30, verbose_name=u'Дата')
+    date_creation = models.DateTimeField(auto_now_add=True)
+    date_start = models.DateField(verbose_name=u'Начало похода')
+    data_finish = models.DateField(verbose_name=u'Конец похода')
     state = models.SmallIntegerField(default=DISABLE, choices=STATE_CHOICE)
     text = models.TextField(verbose_name=u'Страничка')
     files = models.ManyToManyField('Files', blank=True, null=True)
+
+    class Meta:
+        ordering = ["-date_creation"]
+        verbose_name = 'Мероприятие'
+        verbose_name_plural = 'Мероприятия'
 
     def get_absolute_url(self):
         return u'/party/%s' % self.id
 
     def __unicode__(self):
         return self.name
-
-
-class Files(models.Model):
-    file_name = models.CharField(max_length=50)
-    one_file = models.FileField(upload_to='files/')
-
-    def get_absolute_url(self):
-        return u'/files/%s' % self.id
-
-    def __unicode__(self):
-        return self.file_name
