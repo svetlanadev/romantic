@@ -18,7 +18,8 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=50, verbose_name=u'Заголовок')
     date_creation = models.DateTimeField(auto_now_add=True)
     date_publication = models.DateTimeField(blank=True, null=True)
-    owner = models.OneToOneField(settings.AUTH_PROFILE_MODULE, verbose_name=u'Автор')
+    owner = models.OneToOneField(settings.AUTH_PROFILE_MODULE,
+                                 verbose_name=u'Автор')
     text = models.TextField(verbose_name=u'Страничка')
     state = models.SmallIntegerField(default=DISABLE, choices=STATE_CHOICE)
     category = models.ManyToManyField('Category',
