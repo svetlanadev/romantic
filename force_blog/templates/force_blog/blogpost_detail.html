@@ -6,10 +6,16 @@
 <div id="hike">
 	<div>{{ blogpost.text|safe }}</div>
 
-	{% for file in party.files.all %}
-	<div class="well">
-        <img src="http://avelino.ru/assets/templates/main/img/doc.png" width="25px"><a href="{{ file.one_file }}">{{ file.file_name }}</a><br>
-    </div>
-    {% endfor %}
+	{% block extrahead %}
+
+	{% load mptt_comments_tags %}
+	{% get_mptt_comments_media %}
+
+	{% endblock extrahead %}
+
+	{% load mptt_comments_tags %}
+
+	{% display_comment_toplevel_for object %}
+
 </div>
 {% endblock %}

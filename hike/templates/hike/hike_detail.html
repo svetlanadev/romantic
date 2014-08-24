@@ -23,7 +23,9 @@
 	С {{ hike.date_start }} по {{ hike.data_finish }}<br>
 </div>
 <div class="col-md-12">
-	{% comments_for hike %}
+
+<h3>There are {{ hike.comments_count }} comment{{ hike.comments_count|pluralize }}</h3>
+{% comments_for hike %}
 </div>
 
 </div>
