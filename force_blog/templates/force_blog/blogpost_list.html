@@ -1,22 +1,48 @@
 {% extends "base.html" %}
+{% load mezzanine_tags %}
 
 {% block main %}
 {% load imagekit %}
 {% load urltag %}
 {% load bootstrap_pagination %}
+{% load comments_tags %}
+
 <div class="blog">
 	{% for blog_post in blog_posts %}
-		<h2><a href="{{ blog_post.get_absolute_url }}">
-			<strong>{{ blog_post.title }}</strong></a>
-			 {% if user.is_superuser %}
-			 	<a href="{% url_edit blog_post %}">Edit</a>
-			 {% endif %}
-		</h2>
+		<div class="row" align="center">
+			<div class="col-md-12">
+			{% editable blog_post.title %}
+				<p style="font-size:26px"><a href="{{ blog_post.get_absolute_url }}">
+				<strong>{{ blog_post.title }}</strong></a> 
+				</p>
+				{% endeditable %}
+				<p class="text-muted" style="line-height: 1" >
+					Опубликовано: {{ blog_post.date_publication|date:"Y-m-d G:i:s" }}, 
+					Автор - {{ blog_post.owner.get_full_name }}
+				</p>	
+			</div>
+		</div>
 		<!-- {{ blog_post.text|safe|truncatewords:110 }} -->
-		{{ blog_post.text|safe }}
+		{% editable blog_post.text %}{{ blog_post.text|safe }}{% endeditable %}
+		<form method="post" action="/" class="form-inline">{% csrf_token %}
+		<blockquote>
+			<button type="button" class="btn btn-sm"><a href="{{ blog_post.get_absolute_url }}/#blog_title">Подробнее</a></button>
+			<button type="button" class="btn btn-sm"><a href="{{ blog_post.get_absolute_url }}/#href_power_comments">Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a></button>
+			{% if user.is_superuser %}
+				<button type="button" class="btn btn-sm">
+					<a href="{% url_edit blog_post %}"><span class="glyphicon glyphicon-edit"></span> Админ-панель</a>
+				</button>
+				<input type="hidden" name="id" value="{{ blog_post.id }}" />
+		        <input type="submit" button class="btn btn-sm" name="first_girl" value="Скрыть" />
+			{% endif %}
+		</form>
+		</blockquote>
+		{% if check_status == True %}
+		<h1>}!{OPA</h1>
+		{% endif %}
 		<hr>
 	{% endfor %}
 	{% bootstrap_pager page_obj %}
-</div>
 
+</div>
 {% endblock %}

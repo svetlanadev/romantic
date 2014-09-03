@@ -2,7 +2,7 @@
 
 from django.contrib.auth.models import User
 from django.db import models
-from mezzanine.generic.fields import CommentsField
+from power_comments.models import PowerComment
 
 
 class Hike(models.Model):
@@ -25,8 +25,9 @@ class Hike(models.Model):
     requirements = models.TextField(verbose_name=u'Рекомендации')
     state_group = models.ForeignKey('StateGroup', verbose_name=u'Группа')
     region = models.ForeignKey('Region', verbose_name=u'Район похода')
-    status = models.SmallIntegerField(default=PROCESS, choices=STATE_CHOICE, verbose_name=u'Статус')
-    comments = CommentsField()
+    status = models.SmallIntegerField(default=PROCESS,
+                                      choices=STATE_CHOICE,
+                                      verbose_name=u'Статус')
 
     class Meta:
         ordering = ["-creation_date"]

@@ -1,0 +1,82 @@
+<div id="power_comments">
+	<p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
+{% for comment in comments %}
+		<!-- <div class="panel panel-default">
+			<div class="panel-body"> -->
+				<table border="0"><tr>
+					<!-- <div class="col-md-2"> -->
+					<td>
+						<img src="{{ comment.owner.avatar_150.url }}" class="img-circle" width="60px">
+					<!-- </div> -->
+					</td>
+					<!-- <div class="col-md-10"> -->
+					<td>
+					<div class="row"></div>
+						<div class="col-md-9">
+					  		<p class="text-muted" style="font-size:12px">{{ comment.owner.get_full_name }},  {{ comment.date_creation }}</p>
+					  	</div>
+					  	<div class="col-md-3">
+					  		<span class="glyphicon glyphicon-thumbs-down"></span>
+					  		<span class="badge">{{ comment.rating }}</span>
+					  		<span class="glyphicon glyphicon-thumbs-up"></span>
+					  	</div>
+					  	<div class="col-md-12">
+						<p align="justify">{{ comment.text }}</p>
+						</div>
+					<!-- </div> -->
+					</td>
+				</tr></table>		
+			<!-- </div> -->
+		<!-- </div> -->
+		<hr>
+{% endfor %}
+
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+			{% if request.user.is_authenticated %}
+			    <form action="/new_power_comment/" method="post" role="form">{% csrf_token %}
+			    	<div class="form-group">
+						<label for="exampleInputEmail1">Новый комментарий</label>
+						<input type="hidden" name="id_app" value="{{ app_url }}" />
+						<textarea id="id_text" mixlength="10" rows="2" name="text" class="form-control"></textarea>
+					</div>
+			    	<div class="form-group">
+						<button type="submit" class="btn btn-sm">Отправить</button>
+					</div>
+			    </form> 
+			{% else %}
+			    <p>Чтобы публиковать комментарии, <a href="#"> зарегестрируйтесь</a> или <a href="#">войдите.</a></p>
+			{% endif %}
+			</div>   
+		</div>
+
+<!-- Конец -->
+</div>
+
+<!-- 
+	<div class="col-md-8">
+	<ul class="list-group">
+	  <li class="list-group-item">
+	    
+	    <div class="media">
+		    <a class="pull-left" href="#">
+		    	<img src="{{ comment.owner.avatar_150.url }}" class="img-circle" width="60px">
+		    </a>
+		    <div class="media-body">
+			  	<div class="col-md-12">
+				  	<div class="col-md-9">
+				  		<p class="text-muted" style="font-size:12px">{{ comment.owner.get_full_name }},  {{ comment.date_creation }}</p>
+				  	</div>
+				  	<div class="col-md-3">
+				  		<span class="glyphicon glyphicon-thumbs-down"></span>
+				  		<span class="badge">1{{ comment.rating }}</span>
+				  		<span class="glyphicon glyphicon-thumbs-up"></span>
+				  	</div>
+			  	</div>
+		    </div>
+		    <p>{{ comment.text }}</p>
+		</div>
+	  </li>
+	</ul>
+	</div> -->

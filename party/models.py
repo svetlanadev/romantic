@@ -2,6 +2,7 @@
 
 from django.db import models
 from force_blog.models import AttachedFiles, Category
+from power_comments.models import PowerComment
 
 
 class Party(models.Model):

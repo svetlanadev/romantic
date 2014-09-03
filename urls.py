@@ -35,10 +35,12 @@ urlpatterns += patterns('',
     #url("^$", direct_to_template, {"template": "index.html"}, name="home"),
     url(r"^$", RedirectView.as_view(url='/blog/'), name='home'),
     url(r'^', include('hike.urls')),
-    url(r'^', include('government.urls')),
+    url(r'^', include('profile.urls')),
     url(r'^summernote/', include('django_summernote.urls')),
     url(r'^', include('party.urls')),
     url(r'^', include('force_blog.urls')),
+    url(r'^', include('power_comments.urls')),
+    url(r'^select2/', include('django_select2.urls')),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

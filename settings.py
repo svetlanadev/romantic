@@ -255,12 +255,14 @@ INSTALLED_APPS = (
     # "mezzanine.accounts",
     # "mezzanine.mobile",
     'hike',
-    'government',
+    'profile',
     'imagekit',
     'django_summernote',
     'party',
     'force_blog',
     'bootstrap_pagination',
+    'django_select2',
+    'power_comments',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -278,6 +280,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "mezzanine.conf.context_processors.settings",
     'hike.context_processor.contex_hike',
     'party.context_processor.contex_party',
+    'django.core.context_processors.request',
 )
 
 # List of middleware classes to use. Order is important; in the request phase,
@@ -289,7 +292,7 @@ MIDDLEWARE_CLASSES = (
     "django.middleware.locale.LocaleMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    #"django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "mezzanine.core.request.CurrentRequestMiddleware",
     "mezzanine.core.middleware.RedirectFallbackMiddleware",
@@ -360,6 +363,12 @@ except ImportError:
     pass
 
 
+try:
+    from django_summernote_settings import *
+except ImportError:
+    pass
+
+
 ####################
 # DYNAMIC SETTINGS #
 ####################
@@ -381,4 +390,11 @@ else:
 FACEBOOK_APP_ID = '721222201233223'
 FACEBOOK_API_SECRET = '8ee1434a4578ea543d319ba2a4005f22'
 
-AUTH_PROFILE_MODULE = "government.CustomUser"
+AUTH_PROFILE_MODULE = "profile.CustomUser"
+
+
+INPLACEEDIT_DISABLE_CLICK = False
+THUMBNAIL_DEBUG = True
+INPLACEEDIT_EVENT = "click"
+
+DEFAULT_KARMA = 15

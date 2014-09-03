@@ -18,14 +18,19 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=50, verbose_name=u'Заголовок')
     date_creation = models.DateTimeField(auto_now_add=True)
     date_publication = models.DateTimeField(blank=True, null=True)
+    date_edit = models.DateTimeField(blank=True, null=True)
+    rating = models.SmallIntegerField(default=0, verbose_name=u'Рейтинг')
     owner = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
-                                 verbose_name=u'Автор')
+                              verbose_name=u'Автор')
     text = models.TextField(verbose_name=u'Страничка')
-    state = models.SmallIntegerField(default=DISABLE, choices=STATE_CHOICE)
+    state = models.SmallIntegerField(default=DISABLE,
+                                     choices=STATE_CHOICE,
+                                     verbose_name=u'Статус')
     category = models.ManyToManyField('Category',
-                                      verbose_name=u'Категории',
+                                      verbose_name=u'Теги',
                                       related_name="blogposts_category")
     files = models.ManyToManyField('AttachedFiles', blank=True, null=True)
+    if_comments = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["-date_creation"]
@@ -63,8 +68,8 @@ class Category(models.Model):
     category = models.CharField(max_length=30)
 
     class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
 
     def __unicode__(self):
         return self.category

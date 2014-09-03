@@ -1,87 +1,82 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
 {% load pages_tags mezzanine_tags i18n future staticfiles %}
-
 <head>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
-<meta name="description" content="{% block meta_description %}{% endblock %}">
-<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
-<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+    <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
 
-{% ifinstalled mezzanine.blog %}
-<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
-<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
-{% endifinstalled %}
+    {% ifinstalled mezzanine.blog %}
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+    {% endifinstalled %}
 
-{% compress css %}
-<link href="{{ STATIC_URL }}css/bootstrap2.css" rel="stylesheet">
-<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
-<link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
-<!-- CSS Implementing Plugins -->
-<link rel="stylesheet" href="{% static "css/flexslider.css" %}" type="text/css" media="screen">      
-<link rel="stylesheet" href="{% static "css/parallax-slider.css" %}" type="text/css">
-{% if LANGUAGE_BIDI %}
-<link rel="stylesheet" href="{% static "css/rtl.css" %}">
-{% endif %}
-{% ifinstalled cartridge.shop %}
-<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
-{% if LANGUAGE_BIDI %}
-<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
-{% endif %}
-{% endifinstalled %}
-{% block extra_css %}{% endblock %}
-{% endcompress %}
+    {% compress css %}
+    <link href="{{ STATIC_URL }}css/bootstrap2.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="{% static "css/flexslider.css" %}" type="text/css" media="screen">      
+    <link rel="stylesheet" href="{% static "css/parallax-slider.css" %}" type="text/css">
+    {% if LANGUAGE_BIDI %}
+    <link rel="stylesheet" href="{% static "css/rtl.css" %}">
+    {% endif %}
+    {% ifinstalled cartridge.shop %}
+    <link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+    {% if LANGUAGE_BIDI %}
+    <link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+    {% endif %}
+    {% endifinstalled %}
+    {% block extra_css %}{% endblock %}
+    {% endcompress %}
 
-{% block extra_head %}{% endblock %}
-<style type="text/css">
-    body{
-        padding-top: 0px;
-    }
-    #right_banner{ 
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        height:370px;
-    }
-    #right_banner_text{
-        font-size: 25px; 
-        position: absolute;
-        top: 40px;
-        left: 50px;
-        width: 40px;
-        height:50px;
-    }
-    .background_banner{
-        background-image: url({{ MEDIA_URL }}/{{ banner.image }});
-        background-size: cover;
-    }
-    /*.post-meta > a {
-        color: #8B8BCC;
-    }
-    a {
-    color: #6CB9FF;
-    text-decoration: none;
-    }
-    a:hover, a:focus {
-        color: #0086FF;
-        text-decoration: underline;
-    }*/
-</style>
-<script type="text/javascript">
-    $('.bxslider').bxSlider({
-      mode: 'fade',
-      captions: true
-      auto: true,
-    });
-</script>
+    {% block extra_head %}{% endblock %}
+    <style type="text/css">
+        body{
+            padding-top: 0px;
+        }
+        #right_banner{ 
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            height:370px;
+        }
+        #right_banner_text{
+            font-size: 25px; 
+            position: absolute;
+            top: 40px;
+            left: 50px;
+            width: 40px;
+            height:50px;
+        }
+        .background_banner{
+            background-image: url({{ MEDIA_URL }}/{{ banner.image }});
+            background-size: cover;
+        }
+        /*.post-meta > a {
+            color: #8B8BCC;
+        }
+        a {
+        color: #6CB9FF;
+        text-decoration: none;
+        }
+        a:hover, a:focus {
+            color: #0086FF;
+            text-decoration: underline;
+        }*/
+    </style>
+    <script type="text/javascript">
+        $('.bxslider').bxSlider({
+          mode: 'fade',
+          captions: true
+          auto: true,
+        });
+    </script>
 </head>
-
 <body id="{% block body_id %}body{% endblock %}">
-
-
-
 <div class="bannerSection">
     <div class="slider-inner">
     <div id="da-slider" class="da-slider background_banner">
@@ -134,7 +129,7 @@
     </div>
     </div>
 </div>
-
+<!-- Баннер -->
 <div id="right_banner">
     <img src="{{ MEDIA_URL }}/icons/banner2.png" alt="картинка" width="150" />
 </div>
@@ -177,7 +172,7 @@
 <div class="container">
 <div class="row">
 
-<div class="col-md-8 left">
+<div class="col-md-9 left">
 <div class="panel panel-default">
   <div class="panel-body">
     {% block main %}{% endblock %}
@@ -186,31 +181,30 @@
 </div>
 
 <!-- FEED/RSS -->
-<div class="col-md-4 right">
+<div class="col-md-3 right">
     {% nevercache %}
     {% include "includes/user_panel.html" %}
     {% endnevercache %}
     <div class="panel panel-default">
       <div class="panel-body">
-        <h2 align="center">Календарь</h2>
-        {% for party in calendar %}
-            <blockquote>
-            {{ party.date }} <a href="/party/{{ party.id }}">{{ party.name }}</a>
-            </blockquote>
-        {% endfor %}        
+      <h3 align="center"><strong>Будущие события:</strong></h3>
+      <div align="center"><strong>14 февраля, Казмещик</strong></div>
+      <a href="/party/{{ party.id }}"><img src="/static/img/сборы.jpg" width="100%"></a>
+        <p style="line-height:1.1" class="text">Примите участие в традиционных клубовских лыжных сборах, которые пройдут в Казмещике.</p>
+        <hr>
+        <div align="center"><strong>21 сентября, Южноукраинск</strong></div>
+        <a href="/party/{{ party.id }}"><img src="/static/img/скалы.jpg" width="100%"></a>
+        <p style="line-height:1.1" class="text">
+        Выезд для новичков которые пришли в клуб. Расчитан на новичка в туризме</p>
       </div>
     </div>
     <div class="panel panel-default">
       <div class="panel-body">
-        <h2 align="center">Спонсоры</h2>
-        <div class="col-md-6 left">
+        <h2 align="center">Спонсор</h2>
             <img src="http://images.ua.prom.st/20330498_w0_h120_logotip.jpg" width="100%">
-        </div>
-        <div class="col-md-6 middle">
             <p><strong>Телефон:</strong> +380 (95) 124-63-48</p>                    
             <p><strong>Адрес:</strong> ул. Базарная 84</p>
             <p><strong>Email:</strong> samsport@list.ru</p>
-        </div>
       </div>
     </div>
     <div class="panel panel-default">
@@ -219,7 +213,7 @@
             <script type="text/javascript" src="//vk.com/js/api/openapi.js?112"></script>
             <div id="vk_groups"></div>
             <script type="text/javascript">
-            VK.Widgets.Group("vk_groups", {mode: 2, width: "330", height: "400"}, 1025962);
+            VK.Widgets.Group("vk_groups", {mode: 2, width: "230", height: "400"}, 1025962);
             </script>
         </div>
     </div>
@@ -294,7 +288,6 @@
 {% block extra_js %}{% endblock %}
 {% include "includes/footer_scripts.html" %}
 {% endcompress %}
-
 <!--[if lt IE 9]>
 <script src="{% static "js/html5shiv.js" %}"></script>
 <script src="{% static "js/respond.min.js" %}"></script>
