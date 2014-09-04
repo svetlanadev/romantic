@@ -1,5 +1,4 @@
 # coding: utf-8
-# author: dlyapun
 
 # from django.template import RequestContext
 from django.contrib.auth.decorators import login_required

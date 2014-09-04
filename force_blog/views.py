@@ -49,3 +49,15 @@ def blog_edit(request, id):
     return render_to_response('force_blog/blogpost_edit.html',
                               data,
                               context_instance=RequestContext(request))
+
+
+@login_required
+def hidden_blog(request):
+    if request.POST:
+        blog_id = request.POST['blog_id']
+        blog = BlogPost.objects.get(id=int(blog_id))
+        blog.state = BlogPost.DISABLE
+        blog.save()
+        return redirect('/blog/')
+    else:
+        return redirect(blog.get_absolute_url())

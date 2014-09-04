@@ -24,7 +24,7 @@
 		</div>
 		<!-- {{ blog_post.text|safe|truncatewords:110 }} -->
 		{% editable blog_post.text %}{{ blog_post.text|safe }}{% endeditable %}
-		<form method="post" action="/" class="form-inline">{% csrf_token %}
+		<form method="post" action="/hidden_blog/" class="form-inline">{% csrf_token %}
 		<blockquote>
 			<button type="button" class="btn btn-sm"><a href="{{ blog_post.get_absolute_url }}/#blog_title">Подробнее</a></button>
 			<button type="button" class="btn btn-sm"><a href="{{ blog_post.get_absolute_url }}/#href_power_comments">Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a></button>
@@ -32,8 +32,8 @@
 				<button type="button" class="btn btn-sm">
 					<a href="{% url_edit blog_post %}"><span class="glyphicon glyphicon-edit"></span> Админ-панель</a>
 				</button>
-				<input type="hidden" name="id" value="{{ blog_post.id }}" />
-		        <input type="submit" button class="btn btn-sm" name="first_girl" value="Скрыть" />
+				<input type="hidden" name="blog_id" value="{{ blog_post.id }}" />
+		        <input type="submit" button class="btn btn-sm" value="Скрыть" />
 			{% endif %}
 		</form>
 		</blockquote>

@@ -41,6 +41,7 @@ class PowerComment(models.Model):
     def get_full_name(self):
         if self.owner.first_name or self.owner.last_name:
             full_name = u'%s %s' % (self.owner.first_name, self.owner.last_name)
+            return full_name
         else:
             return "No first and last name"
 
