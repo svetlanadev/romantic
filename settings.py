@@ -263,6 +263,7 @@ INSTALLED_APPS = (
     'bootstrap_pagination',
     'django_select2',
     'power_comments',
+    'banner',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -279,6 +280,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "mezzanine.conf.context_processors.settings",
     'hike.context_processor.contex_hike',
+    'banner.context_processor.contex_banner',
     'party.context_processor.contex_party',
     'django.core.context_processors.request',
 )
@@ -398,3 +400,4 @@ THUMBNAIL_DEBUG = True
 INPLACEEDIT_EVENT = "click"
 
 DEFAULT_KARMA = 15
+DEFAULT_BANNER_TITLE = 3

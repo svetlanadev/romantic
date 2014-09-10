@@ -50,17 +50,7 @@
 	</div>
 	<div class="body">
     {{ blogpost.text|safe }}
-    <div class="col-md-8"><hr>
-		{% if blogpost.if_comments %} <!-- Комментарии -->
-			{% power_comments request blogpost.get_absolute_url %}
-		{% else %}
-			Вы настолько много матерились, что мы решили отключить комментарии к этой статье.
-		{% endif %}
-	</div>
-    </div>
-    <div class="col-md-4">
-	{% if user.is_superuser %} <!-- Админка -->
-		<hr>
+    {% if user.is_superuser %} <!-- Админка -->
 		<form method="post" action="/hidden_blog/" class="form-inline">{% csrf_token %}
 			<button type="button" class="btn btn-sm">
 				<a href="{% url_edit blogpost %}"><span class="glyphicon glyphicon-cog"></span> Admin</a>
@@ -71,7 +61,13 @@
 				<button type="submit" class="btn btn-sm"><span class="glyphicon glyphicon-remove"></span> Disable</button>
 		</form>
 	{% endif %}
-	</div>
+    <hr>
+		{% if blogpost.if_comments %} <!-- Комментарии -->
+			{% power_comments request blogpost.get_absolute_url %}
+		{% else %}
+			Вы настолько много матерились, что мы решили отключить комментарии к этой статье.
+		{% endif %}
+    </div>
 </div>
 {% endblock %}
 

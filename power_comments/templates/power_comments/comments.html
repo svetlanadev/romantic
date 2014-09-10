@@ -1,6 +1,7 @@
 <div id="power_comments">
 	<p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
 {% for comment in comments %}
+	<div class="col-md-8">
 		<!-- <div class="panel panel-default">
 			<div class="panel-body"> -->
 				<table border="0"><tr>
@@ -29,9 +30,16 @@
 			<!-- </div> -->
 		<!-- </div> -->
 		<hr>
+	</div>
+	{% if request.user.is_superuser %}
+		<div class="col-md-4">
+			<button type="submit" class="btn btn-sm"><span class="glyphicon glyphicon-remove"></span> Disable</button>
+			<button type="submit" class="btn btn-sm"><span class="glyphicon glyphicon-user"></span> Profile User</button>
+		</div>
+	{% endif %}
 {% endfor %}
 
-
+	<div class="col-md-8">
 		<div class="panel panel-default">
 			<div class="panel-body">
 			{% if request.user.is_authenticated %}
@@ -50,9 +58,11 @@
 			{% endif %}
 			</div>   
 		</div>
+	</div>
 
 <!-- Конец -->
 </div>
+
 
 <!-- 
 	<div class="col-md-8">

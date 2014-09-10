@@ -72,7 +72,7 @@
         $('.bxslider').bxSlider({
           mode: 'fade',
           captions: true
-          auto: true,
+          auto: false,
         });
     </script>
 </head>
@@ -80,48 +80,30 @@
 <div class="bannerSection">
     <div class="slider-inner">
     <div id="da-slider" class="da-slider background_banner">
+    {% for banner in banner_title %}
         <div class="da-slide">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
             <h2>
             <i>
-                Поздравляем участников
-            </i><br> 
-            <i>
-                Одесской Сотки!
+                {{ banner.title }}
                 <div align="center">
-                <button type="button" class="btn btn-info">Узнать подробнее / Обсудить</button>
+                <button type="button" class="btn btn-info">{{ banner.button_name }}</button>
                 </div>
             </i>
             </h2>
+            
             <p>
-                <i>И снова завершился традиционный забег</i> <br> 
-                <i>по поясу Славы, приуроченной к 60 освобождения Одессы!</i>
+                <i>{{ banner.text }}</i> 
             </p>
-            <div class="da-img">
-            </div>
         </div>
-        
-        <div class="da-slide">
-            <h2>
-            <i><strong>
-                Cоревнования памяти
-            </strong></i><br> 
-            <i><strong>
-                А. Котлова, 7-8 июня,
-                <div align="center">
-                <button type="button" class="btn btn-info">Узнать подробнее / Обсудить</button>
-                </div>
-            </strong></i><br> 
-            <i>
-                
-            </i>
-            </h2>
-            <p>
-                <i>Соревнования для повышения техники горных групп.</i><br> 
-                <i>Традиционно соревнования проводятся в трех дисциплинах: </i><br>
-                <i>спас.работы, работа в связках и"скалы".</i>
-            </p>
+        {% if banner.image %}
+            <div class="da-img"><img src="{{ MEDIA_URL }}/{{ banner.image }}" width="100px"></div>
+        {% else %}
             <div class="da-img"></div>
+        {% endif %}
         </div>
+    {% endfor %}
         <nav class="da-arrows">
             <span class="da-arrows-prev"></span>
             <span class="da-arrows-next"></span>        
@@ -171,7 +153,6 @@
 
 <div class="container">
 <div class="row">
-
 <div class="col-md-9 left">
 <div class="panel panel-default">
   <div class="panel-body">
