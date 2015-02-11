@@ -1,32 +1,41 @@
 {% extends "base.html" %}
 
 {% block main %}
-{% load comment_tags %}
+{% load urltag %}
+{% load comments_tags %}
 <!-- Походы -->
+
 <div id="hike">
-<div class="col-md-6 right">
-	<h3>Руководитель</h3>
-	<img src="{{ STATIC_URL }}img/lyapun.jpg" width="70%" height="100%"><br>
-	ФИО - {{ hike.user.first_name }} {{ hike.user.last_name }}<br>
-	email - <a href="mailto:{{ hike.user.email }}">{{ hike.user.email }}</a><br>
-	Телефон - 093-40-99-362<br>
-	Опыт - руководство 2к.с. Кавказ 2012.
+	<div class="col-md-6 right">
+		<h3>Руководитель</h3>
+		<img src="{{ hike.user.avatar_150.url }}" width="50%" height="100%"><br>
+		ФИО - {{ hike.user.user.first_name }} {{ hike.user.user.last_name }}<br>
+		email - <a href="mailto:{{ hike.user.user.email }}">{{ hike.user.user.email }}</a><br>
+		{% if hike.user.phone %}
+			Телефон - {{ hike.user.phone }}<br>
+		{% endif %}
+		{% if hike.user.vk %}
+			vk - {{ hike.user.vk }}<br>
+		{% endif %}
+	</div>
+	<div class="col-md-6 left">
+		<h3>Поход</h3>
+		<strong>Тип</strong> -  {{ hike.type_hike }}<br>
+		<strong>Категория</strong> - {{ hike.difficulty }}<br>
+		<strong>Район</strong> - {{ hike.region }}<br>
+		<strong>Описание</strong> - {{ hike.requirements }}<br>
+		<strong>Состояние</strong> - {{ hike.state_group }}<br>
+		<h4>Сроки</h4>
+		С {{ hike.date_start }} по {{ hike.data_finish }}<br>
+	</div>
+<!-- Комментарии -->
 </div>
-<div class="col-md-6 left">
-	<h3>Поход</h3>
-	<strong>Тип</strong> -  {{ hike.type_hike }}<br>
-	<strong>Категория</strong> - {{ hike.difficulty }}<br>
-	<strong>Район</strong> - {{ hike.region }}<br>
-	<strong>Описание</strong> - {{ hike.requirements }}<br>
-	{{ hike.state_group }}<br>
-	<h4>Сроки</h4>
-	С {{ hike.date_start }} по {{ hike.data_finish }}<br>
+<div id="comments">
+<div class="body">
+<div class="col-md-12 right">
+<hr>
+	{% power_comments request hike.get_absolute_url %}
 </div>
-<div class="col-md-12">
-
-<h3>There are {{ hike.comments_count }} comment{{ hike.comments_count|pluralize }}</h3>
-{% comments_for hike %}
 </div>
-
 </div>
 {% endblock %}

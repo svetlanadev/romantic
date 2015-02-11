@@ -12,12 +12,12 @@ class BlogPostForm(ModelForm):
 
     class Meta:
         model = BlogPost
-        exclude = ['owner', 'date_publication', 'date_creation']
+        exclude = ['owner', 'date_publication', 'date_creation', 'rating', 'state']
 
-    def save(self, *args, **kwargs):
-        owner = kwargs.pop('owner')
-        obj = super(BlogPost, self).save(commit=False)
-        obj.owner = owner
-        obj.save()
-        return obj
+    # def save(self, *args, **kwargs):
+    #     owner = kwargs.pop('owner')
+    #     obj = super(BlogPost, self).save(commit=False)
+    #     obj.owner = owner
+    #     obj.save()
+    #     return obj
         

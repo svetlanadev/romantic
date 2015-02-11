@@ -32,6 +32,49 @@ def new_power_comment(request):
 
 @login_required
 def karma_power_comments(request):
+    user = CustomUser.objects.get(user=request.user)
     if request.method == "POST":
-        id_app = request.POST['id_app']
-    return redirect('/')
+        if user.karma < -10:
+            message = "Недостаточно кармы для комментирования"
+            pass
+        id_comment = request.POST['id_comment']
+        karma = request.POST['karma']
+        comment = PowerComment.objects.get(id=id_comment)
+        if user in comment.karma_users.all():
+            message = "Вы уже поставили рейтинг"
+        else:
+            if karma == "minus":
+                comment.rating = comment.rating - 1
+                user.karma = user.karma - 1
+            if karma == "plus":
+                comment.rating = comment.rating + 1
+                user.karma = user.karma + 1
+            comment.save()
+            user.save()
+            comment.karma_users.add(user)
+    else: 
+        return redirect('/')            
+    return redirect(comment.app)
+
+
+@login_required
+def disable_power_comments(request):
+    user = CustomUser.objects.get(user=request.user)
+    if not user:
+        print "SUKA"
+    else:
+        print "FUCCCKKING EEYY"
+        if request.method == "POST":
+            id_comment = request.POST['id_comment']
+            disable = request.POST['disable']
+            comment = PowerComment.objects.get(id=id_comment)
+            print disable
+            if disable == "true":
+                comment.state = 0 # DISABLE
+                comment.save()
+                print comment.state
+        else: 
+            return redirect('/')            
+        return redirect(comment.app)
+
+# <django.db.models.fields.related.ManyRelatedManager object at 0x7f50182ede90>

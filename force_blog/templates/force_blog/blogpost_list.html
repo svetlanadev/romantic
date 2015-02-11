@@ -9,7 +9,7 @@
 
 <div class="blog">
 	{% for blog_post in blog_posts %}
-		<div class="row" align="center">
+		<!-- <div class="row" align="center">
 			<div class="col-md-12">
 			{% editable blog_post.title %}
 				<p style="font-size:26px"><a href="{{ blog_post.get_absolute_url }}">
@@ -21,11 +21,51 @@
 					Автор - {{ blog_post.owner.get_full_name }}
 				</p>	
 			</div>
+		</div> -->
+		
+		<div class="row" align="">
+		<div class="col-md-1"></div>
+		<div class="col-md-7">
+			<p style="font-size:26px"><a href="{{ blog_post.get_absolute_url }}">
+				<strong>{{ blog_post.title }}</strong></a> 
+				</p>
+			<p class="text-muted" style="line-height: 1" >
+			Опубликовано: {{ blog_post.date_publication|date:"d.m.Y, G:i" }}</p> 
+		</div>
+
+		<div class="col-md-4"><small>
+		Автор: <a href="{{ blog_post.owner.get_absolute_url }}"><span class="glyphicon glyphicon-user"></span> {{ blog_post.owner.get_full_name }}</a><br>
+		
+		{% if user.is_authenticated %}
+		<form action="/karma_force_blog/" method="post" role="form">{% csrf_token %}
+			Рейтинг:
+	  		<input type="hidden" name="id_blogpost" value="{{ blog_post.id }}" />
+	  		<button type="submit" name="karma" value="minus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+	  		<span class="badge">{{ blog_post.rating }}</span>
+	  		<button type="submit" name="karma" value="plus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+	  	</form>
+		{% else %}
+		    Рейтинг: <span class="badge"> {{ blog_post.rating }}</span>
+		{% endif %}
+		
+		</div>
 		</div>
 		<!-- {{ blog_post.text|safe|truncatewords:110 }} -->
 		{% editable blog_post.text %}{{ blog_post.text|safe }}{% endeditable %}
+
+		{% if blog_post.files == True %}
+		<strong>Файлы:</strong>
+		{% for file in blog_post.files.all %}
+				<a href="{{ MEDIA_URL }}{{ file.one_file }}">{{ file.file_name }}</a>, 
+		{% endfor %}
+		{% endif %}
+		<p>
+			<strong>Теги:</strong>
+			{% for category in blog_post.category.all %}
+				<a href="/blog/category/{{ category.category }}">{{ category.category }}</a>, 
+			{% endfor %}
+		</p>
 		<form method="post" action="/hidden_blog/" class="form-inline">{% csrf_token %}
-		<blockquote>
 			<button type="button" class="btn btn-sm"><a href="{{ blog_post.get_absolute_url }}/#blog_title">Подробнее</a></button>
 			<button type="button" class="btn btn-sm"><a href="{{ blog_post.get_absolute_url }}/#href_power_comments">Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a></button>
 			{% if user.is_superuser %}
@@ -36,7 +76,6 @@
 		        <input type="submit" button class="btn btn-sm" value="Скрыть" />
 			{% endif %}
 		</form>
-		</blockquote>
 		{% if check_status == True %}
 		<h1>}!{OPA</h1>
 		{% endif %}

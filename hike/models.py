@@ -2,7 +2,7 @@
 
 from django.contrib.auth.models import User
 from django.db import models
-from power_comments.models import PowerComment
+from django.conf import settings
 
 
 class Hike(models.Model):
@@ -16,7 +16,7 @@ class Hike(models.Model):
         (FAIL, 'Поход не пройден'),
     )
 
-    user = models.ForeignKey(User,  verbose_name=u'Руководитель')
+    user = models.ForeignKey(settings.AUTH_PROFILE_MODULE,  verbose_name=u'Руководитель')
     type_hike = models.ForeignKey('TypeHike',  verbose_name=u'Тип похода')
     creation_date = models.DateTimeField(auto_now_add=True)
     date_start = models.DateField(verbose_name=u'Начало похода')
@@ -28,6 +28,7 @@ class Hike(models.Model):
     status = models.SmallIntegerField(default=PROCESS,
                                       choices=STATE_CHOICE,
                                       verbose_name=u'Статус')
+    if_comments = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["-creation_date"]
@@ -38,8 +39,8 @@ class Hike(models.Model):
         return u'/hikes/%s' % self.id
 
     def __unicode__(self):
-        return u'%s %s - %s, %s' % (self.user.first_name,
-                                    self.user.last_name,
+        return u'%s %s - %s, %s' % (self.user.user.first_name,
+                                    self.user.user.last_name,
                                     self.type_hike.type_hike,
                                     self.difficulty.difficulty)
 
@@ -90,32 +91,3 @@ class Difficulty(models.Model):
 
     def __unicode__(self):
         return self.difficulty
-
-
-class Banner(models.Model):
-    DISABLE = 0
-    ENABLE = 1
-
-    STATE_CHOICE = (
-        (DISABLE, 'Disable'),
-        (ENABLE, 'Enable'),
-    )
-
-    image = models.ImageField(upload_to='banners/')
-    text = models.TextField()
-    state = models.SmallIntegerField(default=DISABLE, choices=STATE_CHOICE)
-
-    class Meta:
-        verbose_name = 'Баннер'
-        verbose_name_plural = 'Баннеры'
-
-    def save(self, force_insert=False, force_update=False, using=None):
-        if self.state == 1:
-            banners = Banner.objects.all()
-            for banner in banners:
-                banner.state = 0
-                banner.save()
-        super(Banner, self).save()
-
-    def __unicode__(self):
-        return u'%s %s' % (self.text, self.state)

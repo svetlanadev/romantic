@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+  <h3 align="center"><strong>Будущие события:</strong></h3>
+
+  {% for party in partys %}
+    <div class="thumbnail">
+        <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
+            <div align="center" style="color:#FFF; font-size:40px; background:url(/static/img/bg-text.png) repeat;">
+                {{ party.name }}
+            </div>
+        </div>
+        <div class="caption">
+            <div align="center">
+                <h4>Начало - <strong>{{ party.date_start }}</strong></h4>
+            </div>
+            <p>{{ party.text|safe|truncatechars:130 }}</p>
+            <div align="center">
+                <a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% include "page_navigation/party.html" %}

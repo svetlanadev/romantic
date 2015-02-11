@@ -28,6 +28,8 @@ class Party(models.Model):
     category = models.ManyToManyField(Category,
                                       verbose_name=u'Категории',
                                       related_name="party_category")
+    image = models.ImageField(upload_to='partys/')
+    if_comments = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["-date_creation"]

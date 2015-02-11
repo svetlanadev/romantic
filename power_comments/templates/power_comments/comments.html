@@ -1,3 +1,4 @@
+{% load comments_tags %}
 <div id="power_comments">
 	<p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
 {% for comment in comments %}
@@ -13,13 +14,21 @@
 					<!-- <div class="col-md-10"> -->
 					<td>
 					<div class="row"></div>
-						<div class="col-md-9">
+						<div class="col-md-8">
 					  		<p class="text-muted" style="font-size:12px">{{ comment.owner.get_full_name }},  {{ comment.date_creation }}</p>
 					  	</div>
-					  	<div class="col-md-3">
-					  		<span class="glyphicon glyphicon-thumbs-down"></span>
+					  	<div class="col-md-4">
+					  	{% if request.user.is_authenticated %}
+					  	<form action="/karma_power_comments/" method="post" role="form">{% csrf_token %}
+					  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+					  		<button type="submit" name="karma" value="minus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-down"></span></button>
 					  		<span class="badge">{{ comment.rating }}</span>
-					  		<span class="glyphicon glyphicon-thumbs-up"></span>
+					  		<button type="submit" name="karma" value="plus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+					  	</form>
+						{% else %}
+						    <span class="badge">{{ comment.rating }}</span>
+						{% endif %}
+					  	
 					  	</div>
 					  	<div class="col-md-12">
 						<p align="justify">{{ comment.text }}</p>
@@ -33,15 +42,18 @@
 	</div>
 	{% if request.user.is_superuser %}
 		<div class="col-md-4">
-			<button type="submit" class="btn btn-sm"><span class="glyphicon glyphicon-remove"></span> Disable</button>
-			<button type="submit" class="btn btn-sm"><span class="glyphicon glyphicon-user"></span> Profile User</button>
+		<form action="/disable_power_comments/" method="post" role="form">{% csrf_token %}
+			<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+			<button type="submit" name="disable" value="true" class="btn btn-link"><span class="glyphicon glyphicon-remove"></span> Disable</button>
+			<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> Profile</button>
+			<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span> Admin</a>
+		</form>
 		</div>
 	{% endif %}
 {% endfor %}
-
 	<div class="col-md-8">
-		<div class="panel panel-default">
-			<div class="panel-body">
+		<!-- <div class="panel panel-default">
+			<div class="panel-body"> -->
 			{% if request.user.is_authenticated %}
 			    <form action="/new_power_comment/" method="post" role="form">{% csrf_token %}
 			    	<div class="form-group">
@@ -56,8 +68,8 @@
 			{% else %}
 			    <p>Чтобы публиковать комментарии, <a href="#"> зарегестрируйтесь</a> или <a href="#">войдите.</a></p>
 			{% endif %}
-			</div>   
-		</div>
+			<!-- </div>   
+		</div> -->
 	</div>
 
 <!-- Конец -->

@@ -17,4 +17,9 @@ class ProfileListView(ListView):
 class ProfileDetailView(DetailView):
     model = CustomUser
 
+    context_object_name = 'user'
     template_name = 'profile_detail.html'
+
+
+def government(request):
+    pass

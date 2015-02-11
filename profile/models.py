@@ -14,8 +14,13 @@ class CustomUser(models.Model):
     karma = models.SmallIntegerField(default=settings.DEFAULT_KARMA,
                                      verbose_name=u'Статус')
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
-    phone = models.CharField(max_length=20, blank=True, null=True)
-    phone2 = models.CharField(max_length=20, blank=True, null=True)
+    # connection = models.ManyToManyField('ConnectionUser', verbose_name=u'Связь')
+
+    phone = models.CharField(max_length=30, verbose_name=u'Номер', blank=True, null=True)
+    vk = models.CharField(max_length=90, verbose_name=u'VK', blank=True, null=True)
+    facebook = models.CharField(max_length=90, verbose_name=u'Facebook', blank=True, null=True)
+    od_class = models.CharField(max_length=90, verbose_name=u'Одноклассники', blank=True, null=True)
+    #karma_url = models
 
     avatar_150 = ImageSpecField(source='avatar',
                                 processors=[ResizeToFill(150, 150)],
@@ -39,9 +44,9 @@ class CustomUser(models.Model):
         return self.user.username
 
 
-# Модератор, писатель, правление.
 # class TypeUser(models.Model):
 #     type_user = models.CharField(max_length=50)
+#     type_goverment = models.CharField(max_length=50, blank=True, null=True)
 
 #     class Meta:
 #         verbose_name = 'Категория'
@@ -49,3 +54,19 @@ class CustomUser(models.Model):
 
 #     def __unicode__(self):
 #         return self.type_user
+
+
+# class ConnectionUser(models.Model):
+#     name = models.ForeignKey('ConnectionType', verbose_name=u'Тип связи')
+#     number = models.CharField(max_length=30, verbose_name=u'Номер/Аккаунт')
+
+#     def __unicode__(self):
+#         return u'%s - %s' % (self.name,
+#                              self.number,)
+
+
+# class ConnectionType(models.Model):
+#     name = models.CharField(max_length=30)
+
+#     def __unicode__(self):
+#         return self.name

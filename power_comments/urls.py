@@ -7,4 +7,7 @@ urlpatterns = patterns('power_comments.views',
     url(r'^karma_power_comments/$',
         'karma_power_comments',
         name="karma_power_comments"),
+    url(r'^disable_power_comments/$',
+        'disable_power_comments',
+        name="disable_power_comments"),
 )

@@ -5,6 +5,35 @@ from django.db import models
 from django.conf import settings
 
 
+class Banner(models.Model):
+    DISABLE = 0
+    ENABLE = 1
+
+    STATE_CHOICE = (
+        (DISABLE, 'Disable'),
+        (ENABLE, 'Enable'),
+    )
+
+    image = models.ImageField(upload_to='banners/')
+    text = models.TextField()
+    state = models.SmallIntegerField(default=DISABLE, choices=STATE_CHOICE)
+
+    class Meta:
+        verbose_name = 'Фоновое изображение'
+        verbose_name_plural = 'Фоновые изображения'
+
+    def save(self, force_insert=False, force_update=False, using=None):
+        if self.state == 1:
+            banners = Banner.objects.all()
+            for banner in banners:
+                banner.state = 0
+                banner.save()
+        super(Banner, self).save()
+
+    def __unicode__(self):
+        return u'%s %s' % (self.text, self.state)
+
+
 class BannerTitle(models.Model):
     DISABLE = 0
     ENABLE = 1
@@ -29,6 +58,8 @@ class BannerTitle(models.Model):
     button_name = models.CharField(max_length=40,
                                    default="Узнать подробнее / Обсудить",
                                    verbose_name=u'Название кнопки')
+
+    url = models.CharField(max_length=150)
 
     class Meta:
         ordering = ["-creation_date"]

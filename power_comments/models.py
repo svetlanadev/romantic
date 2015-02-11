@@ -23,7 +23,7 @@ class PowerComment(models.Model):
     karma_users = models.ManyToManyField(settings.AUTH_PROFILE_MODULE,
                                          blank=True, null=True,
                                          verbose_name=u'Люди сделали отметки',
-                                         related_name="user_karma")
+                                         related_name="user_karma_comment")
     text = models.TextField(verbose_name=u'Страничка')
     state = models.SmallIntegerField(default=ENABLE,
                                      choices=STATE_CHOICE,
@@ -43,7 +43,7 @@ class PowerComment(models.Model):
             full_name = u'%s %s' % (self.owner.first_name, self.owner.last_name)
             return full_name
         else:
-            return "No first and last name"
+            return "No first or last name"
 
     def __unicode__(self):
         return u'%s %s - %s' % (self.text,

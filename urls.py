@@ -6,6 +6,8 @@ from django.contrib import admin
 from django.views.generic.base import RedirectView
 
 from mezzanine.core.views import direct_to_template
+from django.conf import settings
+import debug_toolbar
 
 
 admin.autodiscover()
@@ -40,7 +42,9 @@ urlpatterns += patterns('',
     url(r'^', include('party.urls')),
     url(r'^', include('force_blog.urls')),
     url(r'^', include('power_comments.urls')),
+    url(r'^', include('materials.urls')),
     url(r'^select2/', include('django_select2.urls')),
+    url(r'^__debug__/', include(debug_toolbar.urls)),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

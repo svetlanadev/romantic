@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load mezzanine_tags %}
+
+{% block main %}
+{% load imagekit %}
+{% load urltag %}
+{% load bootstrap_pagination %}
+{% load comments_tags %}
+
+<div class="materials">
+
+
+<div class="row" align="">
+<div class="col-sm-6 col-md-3" align="center">
+	<a href="#">
+	<img src="/static/img/folder.png">
+    <div class="caption">
+        <div align="center">
+            <h4>Отчет - Экспедиция<strong>{{ party.date_start }}</strong></h4>
+        </div>
+    </div>
+    </a>
+</div>
+<div class="col-sm-6 col-md-3" align="center">
+	<a href="#">
+	<img src="/static/img/folder.png">
+    <div class="caption">
+        <div align="center">
+            <h4>Творчество Ляпуна<strong>{{ party.date_start }}</strong></h4>
+        </div>
+    </div>
+    </a>
+</div>
+<div class="col-sm-6 col-md-3" align="center">
+	<a href="#">
+	<img src="/static/img/folder.png">
+    <div class="caption">
+        <div align="center">
+            <h4>Рассказы<strong>{{ party.date_start }}</strong></h4>
+        </div>
+    </div>
+    </a>
+</div>
+
+{% for material in materials %}
+<div class="col-sm-6 col-md-3" align="center">
+	<a href="#">
+    <div class="caption">
+        <div align="center">
+            <h4>{{ material.title }}</h4>
+            <p>Рейтинг - {{ material.rating }}</p>
+            <p>Тип - {{ material.type_hike.type_hike }}</p>
+            <p>Район - {{ material.region }}</p>
+            <p>Hike</p>
+            <br><br>
+        </div>
+    </div>
+    </a>
+</div>
+{% endfor %}
+</div>
+
+<hr>
+<h3>Походы:</h3>
+</p>
+	<!-- {% for material in materials %}
+		<div class="row" align="">
+		<div class="col-md-1"></div>
+		<div class="col-md-7">
+			<p style="font-size:26px"><a href="{{ material.get_absolute_url }}">
+				<strong>{{ material.title }}</strong></a> 
+				</p>
+			<p class="text-muted" style="line-height: 1" >
+			Опубликовано: {{ material.date_publication|date:"d.m.Y, G:i" }}</p> 
+		</div>
+
+		<div class="col-md-4"><small>
+		Автор: <a href="{{ material.owner.get_absolute_url }}"><span class="glyphicon glyphicon-user"></span> {{ material.owner.get_full_name }}</a><br>
+		
+		{% if user.is_authenticated %}
+		<form action="/karma_force_blog/" method="post" role="form">{% csrf_token %}
+			Рейтинг:
+	  		<input type="hidden" name="id_blogpost" value="{{ material.id }}" />
+	  		<button type="submit" name="karma" value="minus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+	  		<span class="badge">{{ material.rating }}</span>
+	  		<button type="submit" name="karma" value="plus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+	  	</form>
+		{% else %}
+		    Рейтинг: <span class="badge"> {{ material.rating }}</span>
+		{% endif %}
+		
+		</div>
+		</div>
+		{% editable material.text %}{{ material.text|safe|truncatewords:110 }}{% endeditable %}
+
+		<strong>Файлы:</strong>
+		{% for file in material.files.all %}
+				<a href="{{ MEDIA_URL }}{{ file.one_file }}">{{ file.file_name }}</a>, 
+		{% endfor %}
+		<p>
+			<strong>Теги:</strong>
+			{% for category in material.category.all %}
+				<a href="/blog/category/{{ category.category }}">{{ category.category }}</a>, 
+			{% endfor %}
+		</p>
+		<form method="post" action="/hidden_blog/" class="form-inline">{% csrf_token %}
+			<button type="button" class="btn btn-sm"><a href="{{ material.get_absolute_url }}/#blog_title">Подробнее</a></button>
+			<button type="button" class="btn btn-sm"><a href="{{ material.get_absolute_url }}/#href_power_comments">Комментарии ({% count_power_comments material.get_absolute_url %})</a></button>
+			{% if user.is_superuser %}
+				<button type="button" class="btn btn-sm">
+					<a href="{% url_edit material %}"><span class="glyphicon glyphicon-edit"></span> Админ-панель</a>
+				</button>
+				<input type="hidden" name="blog_id" value="{{ material.id }}" />
+		        <input type="submit" button class="btn btn-sm" value="Скрыть" />
+			{% endif %}
+		</form>
+		{% if check_status == True %}
+		<h1>}!{OPA</h1>
+		{% endif %}
+		<hr>
+	{% endfor %} -->
+
+</div>
+{% endblock %}

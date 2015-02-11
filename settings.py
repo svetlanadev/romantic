@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from __future__ import absolute_import, unicode_literals
 
 ######################
@@ -94,7 +96,10 @@ MANAGERS = ADMINS
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['127.0.0.1:8000']
+ALLOWED_HOSTS = [
+    '127.0.0.1:8000',
+    '.example.com',
+]
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -264,6 +269,9 @@ INSTALLED_APPS = (
     'django_select2',
     'power_comments',
     'banner',
+    'page_navigation',
+    'debug_toolbar',
+    'materials',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -306,6 +314,7 @@ MIDDLEWARE_CLASSES = (
     # "mezzanine.core.middleware.SSLRedirectMiddleware",
     "mezzanine.pages.middleware.PageMiddleware",
     "mezzanine.core.middleware.FetchFromCacheMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 # Store these package names here as they may change in the future since
@@ -401,3 +410,18 @@ INPLACEEDIT_EVENT = "click"
 
 DEFAULT_KARMA = 15
 DEFAULT_BANNER_TITLE = 3
+
+SECRET_KEY = "FUCKING"
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
+CONFIG_DEFAULTS = {
+    # Toolbar options
+    'DISABLE_PANELS': set(['debug_toolbar.panels.redirects.RedirectsPanel']),
+    'INSERT_BEFORE': '</body>',
+    'JQUERY_URL': '//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js',
+    'RENDER_PANELS': None,
+    'RESULTS_STORE_SIZE': 10,
+    'ROOT_TAG_EXTRA_ATTRS': '',
+    'SHOW_COLLAPSED': False,
+    'SHOW_TOOLBAR_CALLBACK': 'debug_toolbar.middleware.show_toolbar',
+}

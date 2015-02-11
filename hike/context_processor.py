@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from hike.models import Banner
+from banner.models import Banner
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 

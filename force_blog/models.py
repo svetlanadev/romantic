@@ -18,18 +18,32 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=50, verbose_name=u'Заголовок')
     date_creation = models.DateTimeField(auto_now_add=True)
     date_publication = models.DateTimeField(blank=True, null=True)
-    date_edit = models.DateTimeField(blank=True, null=True)
     rating = models.SmallIntegerField(default=0, verbose_name=u'Рейтинг')
+
     owner = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
                               verbose_name=u'Автор')
     text = models.TextField(verbose_name=u'Страничка')
+
     state = models.SmallIntegerField(default=DISABLE,
                                      choices=STATE_CHOICE,
                                      verbose_name=u'Статус')
+
     category = models.ManyToManyField('Category',
                                       verbose_name=u'Теги',
                                       related_name="blogposts_category")
+
+    blog_edit = models.ManyToManyField('BlogEdit',
+                                       blank=True, null=True,
+                                       verbose_name=u'Редактирование',
+                                       related_name="blogpost_edit")
+    
     files = models.ManyToManyField('AttachedFiles', blank=True, null=True)
+
+    karma_users = models.ManyToManyField(settings.AUTH_PROFILE_MODULE,
+                                         blank=True, null=True,
+                                         verbose_name=u'Люди сделали отметки',
+                                         related_name="user_karma_blog")
+
     if_comments = models.BooleanField(default=True)
 
     class Meta:
@@ -73,3 +87,17 @@ class Category(models.Model):
 
     def __unicode__(self):
         return self.category
+
+
+class BlogEdit(models.Model):
+    date_edit = models.DateTimeField(auto_now_add=True)
+    user_edit = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
+                                  verbose_name=u'Автор')
+
+    class Meta:
+        verbose_name = 'Редактирование'
+        verbose_name_plural = 'Редактирование'
+
+    def __unicode__(self):
+        return u'%s - %s' % (self.date_edit,
+                             self.user_edit,)
