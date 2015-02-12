@@ -62,7 +62,7 @@
 		<p>
 			<strong>Теги:</strong>
 			{% for category in blog_post.category.all %}
-				<a href="/blog/category/{{ category.category }}">{{ category.category }}</a>, 
+				<a href="/blog/category/{{ category.id }}">{{ category.category }}</a>, 
 			{% endfor %}
 		</p>
 		<form method="post" action="/hidden_blog/" class="form-inline">{% csrf_token %}

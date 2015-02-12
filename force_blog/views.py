@@ -8,7 +8,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect, render
 from django.views.generic import ListView, DetailView
 from force_blog.forms import BlogPostForm
-from force_blog.models import BlogPost, BlogEdit
+from force_blog.models import BlogPost, BlogEdit, Category
 from django.template import RequestContext
 
 
@@ -26,6 +26,13 @@ class BlogPostListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(BlogPostListView, self).get_context_data(**kwargs)
         return context
+
+
+class BlogPostListViewTag(BlogPostListView):
+
+    def get_queryset(self, **kwargs):
+        category = self.kwargs['category_id']
+        return super(BlogPostListViewTag, self).get_queryset().filter(category=category)
 
 
 class BlogPostDetailView(DetailView):
@@ -102,3 +109,12 @@ def karma_force_blog(request):
     else: 
         return redirect('/')            
     return redirect(blogpost.get_absolute_url())
+
+
+def search_for_tag(request, category_id):
+    category = Category.objects.get(id=category_id)
+    blog_posts = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related('category', 'karma_users').filter(category=category)
+    data = {'blog_posts': blog_posts, 'paginate_by': 5}
+    return render_to_response('force_blog/blogpost_list.html',
+                              data,
+                              context_instance=RequestContext(request))   
