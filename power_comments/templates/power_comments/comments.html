@@ -1,104 +1,92 @@
 {% load comments_tags %}
 <div id="power_comments">
 	<p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
-{% for comment in comments %}
-	<div class="col-md-8">
-		<!-- <div class="panel panel-default">
-			<div class="panel-body"> -->
-				<table border="0"><tr>
-					<!-- <div class="col-md-2"> -->
-					<td>
-						<img src="{{ comment.owner.avatar_150.url }}" class="img-circle" width="60px">
-					<!-- </div> -->
-					</td>
-					<!-- <div class="col-md-10"> -->
-					<td>
-					<div class="row"></div>
-						<div class="col-md-8">
-					  		<p class="text-muted" style="font-size:12px">{{ comment.owner.get_full_name }},  {{ comment.date_creation }}</p>
-					  	</div>
-					  	<div class="col-md-4">
-					  	{% if request.user.is_authenticated %}
-					  	<form action="/karma_power_comments/" method="post" role="form">{% csrf_token %}
-					  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-					  		<button type="submit" name="karma" value="minus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-down"></span></button>
-					  		<span class="badge">{{ comment.rating }}</span>
-					  		<button type="submit" name="karma" value="plus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-					  	</form>
-						{% else %}
-						    <span class="badge">{{ comment.rating }}</span>
-						{% endif %}
-					  	
-					  	</div>
-					  	<div class="col-md-12">
-						<p align="justify">{{ comment.text }}</p>
-						</div>
-					<!-- </div> -->
-					</td>
-				</tr></table>		
+	{% for comment in comments %}
+		<div class="col-md-8">
+			<!-- <div class="panel panel-default">
+				<div class="panel-body"> -->
+					<table border="0"><tr>
+						<!-- <div class="col-md-2"> -->
+						<td>
+							<img src="{{ comment.owner.avatar_150.url }}" class="img-circle" width="60px">
+						<!-- </div> -->
+						</td>
+						<!-- <div class="col-md-10"> -->
+						<td>
+						<div class="row"></div>
+							<div class="col-md-7">
+						  		<p class="text-muted" style="font-size:12px">{{ comment.owner.get_full_name }},  {{ comment.date_creation }}</p>
+						  	</div>
+						  	<div class="col-md-5" id="comment_karma">
+							  	<div class="col-md-4">
+							  		<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
+							  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+							  		<button class="btn btn-link"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+								  	</form>
+								</div>
+								<div class="col-md-3 comment_rating-{{ comment.id }}">
+									<span class="badge">{{ comment.rating }}</span>
+								</div>
+								<div class="col-md-2">
+							  		<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
+							  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+							  		<button class="btn btn-link"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+							  	</form>
+								</div>
+						  	</div>
+						  	<div class="col-md-12">
+							<p align="justify">{{ comment.text }}</p>
+							</div>
+						<!-- </div> -->
+						</td>
+					</tr></table>		
+				<!-- </div> -->
 			<!-- </div> -->
-		<!-- </div> -->
-		<hr>
-	</div>
-	{% if request.user.is_superuser %}
-		<div class="col-md-4">
-		<form action="/disable_power_comments/" method="post" role="form">{% csrf_token %}
-			<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-			<button type="submit" name="disable" value="true" class="btn btn-link"><span class="glyphicon glyphicon-remove"></span> Disable</button>
-			<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> Profile</button>
-			<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span> Admin</a>
-		</form>
+			<hr>
 		</div>
-	{% endif %}
-{% endfor %}
+		{% if request.user.is_superuser %}
+			<div class="col-md-4">
+			<form action="/disable_power_comments/" method="post" role="form">{% csrf_token %}
+				<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+				<button type="submit" name="disable" value="true" class="btn btn-link"><span class="glyphicon glyphicon-remove"></span> Disable</button>
+				<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> Profile</button>
+				<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span> Admin</a>
+			</form>
+			</div>
+		{% endif %}
+	{% endfor %}
+
 	<div class="col-md-8">
-		<!-- <div class="panel panel-default">
-			<div class="panel-body"> -->
-			{% if request.user.is_authenticated %}
-			    <form action="/new_power_comment/" method="post" role="form">{% csrf_token %}
-			    	<div class="form-group">
-						<label for="exampleInputEmail1">Новый комментарий</label>
-						<input type="hidden" name="id_app" value="{{ app_url }}" />
-						<textarea id="id_text" mixlength="10" rows="2" name="text" class="form-control"></textarea>
-					</div>
-			    	<div class="form-group">
-						<button type="submit" class="btn btn-sm">Отправить</button>
-					</div>
-			    </form> 
-			{% else %}
-			    <p>Чтобы публиковать комментарии, <a href="#"> зарегестрируйтесь</a> или <a href="#">войдите.</a></p>
-			{% endif %}
-			<!-- </div>   
-		</div> -->
+		<!-- Елемент що активує процес -->
+		<a id="test_comment" href="javascript:">Натисни мене ніжно</a>
+
+		<!-- Елемент, текст якого буде змінено -->
+		<div id="target_comment">Я готовий до змін.</div>
+
+		<a href="#dialog" name="modal">Вызов модального окна</a>
+
+		<!-- Само окно -->
+		<div id="boxes">  
+			<div id="dialog" class="window"> Текст модального окна
+				<div class="top"><a href="#" class="link close"/>Закрыть</a></div>
+				<div class="content">Текст в модальном окне.</div>
+			</div>
+		</div>
+
+		{% if request.user.is_authenticated %}
+		    <form action="/new_power_comment/" method="post" role="form">{% csrf_token %}
+		    	<div class="form-group">
+					<label for="exampleInputEmail1">Новый комментарий</label>
+					<input type="hidden" name="id_app" value="{{ app_url }}" />
+					<textarea id="id_text" mixlength="10" rows="2" name="text" class="form-control"></textarea>
+				</div>
+		    	<div class="form-group">
+					<button type="submit" class="btn btn-sm">Отправить</button>
+				</div>
+		    </form> 
+		{% else %}
+		    <p>Чтобы публиковать комментарии, <a href="#"> зарегестрируйтесь</a> или <a href="#">войдите.</a></p>
+		{% endif %}
 	</div>
 
-<!-- Конец -->
 </div>
-
-
-<!-- 
-	<div class="col-md-8">
-	<ul class="list-group">
-	  <li class="list-group-item">
-	    
-	    <div class="media">
-		    <a class="pull-left" href="#">
-		    	<img src="{{ comment.owner.avatar_150.url }}" class="img-circle" width="60px">
-		    </a>
-		    <div class="media-body">
-			  	<div class="col-md-12">
-				  	<div class="col-md-9">
-				  		<p class="text-muted" style="font-size:12px">{{ comment.owner.get_full_name }},  {{ comment.date_creation }}</p>
-				  	</div>
-				  	<div class="col-md-3">
-				  		<span class="glyphicon glyphicon-thumbs-down"></span>
-				  		<span class="badge">1{{ comment.rating }}</span>
-				  		<span class="glyphicon glyphicon-thumbs-up"></span>
-				  	</div>
-			  	</div>
-		    </div>
-		    <p>{{ comment.text }}</p>
-		</div>
-	  </li>
-	</ul>
-	</div> -->

@@ -16,6 +16,7 @@
 
     {% compress css %}
     <link href="{{ STATIC_URL }}css/bootstrap2.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
         
     <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
     <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
@@ -215,25 +216,13 @@
 <!-- JS Page Level -->           
 <script type="text/javascript" src="{% static "js/app.js" %}"></script>
 <script type="text/javascript" src="{% static "js/index.js" %}"></script>
+<script type="text/javascript" src="{% static "js/ajax_romantic.js" %}"></script>
 
 <script type="text/javascript">
     jQuery(document).ready(function() {
         App.init();
         App.initSliders();
         Index.initParallaxSlider();
-    });
-</script>
-<script type="text/javascript">
-    // Магія розпочнеться лише після повного завантаження сторінки
-    $(document).ready(function () {
-        // Посилання з id="test" буде тригером події
-        $("#test").click(function() {
-            // AJAX-запит на потрібну адресу
-            $.get("/ajax_test/", function(data) {
-                // Замінюємо текст тегу з id="target" на отримані дані
-                $("#target").html(data.param1);
-            });
-        });
     });
 </script>
 {% block extra_js %}{% endblock %}

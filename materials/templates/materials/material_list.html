@@ -44,7 +44,7 @@
 
 {% for material in materials %}
 <div class="col-sm-6 col-md-3" align="center">
-	<a href="#">
+	<a href="{{ material.get_absolute_url }}">
     <div class="caption">
         <div align="center">
             <h4>{{ material.title }}</h4>
