@@ -44,6 +44,13 @@ class BlogPost(models.Model):
                                          verbose_name=u'Люди сделали отметки',
                                          related_name="user_karma_blog")
 
+    image = models.ImageField(upload_to='BlogImage/',
+                              verbose_name=u'Изображение',
+                              blank=True,
+                              null=True)
+
+    default_image = models.ForeignKey('DefaultImageBlog', verbose_name=u'Изображение')
+
     if_comments = models.BooleanField(default=True)
 
     class Meta:
@@ -62,7 +69,7 @@ class BlogPost(models.Model):
 
 class AttachedFiles(models.Model):
     file_name = models.CharField(max_length=50)
-    one_file = models.FileField(upload_to='files/')
+    one_file = models.FileField(upload_to='AttachedFiles/')
     category = models.ManyToManyField('Category',
                                       verbose_name=u'Категории',
                                       related_name="file_category")
@@ -101,3 +108,16 @@ class BlogEdit(models.Model):
     def __unicode__(self):
         return u'%s - %s' % (self.date_edit,
                              self.user_edit,)
+
+
+class DefaultImageBlog(models.Model):
+    name = models.CharField(max_length=30)
+    image = models.ImageField(upload_to='DefaultImageBlog/',
+                              verbose_name=u'Изображение')
+
+    class Meta:
+        verbose_name = 'Изображение по умолчанию'
+        verbose_name_plural = 'Изображения по умолчанию'
+
+    def __unicode__(self):
+        return self.name

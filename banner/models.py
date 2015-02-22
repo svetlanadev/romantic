@@ -5,35 +5,6 @@ from django.db import models
 from django.conf import settings
 
 
-class Banner(models.Model):
-    DISABLE = 0
-    ENABLE = 1
-
-    STATE_CHOICE = (
-        (DISABLE, 'Disable'),
-        (ENABLE, 'Enable'),
-    )
-
-    image = models.ImageField(upload_to='banners/')
-    text = models.TextField()
-    state = models.SmallIntegerField(default=DISABLE, choices=STATE_CHOICE)
-
-    class Meta:
-        verbose_name = 'Фоновое изображение'
-        verbose_name_plural = 'Фоновые изображения'
-
-    def save(self, force_insert=False, force_update=False, using=None):
-        if self.state == 1:
-            banners = Banner.objects.all()
-            for banner in banners:
-                banner.state = 0
-                banner.save()
-        super(Banner, self).save()
-
-    def __unicode__(self):
-        return u'%s %s' % (self.text, self.state)
-
-
 class BannerTitle(models.Model):
     DISABLE = 0
     ENABLE = 1
@@ -53,13 +24,17 @@ class BannerTitle(models.Model):
                             blank=True,
                             null=True,
                             verbose_name=u'Описание')
+    text_author = models.CharField(max_length=150,
+                                   blank=True,
+                                   null=True,
+                                   verbose_name=u'Автор')
     state = models.SmallIntegerField(default=DISABLE, choices=STATE_CHOICE)
     creation_date = models.DateTimeField(auto_now_add=True)
     button_name = models.CharField(max_length=40,
                                    default="Узнать подробнее / Обсудить",
                                    verbose_name=u'Название кнопки')
 
-    url = models.CharField(max_length=150)
+    url = models.CharField(max_length=150, blank=True, null=True,)
 
     class Meta:
         ordering = ["-creation_date"]
@@ -77,7 +52,7 @@ class BannerTitle(models.Model):
                 if banner.state == 1:
                     if enable_banner == settings.DEFAULT_BANNER_TITLE:
                         banner.state = 0
-                        banner.save()
+                        #banner.save()
                     else:
                         enable_banner = enable_banner + 1
         super(BannerTitle, self).save()
