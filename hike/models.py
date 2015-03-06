@@ -18,17 +18,23 @@ class Hike(models.Model):
 
     user = models.ForeignKey(settings.AUTH_PROFILE_MODULE,  verbose_name=u'Руководитель')
     type_hike = models.ForeignKey('TypeHike',  verbose_name=u'Тип похода')
+
     creation_date = models.DateTimeField(auto_now_add=True)
-    date_start = models.DateField(verbose_name=u'Начало похода')
-    data_finish = models.DateField(verbose_name=u'Конец похода')
+    date_start = models.DateField(verbose_name=u'Начало похода', blank=True, null=True)
+    data_finish = models.DateField(verbose_name=u'Конец похода', blank=True, null=True)
+
     difficulty = models.ForeignKey('Difficulty', verbose_name=u'Категория')
+
     requirements = models.TextField(verbose_name=u'Рекомендации')
+
     state_group = models.ForeignKey('StateGroup', verbose_name=u'Группа')
     region = models.ForeignKey('Region', verbose_name=u'Район похода')
+
     status = models.SmallIntegerField(default=PROCESS,
                                       choices=STATE_CHOICE,
                                       verbose_name=u'Статус')
-    if_comments = models.BooleanField(default=True)
+    
+    if_comments = models.BooleanField(default=True, verbose_name=u'Комментарии включены')
 
     class Meta:
         ordering = ["-creation_date"]

@@ -93,9 +93,9 @@
 		</form>
 	{% endif %}
 	<p>
-		Теги:
+		<strong>Теги:</strong>
 		{% for category in blogpost.category.all %}
-			<a href="#">{{ category.category }}</a>, 
+			<a href="/blog/category/{{ category.id }}">{{ category.category }}</a>, 
 		{% endfor %}
 	</p>
     <hr>

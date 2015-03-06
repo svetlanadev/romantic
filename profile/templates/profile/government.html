@@ -2,7 +2,7 @@
 
 {% block main %}
 {% load imagekit %}
-<h1 align="center"><strong>Правление Клуба</strong></h1>
+<h1 align="center"><strong>Правление Клуба:</strong></h1>
 {% for user in users %}
 	<div class="col-md-12">
 		<div class="col-md-3">
@@ -15,6 +15,6 @@
 			Телефон - {{ user.phone }}<br></p>
 		</div>
 	</div>
-	<p><small>.</small></p><hr>
+	<p style="color:#fff">.</p><hr>
 {% endfor %}
 {% endblock %}

@@ -16,6 +16,12 @@
 
     {% compress css %}
     <link href="{{ STATIC_URL }}css/bootstrap2.css" rel="stylesheet">
+    <link href="/tkr.od.ua/public_html/static/css/bootstrap2.css" rel="stylesheet">
+    <link href="/{{ STATIC_URL }}css/bootstrap2.css" rel="stylesheet">
+    <link href="/css/bootstrap2.css" rel="stylesheet">
+    <link href="css/bootstrap2.css" rel="stylesheet">
+    <link href="{{ MEDIA_URL }}css/bootstrap2.css" rel="stylesheet">
+
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
         
     <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
@@ -109,10 +115,11 @@
 
 
 <!-- Баннер -->
-<!-- <div id="right_banner">
-    <img src="{{ MEDIA_URL }}/icons/banner2.png" alt="картинка" width="150" />
+<div id="right_banner">
+    <img src="{{ MEDIA_URL }}img/folder.png" alt="картинка" width="150" />
+    <img src="{{ STATIC_URL }}img/folder.png" alt="картинка" width="150" />
 </div>
- -->
+
 <div class="navbar navbar-default" role="navigation">
     <div class="container">
     <div class="navbar-header">

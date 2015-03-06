@@ -30,6 +30,14 @@ def material_detail(request, material_id):
                               context_instance=RequestContext(request))
 
 
+def material_folder(request, dir_id):
+    one_dir = Dirs.objects.get(id=dir_id)
+    data = {'one_dir': one_dir, }
+    return render_to_response('materials/material_dir.html',
+                              data,
+                              context_instance=RequestContext(request))
+
+
 @login_required
 def material_new(request):
     owner = CustomUser.objects.get(user=request.user)
@@ -64,32 +72,3 @@ def material_new(request):
         return render_to_response('materials/material_new.html',
                                   data,
                                   context_instance=RequestContext(request))
-
-
-@login_required
-def blog_edit2(request):
-    user = CustomUser.objects.get(user=request.user)
-    id_blog = request.POST['id_blog']
-    blog = BlogPost.objects.get(id=id_blog)
-
-    if request.method == "POST":
-        form = BlogPostForm(request.POST, instance=blog)
-        if form.is_valid():
-            blog_save = blog
-            blog_save.title = blog_save.title + 'backup'
-            blog_edit = BlogEdit(user_edit=user)
-            blog_edit.save()
-            blog_save.blog_edit.add(blog_edit)
-            blog_save.state = 0
-            blog_save.pk = None
-            blog_save.save()
-            print "ALL OK"
-            form.save()
-            url = u'/blog/%s' % id_blog
-            return redirect(url)
-
-    form = BlogPostForm(instance=blog)
-    data = {'form': form, 'blogpost': blog}
-    return render_to_response('force_blog/blogpost_edit.html',
-                              data,
-                              context_instance=RequestContext(request))

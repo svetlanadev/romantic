@@ -9,55 +9,45 @@
 
 <div class="materials">
 
+<div class="col-md-2">
+	<button type="button" class="btn btn-sm"><a href="/"><span class="glyphicon glyphicon-chevron-left"></span> Назад</a></button>
+</div>
+<div class="col-md-8" align="center">
+	<h1 align="center"><strong>Материалы:</strong></h1><br>
+</div>
+<div class="col-md-2"></div>
 
 <div class="row" align="">
-<div class="col-sm-6 col-md-3" align="center">
-	<a href="#">
-	<img src="/static/img/folder.png">
-    <div class="caption">
-        <div align="center">
-            <h4>Отчет - Экспедиция<strong>{{ party.date_start }}</strong></h4>
-        </div>
-    </div>
-    </a>
-</div>
-<div class="col-sm-6 col-md-3" align="center">
-	<a href="#">
-	<img src="/static/img/folder.png">
-    <div class="caption">
-        <div align="center">
-            <h4>Творчество Ляпуна<strong>{{ party.date_start }}</strong></h4>
-        </div>
-    </div>
-    </a>
-</div>
-<div class="col-sm-6 col-md-3" align="center">
-	<a href="#">
-	<img src="/static/img/folder.png">
-    <div class="caption">
-        <div align="center">
-            <h4>Рассказы<strong>{{ party.date_start }}</strong></h4>
-        </div>
-    </div>
-    </a>
-</div>
+	{% for dir in dirs %}
+	<div class="col-sm-6 col-md-3" align="center">
+		<a href="{{ dir.get_absolute_url }}">
+		<img src="{{ MEDIA_URL }}{{ dir.image }}" width="100">
+	    <div class="caption">
+	        <div align="center">
+	            <h4>{{ dir.dir_name }}</h4>
+	        </div>
+	    </div>
+	    </a>
+	</div>
+	{% endfor %}
 
-{% for material in materials %}
-<div class="col-sm-6 col-md-3" align="center">
-	<a href="{{ material.get_absolute_url }}">
-    <div class="caption">
-        <div align="center">
-            <h4>{{ material.title }}</h4>
-            <p>Рейтинг - {{ material.rating }}</p>
-            <p>Тип - {{ material.type_hike.type_hike }}</p>
-            <p>Район - {{ material.region }}</p>
-            <p>Hike</p>
-            <br><br>
-        </div>
-    </div>
-    </a>
-</div>
-{% endfor %}
+	{% for material in materials %}
+	<div class="col-sm-6 col-md-3" align="center">
+		<a href="{{ material.get_absolute_url }}">
+	    <div class="caption">
+	        <div align="center">
+	            <h4>{{ material.title }}</h4>
+	            <p>Рейтинг - {{ material.rating }}</p>
+	            <p>Тип - {{ material.type_hike.type_hike }}</p>
+	            <p>Район - {{ material.region }}</p>
+	            <p>Hike</p>
+	            <br><br>
+	        </div>
+	    </div>
+	    </a>
+	</div>
+	{% endfor %}
+
 </div>
 
 <hr>

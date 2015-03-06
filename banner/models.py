@@ -16,7 +16,7 @@ class BannerTitle(models.Model):
 
     title = models.CharField(max_length=40,
                              verbose_name=u'Название')
-    image = models.ImageField(upload_to='img_banners/',
+    image = models.ImageField(upload_to='BannerTitle/',
                               verbose_name=u'Изображение',
                               blank=True,
                               null=True)

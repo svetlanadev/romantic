@@ -50,8 +50,8 @@
 		
 		</div>
 		</div>
-		<!-- {{ blog_post.text|safe|truncatewords:110 }} -->
-		{% editable blog_post.text %}{{ blog_post.text|safe }}{% endeditable %}
+		<!-- {{ blog_post.text|safe|truncatewords:40 }} -->
+		{{ blog_post.text|safe }}
 
 		{% if blog_post.files == True %}
 		<strong>Файлы:</strong>

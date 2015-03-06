@@ -10,17 +10,29 @@ from django.conf import settings
 class CustomUser(models.Model):
     user = models.OneToOneField("auth.User")
     date_of_birth = models.DateField(blank=True, null=True)
-    # position = models.ForeignKey('TypeUser',  verbose_name=u'Категория')
+    about = models.TextField(verbose_name=u'Про себя', blank=True, null=True)
+    status = models.CharField(max_length=50, verbose_name=u'Статус', blank=True, null=True)
     karma = models.SmallIntegerField(default=settings.DEFAULT_KARMA,
-                                     verbose_name=u'Статус')
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
-    # connection = models.ManyToManyField('ConnectionUser', verbose_name=u'Связь')
+                                     verbose_name=u'Карма')
 
-    phone = models.CharField(max_length=30, verbose_name=u'Номер', blank=True, null=True)
-    vk = models.CharField(max_length=90, verbose_name=u'VK', blank=True, null=True)
-    facebook = models.CharField(max_length=90, verbose_name=u'Facebook', blank=True, null=True)
-    od_class = models.CharField(max_length=90, verbose_name=u'Одноклассники', blank=True, null=True)
-    #karma_url = models
+    avatar = models.ImageField(upload_to='avatars/', 
+                               blank=True, null=True,
+                               default="avatars/no_avatar.png",
+                               verbose_name=u'Аватар')
+
+    phone = models.CharField(max_length=30, 
+                             verbose_name=u'Номер', 
+                             blank=True, null=True)
+
+    vk = models.CharField(max_length=90, 
+                          verbose_name=u'VK', 
+                          blank=True, null=True)
+    facebook = models.CharField(max_length=90, 
+                                verbose_name=u'Facebook', 
+                                blank=True, null=True)
+    od_class = models.CharField(max_length=90, 
+                                verbose_name=u'Одноклассники', 
+                                blank=True, null=True)
 
     avatar_150 = ImageSpecField(source='avatar',
                                 processors=[ResizeToFill(150, 150)],
@@ -32,6 +44,12 @@ class CustomUser(models.Model):
                                 format='PNG',
                                 options={'quality': 80})
 
+    writer = models.BooleanField(default=False, verbose_name=u'Писатель') 
+    valid_member = models.BooleanField(default=False, verbose_name=u'Действильный член') 
+    moderator = models.BooleanField(default=False, verbose_name=u'Модератор') 
+    goverment = models.BooleanField(default=False, verbose_name=u'Правление')
+    instructor = models.BooleanField(default=False, verbose_name=u'Инструктор')
+
     objects = UserManager()
 
     def get_absolute_url(self):
@@ -42,31 +60,3 @@ class CustomUser(models.Model):
 
     def __unicode__(self):
         return self.user.username
-
-
-# class TypeUser(models.Model):
-#     type_user = models.CharField(max_length=50)
-#     type_goverment = models.CharField(max_length=50, blank=True, null=True)
-
-#     class Meta:
-#         verbose_name = 'Категория'
-#         verbose_name_plural = 'Категории'
-
-#     def __unicode__(self):
-#         return self.type_user
-
-
-# class ConnectionUser(models.Model):
-#     name = models.ForeignKey('ConnectionType', verbose_name=u'Тип связи')
-#     number = models.CharField(max_length=30, verbose_name=u'Номер/Аккаунт')
-
-#     def __unicode__(self):
-#         return u'%s - %s' % (self.name,
-#                              self.number,)
-
-
-# class ConnectionType(models.Model):
-#     name = models.CharField(max_length=30)
-
-#     def __unicode__(self):
-#         return self.name

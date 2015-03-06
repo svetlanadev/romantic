@@ -17,13 +17,17 @@ class Party(models.Model):
     )
 
     name = models.CharField(max_length=50, verbose_name=u'Мероприятие')
+
     date_creation = models.DateTimeField(auto_now_add=True)
-    date_start = models.DateField(verbose_name=u'Начало мероприятия')
-    data_finish = models.DateField(verbose_name=u'Конец мероприятия')
+    date_start = models.DateTimeField(verbose_name=u'Начало мероприятия')
+    data_finish = models.DateTimeField(verbose_name=u'Конец мероприятия')
+
     state = models.SmallIntegerField(default=DISABLE,
                                      choices=STATE_CHOICE,
                                      verbose_name=u'Статус')
+
     text = models.TextField(verbose_name=u'Страничка')
+    
     files = models.ManyToManyField(AttachedFiles, blank=True, null=True)
     category = models.ManyToManyField(Category,
                                       verbose_name=u'Категории',

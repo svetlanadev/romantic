@@ -49,7 +49,9 @@ class BlogPost(models.Model):
                               blank=True,
                               null=True)
 
-    default_image = models.ForeignKey('DefaultImageBlog', verbose_name=u'Изображение')
+    default_image = models.ForeignKey('DefaultImageBlog', 
+                                      verbose_name=u'Изображение', 
+                                      blank=True, null=True)
 
     if_comments = models.BooleanField(default=True)
 
