@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 
 {% block main %}
-{% load imagekit %}
 <h1 align="center"><strong>Список юзеров</strong></h1>
 {% for user in users %}
 	<div class="col-md-12">
 		<div class="col-md-3">
-			<img src="{{ MEDIA_URL }}{{ user.avatar_150 }}" class="img-circle" width="120px">
+			<img src="{{ MEDIA_URL }}{{ user.avatar }}" class="img-circle" width="120px">
 		</div>
 		<div class="col-md-8">
 		<br>

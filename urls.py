@@ -12,29 +12,11 @@ import debug_toolbar
 
 admin.autodiscover()
 
-# Add the urlpatterns for any custom Django applications here.
-# You can also change the ``home`` view to add your own functionality
-# to the project's homepage.
-
 urlpatterns = i18n_patterns("",
-    # Change the admin prefix here to use an alternate URL for the
-    # admin interface, which would be marginally more secure.
     ("^admin/", include(admin.site.urls)),
 )
 
 urlpatterns += patterns('',
-
-    # We don't want to presume how your homepage works, so here are a
-    # few patterns you can use to set it up.
-
-    # HOMEPAGE AS STATIC TEMPLATE
-    # ---------------------------
-    # This pattern simply loads the index.html template. It isn't
-    # commented out like the others, so it's the default. You only need
-    # one homepage pattern, so if you use a different one, comment this
-    # one out.
-
-    #url("^$", direct_to_template, {"template": "index.html"}, name="home"),
     url(r"^$", RedirectView.as_view(url='/blog/'), name='home'),
     url(r'^', include('hike.urls')),
     url(r'^', include('profile.urls')),
@@ -43,8 +25,10 @@ urlpatterns += patterns('',
     url(r'^', include('force_blog.urls')),
     url(r'^', include('power_comments.urls')),
     url(r'^', include('materials.urls')),
+    url(r'^', include('urls_custom')),
     url(r'^select2/', include('django_select2.urls')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
+    url(r'', include('social_auth.urls')),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

@@ -3,11 +3,12 @@
   <h3 align="center"><strong>Будущие события:</strong></h3>
 
   {% for party in partys %}
-    <div class="thumbnail">
+    <div class="">
+        <h3 align="center">{{ party.name }}</h3>
         <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
-            <div align="center" style="color:#FFF; font-size:40px; background:url(/static/img/bg-text.png) repeat;">
+            <!-- <div align="center" style="color:#FFF; font-size:30px; background:url(/static/img/bg-text.png) repeat;">
                 {{ party.name }}
-            </div>
+            </div> -->
         </div>
         <div class="caption">
             <div align="center">
@@ -20,6 +21,7 @@
         </div>
     </div>
 {% endfor %}
+</div>
 </div>
 
 {% include "page_navigation/party.html" %}

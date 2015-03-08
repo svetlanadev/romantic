@@ -18,7 +18,7 @@ class ProfileListView(ListView):
 class ProfileDetailView(DetailView):
     model = CustomUser
 
-    context_object_name = 'user'
+    context_object_name = 'profile'
 
 
 def government(request):

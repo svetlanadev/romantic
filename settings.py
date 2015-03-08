@@ -148,7 +148,16 @@ TEMPLATE_LOADERS = (
     "django.template.loaders.app_directories.Loader",
 )
 
-AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
+AUTHENTICATION_BACKENDS = (
+    "mezzanine.core.auth_backends.MezzanineBackend",
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.contrib.vk.VKOAuth2Backend',
+    'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -170,15 +179,15 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 DATABASES = {
     "default": {
         # Add "postgresql_psycopg2", "mysql", "sqlite3" or "oracle".
-        "ENGINE": "django.db.backends.",
+        "ENGINE": "django.db.backends.mysql",
         # DB name or path to database file if using sqlite3.
-        "NAME": "",
+        "NAME": "tkrodua_db",
         # Not used with sqlite3.
-        "USER": "",
+        "USER": "tkrodua_dlyapun",
         # Not used with sqlite3.
-        "PASSWORD": "",
+        "PASSWORD": "dimaleo93",
         # Set to empty string for localhost. Not used with sqlite3.
-        "HOST": "",
+        "HOST": "mysql.rx-name.ua",
         # Set to empty string for default. Not used with sqlite3.
         "PORT": "",
     }
@@ -190,6 +199,7 @@ DATABASES = {
 #########
 
 import os
+import random
 
 # Full filesystem path to the project.
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -278,6 +288,8 @@ INSTALLED_APPS = (
     'page_navigation',
     'debug_toolbar',
     'materials',
+    'social_auth',
+    'social_auth_widget',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -296,6 +308,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'banner.context_processor.contex_banner',
     'party.context_processor.contex_party',
     'django.core.context_processors.request',
+    'social_auth.context_processors.social_auth_by_name_backends',
+    'social_auth.context_processors.social_auth_backends',
+    'social_auth.context_processors.social_auth_by_type_backends',
+    'social_auth.context_processors.social_auth_login_redirect',
 )
 
 # List of middleware classes to use. Order is important; in the request phase,
@@ -403,11 +419,23 @@ else:
     set_dynamic_settings(globals())
 
 
-FACEBOOK_APP_ID = '721222201233223'
-FACEBOOK_API_SECRET = '8ee1434a4578ea543d319ba2a4005f22'
+FACEBOOK_APP_ID = '1602017563346275'
+FACEBOOK_API_SECRET = 'ebc2b04baf9d0421d766d31be62e8e2b'
+
+TWITTER_CONSUMER_KEY = 'RYeEUefjidJ8ptuN9RSVWxTn8'
+TWITTER_CONSUMER_SECRET = 'Z4yQGYDMtdALSZhPZAsXrPcirhOH6uXVQZTkdOb6rFfTeiB0zt'
+
+VK_APP_ID = '4816303'
+VKONTAKTE_APP_ID = VK_APP_ID
+VK_API_SECRET = '5HO4lXQiwRRfuoAFI4mh'
+VKONTAKTE_APP_SECRET = VK_API_SECRET
+
+GOOGLE_OAUTH2_CLIENT_ID = '776153762160-r2qq335ctj8mdnqvidgnoi691m241v3k.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = '22lDMovOA0-p8jcEdPQUF_mN'
 
 AUTH_PROFILE_MODULE = "profile.CustomUser"
 
+SOCIAL_AUTH_USER_MODEL = 'profile.CustomUser'
 
 INPLACEEDIT_DISABLE_CLICK = False
 THUMBNAIL_DEBUG = True
@@ -430,3 +458,35 @@ CONFIG_DEFAULTS = {
     'SHOW_COLLAPSED': False,
     'SHOW_TOOLBAR_CALLBACK': 'debug_toolbar.middleware.show_toolbar',
 }
+
+# Если имя не удалось получить, то можно его сгенерировать
+SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(['Darth_Vader', 'Obi-Wan_Kenobi', 'R2-D2', 'C-3PO', 'Yoda'])
+# Разрешаем создавать пользователей через social_auth
+SOCIAL_AUTH_CREATE_USERS = True
+
+# Перечислим pipeline, которые последовательно буду обрабатывать респонс 
+SOCIAL_AUTH_PIPELINE = (
+    # Получает по backend и uid инстансы social_user и user
+    'social_auth.backends.pipeline.social.social_auth_user',
+    # Получает по user.email инстанс пользователя и заменяет собой тот, который получили выше.
+    # Кстати, email выдает только Facebook и GitHub, а Vkontakte и Twitter не выдают
+    'social_auth.backends.pipeline.associate.associate_by_email',
+    # Пытается собрать правильный username, на основе уже имеющихся данных
+    'social_auth.backends.pipeline.user.get_username',
+    # Создает нового пользователя, если такого еще нет
+    'social_auth.backends.pipeline.user.create_user',
+    # Пытается связать аккаунты
+    'social_auth.backends.pipeline.social.associate_user',
+    # Получает и обновляет social_user.extra_data
+    'social_auth.backends.pipeline.social.load_extra_data',
+    # Обновляет инстанс user дополнительными данными с бекенда
+    'social_auth.backends.pipeline.user.update_user_details'
+)
+
+SOCIAL_AUTH_PROVIDERS = [
+    {'id': p[0], 'name': p[1], 'position': {'width': p[2][0], 'height': p[2][1], }}
+    for p in (
+        ('facebook', u'Login via Facebook', (0, 0)),
+        ('twitter', u'Login via Twitter', (0, -35)),
+    )
+]

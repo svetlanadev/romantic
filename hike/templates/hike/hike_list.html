@@ -1,14 +1,24 @@
 {% extends "base.html" %}
+{% load social_auth_widget %}
 
 {% block main %}
 
 <h1 align="center"><strong>Ближайшие походы:</strong></h1>
+<form action="" method="post">
+    <input name="username" />
+    <input name="password" />
+    <input type="submit" value="Sign in" />
+    {% social_auth_widget %}
+</form>
+
+<h1>sdsdsd</h1>
+<a href="{% url 'socialauth_begin' 'google' %}">Login with FB</a>
 <!-- Походы -->
 {% for hike in hikes %}
 <div>
 	<hr>
 	<div class="col-md-2">
-		<img src="{{ hike.user.avatar_150.url }}" width="80px">
+		<img src="{{ hike.user.avatar.url }}" width="80px">
 	</div>
 
 	<div class="col-md-6">

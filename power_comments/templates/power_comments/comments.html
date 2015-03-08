@@ -8,7 +8,7 @@
 					<table border="0"><tr>
 						<!-- <div class="col-md-2"> -->
 						<td>
-							<img src="{{ comment.owner.avatar_150.url }}" class="img-circle" width="60px">
+							<img src="{{ comment.owner.avatar.url }}" class="img-circle" width="60px">
 						<!-- </div> -->
 						</td>
 						<!-- <div class="col-md-10"> -->
@@ -58,20 +58,18 @@
 
 	<div class="col-md-8">
 		<!-- Елемент що активує процес -->
-		<a id="test_comment" href="javascript:">Натисни мене ніжно</a>
+		<!-- <a id="test_comment" href="javascript:">Натисни мене ніжно</a> -->
 
-		<!-- Елемент, текст якого буде змінено -->
-		<div id="target_comment">Я готовий до змін.</div>
+		<!-- <div id="target_comment">Я готовий до змін.</div>
 
 		<a href="#dialog" name="modal">Вызов модального окна</a>
 
-		<!-- Само окно -->
 		<div id="boxes">  
 			<div id="dialog" class="window"> Текст модального окна
 				<div class="top"><a href="#" class="link close"/>Закрыть</a></div>
 				<div class="content">Текст в модальном окне.</div>
 			</div>
-		</div>
+		</div> -->
 
 		{% if request.user.is_authenticated %}
 		    <form action="/new_power_comment/" method="post" role="form">{% csrf_token %}

@@ -8,7 +8,7 @@
 <div id="hike">
 	<div class="col-md-6 right">
 		<h3>Руководитель</h3>
-		<img src="{{ hike.user.avatar_150.url }}" width="50%" height="100%"><br>
+		<img src="{{ hike.user.avatar.url }}" width="50%" height="100%"><br>
 		ФИО - {{ hike.user.user.first_name }} {{ hike.user.user.last_name }}<br>
 		email - <a href="mailto:{{ hike.user.user.email }}">{{ hike.user.user.email }}</a><br>
 		{% if hike.user.phone %}

@@ -9,38 +9,11 @@
     <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
     <link rel="shortcut icon" href="{% static "img/favicon.png" %}" type="image/png">
 
-    {% ifinstalled mezzanine.blog %}
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
-    <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
-    {% endifinstalled %}
-
-    {% compress css %}
-    <link href="{{ STATIC_URL }}css/bootstrap2.css" rel="stylesheet">
-    <link href="/tkr.od.ua/public_html/static/css/bootstrap2.css" rel="stylesheet">
-    <link href="/{{ STATIC_URL }}css/bootstrap2.css" rel="stylesheet">
-    <link href="/css/bootstrap2.css" rel="stylesheet">
-    <link href="css/bootstrap2.css" rel="stylesheet">
-    <link href="{{ MEDIA_URL }}css/bootstrap2.css" rel="stylesheet">
-
+    <link href="{{ STATIC_URL }}css/bootstrap_rom.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
-        
-    <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
-    <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
-    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="{% static "css/mezzanine.min.css" %}">
     <link rel="stylesheet" href="{% static "css/flexslider.css" %}" type="text/css" media="screen">      
-    <link rel="stylesheet" href="{% static "css/parallax-slider.css" %}" type="text/css">
-    {% if LANGUAGE_BIDI %}
-    <link rel="stylesheet" href="{% static "css/rtl.css" %}">
-    {% endif %}
-    {% ifinstalled cartridge.shop %}
-    <link rel="stylesheet" href="{% static "css/cartridge.css" %}">
-    {% if LANGUAGE_BIDI %}
-    <link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
-    {% endif %}
-    {% endifinstalled %}
     {% block extra_css %}{% endblock %}
-    {% endcompress %}
-
     {% block extra_head %}{% endblock %}
     <style type="text/css">
         body{
@@ -48,197 +21,129 @@
         }
         #right_banner{ 
             position: absolute;
-            top: 5px;
-            right: 5px;
-            height:370px;
-        }
-        #right_banner_text{
-            font-size: 25px; 
-            position: absolute;
-            top: 40px;
-            left: 50px;
-            width: 40px;
-            height:50px;
-        }
-        .background_banner{
-            background-image: url({{ MEDIA_URL }}/{{ banner.image }});
-            background-size: cover;
-        }
-        .background_img_banner{
-            background-image: url(http://images.ua.prom.st/20330498_w0_h120_logotip.jpg);
+            top: 0px;
         }
     </style>
-
-    <script type="text/javascript">
-        $('.bxslider').bxSlider({
-          mode: 'fade',
-          captions: true,
-          auto: false,
-        });
-    </script>
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 
-<!-- <div class="bannerSection">
-    <div class="slider-inner background_banner">
-    <div id="da-slider" class="da-slider">
+<br><br><br>
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+<ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+  </ol>
+  <div class="carousel-inner">
     {% for banner in banner_title %}
-        <div class="da-slide">
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-            <h2>
-            <i>
-                {{ banner.title }}
-                <div align="center">
-                <button type="button" class="btn btn-info">{{ banner.button_name }}</button>
-                </div>
-            </i>
-            </h2>
-            <p>
-                <i>{{ banner.text }}</i> 
-            </p>
-        </div>
-        {% if banner.image %}
-            <div class="da-img"><img src="{{ MEDIA_URL }}/{{ banner.image }}" width="100px"></div>
+        {% if forloop.first %}
+            <div class="item active">
+                <img src="{{ MEDIA_URL }}{{ banner.image }}" width="100%">
+                <div class="carousel-caption"></div>
+            </div>
         {% else %}
-            <div class="da-img"></div>
+            <div class="item">
+                <img src="{{ MEDIA_URL }}{{ banner.image }}" width="100%">
+                <div class="carousel-caption"></div>
+            </div>
         {% endif %}
-        </div>
     {% endfor %}
-        <nav class="da-arrows">
-            <span class="da-arrows-prev"></span>
-            <span class="da-arrows-next"></span>        
-        </nav>
-    </div>
-    </div>
-</div> -->
-
-
-<!-- Баннер -->
-<div id="right_banner">
-    <img src="{{ MEDIA_URL }}img/folder.png" alt="картинка" width="150" />
-    <img src="{{ STATIC_URL }}img/folder.png" alt="картинка" width="150" />
-</div>
-
-<div class="navbar navbar-default" role="navigation">
-    <div class="container">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">{% trans "Toggle Navigation" %}</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-        {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
-    </div>
-    <div class="navbar-collapse collapse">
-    <form action="/search/" class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-            <input class="form-control" placeholder="Search" type="text" name="q" value="">
-        </div>  
-        <div class="form-group">
-            <select class="form-control" name="type">
-                <option value="">Everything</option>        
-                <option value="blog.BlogPost">
-                    Blog posts
-                </option>        
-                <option value="pages.Page">
-                    Pages
-                </option>        
-            </select>
-        </div>
-        <input type="submit" class="btn btn-sm" value="Go">
-    </form>
-        {% page_menu "pages/menus/dropdown.html" %}
-    </div>
-    </div>
-</div>
-
-<div class="container">
-<div class="row">
-<div class="col-md-9 left">
-<div class="panel panel-default">
-  <div class="panel-body">
-    {% block main %}{% endblock %}
   </div>
-</div>
+
+  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
 </div>
 
-<!-- FEED/RSS -->
-<div class="col-md-3 right">
-    {% load page_navigation %}
-    {% page_navigation request %}
-    {% nevercache %}
-{% include "includes/user_panel.html" %}
-{% endnevercache %}
-</div>
-
-</div>
+<div id="right_banner">
+    <img src="{{ MEDIA_URL }}icons/banner.png" alt="картинка" width="100%" />
 </div>
 
 
-<!-- ===================================== -->
-<footer>
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+        <p class="navbar-text" style="opacity: 0;">Signed in as Mark Otto</p>
+      <li><a href="/blog/"><strong>Новости</strong></a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>О клубе</strong> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="/about/">О нас</a></li>
+          <li><a href="/history/">История клуба</a></li>
+          <li><a href="/goverment/">Руководство</a></li>
+          <li><a href="/rules/">Устав</a></li>
+        </ul>
+      </li>
+      <li><a href="/party/"><strong>Мероприятия</strong></a></li>
+      <li><a href="/hikes/"><strong>Походы</strong></a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>Библиотека</strong> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="/passport/">Паспорта препятствий</a></li>
+          <li><a href="/report/">Отчеты походов</a></li>
+          <li class="divider"></li>
+          <li><a href="/art/">Творчество</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">Link</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Библиотека <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </li>
+      <p class="navbar-text" style="opacity: 0;">Signed in as Mark Otto</p>
+    </ul> -->
+  </div><!-- /.navbar-collapse -->
+</nav>
+
 <div class="container">
-<!-- FEED/RSS -->
+    <div class="row">
+        <div class="col-md-9 left">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                {% block main %}{% endblock %}
+              </div>
+            </div>
+        </div>
+        <div class="col-md-3 right">
+            {% load page_navigation %}
+            {% page_navigation request %}
+        </div>
+    </div>
+</div>
 
-<div class="row">
-<p class="site-info text-center">
-    {% trans "Powered by" %}
-    <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %},
-    <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %}
-    {% trans "and" %}
-    <a href="http://www.djangoproject.com">Django</a>
-    <span class="separator">|</span>
-    {% trans "Theme by" %} <a target="_blank" href="http://getbootstrap.com">Bootstrap</a>
-    <span class="separator">|</span>
-    by Dmitry Lyapun, <a href="mailto:dlyapun@gmail.com">dlyapun@gmail.com</a>
-    {% ifinstalled mezzanine.mobile %}
-    <span class="separator">|</span>
-    <a href="{% url "set_device" "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a>
-    {% endifinstalled %}
-</p>
-</div>
-</div>
+<footer>
+    <div class="container">
+        <div class="row">
+        <p class="site-info text-center">
+            Powered by
+            <a href="http://mezzanine.jupo.org">Mezzanine</a>
+            and
+            <a href="http://www.djangoproject.com">Django</a>
+            <span class="separator">|</span>
+            Theme by <a target="_blank" href="http://getbootstrap.com">Bootstrap</a>
+            <span class="separator">|</span>
+            by Dmitry Lyapun, <a href="mailto:dlyapun@gmail.com">dlyapun@gmail.com</a>
+        </p>
+        </div>
+    </div>
 </footer>
 
-
-{% compress js %}
 <script type="text/javascript" src="{% static "js/jquery-1.8.2.min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/modernizr.custom.js" %}"></script>   
-<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
-<script src="{% static "js/bootstrap.js" %}"></script>
-<script src="{% static "js/bootstrap-extras.js" %}"></script>
-<!-- JS Global Compulsory -->           
-  
-    
-    <!-- JS Implementing Plugins -->           
-<script type="text/javascript" src="{% static "js/jquery.flexslider-min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/modernizr.js" %}"></script>
-<script type="text/javascript" src="{% static "js/jquery.cslider.js" %}"></script> 
-<script type="text/javascript" src="{% static "js/back-to-top.js" %}"></script>
-<script type="text/javascript" src="{% static "js/jquery.sticky.js" %}"></script>
-
-<!-- JS Page Level -->           
-<script type="text/javascript" src="{% static "js/app.js" %}"></script>
-<script type="text/javascript" src="{% static "js/index.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/ajax_romantic.js" %}"></script>
 
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-        App.init();
-        App.initSliders();
-        Index.initParallaxSlider();
-    });
-</script>
 {% block extra_js %}{% endblock %}
-{% include "includes/footer_scripts.html" %}
-{% endcompress %}
-<!--[if lt IE 9]>
-<script src="{% static "js/html5shiv.js" %}"></script>
-<script src="{% static "js/respond.min.js" %}"></script>
-<![endif]-->
-<!-- <div id="topcontrol" title="Scroll Back to Top" style="position: fixed; bottom: 5px; right: 5px; opacity: 1; cursor: pointer;"><img src="/static/img/сборы.jpg" style="width:51px; height:42px"></div> -->
 </body>
 </html>
