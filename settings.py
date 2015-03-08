@@ -290,6 +290,7 @@ INSTALLED_APPS = (
     'materials',
     'social_auth',
     'social_auth_widget',
+    'registration',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -483,10 +484,5 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.user.update_user_details'
 )
 
-SOCIAL_AUTH_PROVIDERS = [
-    {'id': p[0], 'name': p[1], 'position': {'width': p[2][0], 'height': p[2][1], }}
-    for p in (
-        ('facebook', u'Login via Facebook', (0, 0)),
-        ('twitter', u'Login via Twitter', (0, -35)),
-    )
-]
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
+REGISTRATION_AUTO_LOGIN = True #
