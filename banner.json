@@ -1,0 +1,20 @@
+[
+{
+  "pk": 1, 
+  "model": "party.party", 
+  "fields": {
+    "files": [], 
+    "category": [
+      2
+    ], 
+    "name": "\u041e\u0442\u043c\u0435\u0447\u0430\u043d\u0438\u0435", 
+    "text": "\u0421\u043a\u043e\u0440\u043e \u0441\u043e\u0441\u0442\u043e\u0438\u0442\u0441\u044f \u043e\u0442\u043c\u0435\u0447\u0430\u043d\u0438\u0435 \u0441\u0435\u0437\u043e\u043d\u0430. \u041f\u0440\u0438\u0433\u043b\u0430\u0448\u0430\u044e\u0442\u0441\u044f \u0432\u0441\u0435!&nbsp;", 
+    "image": "partys/H7_U1yflhEU.jpg", 
+    "date_start": "2015-03-07T13:18:20Z", 
+    "data_finish": "2015-03-07T13:18:19Z", 
+    "state": 1, 
+    "date_creation": "2015-03-07T13:18:56.616Z", 
+    "if_comments": true
+  }
+}
+]

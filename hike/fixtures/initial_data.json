@@ -1,0 +1,37 @@
+[
+{
+  "pk": 1, 
+  "model": "hike.typehike", 
+  "fields": {
+    "type_hike": "\u0413\u043e\u0440\u043d\u044b\u0439 \u043f\u043e\u0445\u043e\u0434"
+  }
+},
+{
+  "pk": 1, 
+  "model": "hike.region", 
+  "fields": {
+    "region": "\u041a\u0440\u044b\u043c"
+  }
+},
+{
+  "pk": 2, 
+  "model": "hike.region", 
+  "fields": {
+    "region": "\u041a\u0430\u0432\u043a\u0430\u0437"
+  }
+},
+{
+  "pk": 1, 
+  "model": "hike.difficulty", 
+  "fields": {
+    "difficulty": "1 \u043a.\u0441."
+  }
+},
+{
+  "pk": 2, 
+  "model": "hike.difficulty", 
+  "fields": {
+    "difficulty": "2 \u043a.\u0441."
+  }
+}
+]

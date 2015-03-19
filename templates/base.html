@@ -9,7 +9,7 @@
     <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
     <link rel="shortcut icon" href="{% static "img/favicon.png" %}" type="image/png">
 
-    <link href="{{ STATIC_URL }}css/bootstrap_rom.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static "css/mezzanine.min.css" %}">
     <link rel="stylesheet" href="{% static "css/flexslider.css" %}" type="text/css" media="screen">      
@@ -26,7 +26,7 @@
     </style>
 </head>
 <body id="{% block body_id %}body{% endblock %}">
-
+<!-- 
 <br><br><br>
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 <ol class="carousel-indicators">
@@ -59,7 +59,7 @@
 
 <div id="right_banner">
     <img src="{{ MEDIA_URL }}icons/banner.png" alt="картинка" width="100%" />
-</div>
+</div> -->
 
 
 <nav class="navbar navbar-default" role="navigation">

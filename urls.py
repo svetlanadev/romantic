@@ -29,6 +29,7 @@ urlpatterns += patterns('',
     url(r'^select2/', include('django_select2.urls')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
     url(r'', include('social_auth.urls')),
+    url(r'^', include('registration.backends.default.urls')),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

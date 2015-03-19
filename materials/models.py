@@ -93,8 +93,22 @@ class AttachedFiles(models.Model):
 
 
 class Dirs(models.Model):
-    dir_name = models.CharField(max_length=30)
+    DISABLE = 0
+    HIKE = 1
+    ART = 2
+    PASSPORT = 3
 
+    STATE_CHOICE = (
+        (DISABLE, 'Disable'),
+        (HIKE, 'Отчет'),
+        (ART, 'Творчество'),
+        (PASSPORT, 'Паспорт'),
+    )
+
+    dir_name = models.CharField(max_length=30)
+    state = models.SmallIntegerField(default=HIKE,
+                                     choices=STATE_CHOICE,
+                                     verbose_name=u'Статус')
     materials = models.ManyToManyField('Material',
                                        blank=True, null=True,
                                        verbose_name=u'Материалы',

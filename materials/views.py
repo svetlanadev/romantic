@@ -12,8 +12,28 @@ from hike.models import TypeHike, Region, Difficulty
 from profile.models import CustomUser
 
 
-def material_list(request):
+def material_report(request):
     type_material = 1 # HIKE
+    materials = Material.objects.all().filter(state=type_material)
+    dirs = Dirs.objects.all()
+    data = {'materials': materials, 'dirs': dirs,}
+    return render_to_response('materials/material_list.html',
+                              data,
+                              context_instance=RequestContext(request))
+
+
+def material_passport(request):
+    type_material = 3 # HIKE
+    materials = Material.objects.all().filter(state=type_material)
+    dirs = Dirs.objects.all()
+    data = {'materials': materials, 'dirs': dirs,}
+    return render_to_response('materials/material_list.html',
+                              data,
+                              context_instance=RequestContext(request))
+
+
+def material_art(request):
+    type_material = 2 # HIKE
     materials = Material.objects.all().filter(state=type_material)
     dirs = Dirs.objects.all()
     data = {'materials': materials, 'dirs': dirs,}

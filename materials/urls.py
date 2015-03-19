@@ -4,10 +4,9 @@ from django.conf.urls import patterns, url, include
 
 
 urlpatterns = patterns('materials.views',
-    url(r'^materials/$', 'material_list'),
-    # url(r'^report/$', 'material_report'),
-    # url(r'^passport/$', 'material_passport'),
-    # url(r'^art/$', 'material_art'),
+    url(r'^report/$', 'material_report'),
+    url(r'^passport/$', 'material_passport'),
+    url(r'^art/$', 'material_art'),
     url(r'^material_new/$', 'material_new'),
     url(r'^materials/(?P<material_id>\w+)/$', 'material_detail'),
     url(r'^materials/dirs/(?P<dir_id>\w+)/$', 'material_folder'),
