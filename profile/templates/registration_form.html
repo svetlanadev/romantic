@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Регистрация{% endblock %}
+
+{% block main %}
+{% csrf_token %}
+<!-- {% if user.is_authenticated %}
+Что такое, {{ user.username }}? Вы же уже зарегистрированы!. 
+Впрочем, всегда можно <a href="#">выйти</a>.<br/><br/>
+{% else %}
+<form method="post" action="">
+<dl class="register">
+{% for field in form %}
+    <dt>{{ field.label_tag }}</dt>
+    <dd class="clearfix">{{ field }}
+    {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+    {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+    </dd>
+{% endfor %}
+</dl>
+<input type="submit" value="Зарегистрироваться" / class="clearfix">
+</form>
+{% endif %} -->
+<div class="col-md-12">
+    <div class="main">
+        <h4>Регистрация</h4>
+        <!-- <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <a href="#" class="btn btn-lg btn-primary btn-block">Facebook</a>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
+            </div>
+        </div> -->
+        <div class="login-or">
+            <hr class="hr-or">
+            <span class="span-or"></span>
+        </div>
+        <form method="post" action="" role="form">
+            {{ form.non_field_errors }}
+              {{ form.username.errors }}
+              <label for="id_username">Логин</label>
+              <!-- <input id="id_username" maxlength="30" name="username" type="text" class="form-control"> -->
+              {{ form.username }}<br>
+              {{ form.password1.errors }}
+              <label for="id_password1">Пароль</label>
+              <!-- <input id="id_password1" name="password1" type="password" class="form-control"> -->
+              {{ form.password1 }}<br>
+              {{ form.password2.errors }}
+              <label for="id_password2">Повторите пароль</label>
+              <!-- <input id="id_password2" name="password2" type="password" class="form-control"> -->
+              {{ form.password2 }}<br>
+              {{ form.email.errors }}
+              
+              <label for="email">Email</label>
+              <!-- <input id="id_email" name="email" type="email"  class="form-control"> -->
+              <!-- <input type="email" id="inputEmail" class="form-control" placeholder="example@mail.com"> -->
+              {{ form.email }}
+              <br>
+            <div class="row">
+                <div class="col-xs-6 col-md-6">
+                    {{ form.first_name.errors }}
+                    <label for="id_first_name">Имя</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="col-xs-6 col-md-6">
+                    {{ form.last_name.errors }}
+                    <label for="id_last_name">Фамилия</label>
+                    {{ form.last_name }}
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Зарегестрироваться</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+<form method="post" action="">
+<dl class="register">
+
+    <dt><label for="id_username">Имя пользователя:</label></dt>
+    <dd class="clearfix"><input id="id_username" maxlength="30" name="username" type="text">
+    <div class="clearfix">Обязательное поле. Не более 30 символов. Только буквы, цифры и символы @/./+/-/_.</div>
+    
+    </dd>
+
+    <dt><label for="id_email">Email:</label></dt>
+    <dd class="clearfix"><input id="id_email" name="email" type="email">
+    
+    
+    </dd>
+
+    <dt><label for="id_password1">Пароль:</label></dt>
+    <dd class="clearfix"><input id="id_password1" name="password1" type="password">
+    
+    
+    </dd>
+
+    <dt><label for="id_password2">Подтверждение пароля:</label></dt>
+    <dd class="clearfix"><input id="id_password2" name="password2" type="password">
+    <div class="clearfix">Введите тот же пароль, что и выше, для подтверждения.</div>
+    
+    </dd>
+
+    <dt><label for="id_first_name">First name:</label></dt>
+    <dd class="clearfix"><input id="id_first_name" maxlength="30" name="first_name" type="text">
+    
+    
+    </dd>
+
+    <dt><label for="id_last_name">Last name:</label></dt>
+    <dd class="clearfix"><input id="id_last_name" maxlength="30" name="last_name" type="text">
+    
+    
+    </dd>
+
+</dl>
+<input type="submit" value="Зарегистрироваться" class="clearfix">
+</form>

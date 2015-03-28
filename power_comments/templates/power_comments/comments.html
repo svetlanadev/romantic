@@ -3,48 +3,52 @@
 	<p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
 	{% for comment in comments %}
 		<div class="col-md-8">
-			<!-- <div class="panel panel-default">
-				<div class="panel-body"> -->
-					<table border="0"><tr>
-						<!-- <div class="col-md-2"> -->
-						<td>
-							<img src="{{ comment.owner.avatar.url }}" class="img-circle" width="60px">
-						<!-- </div> -->
-						</td>
-						<!-- <div class="col-md-10"> -->
-						<td>
-						<div class="row"></div>
-							<div class="col-md-7">
-						  		<p class="text-muted" style="font-size:12px">{{ comment.owner.get_full_name }},  {{ comment.date_creation }}</p>
-						  	</div>
-						  	<div class="col-md-5" id="comment_karma">
-							  	<div class="col-md-4">
-							  		<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
-							  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-							  		<button class="btn btn-link"><span class="glyphicon glyphicon-thumbs-down"></span></button>
-								  	</form>
-								</div>
-								<div class="col-md-3 comment_rating-{{ comment.id }}">
-									<span class="badge">{{ comment.rating }}</span>
-								</div>
-								<div class="col-md-2">
-							  		<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
-							  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-							  		<button class="btn btn-link"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-							  	</form>
-								</div>
-						  	</div>
-						  	<div class="col-md-12">
-							<p align="justify">{{ comment.text }}</p>
-							</div>
-						<!-- </div> -->
-						</td>
-					</tr></table>		
-				<!-- </div> -->
-			<!-- </div> -->
+			<table border="0"><tr>
+				<td>
+					<img src="{{ comment.owner.avatar.url }}" class="img-circle" width="80px">
+				</td>
+				<td>
+				<div class="row"></div>
+					<div class="col-md-12">
+				  		<strong>{{ comment.owner.get_full_name }}</strong> - {{ comment.date_creation }} - Рейтинг - {{ comment.rating }}
+				  	</div>
+				  	<!-- <div class="col-md-5" id="comment_karma">
+					  	<div class="col-md-4">
+					  		<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
+					  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+					  		<button class="btn btn-link"><span class="glyphicon glyphicon-minus"></span></button>
+						  	</form>
+						</div>
+						<div class="col-md-3 comment_rating-{{ comment.id }}">
+							<span class="badge">{{ comment.rating }}</span>
+						</div>
+						<div class="col-md-2">
+					  		<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
+					  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+					  		<button class="btn btn-link"><span class="glyphicon glyphicon-plus"></span></button>
+					  	</form>
+						</div>
+				  	</div> -->
+				  	<div class="col-md-12">
+					<p align="justify">{{ comment.text }}</p>
+						<div class="col-md-1">
+						  	<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
+						  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+						  		<button class="btn btn-link"><span class="glyphicon glyphicon-plus"></span></button>
+						  	</form>
+						</div>
+						<div class="col-md-1">
+							<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
+						  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+						  		<button class="btn btn-link"><span class="glyphicon glyphicon-minus"></span></button>
+						  	</form>
+						</div>
+					</div>
+				</td>
+			</tr></table>		
 			<hr>
 		</div>
-		{% if request.user.is_superuser %}
+<!-- 		{% if request.user.is_superuser %}
 			<div class="col-md-4">
 			<form action="/disable_power_comments/" method="post" role="form">{% csrf_token %}
 				<input type="hidden" name="id_comment" value="{{ comment.id }}" />
@@ -53,7 +57,7 @@
 				<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span> Admin</a>
 			</form>
 			</div>
-		{% endif %}
+		{% endif %} -->
 	{% endfor %}
 
 	<div class="col-md-8">
@@ -83,8 +87,7 @@
 				</div>
 		    </form> 
 		{% else %}
-		    <p>Чтобы публиковать комментарии, <a href="#"> зарегистрируйтесь</a> или <a href="#">войдите.</a></p>
+		    <p>Чтобы публиковать комментарии, <a href="/register/"> зарегистрируйтесь</a> или <a href="/login/">войдите.</a></p>
 		{% endif %}
 	</div>
-
 </div>

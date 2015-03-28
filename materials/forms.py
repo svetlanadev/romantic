@@ -9,10 +9,10 @@ from materials.models import Material
 
 
 class MaterialForm(ModelForm):
-    text = forms.CharField(widget=SummernoteWidget())
-    new_dirs = forms.CharField(min_length=5,
-                           	   max_length=50,
-                               error_messages={'required': 'Миннимум 10 символов'})
+    text = forms.CharField(widget=SummernoteInplaceWidget())
+    # new_dirs = forms.CharField(min_length=5,
+    #                        	   max_length=50,
+    #                            error_messages={'required': 'Миннимум 10 символов'})
 
     class Meta:
         model = Material

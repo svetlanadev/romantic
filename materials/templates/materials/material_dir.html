@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load mezzanine_tags %}
 
+{% block meta_title %}{{ one_dir.dir_name }}{% endblock %}
+
 {% block main %}
 {% load imagekit %}
 {% load urltag %}

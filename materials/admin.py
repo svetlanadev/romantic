@@ -13,6 +13,7 @@ class MaterialAdmin(SummernoteModelAdmin):
 
 
 class DirsAdmin(admin.ModelAdmin):
+	list_display = ('dir_name', 'state')
 	filter_horizontal = ('materials',)
 
 admin.site.register(Material, MaterialAdmin)

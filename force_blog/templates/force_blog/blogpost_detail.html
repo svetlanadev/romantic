@@ -1,110 +1,87 @@
 {% extends "base.html" %}
 
+{% block meta_title %}{{ blogpost.title }}{% endblock %}
+
 {% block main %}
 {% load urltag %}
 {% load comments_tags %}
 
-<!-- Modal -->
-<!-- LIne 5497  @media (min-width: 768px)-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    <form action="/blog_edit/" method="post" role="form">{% csrf_token %}
+<style type="text/css">
+	.post-header-line { border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
+</style>
 
-      <div class="modal-body">
-      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
-      	<input type="hidden" name="id_blog" value="{{ blogpost.id }}" />
-        
-        <input id="id_title" maxlength="50" class="form-control" placeholder="Название поста" name="title" type="text" value="{{ blogpost.title }}"></p>
-        
-        <textarea cols="40" hidden="true" id="id_text" name="text" rows="10" class="input-xlarge" style="display: none;">{{ blogpost.text|safe }}</textarea>
-        <input type="hidden" name="id_rating" value="{{ blogpost.rating }}" />
-        <label for="id_state">State:</label> <select id="id_state" name="state">
-		<option value="0">Скрыть статью</option>
-		<option value="1" selected="selected">Отображать статью</option>
-		</select></p>
-		<p><label for="id_category">Категории:</label> <select multiple="multiple" id="id_category" name="category">
-		<option value="1" selected="selected">поход</option>
-		<option value="2">мероприятия</option>
-		<option value="3">правление</option>
-		</select> 
-
-		<select id="id_if_comments" name="if_comments">
-		<option value="False">Отключить комментарии</option>
-		<option value="True" selected="selected">Включить комментарии</option>
-		</select>
-
-        <iframe id="id_text-iframe" src="/summernote/editor/id_text/" frameborder="0" cols="40" rows="10" width="100%" height="500"></iframe>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn">Save changes</button>
-      </div>
-
-    </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+<div class="col-md-9 left">
+<div class="panel panel-default">
+<div class="panel-body">
 <!-- Блог -->
 <div id="blogpost">
 
 	<!-- Заголовок -->
 	<div class="row" align="">
 		<div class="col-md-1"></div>
-		<div class="col-md-7">
-			<p style="font-size:26px" id="blog_title">
-			<strong>{{ blogpost.title }}</strong>
+		<div class="col-md-10" align="center">
+			<p style="font-size:24px; color: #E22424">
+				<strong>{{ blogpost.title }}</strong>
 			</p>
-			<p class="text-muted" style="line-height: 1" >
-			Опубликовано: {{ blogpost.date_publication|date:"d.m.Y, G:i" }}</p> 
-		</div>
-		<div class="col-md-4"><small>
-		Автор: <a href="{{ blogpost.owner.get_absolute_url }}"><span class="glyphicon glyphicon-user"></span> {{ blogpost.owner.get_full_name }}</a><br>
-		
-		{% if user.is_authenticated %}
-		<form action="/karma_force_blog/" method="post" role="form">{% csrf_token %}
-			Рейтинг:
-	  		<input type="hidden" name="id_blogpost" value="{{ blogpost.id }}" />
-	  		<button type="submit" name="karma" value="minus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-down"></span></button>
-	  		<span class="badge">{{ blogpost.rating }}</span>
-	  		<button type="submit" name="karma" value="plus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-	  	</form>
-		{% else %}
-		    Рейтинг: <span class="badge"> {{ blogpost.rating }}</span>
-		{% endif %}
-		
 		</div>
 	</div>
 	<div class="body">
-    {{ blogpost.text|safe }}
-    <br>
-    {% if user.is_superuser %} <!-- Админка -->
-		<form method="post" action="/hidden_blog/" class="form-inline">{% csrf_token %}
-			<button type="button" class="btn btn-sm">
-				<a href="{% url_edit blogpost %}"><span class="glyphicon glyphicon-cog"></span> Admin</a>
-				<!-- Button trigger modal -->
-			</button>
-				<button class="btn btn-sm" data-toggle="modal" data-target="#myModal"><a href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a></button>
-				<input type="hidden" name="blog_id" value="{{ blogpost.id }}" />
-				<button type="submit" class="btn btn-sm"><span class="glyphicon glyphicon-remove"></span> Disable</button>
-		</form>
-	{% endif %}
-	<p>
-		<strong>Теги:</strong>
-		{% for category in blogpost.category.all %}
-			<a href="/blog/category/{{ category.id }}">{{ category.category }}</a>, 
-		{% endfor %}
-	</p>
-    <hr>
+	    {{ blogpost.text|safe }}
+	    <br>
+		<div class="row">
+	        <div class="col-md-12 post-header-line">
+	        	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blogpost.date_publication|date:"d.m.Y, G:i" }} 
+	            | <span class="glyphicon glyphicon-user"></span> Автор: <a href="{{ blogpost.owner.get_absolute_url }}">{{ blogpost.owner.get_full_name }}</a> 
+	            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blogpost.get_absolute_url }}/#href_power_comments">
+				Комментарии ({% count_power_comments blogpost.get_absolute_url %})</a>
+	            | <span class="glyphicon glyphicon-tags"></span> Теги : 
+            	{% for category in blogpost.category.all %}
+					<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>  
+				{% endfor %}
+					<!-- Admin panel -->
+				{% if profile.moderator %} 
+		        <div class="btn-group show-on-hover">
+		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+		            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
+		          </button>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
+		            <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
+		          </ul>
+		        </div>
+		        {% endif %}
+		        {% if user.is_superuser %} 
+		        	<div class="btn-group show-on-hover">
+		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+		            <span class="glyphicon glyphicon-tower"></span> Admin <span class="caret"></span>
+		          </button>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="{% url_edit blogpost %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
+		            <li><a href="#"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Понизить карму на 10</a></li>
+		            <li><a href="#"><span class="glyphicon glyphicon-ban-circle"></span> Забанить пользователя</a></li>
+		            <li class="divider"></li>
+		            <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Бан и скрытие всех постов</a></li>
+		          </ul>
+		        </div>
+		        {% endif %}
+	        </div>
+	    </div>
+	    <br>
 		{% if blogpost.if_comments %} <!-- Комментарии -->
 			{% power_comments request blogpost.get_absolute_url %}
 		{% else %}
 			Вы настолько много матерились, что мы решили отключить комментарии к этой статье.
 		{% endif %}
     </div>
+<!-- Блог -->
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-md-3 right">
+    {% load page_navigation %}
+    {% page_navigation request %}
 </div>
 
 {% endblock %}

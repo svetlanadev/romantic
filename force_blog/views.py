@@ -44,8 +44,7 @@ class BlogPostDetailView(DetailView):
 @login_required
 def blog_edit(request):
     user = CustomUser.objects.get(user=request.user)
-    id_blog = request.POST['id_blog']
-    blog = BlogPost.objects.get(id=id_blog)
+    blog = BlogPost.objects.get(id=request.POST['id_blog'])
 
     if request.method == "POST":
         form = BlogPostForm(request.POST, instance=blog)
@@ -58,9 +57,8 @@ def blog_edit(request):
             blog_save.state = 0
             blog_save.pk = None
             blog_save.save()
-            print "ALL OK"
             form.save()
-            url = u'/blog/%s' % id_blog
+            url = u'/blog/%s' % request.POST['id_blog']
             return redirect(url)
 
     form = BlogPostForm(instance=blog)
@@ -111,10 +109,10 @@ def karma_force_blog(request):
     return redirect(blogpost.get_absolute_url())
 
 
-def search_for_tag(request, category_id):
-    category = Category.objects.get(id=category_id)
-    blog_posts = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related('category', 'karma_users').filter(category=category)
-    data = {'blog_posts': blog_posts, 'paginate_by': 5}
-    return render_to_response('force_blog/blogpost_list.html',
-                              data,
-                              context_instance=RequestContext(request))   
+# def search_for_tag(request, category_id):
+#     category = Category.objects.get(id=category_id)
+#     blog_posts = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related('category', 'karma_users').filter(category=category)
+#     data = {'blog_posts': blog_posts, 'paginate_by': 5}
+#     return render_to_response('force_blog/blogpost_list.html',
+#                               data,
+#                               context_instance=RequestContext(request))   

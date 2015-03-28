@@ -14,29 +14,32 @@ from profile.models import CustomUser
 
 def material_report(request):
     type_material = 1 # HIKE
+    name_material = "Отчеты походов"
     materials = Material.objects.all().filter(state=type_material)
-    dirs = Dirs.objects.all()
-    data = {'materials': materials, 'dirs': dirs,}
+    dirs = Dirs.objects.all().filter(state=type_material)
+    data = {'materials': materials, 'dirs': dirs, 'name_material': name_material}
     return render_to_response('materials/material_list.html',
                               data,
                               context_instance=RequestContext(request))
 
 
 def material_passport(request):
-    type_material = 3 # HIKE
+    type_material = 3 # PASSPORT
+    name_material = "Паспорта препятствий"
     materials = Material.objects.all().filter(state=type_material)
-    dirs = Dirs.objects.all()
-    data = {'materials': materials, 'dirs': dirs,}
+    dirs = Dirs.objects.all().filter(state=type_material)
+    data = {'materials': materials, 'dirs': dirs, 'name_material': name_material}
     return render_to_response('materials/material_list.html',
                               data,
                               context_instance=RequestContext(request))
 
 
 def material_art(request):
-    type_material = 2 # HIKE
+    type_material = 2 # ART
+    name_material = "Творчество"
     materials = Material.objects.all().filter(state=type_material)
-    dirs = Dirs.objects.all()
-    data = {'materials': materials, 'dirs': dirs,}
+    dirs = Dirs.objects.all().filter(state=type_material)
+    data = {'materials': materials, 'dirs': dirs, 'name_material': name_material}
     return render_to_response('materials/material_list.html',
                               data,
                               context_instance=RequestContext(request))
@@ -61,7 +64,6 @@ def material_folder(request, dir_id):
 @login_required
 def material_new(request):
     owner = CustomUser.objects.get(user=request.user)
-    print owner
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
@@ -72,11 +74,12 @@ def material_new(request):
             material = form.save(owner=owner)
             material_last = Material.objects.first()
             print material_last.title
-            new_dir = text = form.cleaned_data['new_dirs']
-            dirs = Dirs(dir_name=new_dir)
-            dirs.materials.add(material_last)
-            dirs.save()
-            print dirs
+            # if form.cleaned_data['new_dirs'] != null:
+            #     new_dir = text = form.cleaned_data['new_dirs']
+            #     dirs = Dirs(dir_name=new_dir)
+            #     dirs.materials.add(material_last)
+            #     dirs.save()
+            #     print dirs
             
             url = u'/material/%s' % material_last.id
             return redirect(url)

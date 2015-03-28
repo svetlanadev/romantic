@@ -16,7 +16,10 @@ def page_navigation(request):
     if request.path == "/party/":
         url = template.loader.get_template("page_navigation/party.html")
     else:
-        url = template.loader.get_template("page_navigation/page.html")
+    	if request.path == "/login/":
+    		url = template.loader.get_template("page_navigation/null.html")
+    	else:
+        	url = template.loader.get_template("page_navigation/page.html")
 
     return url.render(Context({'partys': partys}))
 
