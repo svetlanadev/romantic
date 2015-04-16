@@ -61,8 +61,10 @@ def material_folder(request, dir_id):
                               context_instance=RequestContext(request))
 
 
-@login_required
+# @login_required
 def material_new(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
     owner = CustomUser.objects.get(user=request.user)
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()

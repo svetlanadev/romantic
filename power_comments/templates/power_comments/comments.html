@@ -9,8 +9,11 @@
 				</td>
 				<td>
 				<div class="row"></div>
-					<div class="col-md-12">
-				  		<strong>{{ comment.owner.get_full_name }}</strong> - {{ comment.date_creation }} - Рейтинг - {{ comment.rating }}
+					<div class="col-md-9">
+				  		<strong>{{ comment.owner.get_full_name }}</strong> - {{ comment.date_creation }}
+				  	</div>
+				  	<div class="col-md-3 right">
+				  		<span class="glyphicon glyphicon-star"></span> Рейтинг: <strong>{{ comment.rating }}</strong>
 				  	</div>
 				  	<!-- <div class="col-md-5" id="comment_karma">
 					  	<div class="col-md-4">
@@ -31,22 +34,25 @@
 				  	</div> -->
 				  	<div class="col-md-12">
 					<p align="justify">{{ comment.text }}</p>
-						<div class="col-md-1">
-						  	<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
-						  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-						  		<button class="btn btn-link"><span class="glyphicon glyphicon-plus"></span></button>
-						  	</form>
-						</div>
-						<div class="col-md-1">
-							<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
-						  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-						  		<button class="btn btn-link"><span class="glyphicon glyphicon-minus"></span></button>
-						  	</form>
-						</div>
 					</div>
 				</td>
 			</tr></table>		
 			<hr>
+		</div>
+		<div class="col-md-2"><br>
+			<div class="col-md-1">
+			  	<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
+			  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+			  		<button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+			  	</form>
+			</div>
+			<div class="col-md-3">
+				<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
+			  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+			  		<button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+			  	</form>
+			</div>
+
 		</div>
 <!-- 		{% if request.user.is_superuser %}
 			<div class="col-md-4">

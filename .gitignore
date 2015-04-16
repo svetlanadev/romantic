@@ -6,4 +6,6 @@ db.sqlite3
 .coverage
 local_settings.py
 /static
+/media
+romantic/static/*
 web-secret
