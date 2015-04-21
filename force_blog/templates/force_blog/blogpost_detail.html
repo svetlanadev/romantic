@@ -2,6 +2,12 @@
 
 {% block meta_title %}{{ blogpost.title }}{% endblock %}
 
+{% block navbar_block %}
+	{% if profile.moderator or profile.goverment or user.is_superuser %}
+		<li><a href="/admin/force_blog/blogpost/add/"><strong style="font-size:14px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить новость</strong></a></li>
+	{% endif %}
+{% endblock %} 
+
 {% block main %}
 {% load urltag %}
 {% load comments_tags %}
@@ -28,6 +34,10 @@
 	<div class="body">
 	    {{ blogpost.text|safe }}
 	    <br>
+			<!-- <strong>Файлы:</strong>
+			{% for file in blogpost.files.all %}
+					<a href="{{ STATIC_URL }}{{ file.one_file }}">{{ file.file_name }}</a>, 
+			{% endfor %} -->
 		<div class="row">
 	        <div class="col-md-12 post-header-line">
 	        	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blogpost.date_publication|date:"d.m.Y, G:i" }} 
@@ -39,14 +49,14 @@
 					<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>  
 				{% endfor %}
 					<!-- Admin panel -->
-				{% if profile.moderator %} 
+				{% if profile.moderator == True %} 
 		        <div class="btn-group show-on-hover">
 		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
 		            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
 		          </button>
 		          <ul class="dropdown-menu" role="menu">
 		            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
-		            <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
+		            <li><a href="/blog_edit/{{ blogpost.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
 		          </ul>
 		        </div>
 		        {% endif %}
@@ -57,7 +67,7 @@
 		          </button>
 		          <ul class="dropdown-menu" role="menu">
 		            <li><a href="{% url_edit blogpost %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
-		            <li><a href="#"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Понизить карму на 10</a></li>
+		            <li><a href="/minus_karma_admin/{{ blogpost.id }}"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Понизить карму на 10</a></li>
 		            <li><a href="#"><span class="glyphicon glyphicon-ban-circle"></span> Забанить пользователя</a></li>
 		            <li class="divider"></li>
 		            <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Бан и скрытие всех постов</a></li>

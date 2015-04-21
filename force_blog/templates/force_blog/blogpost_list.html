@@ -5,6 +5,12 @@
 <!-- Вот так выглядит этот блок в файле base.html - <title></title> -->
 {% block meta_title %}Новости{% endblock %} 
 
+{% block navbar_block %}
+	{% if profile.moderator or profile.goverment or user.is_superuser %}
+		<li><a href="/admin/force_blog/blogpost/add/"><strong style="font-size:14px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить новость</strong></a></li>
+	{% endif %}
+{% endblock %} 
+
 <!-- Открываем новый блок -->
 {% block main %}
 <!-- {% load imagekit %} -->
@@ -39,6 +45,13 @@
 	<!-- Вывод текста -->
 	{{ blog_post.text|safe }}
 	<br>
+	<!-- Проверяет или есть файлы. -->
+	<!-- {% if blog_post.files == True %}
+		<strong>Файлы:</strong>
+		{% for file in blog_post.files.all %}
+				<a href="{{ MEDIA_URL }}{{ file.one_file }}">{{ file.file_name }}</a>, 
+		{% endfor %}
+	{% endif %} -->
 	<div class="row">
         <div class="col-md-12 post-header-line">
         	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blog_post.date_publication|date:"d.m.Y, G:i" }} 
@@ -60,13 +73,7 @@
 		Рейтинг: <span class="badge">{{ blog_post.rating }}</span>
 	</p>  -->
 
-	<!-- Проверяет или есть файлы. -->
-	{% if blog_post.files == True %}
-		<strong>Файлы:</strong>
-		{% for file in blog_post.files.all %}
-				<a href="{{ MEDIA_URL }}{{ file.one_file }}">{{ file.file_name }}</a>, 
-		{% endfor %}
-	{% endif %}
+	
 
 	<!-- <strong>Теги:</strong>
 	{% for category in blog_post.category.all %}

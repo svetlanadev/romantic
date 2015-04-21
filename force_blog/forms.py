@@ -12,7 +12,7 @@ class BlogPostForm(ModelForm):
 
     class Meta:
         model = BlogPost
-        exclude = ['owner', 'date_publication', 'date_creation', 'rating', 'state']
+        exclude = ['owner', 'date_publication', 'image', 'default_image', 'date_creation', 'rating', 'state', 'blog_edit', 'karma_users', 'category', 'files',]
 
     # def save(self, *args, **kwargs):
     #     owner = kwargs.pop('owner')

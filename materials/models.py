@@ -10,12 +10,14 @@ class Material(models.Model):
     HIKE = 1
     ART = 2
     PASSPORT = 3
+    SANDBOX = 4
 
     STATE_CHOICE = (
         (DISABLE, 'Disable'),
         (HIKE, 'Отчет'),
         (ART, 'Творчество'),
         (PASSPORT, 'Паспорт'),
+        (SANDBOX, 'Песочница'),
     )
 
     title = models.CharField(max_length=50, verbose_name=u'Заголовок', default='Отчет о походе')

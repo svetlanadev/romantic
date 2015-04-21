@@ -45,6 +45,17 @@ def material_art(request):
                               context_instance=RequestContext(request))
 
 
+def sandbox(request):
+    type_material = 4 # Песочница
+    name_material = "Песочница"
+    materials = Material.objects.all().filter(state=type_material)
+    dirs = Dirs.objects.all().filter(state=type_material)
+    data = {'materials': materials, 'dirs': dirs, 'name_material': name_material}
+    return render_to_response('materials/material_list.html',
+                              data,
+                              context_instance=RequestContext(request))
+
+
 def material_detail(request, material_id):
     material = Material.objects.get(id=material_id)
     data = {'material': material, }
@@ -60,6 +71,9 @@ def material_folder(request, dir_id):
                               data,
                               context_instance=RequestContext(request))
 
+
+def sandbox_new(request):
+    pass
 
 # @login_required
 def material_new(request):
@@ -83,7 +97,7 @@ def material_new(request):
             #     dirs.save()
             #     print dirs
             
-            url = u'/material/%s' % material_last.id
+            url = u'/materials/%s' % material_last.id
             return redirect(url)
         else:
             data = {'form': form, 'type_hikes': type_hike, 'regions': region, 'difficultys': difficulty}

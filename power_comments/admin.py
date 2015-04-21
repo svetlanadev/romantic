@@ -6,7 +6,7 @@ from django.contrib import admin
 
 
 class PowerCommentAdmin(admin.ModelAdmin):
-    list_display = ('owner', 'app', 'text', 'rating', 'state')
+    list_display = ('owner', 'date_creation', 'app', 'rating', 'state', 'text')
     filter_horizontal = ('karma_users',)
 
 

@@ -83,7 +83,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.core.context_processors.tz",
-    # 'banner.context_processor.contex_banner',
+    'banner.context_processor.contex_banner',
     'party.context_processor.contex_party',
     'django.core.context_processors.request',
     # 'social_auth.context_processors.social_auth_by_name_backends',

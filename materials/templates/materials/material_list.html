@@ -1,7 +1,12 @@
 {% extends "base.html" %}
-{% load mezzanine_tags %}
 
 {% block meta_title %}{{ name_material }}{% endblock %}
+
+{% block navbar_block %}
+	{% if profile.writer or profile.moderator or profile.goverment or user.is_superuser %}
+		<li><a href="material_new"><strong style="font-size:14px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить Материал</strong></a></li>
+	{% endif %}
+{% endblock %} 
 
 {% block main %}
 {% load imagekit %}
@@ -9,12 +14,16 @@
 {% load bootstrap_pagination %}
 {% load comments_tags %}
 
+<div class="panel panel-default">
+<div class="panel-body">
 <div class="materials">
 	<div class="col-md-2">
 		<!-- <button type="button" class="btn btn-sm"><a href="/"><span class="glyphicon glyphicon-chevron-left"></span> Назад</a></button> -->
 	</div>
 	<div class="col-md-8" align="center">
-		<h1 align="center"><strong>{{ name_material }}</strong></h1><br>
+		<p style="font-size:24px;" align="center"><strong>{{ name_material }}</strong></p>
+		<br>
+		<!-- <h1 align="center"><strong>{{ name_material }}</strong></h1> -->
 	</div>
 	<div class="col-md-2"></div>
 
@@ -53,5 +62,7 @@
 		</div>
 		{% endfor %}
 	</div>	
+</div>
+</div>
 </div>
 {% endblock %}
