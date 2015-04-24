@@ -2,8 +2,8 @@
 <div>
 	<p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
 	
-	{% for comment in comments %}
-		<div class="col-md-8">
+	{% for comment in comments %}±
+		<div class="col-md-10">
 			<table border="0"><tr>
 				<td>
 					<img src="{{ comment.owner.avatar.url }}" class="img-circle" width="80px">
@@ -15,7 +15,7 @@
 				  		<strong><a href="{{ comment.owner.get_absolute_url }}">{{ comment.owner.get_full_name }}</a> </strong> - {{ comment.date_creation }}
 				  	</div>
 				  	<div class="col-md-3 right">
-				  		<a id="test_comment" href="javascript:"><span class="glyphicon glyphicon-pencil"></span></a>
+				  		<a id="edit_comment" href="javascript:"><span class="glyphicon glyphicon-pencil"></span></a>
 				  		<span class="glyphicon glyphicon-star"></span> Рейтинг: <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong>
 				  	</div>
 				  	
@@ -26,31 +26,27 @@
 			</tr></table>		
 			<hr>
 		</div>
-		<div class="col-md-2"><br>
+<!-- 		<div class="col-md-2"><br>
 			<div class="col-md-1">
 			  	<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
 			  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
 			  		<button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
 			  	</form>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
 			  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
 			  		<button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
 			  	</form>
+			  	{% if request.user.is_superuser %}
+			  	<form action="/disable_power_comments/" method="post" role="form">{% csrf_token %}
+					<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+					<button type="submit" name="disable" value="true" class="btn btn-link"><span class="glyphicon glyphicon-remove"></span></button>
+					<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span></a>
+				</form>
+				{% endif %}
 			</div>
-
-		</div>
-		{% if request.user.is_superuser %}
-			<div class="col-md-4">
-			<form action="/disable_power_comments/" method="post" role="form">{% csrf_token %}
-				<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-				<button type="submit" name="disable" value="true" class="btn btn-link"><span class="glyphicon glyphicon-remove"></span> Disable</button>
-				<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> Profile</button>
-				<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span> Admin</a>
-			</form>
-			</div>
-		{% endif %}
+		</div> -->
 	{% endfor %}
 	<div id="power_comments"></div>
 
