@@ -8,37 +8,34 @@
 {% load bootstrap_pagination %}
 {% load comments_tags %}
 
+<div class="panel panel-default">
+<div class="panel-body">
 <div class="materials">
-
-<div class="col-md-2">
-	<!-- <button type="button" class="btn btn-sm"><a href="/materials/"><span class="glyphicon glyphicon-chevron-left"></span> Назад</a></button> -->
+	<div class="col-md-2">
+		<!-- <button type="button" class="btn btn-sm"><a href="/"><span class="glyphicon glyphicon-chevron-left"></span> Назад</a></button> -->
+	</div>
+	
+	<div class="col-md-8" align="center">
+		<p style="font-size:24px;" align="center"><strong>{{ one_dir.dir_name }}</strong></p>
+		<br>
+		<!-- <h1 align="center"><strong>{{ name_material }}</strong></h1> -->
+	</div>
+	<div class="row" align="">
+		{% if one_dir.materials.all %}
+			{% for material in one_dir.materials.all %}
+			<div class="col-md-6">
+	            <h5><a href="{{ material.get_absolute_url }}">
+	                {{ material.title }}, 
+	            </a>rate: {{ material.rating }}, {{ material.type_hike.type_hike }}, {{ material.region }}</h5>
+	            <p>{{ material.status }}</p>
+	            <h2>
+			</div>
+			{% endfor %}
+		{% else %}
+		    Папка полностью пуста.
+		{% endif %}
+	</div>	
 </div>
-<div class="col-md-8" align="center">
-	<h1 align="center"><strong>{{ one_dir.dir_name }}</strong></h1><br>
-</div>
-<div class="col-md-2"></div>
-
-<div class="row" align="">
-	{% if one_dir.materials.all %}
-	    {% for material in one_dir.materials.all %}
-		<div class="col-sm-6 col-md-3" align="center">
-			<a href="{{ material.get_absolute_url }}">
-		    <div class="caption">
-		        <div align="center">
-		            <h4>{{ material.title }}</h4>
-		            <p>Рейтинг - {{ material.rating }}</p>
-		            <p>Тип - {{ material.type_hike.type_hike }}</p>
-		            <p>Район - {{ material.region }}</p>
-		            <p>Hike</p>
-		            <br><br>
-		        </div>
-		    </div>
-		    </a>
-		</div>
-		{% endfor %}
-	{% else %}
-	    Папка полностью пуста.
-	{% endif %}
 </div>
 </div>
 {% endblock %}

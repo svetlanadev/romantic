@@ -1,19 +1,14 @@
 {% extends "base.html" %}
 
-{% block meta_title %}Добавить запись{% endblock %}
+{% block meta_title %}Добавление нового поста{% endblock %}
 
 {% block main %}
-{% load imagekit %}
-{% load urltag %}
-{% load bootstrap_pagination %}
-{% load comments_tags %}
-
+<!-- Походы -->
 <div class="col-md-9 left">
 	<div class="panel panel-default">
 		<div class="panel-body">
-			<div class="materials">
-				<h1>Новый материал</h1>
-				<form action="/material_new/" method="post" role="form">
+			<div id="blogpost">
+				<form action="/blog_new/" method="post" role="form">
 				  {{ form.non_field_errors }}
 				  {{ form.as_p }}
 				  <button type="submit" class="btn btn-default">Сохранить изменения</button>
@@ -24,3 +19,5 @@
 	</div>
 </div>
 {% endblock %}
+
+{{ form.as_p }}

@@ -6,101 +6,21 @@
     <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
     <meta name="description" content="{% block meta_description %}{% endblock %}">
     <title>{% block meta_title %}{% endblock %} | Романтик</title>
-    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.png" type="image/png">
 
-    <link href="{{ STATIC_URL }}css/bootstrap_rom.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/style2.css" rel="stylesheet">
     {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
-    <style type="text/css">
-        body{
-            padding-top: 0px;
-        }
-        #right_banner{ 
-            position: absolute;
-            top: 0px;
-        }
-    </style>
-    <style type="text/css">
-    
-    body {
-    font-size: 12px;
-  }
-  .main {
-    max-width: 450px;
-    margin: 0 auto;
-  }
-  .login-or {
-    position: relative;
-    font-size: 18px;
-    color: #aaa;
-    margin-top: 10px;
-            margin-bottom: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .span-or {
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: -2px;
-    margin-left: -25px;
-    background-color: #fff;
-    width: 50px;
-    text-align: center;
-  }
-  .hr-or {
-    background-color: #cdcdcd;
-    height: 1px;
-    margin-top: 0px !important;
-    margin-bottom: 0px !important;
-  }
-  h4 {
-    text-align: center;
-    line-height: 150%;
-  }
-</style>
 </head>
 <body id="{% block body_id %}body{% endblock %}">
-<!-- 
-<br><br><br>
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-<ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-  </ol>
-  <div class="carousel-inner">
-    {% for banner in banner_title %}
-        {% if forloop.first %}
-            <div class="item active">
-                <img src="{{ MEDIA_URL }}{{ banner.image }}" width="100%">
-                <div class="carousel-caption"></div>
-            </div>
-        {% else %}
-            <div class="item">
-                <img src="{{ MEDIA_URL }}{{ banner.image }}" width="100%">
-                <div class="carousel-caption"></div>
-            </div>
-        {% endif %}
-    {% endfor %}
-  </div>
-
-  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-  </a>
-  <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-  </a>
-</div>
-
-<div id="right_banner">
-    <img src="{{ MEDIA_URL }}icons/banner.png" alt="картинка" width="100%" />
-</div> -->
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
         <p class="navbar-text" style="opacity: 0;">==Дима Ляпун тут был==</p>
+        <li><a href="/"><strong>Главная</strong></a></li>
       <li><a href="/blog/"><strong>Новости</strong></a></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>О клубе</strong> <b class="caret"></b></a>
@@ -257,22 +177,60 @@
     </div>
 </div>
 
-<footer>
-    <div class="container">
-        <div class="row">
-        <p class="site-info text-center">
-            Powered by
-            <a href="http://mezzanine.jupo.org">Mezzanine</a>
-            and
+<div class="footer center-block">
+      <ul class="navigation list-inline list-inline-clear-padding">
+        <li>
+          <a href="/" style="font-size:16px;">Главная</a>
+        </li><li>
+          <a href="#" style="font-size:16px;">О нас</a>
+          <ul class="submenu">
+            <li><a href="#">история</a></li>
+            <li><a href="#">гимн</a></li>
+            <li><a href="#">устав</a></li>
+            <li><a href="#">походы</a></li>
+          </ul>
+        </li><li>
+          <a href="/blog/" style="font-size:16px;">Новости</a>
+          <ul class="submenu">
+            <li><a href="/arhive_news/">архив новостей</a></li>
+          </ul>
+        </li><li>
+          <a href="#" style="font-size:16px;">Календарь</a>
+        </li><li>
+          <a href="/library/" style="font-size:16px;">Библиотека</a>
+          <ul class="submenu">
+            <li><a href="/passport/">паспорта препятствий</a></li>
+            <li><a href="/report/">отчеты походов</a></li>
+            <li><a href="/art/">творчество</a></li>
+            <li><a href="#">статьи</a></li>
+            <li><a href="/sandbox/"><strong>песочница</strong></a></li>
+          </ul>
+        </li><li>
+          <a href="#" style="font-size:16px;">Контакты</a>
+        </li>
+      </ul>
+
+      <div class="bottom-bar">
+        <ul class="socials list-inline pull-left">
+          <li class="fb"></li>
+          <li class="vk"></li>
+          <li class="tw"></li>
+          <li class="goo"></li>
+        </ul>
+        <form class="search-form form-inline pull-right">
+          <div class="form-group">
+            <input type="search" class="form-control" placeholder="ПОИСК">
+          </div><button type="submit" class="btn btn-default"></button>
+        </form>
+        <div class="copy">Powered by
             <a href="http://www.djangoproject.com">Django</a>
             <span class="separator">|</span>
-            Theme by <a target="_blank" href="http://getbootstrap.com">Bootstrap</a>
-            <span class="separator">|</span>
             by Dmitry Lyapun, <a href="mailto:dlyapun@gmail.com">dlyapun@gmail.com</a>
-        </p>
-        </div>
+            <span class="separator">|</span>
+            &copy; tkr.od.ua</div>
+      </div>
     </div>
-</footer>
+  <div id="goTop"></div>
 
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.8.2.min.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>

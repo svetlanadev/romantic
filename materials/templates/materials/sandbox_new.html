@@ -8,68 +8,19 @@
 {% load bootstrap_pagination %}
 {% load comments_tags %}
 
-<div class="materials">
-	<h1>Новый материал</h1>
-    <form action="/material_new/" method="post" role="form">{% csrf_token %}
-    	{% if form.errors %}
-            <p style="color: red;">
-                Please correct the error{{ form.errors|pluralize }} below.
-            </p>
-        {% endif %}
-        {{ form.title.errors }}
-        <input id="id_title" maxlength="50" class="form-control" value="Название" placeholder="Название поста" name="title" type="text" value=""></p>
-        
-        {{ form.year.errors }}
-        <input id="id_year" maxlength="50" class="form-control" value="2000" placeholder="Год" name="year" type="text" value=""></p>
-
-        {{ form.text.errors }}
-        <textarea cols="40" id="id_text" name="text" rows="10" class="input-xlarge form-control">{{ material.text|safe }}</textarea>
-
-
-
-        <input type="hidden" name="id_if_comments" class="form-control" value="True" />
-        <div class="row">
-	        <div class="col-xs-4">
-	        	{{ form.state.errors }}
-	        	<p>Статус:</p>
-		        <select id="id_state" name="state" class="form-control">
-					<option value="4">Песочница</option>
-				</select>
+<div class="col-md-9 left">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="materials">
+				<h1>Новый материал в Песочницу!</h1>
+				<form action="/sandbox_new/" method="post" role="form">
+				  {{ form.non_field_errors }}
+				  {{ form.as_p }}
+				  <button type="submit" class="btn btn-default">Опубликовать</button>
+				  <a href="/blog/"><button class="btn btn-default">Отмена</button></a>
+				</form>
 			</div>
-			<div class="col-xs-4">
-				{{ form.region.errors }}
-	        	<p>Регион:</p>
-		        <select id="id_region" name="region" class="form-control">
-		        	{% for region in regions %}
-						<option value="{{ region.id }}">{{ region.region }}</option>
-					{% endfor %}
-				</select>
-			</div>			
 		</div>
-		<div class="row">
-	        <div class="col-xs-4">
-	        	{{ form.type_hike.errors }}
-	        	<p>Тип:</p>
-		        <select id="id_type_hike" name="type_hike" class="form-control">
-					{% for type_hike in type_hikes %}
-						<option value="{{ type_hike.id }}">{{ type_hike.type_hike }}</option>
-					{% endfor %}
-				</select>
-			</div>
-			<div class="col-xs-4">
-				{{ form.difficulty.errors }}
-	        	<p>Сложность:</p>
-		        <select id="id_difficulty" name="difficulty" class="form-control">
-		        	{% for difficulty in difficultys %}
-						<option value="{{ difficulty.id }}">{{ difficulty.difficulty }}</option>
-					{% endfor %}
-				</select>
-			</div>			
-		</div>
-
-        <!-- <iframe id="id_text-iframe" src="/summernote/editor/id_text/" frameborder="0" cols="40" rows="10" width="100%" height="500"></iframe> -->
-
-        <button type="submit" class="btn">Опубликовать</button>
-    </form>
+	</div>
 </div>
 {% endblock %}

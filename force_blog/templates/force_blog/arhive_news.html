@@ -3,13 +3,7 @@
 
 <!-- Первый блок meta_title, к который мы встаим просто текст -->
 <!-- Вот так выглядит этот блок в файле base.html - <title></title> -->
-{% block meta_title %}Новости{% endblock %} 
-
-{% block navbar_block %}
-	{% if profile.moderator or profile.goverment or user.is_superuser %}
-		<li><a href="/blog_new/"><strong style="font-size:12px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить новость</strong></a></li>
-	{% endif %}
-{% endblock %} 
+{% block meta_title %}Архив Новостей{% endblock %} 
 
 <!-- Открываем новый блок -->
 {% block main %}
@@ -19,6 +13,8 @@
 {% load bootstrap_pagination %}
 {% load comments_tags %}
 
+<div class="container">
+<div class="row">
 <style type="text/css">
 	.post-header-line { border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
 </style>
@@ -28,8 +24,6 @@
 <div class="panel-body">
 <div class="blog">
 
-<!-- Цикл, который выводит все посты новостей, которые мы передали -->
-<!-- То есть, у нас будет выведено пять таких одинаковых блоков, но с разной инфой -->
 {% for blog_post in blog_posts %}
 	<div class="row" align="">
 	<div class="col-md-1"></div>
@@ -41,17 +35,6 @@
 		</p>
 	</div>
 	</div>
-	<!-- {{ blog_post.text|safe|truncatewords:40 }} - обрезание по 40 символов -->
-	<!-- Вывод текста -->
-	{{ blog_post.text|safe }}
-	<br>
-	<!-- Проверяет или есть файлы. -->
-	<!-- {% if blog_post.files == True %}
-		<strong>Файлы:</strong>
-		{% for file in blog_post.files.all %}
-				<a href="{{ MEDIA_URL }}{{ file.one_file }}">{{ file.file_name }}</a>, 
-		{% endfor %}
-	{% endif %} -->
 	<div class="row">
         <div class="col-md-12 post-header-line">
         	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blog_post.date_publication|date:"d.m.Y, G:i" }} 
@@ -75,12 +58,11 @@
 </div>
 
 <div class="col-md-3 right">
-	<!-- Тег, который в зависимости от url возвращает разные шаблоны -->
-	<!-- Допустим, в одном случае он возвратит кусочек мероприятий -->
-	<!-- Ну а в другом вообще ничего -->
     {% load page_navigation %}
     {% page_navigation request %}
 </div>
 
 <!-- И в конце закрывается блок -->
+</div>
+</div>
 {% endblock %}

@@ -1,6 +1,7 @@
 {% load comments_tags %}
-<div id="power_comments">
+<div>
 	<p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
+	
 	{% for comment in comments %}
 		<div class="col-md-8">
 			<table border="0"><tr>
@@ -13,26 +14,11 @@
 						
 				  		<strong><a href="{{ comment.owner.get_absolute_url }}">{{ comment.owner.get_full_name }}</a> </strong> - {{ comment.date_creation }}
 				  	</div>
-				  	<!-- <div class="col-md-3 right">
-				  		<span class="glyphicon glyphicon-star"></span> Рейтинг: <strong>{{ comment.rating }}</strong>
-				  	</div> -->
-				  	<!-- <div class="col-md-5" id="comment_karma">
-					  	<div class="col-md-4">
-					  		<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
-					  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-					  		<button class="btn btn-link"><span class="glyphicon glyphicon-minus"></span></button>
-						  	</form>
-						</div>
-						<div class="col-md-3 comment_rating-{{ comment.id }}">
-							<span class="badge">{{ comment.rating }}</span>
-						</div>
-						<div class="col-md-2">
-					  		<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
-					  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-					  		<button class="btn btn-link"><span class="glyphicon glyphicon-plus"></span></button>
-					  	</form>
-						</div>
-				  	</div> -->
+				  	<div class="col-md-3 right">
+				  		<a id="test_comment" href="javascript:"><span class="glyphicon glyphicon-pencil"></span></a>
+				  		<span class="glyphicon glyphicon-star"></span> Рейтинг: <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong>
+				  	</div>
+				  	
 				  	<div class="col-md-12">
 					<p align="justify">{{ comment.text }}</p>
 					</div>
@@ -41,7 +27,7 @@
 			<hr>
 		</div>
 		<div class="col-md-2"><br>
-			<!-- <div class="col-md-1">
+			<div class="col-md-1">
 			  	<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
 			  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
 			  		<button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
@@ -52,7 +38,7 @@
 			  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
 			  		<button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
 			  	</form>
-			</div> -->
+			</div>
 
 		</div>
 		{% if request.user.is_superuser %}
@@ -66,28 +52,21 @@
 			</div>
 		{% endif %}
 	{% endfor %}
+	<div id="power_comments"></div>
 
 	<div class="col-md-8">
 		<!-- Елемент що активує процес -->
 		<!-- <a id="test_comment" href="javascript:">Натисни мене ніжно</a> -->
 
-		<!-- <div id="target_comment">Я готовий до змін.</div>
-
-		<a href="#dialog" name="modal">Вызов модального окна</a>
-
-		<div id="boxes">  
-			<div id="dialog" class="window"> Текст модального окна
-				<div class="top"><a href="#" class="link close"/>Закрыть</a></div>
-				<div class="content">Текст в модальном окне.</div>
-			</div>
-		</div> -->
+		<!-- <div id="target_comment">Я готовий до змін.</div> -->
 
 		{% if request.user.is_authenticated %}
-		    <form action="/new_power_comment/" method="post" role="form">{% csrf_token %}
-		    	<div class="form-group">
+		    <form action="/new_power_comment/" class="new_power_comment" method="post" role="form">{% csrf_token %}
+		    	<div id="new_comment_form" class="form-group">
 					<label for="exampleInputEmail1">Новый комментарий</label>
-					<input type="hidden" name="id_app" value="{{ app_url }}" />
-					<textarea id="id_text" mixlength="10" rows="2" name="text" class="form-control"></textarea>
+					<input type="hidden" name="id_app" value="{{ app_url }}" /><br>
+					<label id="comment_alert_dander" class="control-label" for="inputError" style="display: none;">Input with error</label>
+					<textarea id="id_text_comment" mixlength="10" rows="2" name="text" class="form-control" value="{{ app_url }}"></textarea>
 				</div>
 		    	<div class="form-group">
 					<button type="submit" class="btn btn-sm">Отправить</button>
@@ -97,4 +76,10 @@
 		    <p>Чтобы публиковать комментарии, <a href="/register/"> зарегистрируйтесь</a> или <a href="/login/">войдите.</a></p>
 		{% endif %}
 	</div>
+</div>
+
+<div class="popover fade right in">
+	<div class="arrow"></div>
+	<h3 class="popover-title" style="display: none;"></h3>
+	<div class="popover-content">Vivamus sagittis lacus vel augue laoreet rutrum faucibus.</div>
 </div>

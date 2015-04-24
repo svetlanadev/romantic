@@ -2,21 +2,18 @@
 # author: dlyapun
 
 from django import forms
-from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from materials.models import Material
 
 
 class MaterialForm(ModelForm):
-    text = forms.CharField(widget=SummernoteInplaceWidget())
-    # new_dirs = forms.CharField(min_length=5,
-    #                        	   max_length=50,
-    #                            error_messages={'required': 'Миннимум 10 символов'})
+    text = forms.CharField(widget=SummernoteWidget())
 
     class Meta:
         model = Material
-        exclude = ['owner', 'date_publication', 'date_creation', 'rating', 'karma_users', 'material_edit', 'if_comments']
+        exclude = ['owner', 'date_publication', 'date_creation',
+                   'rating', 'karma_users', 'material_edit', 'if_comments']
 
     def save(self, *args, **kwargs):
         owner = kwargs.pop('owner')
@@ -24,5 +21,3 @@ class MaterialForm(ModelForm):
         obj.owner = owner
         obj.save()
         return obj
-
-        

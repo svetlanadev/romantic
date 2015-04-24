@@ -1,7 +1,7 @@
 # coding=utf-8
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+import os, random
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -26,12 +26,8 @@ ALLOWED_HOSTS = [
 INTERNAL_IPS = ("127.0.0.1",)
 
 AUTHENTICATION_BACKENDS = (
-    # 'social_auth.backends.twitter.TwitterBackend',
-    # 'social_auth.backends.facebook.FacebookBackend',
-    # 'social_auth.backends.contrib.vk.VKOAuth2Backend',
-    # 'social_auth.backends.google.GoogleOAuthBackend',
-    # 'social_auth.backends.google.GoogleOAuth2Backend',
-    # 'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.contrib.vk.VKOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -62,7 +58,7 @@ INSTALLED_APPS = (
     'profile',
     'imagekit',
     'django_summernote',
-    'party',
+    # 'party',
     'force_blog',
     'bootstrap_pagination',
     'django_select2',
@@ -86,10 +82,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'banner.context_processor.contex_banner',
     'party.context_processor.contex_party',
     'django.core.context_processors.request',
-    # 'social_auth.context_processors.social_auth_by_name_backends',
-    # 'social_auth.context_processors.social_auth_backends',
-    # 'social_auth.context_processors.social_auth_by_type_backends',
-    # 'social_auth.context_processors.social_auth_login_redirect',
+    'social_auth.context_processors.social_auth_backends',
+    'social_auth.context_processors.social_auth_by_type_backends',
+    'social_auth.context_processors.social_auth_login_redirect',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -149,23 +144,23 @@ try:
 except ImportError:
     pass
 
-# FACEBOOK_APP_ID = '1602017563346275'
-# FACEBOOK_API_SECRET = 'ebc2b04baf9d0421d766d31be62e8e2b'
+FACEBOOK_APP_ID = '1602017563346275'
+FACEBOOK_API_SECRET = 'ebc2b04baf9d0421d766d31be62e8e2b'
 
 # TWITTER_CONSUMER_KEY = 'RYeEUefjidJ8ptuN9RSVWxTn8'
 # TWITTER_CONSUMER_SECRET = 'Z4yQGYDMtdALSZhPZAsXrPcirhOH6uXVQZTkdOb6rFfTeiB0zt'
 
-# VK_APP_ID = '4816303'
-# VKONTAKTE_APP_ID = VK_APP_ID
-# VK_API_SECRET = '5HO4lXQiwRRfuoAFI4mh'
-# VKONTAKTE_APP_SECRET = VK_API_SECRET
+VK_APP_ID = '4816303'
+VKONTAKTE_APP_ID = VK_APP_ID
+VK_API_SECRET = '5HO4lXQiwRRfuoAFI4mh'
+VKONTAKTE_APP_SECRET = VK_API_SECRET
 
 # GOOGLE_OAUTH2_CLIENT_ID = '776153762160-r2qq335ctj8mdnqvidgnoi691m241v3k.apps.googleusercontent.com'
 # GOOGLE_OAUTH2_CLIENT_SECRET = '22lDMovOA0-p8jcEdPQUF_mN'
 
 AUTH_PROFILE_MODULE = "profile.CustomUser"
 
-# SOCIAL_AUTH_USER_MODEL = 'profile.CustomUser'
+SOCIAL_AUTH_USER_MODEL = 'profile.CustomUser'
 
 # INPLACEEDIT_DISABLE_CLICK = False
 # THUMBNAIL_DEBUG = True
@@ -188,29 +183,29 @@ CONFIG_DEFAULTS = {
     'SHOW_TOOLBAR_CALLBACK': 'debug_toolbar.middleware.show_toolbar',
 }
 
-# # Если имя не удалось получить, то можно его сгенерировать
-# SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(['Darth_Vader', 'Obi-Wan_Kenobi', 'R2-D2', 'C-3PO', 'Yoda'])
-# # Разрешаем создавать пользователей через social_auth
-# SOCIAL_AUTH_CREATE_USERS = True
+# Если имя не удалось получить, то можно его сгенерировать
+SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(['Darth_Vader', 'Obi-Wan_Kenobi', 'R2-D2', 'C-3PO', 'Yoda'])
+# Разрешаем создавать пользователей через social_auth
+SOCIAL_AUTH_CREATE_USERS = True
 
 # # Перечислим pipeline, которые последовательно буду обрабатывать респонс 
-# SOCIAL_AUTH_PIPELINE = (
-#     # Получает по backend и uid инстансы social_user и user
-#     'social_auth.backends.pipeline.social.social_auth_user',
-#     # Получает по user.email инстанс пользователя и заменяет собой тот, который получили выше.
-#     # Кстати, email выдает только Facebook и GitHub, а Vkontakte и Twitter не выдают
-#     'social_auth.backends.pipeline.associate.associate_by_email',
-#     # Пытается собрать правильный username, на основе уже имеющихся данных
-#     'social_auth.backends.pipeline.user.get_username',
-#     # Создает нового пользователя, если такого еще нет
-#     'social_auth.backends.pipeline.user.create_user',
-#     # Пытается связать аккаунты
-#     'social_auth.backends.pipeline.social.associate_user',
-#     # Получает и обновляет social_user.extra_data
-#     'social_auth.backends.pipeline.social.load_extra_data',
-#     # Обновляет инстанс user дополнительными данными с бекенда
-#     'social_auth.backends.pipeline.user.update_user_details'
-# )
+SOCIAL_AUTH_PIPELINE = (
+    # Получает по backend и uid инстансы social_user и user
+    'social_auth.backends.pipeline.social.social_auth_user',
+    # Получает по user.email инстанс пользователя и заменяет собой тот, который получили выше.
+    # Кстати, email выдает только Facebook и GitHub, а Vkontakte и Twitter не выдают
+    'social_auth.backends.pipeline.associate.associate_by_email',
+    # Пытается собрать правильный username, на основе уже имеющихся данных
+    'social_auth.backends.pipeline.user.get_username',
+    # Создает нового пользователя, если такого еще нет
+    'social_auth.backends.pipeline.user.create_user',
+    # Пытается связать аккаунты
+    'social_auth.backends.pipeline.social.associate_user',
+    # Получает и обновляет social_user.extra_data
+    'social_auth.backends.pipeline.social.load_extra_data',
+    # Обновляет инстанс user дополнительными данными с бекенда
+    'social_auth.backends.pipeline.user.update_user_details'
+)
 
 # ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
 # REGISTRATION_AUTO_LOGIN = True #

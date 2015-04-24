@@ -10,9 +10,9 @@ class BlogPost(models.Model):
     DELETE = 2
 
     STATE_CHOICE = (
-        (DISABLE, 'Disable'),
-        (ENABLE, 'Enable'),
-        (DELETE, 'Delete'),
+        (DISABLE, 'Новость отключена'),
+        (ENABLE, 'Обычная Новость'),
+        (DELETE, 'Важная Новость'),
     )
 
     title = models.CharField(max_length=50, verbose_name=u'Заголовок')
@@ -36,7 +36,7 @@ class BlogPost(models.Model):
                                        blank=True, null=True,
                                        verbose_name=u'Редактирование',
                                        related_name="blogpost_edit")
-    
+
     files = models.ManyToManyField('AttachedFiles', blank=True, null=True)
 
     karma_users = models.ManyToManyField(settings.AUTH_PROFILE_MODULE,
@@ -49,8 +49,8 @@ class BlogPost(models.Model):
                               blank=True,
                               null=True)
 
-    default_image = models.ForeignKey('DefaultImageBlog', 
-                                      verbose_name=u'Изображение', 
+    default_image = models.ForeignKey('DefaultImageBlog',
+                                      verbose_name=u'Изображение',
                                       blank=True, null=True)
 
     if_comments = models.BooleanField(default=True)

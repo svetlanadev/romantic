@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
-{% block meta_title %}Добавить запись{% endblock %}
+{% block meta_title %}Песочница{% endblock %}
+
+{% block navbar_block %}
+	{% if user.is_authenticated %}
+		<li><a href="/sandbox_new/"><strong style="font-size:14px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Материал в песочницу</strong></a></li>
+	{% endif %}
+{% endblock %} 
 
 {% block main %}
 {% load imagekit %}
@@ -8,70 +14,30 @@
 {% load bootstrap_pagination %}
 {% load comments_tags %}
 
+<div class="panel panel-default">
+<div class="panel-body">
 <div class="materials">
-	<h1>Новый материал</h1>
-    <form action="/material_new/" method="post" role="form">{% csrf_token %}
-    	{% if form.errors %}
-            <p style="color: red;">
-                Please correct the error{{ form.errors|pluralize }} below.
-            </p>
-        {% endif %}
-        {{ form.title.errors }}
-        <input id="id_title" maxlength="50" class="form-control" value="Название" placeholder="Название поста" name="title" type="text" value=""></p>
-        
-        {{ form.year.errors }}
-        <input id="id_year" maxlength="50" class="form-control" value="2000" placeholder="Год" name="year" type="text" value=""></p>
-
-        {{ form.text.errors }}
-        <textarea cols="40" id="id_text" name="text" rows="10" class="input-xlarge form-control">{{ material.text|safe }}</textarea>
-
-
-
-        <input type="hidden" name="id_if_comments" class="form-control" value="True" />
-        <div class="row">
-	        <div class="col-xs-4">
-	        	{{ form.state.errors }}
-	        	<p>Статус:</p>
-		        <select id="id_state" name="state" class="form-control">
-					<option value="1">Отчет</option>
-					<option value="2" selected="selected">Творчество</option>
-					<option value="3" selected="selected">Паспорт препятствия</option>
-				</select>
-			</div>
-			<div class="col-xs-4">
-				{{ form.region.errors }}
-	        	<p>Регион:</p>
-		        <select id="id_region" name="region" class="form-control">
-		        	{% for region in regions %}
-						<option value="{{ region.id }}">{{ region.region }}</option>
-					{% endfor %}
-				</select>
-			</div>			
+	<div class="col-md-2">
+		<!-- <button type="button" class="btn btn-sm"><a href="/"><span class="glyphicon glyphicon-chevron-left"></span> Назад</a></button> -->
+	</div>
+	<div class="col-md-8" align="center">
+		<p style="font-size:24px;" align="center"><strong>Песочница</strong></p>
+		<br>
+		<!-- <h1 align="center"><strong>{{ name_material }}</strong></h1> -->
+	</div>
+	<div class="row" align="">
+		{% for material in materials %}
+		<div class="col-md-6">
+            <h5><a href="{{ material.get_absolute_url }}">
+                {{ material.title }}, 
+            </a>rate: {{ material.rating }}, {{ material.type_hike.type_hike }}, {{ material.region }}</h5>
+            <p>{{ material.status }}</p>
+            <h2>
 		</div>
-		<div class="row">
-	        <div class="col-xs-4">
-	        	{{ form.type_hike.errors }}
-	        	<p>Тип:</p>
-		        <select id="id_type_hike" name="type_hike" class="form-control">
-					{% for type_hike in type_hikes %}
-						<option value="{{ type_hike.id }}">{{ type_hike.type_hike }}</option>
-					{% endfor %}
-				</select>
-			</div>
-			<div class="col-xs-4">
-				{{ form.difficulty.errors }}
-	        	<p>Сложность:</p>
-		        <select id="id_difficulty" name="difficulty" class="form-control">
-		        	{% for difficulty in difficultys %}
-						<option value="{{ difficulty.id }}">{{ difficulty.difficulty }}</option>
-					{% endfor %}
-				</select>
-			</div>			
-		</div>
+		{% endfor %}
 
-        <!-- <iframe id="id_text-iframe" src="/summernote/editor/id_text/" frameborder="0" cols="40" rows="10" width="100%" height="500"></iframe> -->
-
-        <button type="submit" class="btn">Опубликовать</button>
-    </form>
+	</div>	
+</div>
+</div>
 </div>
 {% endblock %}

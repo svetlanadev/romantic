@@ -11,7 +11,7 @@ import debug_toolbar
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r"^$", RedirectView.as_view(url='/blog/'), name='home'),
+    url(r"^$", TemplateView.as_view(template_name="index.html")),
     url(r'^about/$', TemplateView.as_view(template_name="about.html")),
     url(r'^contact-only/$', TemplateView.as_view(template_name="contact-only.html")),
 
@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^', include('materials.urls')),
     # url(r'^select2/', include('django_select2.urls')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
-    # url(r'', include('social_auth.urls')),
+    url(r'', include('social_auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 

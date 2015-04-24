@@ -4,11 +4,13 @@ from django.conf.urls import patterns, url, include
 
 
 urlpatterns = patterns('materials.views',
-    url(r'^report/$', 'material_report'),
-    url(r'^passport/$', 'material_passport'),
-    url(r'^art/$', 'material_art'),
-    url(r'^sandbox/$', 'sandbox'),
+    url(r'^report/$', 'materials', {'state': 'report'}),
+    url(r'^passport/$', 'materials', {'state': 'passport'}),
+    url(r'^art/$', 'materials', {'state': 'art'}),
+    url(r'^sandbox/$', 'sandbox', {'state': 'sandbox'}),
+    url(r'^library/$', 'library'),
     url(r'^material_new/$', 'material_new'),
+    url(r'^material_edit/(?P<material_id>\w+)/$', 'material_edit', name="material_edit"),
     url(r'^sandbox_new/$', 'sandbox_new'),
     url(r'^materials/(?P<material_id>\w+)/$', 'material_detail'),
     url(r'^materials/dirs/(?P<dir_id>\w+)/$', 'material_folder'),
