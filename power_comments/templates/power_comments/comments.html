@@ -2,11 +2,15 @@
 <div>
 	<p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
 	
-	{% for comment in comments %}±
-		<div class="col-md-10">
+	{% for comment in comments %}
+		<div class="row">
+		{% if comment.count_inc %}
+		<div class="col-md-{{ comment.count_inc }}"></div>
+		{% endif %}
+		<div class="col-md-9">
 			<table border="0"><tr>
 				<td>
-					<img src="{{ comment.owner.avatar.url }}" class="img-circle" width="80px">
+					<img src="{{ comment.owner.avatar.url }}" class="img-circle" width="70px">
 				</td>
 				<td>
 				<div class="row"></div>
@@ -14,10 +18,10 @@
 						
 				  		<strong><a href="{{ comment.owner.get_absolute_url }}">{{ comment.owner.get_full_name }}</a> </strong> - {{ comment.date_creation }}
 				  	</div>
-				  	<div class="col-md-3 right">
+				  	<!-- <div class="col-md-3 right">
 				  		<a id="edit_comment" href="javascript:"><span class="glyphicon glyphicon-pencil"></span></a>
 				  		<span class="glyphicon glyphicon-star"></span> Рейтинг: <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong>
-				  	</div>
+				  	</div> -->
 				  	
 				  	<div class="col-md-12">
 					<p align="justify">{{ comment.text }}</p>
@@ -47,6 +51,7 @@
 				{% endif %}
 			</div>
 		</div> -->
+		</div>
 	{% endfor %}
 	<div id="power_comments"></div>
 
@@ -72,10 +77,4 @@
 		    <p>Чтобы публиковать комментарии, <a href="/register/"> зарегистрируйтесь</a> или <a href="/login/">войдите.</a></p>
 		{% endif %}
 	</div>
-</div>
-
-<div class="popover fade right in">
-	<div class="arrow"></div>
-	<h3 class="popover-title" style="display: none;"></h3>
-	<div class="popover-content">Vivamus sagittis lacus vel augue laoreet rutrum faucibus.</div>
 </div>

@@ -7,16 +7,16 @@ from django.conf import settings
 class PowerComment(models.Model):
     DISABLE = 0
     ENABLE = 1
-    DELETE = 2
+    BAD_KARMA = 2
 
     STATE_CHOICE = (
-        (DISABLE, 'Disable'),
-        (ENABLE, 'Enable'),
-        (DELETE, 'Delete'),
+        (DISABLE, 'Скрыт'),
+        (ENABLE, 'Активен'),
+        (BAD_KARMA, 'Плохая карма'),
     )
 
     date_creation = models.DateTimeField(auto_now_add=True)
-    date_edit = models.DateTimeField(blank=True, null=True)
+    # date_edit = models.DateTimeField(blank=True, null=True)
     rating = models.SmallIntegerField(default=0, verbose_name=u'Рейтинг')
     owner = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
                               verbose_name=u'Автор')
@@ -28,7 +28,10 @@ class PowerComment(models.Model):
     state = models.SmallIntegerField(default=ENABLE,
                                      choices=STATE_CHOICE,
                                      verbose_name=u'Статус')
-    app = models.CharField(max_length=100)
+    app = models.CharField(max_length=1000)
+    position = models.SmallIntegerField(default=0)
+    count_inc = models.SmallIntegerField(verbose_name=u'Кол-во вложений', blank=True, null=True,)
+    pre_comment = models.CharField(max_length=1000, verbose_name=u'Пре коммент', blank=True, null=True,)
 
     class Meta:
         ordering = ["date_creation"]

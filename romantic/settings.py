@@ -58,7 +58,7 @@ INSTALLED_APPS = (
     'profile',
     'imagekit',
     'django_summernote',
-    # 'party',
+    'party',
     'force_blog',
     'bootstrap_pagination',
     'django_select2',
