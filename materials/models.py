@@ -10,22 +10,34 @@ class Material(models.Model):
     HIKE = 1
     ART = 2
     PASSPORT = 3
+    SANDBOX = 4
 
     STATE_CHOICE = (
         (DISABLE, 'Disable'),
         (HIKE, 'Отчет'),
         (ART, 'Творчество'),
         (PASSPORT, 'Паспорт'),
+        (SANDBOX, 'Песочница'),
     )
 
-    title = models.CharField(max_length=50, verbose_name=u'Заголовок', default='Отчет о походе')
+    title = models.CharField(max_length=50,
+                             verbose_name=u'Заголовок',
+                             default='Отчет о походе')
     year = models.SmallIntegerField(verbose_name=u'Год', default=2000)
-    status = models.CharField(max_length=250, verbose_name=u'Краткое описание', blank=True, null=True)
+    status = models.CharField(max_length=250,
+                              verbose_name=u'Краткое описание',
+                              blank=True, null=True)
 
     # Готовые модели и поля из приложения Hike
-    type_hike = models.ForeignKey(TypeHike,  verbose_name=u'Тип похода', blank=True, null=True,)
-    difficulty = models.ForeignKey(Difficulty, verbose_name=u'Категория', blank=True, null=True,)
-    region = models.ForeignKey(Region, verbose_name=u'Район похода', blank=True, null=True,)
+    type_hike = models.ForeignKey(TypeHike,
+                                  verbose_name=u'Тип похода',
+                                  blank=True, null=True,)
+    difficulty = models.ForeignKey(Difficulty,
+                                   verbose_name=u'Категория',
+                                   blank=True, null=True,)
+    region = models.ForeignKey(Region,
+                               verbose_name=u'Район похода',
+                               blank=True, null=True,)
 
     date_creation = models.DateTimeField(auto_now_add=True)
     date_publication = models.DateTimeField(auto_now_add=True)
@@ -39,13 +51,11 @@ class Material(models.Model):
                                      choices=STATE_CHOICE,
                                      verbose_name=u'Статус')
 
-    
-
     material_edit = models.ManyToManyField('MaterialEdit',
-                                       blank=True, null=True,
-                                       verbose_name=u'Редактирование',
-                                       related_name="material_edit")
-    
+                                           blank=True, null=True,
+                                           verbose_name=u'Редактирование',
+                                           related_name="material_edit")
+
     files = models.ManyToManyField('AttachedFiles', blank=True, null=True)
 
     karma_users = models.ManyToManyField(settings.AUTH_PROFILE_MODULE,
@@ -58,7 +68,8 @@ class Material(models.Model):
                               blank=True,
                               null=True)
 
-    if_comments = models.BooleanField(default=True, verbose_name=u'Комментарии включены')
+    if_comments = models.BooleanField(
+        default=True, verbose_name=u'Комментарии включены')
 
     class Meta:
         ordering = ["-date_creation"]
@@ -93,8 +104,22 @@ class AttachedFiles(models.Model):
 
 
 class Dirs(models.Model):
-    dir_name = models.CharField(max_length=30)
+    DISABLE = 0
+    HIKE = 1
+    ART = 2
+    PASSPORT = 3
 
+    STATE_CHOICE = (
+        (DISABLE, 'Disable'),
+        (HIKE, 'Отчет'),
+        (ART, 'Творчество'),
+        (PASSPORT, 'Паспорт'),
+    )
+
+    dir_name = models.CharField(max_length=30)
+    state = models.SmallIntegerField(default=HIKE,
+                                     choices=STATE_CHOICE,
+                                     verbose_name=u'Статус')
     materials = models.ManyToManyField('Material',
                                        blank=True, null=True,
                                        verbose_name=u'Материалы',

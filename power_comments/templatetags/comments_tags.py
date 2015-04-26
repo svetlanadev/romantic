@@ -1,9 +1,10 @@
 # coding: utf-8
 
 from django import template
-from power_comments.models import PowerComment
-from django.core.urlresolvers import reverse, NoReverseMatch
 from django.core import urlresolvers
+from django.core.urlresolvers import reverse, NoReverseMatch
+from power_comments.forms import PowerCommentForm
+from power_comments.models import PowerComment
 
 register = template.Library()
 

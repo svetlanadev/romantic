@@ -6,8 +6,9 @@ from force_blog.models import BlogPost, AttachedFiles, Category, BlogEdit, Defau
 
 
 class BlogPostAdmin(SummernoteModelAdmin):
-    filter_horizontal = ('files', 'category')
-    list_display = ('title', 'owner', 'state')
+    filter_horizontal = ('files', 'category', 'blog_edit')
+    list_display = (
+        'title', 'date_publication', 'owner', 'rating', 'state', 'if_comments')
     list_filter = ('date_creation',)
     ordering = ('-date_creation',)
 

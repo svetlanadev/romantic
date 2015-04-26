@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block meta_title %}Мероприятия{% endblock %}
+
+{% block navbar_block %}
+    {% if profile.moderator or profile.goverment or user.is_superuser %}
+        <li><a href="#"><strong style="font-size:14px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить Мероприятие</strong></a></li>
+    {% endif %}
+{% endblock %} 
+
 {% block main %}
 {% load imagekit %}
 

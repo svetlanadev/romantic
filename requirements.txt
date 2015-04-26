@@ -1,14 +1,13 @@
-Django==1.6.3
 Django-Select2==4.2.2
-Mezzanine==3.1.1
-PIL==1.1.7
 Pillow==2.4.0
+PyJWT==0.4.1
 argparse==1.2.1
 bleach==1.4
 django-appconf==0.6
 django-bootstrap-pagination==1.5.0
 django-debug-toolbar==1.2.2
 django-imagekit==3.2.1
+django-registration-redux==1.1
 django-social-auth==0.7.28
 django-summernote==0.6.3
 filebrowser-safe==0.3.3
@@ -20,6 +19,7 @@ oauth2==1.5.211
 oauthlib==0.6.1
 pilkit==1.1.6
 python-openid==2.2.5
+python-social-auth==0.2.2
 pytz==2014.2
 requests==2.2.1
 requests-oauthlib==0.4.0

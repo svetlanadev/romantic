@@ -1,10 +1,16 @@
 <div class="panel panel-default">
   <div class="panel-body">
-  <h3 align="center"><strong>Будущие события:</strong></h3>
+  <p style="font-size:20px; color: #337ab7" align="center"><strong>Новые материалы</strong></p><hr>
+  <p style="font-size:20px; color: #337ab7" align="center"><strong>Что обсуждают?</strong></p><hr>
 
+  <a href="#"><h5>Добавление статья в категорию "Творчество"</a></h5>
+  <a href="#"><h5>Обсуждение новости "Нужна помощь"</a></h5>
+  <p style="font-size:20px; color: #337ab7" align="center"><strong>Не пропустите</strong></p>
+  <a href="#"><h5>Скальный выезд, 25-26 апреля</a></h5>
+<hr>
   {% for party in partys %}
     <div class="">
-        <h3 align="center">{{ party.name }}</h3>
+        <p style="font-size:18px; color:" align="center">{{ party.name }} сезона</p>
         <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
             <!-- <div align="center" style="color:#FFF; font-size:30px; background:url(/static/img/bg-text.png) repeat;">
                 {{ party.name }}
@@ -12,7 +18,8 @@
         </div>
         <div class="caption">
             <div align="center">
-                <h4>Начало - <strong>{{ party.date_start }}</strong></h4>
+                <h4>Дата - {{ party.date_start|date:"d, F Y" }}<br>
+                Время - {{ party.date_start|date:"G:i" }}</h4>
             </div>
             <p>{{ party.text|safe|truncatechars:130 }}</p>
             <div align="center">

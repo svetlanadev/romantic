@@ -1,0 +1,36 @@
+<div class="col-md-10">
+	<table border="0"><tr>
+		<td>
+			<img src="{{ comment.owner.avatar.url }}" class="img-circle" width="70px">
+		</td>
+		<td>
+		<div class="row"></div>
+			<div class="col-md-9">
+				
+		  		<strong><a href="{{ comment.owner.get_absolute_url }}">{{ comment.owner.get_full_name }}</a> </strong> - {{ comment.date_creation }}
+		  	</div>
+		  	<div class="col-md-3 right">
+		  		<span class="glyphicon glyphicon-star"></span> Рейтинг: <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong>
+		  	</div>
+		  	
+		  	<div class="col-md-12">
+			<p align="justify">{{ comment.text }}</p>
+			</div>
+		</td>
+	</tr></table>		
+	<hr>
+</div>
+<div class="col-md-2"><br>
+	<div class="col-md-1">
+	  	<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
+	  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+	  		<button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+	  	</form>
+	</div>
+	<div class="col-md-3">
+		<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
+	  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+	  		<button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+	  	</form>
+	</div>
+</div>

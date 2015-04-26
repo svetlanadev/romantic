@@ -3,8 +3,8 @@
 
 from django import forms
 from django.forms import ModelForm
-from force_blog.models import BlogPost
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+from force_blog.models import BlogPost
 
 
 class BlogPostForm(ModelForm):
@@ -12,12 +12,12 @@ class BlogPostForm(ModelForm):
 
     class Meta:
         model = BlogPost
-        exclude = ['owner', 'date_publication', 'date_creation', 'rating', 'state']
+        exclude = ['owner', 'date_publication', 'image', 'default_image',
+                   'date_creation', 'rating', 'blog_edit', 'karma_users', 'files', ]
 
-    # def save(self, *args, **kwargs):
-    #     owner = kwargs.pop('owner')
-    #     obj = super(BlogPost, self).save(commit=False)
-    #     obj.owner = owner
-    #     obj.save()
-    #     return obj
-        
+    def save(self, *args, **kwargs):
+        owner = kwargs.pop('owner')
+        obj = super(BlogPostForm, self).save(commit=False)
+        obj.owner = owner
+        obj.save()
+        return obj

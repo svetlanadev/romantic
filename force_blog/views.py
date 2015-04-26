@@ -10,6 +10,7 @@ from django.views.generic import ListView, DetailView
 from force_blog.forms import BlogPostForm
 from force_blog.models import BlogPost, BlogEdit, Category
 from django.template import RequestContext
+import time
 
 
 class BlogPostListView(ListView):
@@ -19,9 +20,9 @@ class BlogPostListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related('category', 'karma_users').filter(state=1)
+        qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
+            'category', 'karma_users').exclude(state=0)
         return qs
-
 
     def get_context_data(self, **kwargs):
         context = super(BlogPostListView, self).get_context_data(**kwargs)
@@ -41,33 +42,76 @@ class BlogPostDetailView(DetailView):
     context_object_name = 'blogpost'
 
 
+class BlogPostArhiveListView(ListView):
+    model = BlogPost
+    context_object_name = 'blog_posts'
+
+    template_name = 'force_blog/arhive_news.html'
+
+    paginate_by = 50
+
+    def get_queryset(self):
+        qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
+            'category', 'karma_users').exclude(state=0)
+        return qs
+
+
 @login_required
-def blog_edit(request):
-    user = CustomUser.objects.get(user=request.user)
-    id_blog = request.POST['id_blog']
-    blog = BlogPost.objects.get(id=id_blog)
+def blog_edit(request, blog_id):
+    profile = CustomUser.objects.get(user=request.user)
+
+    if not profile.moderator and profile.goverment and profile.user.is_superuser:
+        return redirect('/login/')
+
+    blog = BlogPost.objects.get(id=blog_id)
 
     if request.method == "POST":
         form = BlogPostForm(request.POST, instance=blog)
         if form.is_valid():
-            blog_save = blog
-            blog_save.title = blog_save.title + 'backup'
-            blog_edit = BlogEdit(user_edit=user)
-            blog_edit.save()
-            blog_save.blog_edit.add(blog_edit)
-            blog_save.state = 0
-            blog_save.pk = None
-            blog_save.save()
-            print "ALL OK"
-            form.save()
-            url = u'/blog/%s' % id_blog
+            blog_backup(blog, profile)
+
+            form.save(owner=profile)
+            url = u'/blog/%s' % blog_id
             return redirect(url)
 
-    form = BlogPostForm(instance=blog)
-    data = {'form': form, 'blogpost': blog}
+    else:
+        form = BlogPostForm(instance=blog)
+
+    data = {'form': form, 'blog': blog}
     return render_to_response('force_blog/blogpost_edit.html',
                               data,
                               context_instance=RequestContext(request))
+
+
+@login_required
+def blog_new(request):
+    profile = CustomUser.objects.get(user=request.user)
+
+    if not profile.moderator and profile.goverment and profile.user.is_superuser:
+        return redirect('/login/')
+
+    if request.method == "POST":
+        form = BlogPostForm(request.POST)
+        if form.is_valid():
+            form.save(owner=profile)
+            blog = BlogPost.objects.first()
+            url = u'/blog/%s' % blog.id
+            return redirect(url)
+
+    form = BlogPostForm()
+    data = {'form': form, }
+    return render_to_response('force_blog/blogpost_new.html',
+                              data,
+                              context_instance=RequestContext(request))
+
+
+def blog_backup(blog, user):
+    # blog_backup = blog
+    # blog_backup.title = blog.title + ', user: ' + str(user.user) + ', date' + time.ctime()
+    # blog_backup.state = 0
+    # blog_backup.save()
+    blog_edit = BlogEdit(user_edit=user)
+    blog_edit.save()
 
 
 @login_required
@@ -106,15 +150,20 @@ def karma_force_blog(request):
             blogpost.save()
             user.save()
             blogpost.karma_users.add(user)
-    else: 
-        return redirect('/')            
+    else:
+        return redirect('/')
     return redirect(blogpost.get_absolute_url())
 
 
-def search_for_tag(request, category_id):
-    category = Category.objects.get(id=category_id)
-    blog_posts = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related('category', 'karma_users').filter(category=category)
-    data = {'blog_posts': blog_posts, 'paginate_by': 5}
-    return render_to_response('force_blog/blogpost_list.html',
-                              data,
-                              context_instance=RequestContext(request))   
+def minus_karma_admin(request, blog_id):
+    if not request.user.is_authenticated():
+        print "You not superuser"
+        return redirect('/')
+
+    blog = BlogPost.objects.get(id=blog_id)
+    user = blog.owner
+    user.karma = user.karma - 10
+    user.save()
+
+    url = u'/blog/%s' % blog_id
+    return redirect(url)

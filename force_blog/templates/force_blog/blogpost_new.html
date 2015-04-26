@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Добавление нового поста{% endblock %}
+
+{% block main %}
+<!-- Походы -->
+<div class="col-md-9 left">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div id="blogpost">
+				<form action="/blog_new/" method="post" role="form">
+				  {{ form.non_field_errors }}
+				  {{ form.as_p }}
+				  <button type="submit" class="btn btn-default">Сохранить изменения</button>
+				  <a href="/blog/"><button class="btn btn-default"> Отмена</button></a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{{ form.as_p }}
