@@ -10,6 +10,7 @@ from django.views.generic import ListView, DetailView
 from force_blog.forms import BlogPostForm
 from force_blog.models import BlogPost, BlogEdit, Category
 from django.template import RequestContext
+from django.core.exceptions import ObjectDoesNotExist
 import time
 
 
@@ -59,6 +60,7 @@ class BlogPostArhiveListView(ListView):
 @login_required
 def blog_edit(request, blog_id):
     profile = CustomUser.objects.get(user=request.user)
+    categorys = Category.objects.all()
 
     if not profile.moderator and profile.goverment and profile.user.is_superuser:
         return redirect('/login/')
@@ -67,7 +69,29 @@ def blog_edit(request, blog_id):
 
     if request.method == "POST":
         form = BlogPostForm(request.POST, instance=blog)
+        form.is_valid()
+        try:
+            tags = form.cleaned_data['category']
+        except KeyError:
+            new_tag = Category.objects.create(category=request.POST['category'])
+        
+        # tags = form.cleaned_data['category']
+
         if form.is_valid():
+            for x in categorys:
+                blog.category.remove(x)
+
+            for x in tags:
+                try:
+                    tag = Category.objects.get(category=x)
+                except ObjectDoesNotExist:
+                    pass
+                
+                try:
+                    blog.category.add(tag)
+                except TypeError:
+                    pass
+
             blog_backup(blog, profile)
 
             form.save(owner=profile)
@@ -77,7 +101,7 @@ def blog_edit(request, blog_id):
     else:
         form = BlogPostForm(instance=blog)
 
-    data = {'form': form, 'blog': blog}
+    data = {'form': form, 'blog': blog, 'categorys': categorys}
     return render_to_response('force_blog/blogpost_edit.html',
                               data,
                               context_instance=RequestContext(request))
@@ -86,20 +110,38 @@ def blog_edit(request, blog_id):
 @login_required
 def blog_new(request):
     profile = CustomUser.objects.get(user=request.user)
+    categorys = Category.objects.all()
+    form = BlogPostForm()
 
     if not profile.moderator and profile.goverment and profile.user.is_superuser:
         return redirect('/login/')
 
     if request.method == "POST":
         form = BlogPostForm(request.POST)
+        form.is_valid()
+        try:
+            tags = form.cleaned_data['category']
+        except KeyError:
+            new_tag = Category.objects.create(category=request.POST['category'])
+        
         if form.is_valid():
+            # tags = form.cleaned_data['category']
+            print tags
             form.save(owner=profile)
             blog = BlogPost.objects.first()
+            print blog
+            print "+++++++++++"
+            for x in tags:
+                print x
+                print '============'
+                tag = Category.objects.get(category=x)
+                print tag
+                blog.category.add(tag)
+
             url = u'/blog/%s' % blog.id
             return redirect(url)
 
-    form = BlogPostForm()
-    data = {'form': form, }
+    data = {'form': form, 'categorys': categorys}
     return render_to_response('force_blog/blogpost_new.html',
                               data,
                               context_instance=RequestContext(request))

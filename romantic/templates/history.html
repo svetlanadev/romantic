@@ -1,1 +1,108 @@
-history.html
+{% extends "base.html" %}
+
+{% block extra_css %}<link href="{{ STATIC_URL }}css/jquery.tokenize.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block main %}
+<!-- Походы -->
+<div class="col-md-9 left">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div id="blogpost">
+				<form action="/blog_new/" method="post" role="form">
+					<div class="row">
+						<div class="col-xs-6">
+						    <input id="id_title" name="title" type="text" class="form-control" placeholder="Заголовок"><br>
+						</div>
+						<div class="col-xs-3">
+								<select id="id_state" name="state" class="form-control">
+									<option value="0">Новость отключена</option>
+									<option value="1" selected="selected">Обычная Новость</option>
+									<option value="2">Важная Новость</option>
+								</select>
+						</div>
+						<div class="col-xs-3 checkbox">
+							<label>
+							  <input checked="checked" id="id_if_comments" name="if_comments" type="checkbox"> Включить комментарии
+							</label>
+						</div>
+					</div>
+					
+						<textarea cols="40" hidden="true" id="id_text" name="text" rows="10" style="display: none;"></textarea>
+
+
+						<div id="text_field"> 
+							<script>
+							var settings_id_text = {"lang": "en-US", "width": "100%", "styleWithSpan": true, "url": {"upload_attachment": "/summernote/upload_attachment/"}, "airMode": false, "direction": "ltr", "toolbar": [["style", ["style"]], ["font", ["bold", "italic", "underline", "superscript", "subscript", "strikethrough", "clear"]], ["fontname", ["fontname"]], ["fontsize", ["fontsize"]], ["color", ["color"]], ["para", ["ul", "ol", "paragraph"]], ["height", ["height"]], ["table", ["table"]], ["insert", ["link", "picture", "video", "hr"]], ["view", ["fullscreen", "codeview"]], ["help", ["help"]]], "height": "700"};
+							</script>
+							<iframe id="id_text_iframe" src="/summernote/editor/id_text/" frameborder="0" cols="40" rows="10" width="100%" height="700" style="height: 700px;"></iframe>
+						</div>
+
+				<div class="row">
+					<div class="col-xs-4">
+					<p><label for="id_category">Теги:</label> 
+					<select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
+					    <option value="1">Мероприятия</option>
+					    <option value="2">Походы</option>
+					    <option value="3">Фотографии</option>
+					    <option value="4">Anna</option>
+					    <option value="5">Eleanor</option>
+					</select>
+					</p>
+					<label>Доступные теги:</label> 
+					<p>Мероприятия, Походы, Фотографии, </p>
+					</div>
+				</div>
+					<button type="submit" class="btn btn-default">Сохранить изменения</button>
+					<a href="/blog/"><button class="btn btn-default"> Отмена</button></a>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block extra_js %}<script src="{{ STATIC_URL }}js/jquery.tokenize.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $('#id_category').tokenize();
+</script>
+{% endblock %}
+
+{{ form.as_p }}
+
+<form action="/blog_new/" method="post" role="form">
+	<p><label for="id_title">Заголовок:</label> 
+		<input id="id_title" maxlength="50" name="title" type="text">
+	</p>
+	<p><label for="id_text">Text:</label> 
+		<textarea cols="40" hidden="true" id="id_text" name="text" rows="10" style="display: none;"></textarea>
+		<iframe id="id_text_iframe" src="/summernote/editor/id_text/" frameborder="0" cols="40" rows="10" width="100%" height="700" style="height: 700px;"></iframe>
+	</p>
+	<p><label for="id_state">Статус:</label> 
+		<select id="id_state" name="state">
+			<option value="0">Новость отключена</option>
+			<option value="1" selected="selected">Обычная Новость</option>
+			<option value="2">Важная Новость</option>
+		</select>
+	</p>
+	<p><label for="id_category">Теги:</label> 
+		<select multiple="multiple" id="id_category" name="category">
+			<option value="1">Мероприятия</option>
+			<option value="2">Походы</option>
+			<option value="3">Фотографии</option>
+			<option value="4"></option>
+		</select> 
+	</p>
+	<p><label for="id_if_comments">If comments:</label> 
+		<input checked="checked" id="id_if_comments" name="if_comments" type="checkbox">
+	</p>
+	<button type="submit" class="btn btn-default">Сохранить изменения</button>
+	<a href="/blog/"><button class="btn btn-default"> Отмена</button></a>
+</form>
+
+
+
+<script>
+var settings_id_text = {"lang": "en-US", "width": "100%", "styleWithSpan": true, "url": {"upload_attachment": "/summernote/upload_attachment/"}, "airMode": false, "direction": "ltr", "toolbar": [["style", ["style"]], ["font", ["bold", "italic", "underline", "superscript", "subscript", "strikethrough", "clear"]], ["fontname", ["fontname"]], ["fontsize", ["fontsize"]], ["color", ["color"]], ["para", ["ul", "ol", "paragraph"]], ["height", ["height"]], ["table", ["table"]], ["insert", ["link", "picture", "video", "hr"]], ["view", ["fullscreen", "codeview"]], ["help", ["help"]]], "height": "700"};
+</script>

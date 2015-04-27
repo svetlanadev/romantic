@@ -7,12 +7,12 @@ from django.conf import settings
 class BlogPost(models.Model):
     DISABLE = 0
     ENABLE = 1
-    DELETE = 2
+    HOT_POST = 2
 
     STATE_CHOICE = (
         (DISABLE, 'Новость отключена'),
         (ENABLE, 'Обычная Новость'),
-        (DELETE, 'Важная Новость'),
+        (HOT_POST, 'Важная Новость'),
     )
 
     title = models.CharField(max_length=50, verbose_name=u'Заголовок')
@@ -24,7 +24,7 @@ class BlogPost(models.Model):
                               verbose_name=u'Автор')
     text = models.TextField(verbose_name=u'Страничка')
 
-    state = models.SmallIntegerField(default=DISABLE,
+    state = models.SmallIntegerField(default=ENABLE,
                                      choices=STATE_CHOICE,
                                      verbose_name=u'Статус')
 

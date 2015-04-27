@@ -4,7 +4,7 @@
 
 {% block navbar_block %}
 	{% if profile.moderator or profile.goverment or user.is_superuser %}
-		<li><a href="/admin/force_blog/blogpost/add/"><strong style="font-size:14px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить новость</strong></a></li>
+		<li><a href="/blog_new/"><strong style="font-size:12px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить новость</strong></a></li>
 	{% endif %}
 {% endblock %} 
 

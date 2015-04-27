@@ -4,11 +4,12 @@
 from django import forms
 from django.forms import ModelForm
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
-from force_blog.models import BlogPost
+from force_blog.models import BlogPost, Category
 
 
 class BlogPostForm(ModelForm):
     text = forms.CharField(widget=SummernoteWidget())
+    # category = forms.ModelMultipleChoiceField(queryset=Category.objects.all())
 
     class Meta:
         model = BlogPost

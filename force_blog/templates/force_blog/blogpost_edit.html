@@ -2,24 +2,77 @@
 
 {% block meta_title %}{{ blog.title }} - Редактирование{% endblock %}
 
+{% block navbar_block %}
+	{% if profile.moderator or profile.goverment or user.is_superuser %}
+		<li><a href="/blog_new/"><strong style="font-size:12px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить новость</strong></a></li>
+	{% endif %}
+{% endblock %} 
+
+{% block extra_css %}<link href="{{ STATIC_URL }}css/jquery.tokenize.css" rel="stylesheet" type="text/css">{% endblock %}
+
 {% block main %}
 <!-- Походы -->
 <div class="col-md-9 left">
-<div class="panel panel-default">
-<div class="panel-body">
-<div id="blogpost">
-	<form action="/blog_edit/{{ blog.id }}/" method="post" role="form">
-	  {{ form.non_field_errors }}
-	  {{ form.as_p }}
-	  <button type="submit" class="btn btn-default">Сохранить изменения</button>
-	  <a href="/blog/{{ blog.id }}/">
-	  	<button class="btn btn-default"> Отмена</button>
-	  </a>
-	</form>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div id="blogpost">
+				<form action="/blog_edit/{{ blog.id }}/" method="post" role="form">
+					<div class="row">
+						<div class="col-xs-6">
+						    <input id="id_title" name="title" type="text" class="form-control" placeholder="Заголовок" value="{{ form.title.value }}"><br>
+						</div>
+						<div class="col-xs-3">
+								<select id="id_state" name="state" class="form-control">
+									<option value="0">Новость отключена</option>
+									<option value="1" selected="selected">Обычная Новость</option>
+									<option value="2">Важная Новость</option>
+								</select>
+						</div>
+						<div class="col-xs-3 checkbox">
+							<label>
+							  <input checked="checked" id="id_if_comments" name="if_comments" type="checkbox"> Включить комментарии
+							</label>
+						</div>
+					</div>
+					{{ form.text }}
+
+				<div class="row">
+					<div class="col-xs-4">
+					<p><label for="id_category">Теги:</label> 
+					<select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
+						{% for category in categorys %}
+					    <option value="{{ category.id }}">{{ category.category }}</option>
+					    {% endfor %}
+					    {% for category in blog.category.all %}
+					    <option value="{{ category.id }}" selected="selected">{{ category.category }}</option>
+					    {% endfor %}
+					</select>
+					</p>
+					<label>Доступные теги:</label> 
+					{% for category in categorys %}
+					    {{ category.category }}, 
+					{% endfor %}
+					</div>
+				</div>
+					<button type="submit" class="btn btn-default">Сохранить изменения</button>
+					<a href="/blog/"><button class="btn btn-default"> Отмена</button></a>
+				</form>
+
+			</div>
+		</div>
+	</div>
 </div>
-</div>
-</div>
-</div>
+
+{{ form.as_p }}
+
+
 {% endblock %}
+
+{% block extra_js %}<script src="{{ STATIC_URL }}js/jquery.tokenize.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $('#id_category').tokenize();
+</script>
+{% endblock %}
+
 
 {{ form.as_p }}
