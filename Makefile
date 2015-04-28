@@ -14,3 +14,6 @@ migrate:
 
 schema:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=romantic.settings $(MANAGE) schemamigration blog --auto
+
+port:
+	sudo fuser -k 8000/tcp

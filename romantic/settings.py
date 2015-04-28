@@ -124,8 +124,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = '/home/ukrainem/domains/tkr.od.ua/public_html/media/'
+# MEDIA_ROOT = '/home/ukrainem/domains/tkr.od.ua/public_html/media/'
 STATIC_ROOT = '/home/ukrainem/domains/tkr.od.ua/public_html/static/'
+
+MEDIA_ROOT = u'/media/'
+
+ELFINDER_OPTIONS = {
+    'root': os.path.join(os.getcwd(), 'media', 'uploads'),
+    'URL': '/media/uploads/',
+}
 
 # Additional locations of static files
 STATICFILES_DIRS = (

@@ -8,7 +8,7 @@ from profile.models import CustomUser
 from django.shortcuts import render_to_response, redirect, render
 from power_comments.models import PowerComment
 from power_comments.forms import PowerCommentForm
-from django.utils import simplejson
+# from django.utils import simplejson
 from django.http import HttpResponse
 from random import randint
 from django.template import RequestContext
