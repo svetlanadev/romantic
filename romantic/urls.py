@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     # url(r'^select2/', include('django_select2.urls')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
     url(r'', include('social_auth.urls')),
+    url(r'^cked/', include('cked.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 

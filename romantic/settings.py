@@ -68,6 +68,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'materials',
     'social_auth',
+    'cked',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
