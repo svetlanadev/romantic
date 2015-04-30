@@ -24,9 +24,7 @@ urlpatterns = patterns('',
     url(r'^', include('force_blog.urls')),
     url(r'^', include('power_comments.urls')),
     url(r'^', include('materials.urls')),
-    # url(r'^select2/', include('django_select2.urls')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
-    url(r'', include('social_auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 

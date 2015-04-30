@@ -12,6 +12,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.views.generic.edit import FormView
 from profile.models import CustomUser
+from power_comments.models import PowerComment
 from profile.forms import UserCreateForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 
@@ -83,8 +84,11 @@ def government(request):
 
 @login_required
 def profile(request):
+    print request.user
     profile = CustomUser.objects.get(user=request.user)
-    data = {'profile': profile}
+    comments = PowerComment.objects.filter(owner=profile)
+    print comments
+    data = {'profile': profile, 'comments': comments}
     return render_to_response('profile.html',
                               data,
                               context_instance=RequestContext(request))

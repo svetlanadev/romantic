@@ -4,8 +4,4 @@
 db.sqlite3
 .DS_Store
 .coverage
-local_settings.py
-/static
-/media
-romantic/static/*
 web-secret
