@@ -8,7 +8,7 @@ from cked.widgets import CKEditorWidget
 
 
 class ArticleForm(ModelForm):
-    text = CharField(widget=CKEditorWidget)
+    text = CharField(widget=CKEditorWidget())
 
 
 class BlogPostAdmin(admin.ModelAdmin):

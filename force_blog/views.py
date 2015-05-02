@@ -126,16 +126,10 @@ def blog_new(request):
         
         if form.is_valid():
             # tags = form.cleaned_data['category']
-            print tags
             form.save(owner=profile)
             blog = BlogPost.objects.first()
-            print blog
-            print "+++++++++++"
             for x in tags:
-                print x
-                print '============'
                 tag = Category.objects.get(category=x)
-                print tag
                 blog.category.add(tag)
 
             url = u'/blog/%s' % blog.id

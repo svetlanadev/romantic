@@ -12,7 +12,7 @@ class BlogPost(models.Model):
     STATE_CHOICE = (
         (DISABLE, 'Новость отключена'),
         (ENABLE, 'Обычная Новость'),
-        (HOT_POST, 'Важная Новость'),
+        (HOT_POST, 'Важная Новость (На главной)'),
     )
 
     title = models.CharField(max_length=50, verbose_name=u'Заголовок')

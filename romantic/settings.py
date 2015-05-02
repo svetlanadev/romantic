@@ -137,6 +137,16 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'full',
+#         'height': '700',
+#     },
+#     'awesome_ckeditor': {
+#         'toolbar': 'Basic',
+#     },
+# }
+
 try:
     from local_settings import *
 except ImportError:
