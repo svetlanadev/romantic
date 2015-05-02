@@ -1,4 +1,5 @@
-# coding=utf-8
+# coding: utf-8
+# author: dlyapun
 
 from django import forms
 from django.conf import settings
@@ -73,27 +74,73 @@ class UserLoginForm(AuthenticationForm):
                             'class':'form-control',
                         }))
 
-# class CustomUserForm(ModelForm):
-#     first_name = forms.CharField(max_length=30, required=False)
-#     last_name = forms.CharField(max_length=30, required=False)
-    # new_dirs = forms.CharField(min_length=5,
-    #                            max_length=50,
-    #                            error_messages={'required': 'Миннимум 10 символов'})
 
-#     email = forms.EmailField()
-#     bio = forms.CharField()
-#     date_of_birth = forms.DateTimeField(
-#         label='Дата рождения',
-#         widget=DatePickerWidget(params='dateFormat: "YYYY/DD/MM", minDate:"1/1/1900", pickTime: false, weekStart: 1, autoclose: 1,',
-#                                 attrs={'class': 'form-control', 'onclick': 'picker()', }))
+class CustomUserForm(ModelForm):
+    first_name = forms.CharField(
+                max_length=30,
+                widget=forms.TextInput(attrs={
+                            'placeholder':'Антон',
+                            'class':'form-control',
+                        }))
+    last_name = forms.CharField(
+                max_length=30,
+                widget=forms.TextInput(attrs={
+                            'placeholder':'Иванов',
+                            'class':'form-control',
+                        }))
 
-#     class Meta:
-#         model = settings.AUTH_PROFILE_MODULE
-#         exclude = ['user']
+    about = forms.CharField(
+                max_length=500,
+                widget=forms.Textarea(attrs={
+                            'placeholder':'Пару слов про себя',
+                            'class':'form-control',
+                        }))
+    status = forms.CharField(
+                max_length=50,
+                widget=forms.TextInput(attrs={
+                            'placeholder':'Статус',
+                            'class':'form-control',
+                        }))
+    phone = forms.CharField(
+                max_length=20,
+                required=False,
+                widget=forms.TextInput(attrs={
+                            'placeholder':'Телефон',
+                            'class':'form-control',
+                        }))
+    vk = forms.URLField(
+                max_length=50,
+                required=False,
+                widget=forms.TextInput(attrs={
+                            'placeholder':'Вконтакте',
+                            'class':'form-control',
+                        }))
+    facebook = forms.URLField(
+                max_length=50,
+                required=False,
+                widget=forms.TextInput(attrs={
+                            'placeholder':'Facebook',
+                            'class':'form-control',
+                        }))
+    od_class = forms.URLField(
+                max_length=50,
+                required=False,
+                widget=forms.TextInput(attrs={
+                            'placeholder':'Одноклассники',
+                            'class':'form-control',
+                        }))
+    date_of_birth = forms.DateField(
+                widget=forms.TextInput(attrs={
+                            'placeholder':'Дата Рождения',
+                            'class':'form-control',
+                        }))
 
-#     def save(self, *args, **kw):
-#         super(CustomUserForm, self).save(*args, **kw)
-#         self.instance.user.first_name = self.cleaned_data.get('first_name')
-#         self.instance.user.last_name = self.cleaned_data.get('last_name')
-#         self.instance.user.email = self.cleaned_data.get('email')
-#         self.instance.user.save()
+    class Meta:
+        model = CustomUser
+        exclude = ['user', 'karma', 'writer', 'valid_member', 'moderator', 'goverment', 'instructor',]
+
+    def save(self, *args, **kw):
+        super(CustomUserForm, self).save(*args, **kw)
+        self.instance.user.first_name = self.cleaned_data.get('first_name')
+        self.instance.user.last_name = self.cleaned_data.get('last_name')
+        self.instance.user.save()

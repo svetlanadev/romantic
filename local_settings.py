@@ -18,5 +18,5 @@ DATABASES = {
 
 DEBUG = True
 
-MEDIA_ROOT = os.path.normpath(os.path.join(SITE_ROOT, "../media"))
+MEDIA_ROOT = os.path.normpath(os.path.join(SITE_ROOT, "media"))
 STATIC_ROOT = os.path.normpath(os.path.join(SITE_ROOT, "../static"))

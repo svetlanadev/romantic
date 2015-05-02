@@ -12,8 +12,9 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.views.generic.edit import FormView
 from profile.models import CustomUser
+from materials.models import Material
 from power_comments.models import PowerComment
-from profile.forms import UserCreateForm, UserLoginForm
+from profile.forms import UserCreateForm, UserLoginForm, CustomUserForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -47,6 +48,17 @@ class RegisterFormView(FormView):
         return super(RegisterFormView, self).form_valid(form)
 
 
+    def get_form(self, form_class):
+        return form_class(**self.get_form_kwargs())
+
+
+    def get(self, request, **kwargs):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect("/blog/")
+        else:
+            return self.render_to_response(self.get_context_data(), **kwargs)
+
+
 class LoginFormView(FormView):
     form_class = UserLoginForm
 
@@ -54,7 +66,7 @@ class LoginFormView(FormView):
     template_name = "login.html"
 
     # В случае успеха перенаправим на главную.
-    success_url = "/"
+    success_url = "/blog/"
 
     def form_valid(self, form):
         # Получаем объект пользователя на основе введённых в форму данных.
@@ -65,13 +77,24 @@ class LoginFormView(FormView):
         return super(LoginFormView, self).form_valid(form)
 
 
+    def get_form(self, form_class):
+        return form_class(**self.get_form_kwargs())
+ 
+
+    def get(self, request, **kwargs):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect("/blog/")
+        else:
+            return self.render_to_response(self.get_context_data(), **kwargs)
+
+
 class LogoutView(View):
     def get(self, request):
         # Выполняем выход для пользователя, запросившего данное представление.
         logout(request)
 
         # После чего, перенаправляем пользователя на главную страницу.
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("/blog/")
 
 
 def government(request):
@@ -82,13 +105,42 @@ def government(request):
                               context_instance=RequestContext(request))
 
 
+def profile_edit(request):
+    profile = CustomUser.objects.get(id=request.user.id)
+
+    template = 'profile_edit.html'
+
+    if request.POST:    # If the form has been submitted...
+        form = CustomUserForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():     # All validation rules pass
+            form.save()
+            url = u'/profile/%s' % request.user.id
+            return redirect(url)
+        else:
+            return render_to_response(template, {
+                                      'form': form,
+                                      'profile': profile},
+                                      context_instance=RequestContext(request))
+    else:
+        form = CustomUserForm(
+            instance=profile,
+            initial={
+                'first_name': profile.user.first_name,
+                'last_name': profile.user.last_name,
+                'email': profile.user.email,
+            })
+    return render_to_response(template, {
+                              'form': form,
+                              'profile': profile},
+                              context_instance=RequestContext(request))
+
+
 @login_required
-def profile(request):
-    print request.user
-    profile = CustomUser.objects.get(user=request.user)
-    comments = PowerComment.objects.filter(owner=profile)
-    print comments
-    data = {'profile': profile, 'comments': comments}
+def profile(request, profile_id):
+    profile = CustomUser.objects.get(id=profile_id)
+    comments = PowerComment.objects.filter(owner=profile)[:10]
+    materials = Material.objects.filter(owner=profile).exclude(state=2) 
+    data = {'profile': profile, 'comments': comments, 'materials':materials}
     return render_to_response('profile.html',
                               data,
                               context_instance=RequestContext(request))

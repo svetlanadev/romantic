@@ -1,9 +1,9 @@
 {% load comments_tags %}
-<div>
+<div id="comments">
 	<p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
 	
 	{% for comment in comments %}
-		<div class="row">
+		<div class="row" id="comment_{{ comment.id }}">
 		{% if comment.count_inc %}
 		<div class="col-md-{{ comment.count_inc }}"></div>
 		{% endif %}
