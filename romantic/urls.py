@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
@@ -24,15 +25,11 @@ urlpatterns = patterns('',
     url(r'^', include('force_blog.urls')),
     url(r'^', include('power_comments.urls')),
     url(r'^', include('materials.urls')),
-    # url(r'^select2/', include('django_select2.urls')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
-    url(r'', include('social_auth.urls')),
     url(r'^cked/', include('cked.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 
 if settings.DEBUG:
-    urlpatterns += patterns('',
-        (r'media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': './media/'}),
-    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

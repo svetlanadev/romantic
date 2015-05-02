@@ -1,15 +1,18 @@
+{% load comments_tags %}
 <div class="panel panel-default">
   <div class="panel-body">
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Новые материалы</strong></p><hr>
-  <a href="#"><h5>Отчет о горном походе 5кс. Павлов А.А</a></h5>
-  <a href="#"><h5>Ремонт горелок в походных условиях, Павлов А.А</a></h5>
+  {% for material in materials %}
+    <a href="/materials/{{ material.id }}"><h5>{{ material.title }}</a></h5>
+  {% endfor %}
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Что обсуждают?</strong></p><hr>
-
-  <a href="#"><h5>Добавление статья в категорию "Творчество"</a></h5>
-  <a href="#"><h5>Обсуждение новости "Нужна помощь"</a></h5>
+  {% for comment in comments %}
+    <a href="{{ comment.app }}/"><h5>{% url_with_comment comment.app %}</a></h5>
+  {% endfor %}
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Не пропустите</strong></p>
-  <a href="#"><h5>Скальный выезд, 25-26 апреля</a></h5>
-  <a href="#"><h5>ОВК, 15 мая, 18:00</a></h5>
+  {% for party in partys %}
+    <a href="/{{ party.get_absolute_url }}/"><h5>{{ party.name }}</a></h5>
+  {% endfor %}
 <hr>
   {% for party in partys %}
     <div class="">
@@ -34,4 +37,4 @@
 </div>
 </div>
 
-{% include "page_navigation/party.html" %}
+{% include "page_navigation/sponsors.html" %}

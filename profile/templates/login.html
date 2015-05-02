@@ -8,18 +8,18 @@
   <div class="col-md-4">
     <div class="main">
         <h4>Войдите, или <a href="/register/">Зарегистрируйтесь</a></h4>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6">
               <a href="#" class="btn btn-lg btn-primary btn-block">Facebook</a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
               <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
             </div>
-        </div>
-        <div class="login-or">
+        </div> -->
+        <!-- <div class="login-or">
             <hr class="hr-or">
             <span class="span-or">или</span>
-        </div>
+        </div> -->
         <form method="post" action="" role="form">
             {{ form.non_field_errors }}
                 {{ form.username.errors }}
@@ -31,11 +31,11 @@
               <label for="inputPassword">Пароль</label>
               <!-- <input id="id_password" name="password" type="password"> -->
               {{ form.password }}<br>
-            <div class="checkbox pull-right">
+<!--             <div class="checkbox pull-right">
                 <label>
                 <input type="checkbox">
                 Запомнить меня </label>
-            </div>
+            </div> -->
             <button type="submit" class="btn btn btn-primary">
                 Вход
             </button>

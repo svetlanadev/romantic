@@ -18,6 +18,7 @@
 {% load urltag %}
 {% load bootstrap_pagination %}
 {% load comments_tags %}
+{% load urltag %}
 
 <style type="text/css">
 	.post-header-line { border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
@@ -62,6 +63,31 @@
             	{% for category in blog_post.category.all %}
 					<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> 
 				{% endfor %}
+			{% if profile.moderator == True or user.is_superuser %} 
+		        <div class="btn-group show-on-hover">
+		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+		            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
+		          </button>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
+		            <li><a href="/blog_edit/{{ blog_post.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
+		          </ul>
+		        </div>
+		        {% endif %}
+		        {% if user.is_superuser %} 
+		        	<div class="btn-group show-on-hover">
+		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+		            <span class="glyphicon glyphicon-tower"></span> Admin <span class="caret"></span>
+		          </button>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="{% url_edit blog_post %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
+		            <li><a href="/minus_karma_admin/{{ blog_post.id }}"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Понизить карму на 10</a></li>
+		            <li><a href="#"><span class="glyphicon glyphicon-ban-circle"></span> Забанить пользователя</a></li>
+		            <li class="divider"></li>
+		            <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Бан и скрытие всех постов</a></li>
+		          </ul>
+		        </div>
+		        {% endif %}
         </div>
     </div>
 	<br>

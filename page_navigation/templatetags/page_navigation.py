@@ -6,30 +6,23 @@ from django.core import urlresolvers
 from django.shortcuts import render_to_response, redirect, render
 from django.template import Context
 from party.models import Party
+from materials.models import Material
+from power_comments.models import PowerComment
 
 register = template.Library()
 
 
 @register.simple_tag()
 def page_navigation(request):
-    partys = Party.objects.all()
-    if request.path == "/party/":
-        url = template.loader.get_template("page_navigation/party.html")
-    else:
-    	if request.path == "/login/":
-    		url = template.loader.get_template("page_navigation/null.html")
-    	else:
-        	url = template.loader.get_template("page_navigation/page.html")
+    partys = Party.objects.all()[:5]
+    materials = Material.objects.all()[:5]
+    comments = PowerComment.objects.order_by().values('app').distinct()
+    # comments = {} # словарь объектов с уникальными сериями
+    # for comment in PowerComment.objects.all():
+    #     if comment.app not in comments:
+    #         comments[comment.app] = comment
+    print comments
+    url = template.loader.get_template("page_navigation/page.html")
+    data = {'materials': materials, 'partys': partys, 'comments': comments}
 
-    return url.render(Context({'partys': partys}))
-
-# ('page_navigation/page.html')
-# @register.inclusion_tag('power_comments/comments.html')
-# def power_comments(request, app_url):
-#     comments = PowerComment.objects.all().filter(app=app_url, state=1)
-#     count_comments = comments
-#     data = {'comments': comments,
-#             'app_url': app_url,
-#             'count_comments': count_comments,
-#             'request': request}
-#     return data
+    return url.render(Context(data))

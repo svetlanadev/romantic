@@ -3,18 +3,125 @@
 {% block meta_title %}Профиль - {{ profile.get_full_name }}{% endblock %}
 
 {% block main %}
+{% load urltag %}
+{% load comments_tags %}
+<div class="col-md-9 left">
+<div class="panel panel-default">
+<div class="panel-body">
+    
+    <div class="col-md-4">
+        <center>
+        <img src="{{ profile.avatar.url }}" name="aboutme" width="140" height="140" border="0" class="img-circle"></a>
+        <h3 class="media-heading">{{ profile.get_full_name }} <small>{{ profile.status }}</small></h3>
+        <span><strong>Состоит в: </strong></span>
+            {% if profile.writer %}
+            <span class="label label-default">Писатель</span>
+          {% endif %}
+          {% if profile.valid_member %}
+            <span class="label label-primary">Действильный член</span>
+          {% endif %}
+          {% if profile.moderator %}
+            <span class="label label-info">Модератор</span>
+          {% endif %}
+          {% if profile.goverment %}
+            <span class="label label-success">Правление</span>
+          {% endif %}
+          {% if profile.instructor %}
+            <span class="label label-warning">Инструктор</span>
+          {% endif %}
+          {% if user.is_superuser %} 
+            <span class="label label-danger"><span class="glyphicon glyphicon-tower"></span> Администратор</span>
+          {% endif %}
+        </center>
+        <hr>
+        {% if user.is_authenticated %} 
+        <p><strong>Email: </strong> <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a></p>
+        <p><strong>Телефон: </strong> {{ profile.phone }}</p>
+        {% endif %}
+        <p><strong>О себе: </strong> {{ profile.about }}</p>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
+                    </span> Отчеты/Статьи</a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in">
+                {% for material in materials %}
+                <div class="list-group">
+                  <a href="/materials/{{ material.id }}" class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ material.title }}</h4>
+                    <p class="list-group-item-text">{{ material.status }}</p>
+                  </a>
+                </div>
+                {% endfor %}
 
-<h1 align="center"><strong>Профиль</strong></h1>
-<div id="profile">
-	<div class="col-md-6 right">
-		<h3>Профиль</h3>
-		<img src="{{ profile.avatar.url }}" width="50%" height="100%"><br>
-		ФИО - {{ profile.get_full_name }}<br>
-		email - <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a><br>
-	</div>
-<!-- 	<div class="col-md-6 left">
-		<h3>Поход</h3>
-	</div> -->
-<!-- Комментарии -->
+                <!-- <ul class="list-group">
+                  <li class="list-group-item"><span class="glyphicon glyphicon-pencil text-primary"></span><a href="http://fb.com/moinakbarali">Articles</a>
+                  </li>
+                  <li class="list-group-item"> <span class="glyphicon glyphicon-comment text-success"></span><a href="http://fb.com/moinakbarali">Comments</a><span class="badge">42</span></li>
+                </ul> -->
+                
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-file">
+                    </span> Комментарии</a>
+                </h4>
+              </div>
+              <div id="collapseFour" class="panel-collapse collapse">
+              {% for comment in comments %}
+                <div class="list-group">
+                  <a href="{{ comment.app }}/#comment_{{ comment.id }}" class="list-group-item">
+                    <h5 class="list-group-item-heading" align="center">Тема: {% url_with_comment comment.app %}</h5>
+                    <p class="list-group-item-text">
+                      <span class="glyphicon glyphicon-star text-primary"></span><strong>{{ comment.rating }}</strong>; {{ comment.date_creation }} <br>{{ comment.text }}
+                    </p>
+                  </a>
+                </div>
+              {% endfor %}
+              </div>
+            </div>
+<!--             <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"><span class="glyphicon glyphicon-heart">
+                    </span> Творчетсво</a>
+                </h4>
+              </div>
+              <div id="collapseFive" class="panel-collapse collapse">
+                <div class="list-group">
+                  <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                  </a>
+                </div>
+                <div class="list-group">
+                  <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                  </a>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="col-md-3 right">
+    <!-- Тег, который в зависимости от url возвращает разные шаблоны -->
+    <!-- Допустим, в одном случае он возвратит кусочек мероприятий -->
+    <!-- Ну а в другом вообще ничего -->
+    {% load page_navigation %}
+    {% page_navigation request %}
 </div>
 {% endblock %}
