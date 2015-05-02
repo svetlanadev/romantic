@@ -6,6 +6,10 @@
 {% load urltag %}
 {% load comments_tags %}
 
+
+<div class="col-md-9 left">
+<div class="panel panel-default">
+<div class="panel-body">
 <div id="material">
 	<div class="row" align="">
 		<div class="col-md-1"></div>
@@ -53,7 +57,14 @@
 		{% endif %}
     </div>
 </div>
+</div>
+</div>
+</div>
 
+<div class="col-md-3 right">
+    {% load page_navigation %}
+    {% page_navigation request %}
+</div>
 {% endblock %}
 
 

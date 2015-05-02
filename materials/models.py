@@ -7,26 +7,24 @@ from cked.fields import RichTextField
 
 
 class Material(models.Model):
-    DISABLE = 0
+    SANDBOX = 0
     HIKE = 1
     ART = 2
     PASSPORT = 3
-    SANDBOX = 4
 
     STATE_CHOICE = (
-        (DISABLE, 'Disable'),
+        (SANDBOX, 'Песочница'),
         (HIKE, 'Отчет'),
         (ART, 'Творчество'),
         (PASSPORT, 'Паспорт'),
-        (SANDBOX, 'Песочница'),
     )
 
-    title = models.CharField(max_length=50,
+    title = models.CharField(max_length=150,
                              verbose_name=u'Заголовок',
                              default='Отчет о походе')
     year = models.SmallIntegerField(verbose_name=u'Год', default=2000)
     status = models.CharField(max_length=250,
-                              verbose_name=u'Краткое описание',
+                              verbose_name=u'Маршрут',
                               blank=True, null=True)
 
     # Готовые модели и поля из приложения Hike
@@ -79,6 +77,19 @@ class Material(models.Model):
 
     def get_absolute_url(self):
         return u'/materials/%s' % self.id
+
+    def get_type_material(self):
+        if self.state == 1:
+            name_material = "Отчет"
+        elif self.state == 3:
+            name_material = "Паспорт"
+        elif self.state == 2:
+            name_material = "Творчество"
+        elif self.state == 0:
+            name_material = "Песочница"
+        else:
+            name_material = "errors"
+        return name_material
 
     def __unicode__(self):
         return u'%s, %s, %s, %s, %s, %s' % (self.title,

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block meta_title %}{{ profile.get_full_name }}{% endblock %}
+{% block meta_title %}{{ profile2.get_full_name }}{% endblock %}
 
 {% block main %}
 {% load urltag %}
@@ -10,37 +10,37 @@
 <div class="panel-body">
     <div class="col-md-4">
         <center>
-        <img src="{{ profile.avatar.url }}" name="aboutme" width="200" height="200" border="0" class="img-circle">
-        <h3 class="media-heading">{{ profile.get_full_name }} <small>{{ profile.status }}</small></h3>
+        <img src="{{ profile2.avatar.url }}" name="aboutme" width="200" height="200" border="0" class="img-circle">
+        <h3 class="media-heading">{{ profile2.get_full_name }} <small>{{ profile2.status }}</small></h3>
         <span><strong>Состоит в: </strong></span>
-            {% if profile.writer %}
+            {% if profile2.writer %}
             <span class="label label-default">Писатель</span>
           {% endif %}
-          {% if profile.valid_member %}
+          {% if profile2.valid_member %}
             <span class="label label-primary">Действильный член</span>
           {% endif %}
-          {% if profile.moderator %}
+          {% if profile2.moderator %}
             <span class="label label-info">Модератор</span>
           {% endif %}
-          {% if profile.goverment %}
+          {% if profile2.goverment %}
             <span class="label label-success">Правление</span>
           {% endif %}
-          {% if profile.instructor %}
+          {% if profile2.instructor %}
             <span class="label label-warning">Инструктор</span>
           {% endif %}
-          {% if user.is_superuser %} 
+          {% if profile2.user.is_superuser %} 
             <span class="label label-danger"><span class="glyphicon glyphicon-tower"></span> Администратор</span>
           {% endif %}
         </center>
         <hr>
-        {% if request.user == profile.user %} 
+        {% if profile == profile2 %} 
           <p align="center"><a href="/profile_edit/"><span class="glyphicon glyphicon-pencil"></span> Редактировать профиль</a></p>
         {% endif %}
         {% if user.is_authenticated %} 
-        <p><strong>Email: </strong> <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a></p>
-        <p><strong>Телефон: </strong> {{ profile.phone }}</p>
+        <p><strong>Email: </strong> <a href="mailto:{{ profile2.user.email }}">{{ profile2.user.email }}</a></p>
+        <p><strong>Телефон: </strong> {{ profile2.phone }}</p>
         {% endif %}
-        <p><strong>О себе: </strong> {{ profile.about }}</p>
+        <p><strong>О себе: </strong> {{ profile2.about }}</p>
     </div>
     <div class="col-md-8">
         <div class="row">

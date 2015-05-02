@@ -2,18 +2,13 @@
 
 {% block meta_title %}{{ name_material }}{% endblock %}
 
-{% block navbar_block %}
-	{% if profile.writer or profile.moderator or profile.goverment or user.is_superuser %}
-		<li><a href="/material_new/"><strong style="font-size:14px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить Материал</strong></a></li>
-	{% endif %}
-{% endblock %} 
-
 {% block main %}
 {% load imagekit %}
 {% load urltag %}
 {% load bootstrap_pagination %}
 {% load comments_tags %}
 
+<div class="col-md-9 left">
 <div class="panel panel-default">
 <div class="panel-body">
 <div class="materials">
@@ -47,16 +42,49 @@
 	<div class="row" align="">
 		{% for material in materials %}
 		<div class="col-md-6">
-            <h5><a href="{{ material.get_absolute_url }}">
-                {{ material.title }}, 
-            </a>rate: {{ material.rating }}, {{ material.type_hike.type_hike }}, {{ material.region }}</h5>
-            <p>{{ material.status }}</p>
-            <h2>
+		<div class="panel panel-default">
+  		<div class="panel-body" style="padding: 10px;">
+		<a href="{{ material.get_absolute_url }}"><p align="center"><strong></strong></p></a>
+			<table class="table" style="margin-bottom: 0px;">
+			    <tbody>
+			      <tr>
+			        <td rowspan="3">
+			        	<img src="{{ material.type_hike.image.url }}" class="img-circle img-thumbnail" width="70px">
+			        </td>
+			        <td>Тип: {{ material.type_hike.type_hike }} поход</td>
+			        <td>Сложность: {{ material.difficulty }}</td>
+			        <!-- <td>@mdo</td> -->
+			      </tr>
+			      <tr>
+			        <td>Регион: {{ material.region }}</td>
+			        <td>{{ material.year }} год</td>
+			        <!-- <td>@TwBootstrap</td> -->
+			      </tr>
+			      <tr>
+			        <td colspan="2">Руководитель - {{ material.title }}</td>
+			        <!-- <td>Thornton</td> -->
+			      </tr>
+			    </tbody>
+			</table>
+			<p><strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:280 }}</p>
+		</div>
+		</div>
 		</div>
 		{% endfor %}
-
 	</div>	
 </div>
 </div>
 </div>
+</div>
+
+<div class="col-md-3 right">
+	<!-- Тег, который в зависимости от url возвращает разные шаблоны -->
+	<!-- Допустим, в одном случае он возвратит кусочек мероприятий -->
+	<!-- Ну а в другом вообще ничего -->
+    {% load page_navigation %}
+    {% page_navigation request %}
+</div>
+
 {% endblock %}
+
+

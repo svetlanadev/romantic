@@ -36,12 +36,12 @@ class UserCreateForm(UserCreationForm):
 
     password1 = forms.CharField(
                 max_length=30,
-                widget=forms.TextInput(attrs={
+                widget=forms.PasswordInput(attrs={
                             'class':'form-control',
                         }))
     password2 = forms.CharField(
                 max_length=30,
-                widget=forms.TextInput(attrs={
+                widget=forms.PasswordInput(attrs={
                             'class':'form-control',
                         }))
 
@@ -70,7 +70,7 @@ class UserLoginForm(AuthenticationForm):
 
     password = forms.CharField(
                 max_length=30,
-                widget=forms.TextInput(attrs={
+                widget=forms.PasswordInput(attrs={
                             'class':'form-control',
                         }))
 

@@ -3,7 +3,7 @@
   <div class="panel-body">
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Новые материалы</strong></p><hr>
   {% for material in materials %}
-    <a href="/materials/{{ material.id }}"><h5>{{ material.title }}</a></h5>
+    <a href="/materials/{{ material.id }}"><h5>{{ material.get_type_material }}: {{ material.type_hike.type_hike }}: {{ material.difficulty }}, {{ material.region }}, {{ material.title }}, {{ material.year }} год</a></h5>
   {% endfor %}
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Что обсуждают?</strong></p><hr>
   {% for comment in comments %}
@@ -11,7 +11,7 @@
   {% endfor %}
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Не пропустите</strong></p>
   {% for party in partys %}
-    <a href="/{{ party.get_absolute_url }}/"><h5>{{ party.name }}</a></h5>
+    <a href="/party/{{ party.get_absolute_url }}/"><h5>{{ party.name }}</a></h5>
   {% endfor %}
 <hr>
   {% for party in partys %}

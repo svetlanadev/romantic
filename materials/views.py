@@ -135,6 +135,18 @@ def material_edit(request, material_id):
                               context_instance=RequestContext(request))
 
 
+@login_required
+def material_my(request):
+    user = CustomUser.objects.get(user=request.user)
+    material_enable = Material.objects.filter(owner=user).exclude(state=0)
+    material_disable = Material.objects.filter(owner=user, state=0)
+
+    data = {'materials': material_enable, 'material_disable': material_disable}
+    return render_to_response('materials/material_my.html',
+                              data,
+                              context_instance=RequestContext(request))
+
+
 def _type_material(state):
     if state == 'report':
         type_material = 1
@@ -146,9 +158,9 @@ def _type_material(state):
         type_material = 2
         name_material = "Творчество"
     elif state == 'sandbox':
-        type_material = 4
+        type_material = 0
         name_material = "Песочница"
     else:
-        type_material = 0
+        type_material = 999
         name_material = "errors"
     return type_material, name_material

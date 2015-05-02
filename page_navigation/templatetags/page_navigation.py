@@ -15,7 +15,7 @@ register = template.Library()
 @register.simple_tag()
 def page_navigation(request):
     partys = Party.objects.all()[:5]
-    materials = Material.objects.all()[:5]
+    materials = Material.objects.exclude(state=0)[:5]
     comments = PowerComment.objects.order_by().values('app').distinct()
     # comments = {} # словарь объектов с уникальными сериями
     # for comment in PowerComment.objects.all():

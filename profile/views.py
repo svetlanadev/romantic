@@ -113,7 +113,7 @@ def government(request):
 
 
 def profile_edit(request):
-    profile = CustomUser.objects.get(id=request.user.id)
+    profile = CustomUser.objects.get(user=request.user)
 
     template = 'profile_edit.html'
 
@@ -121,7 +121,7 @@ def profile_edit(request):
         form = CustomUserForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():     # All validation rules pass
             form.save()
-            url = u'/profile/%s' % request.user.id
+            url = u'/profile/%s' % profile.id
             return redirect(url)
         else:
             return render_to_response(template, {
@@ -144,10 +144,10 @@ def profile_edit(request):
 
 @login_required
 def profile(request, profile_id):
-    profile = CustomUser.objects.get(id=profile_id)
-    comments = PowerComment.objects.filter(owner=profile)[:10]
-    materials = Material.objects.filter(owner=profile).exclude(state=2) 
-    data = {'profile': profile, 'comments': comments, 'materials':materials}
+    profile2 = CustomUser.objects.get(id=profile_id)
+    comments = PowerComment.objects.filter(owner=profile2)[:10]
+    materials = Material.objects.filter(owner=profile2).exclude(state=2) 
+    data = {'profile2': profile2, 'comments': comments, 'materials':materials}
     return render_to_response('profile.html',
                               data,
                               context_instance=RequestContext(request))

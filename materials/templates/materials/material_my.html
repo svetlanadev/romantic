@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Мои материалы{% endblock %}
+
+{% block main %}
+{% load imagekit %}
+{% load urltag %}
+{% load bootstrap_pagination %}
+{% load comments_tags %}
+
+<div class="col-md-9 left">
+	<div class="panel panel-default">
+	<div class="panel-body">
+			<p style="font-size:20px;" align="center"><strong>Мои материалы - опубликованы</strong></p>
+			<br>
+			<!-- <div class="login-or">
+	            <hr class="hr-or">
+	            <span class="span-or-public"><strong>Опубликованные</strong></span>
+	        </div> -->
+			{% for material in materials %}
+			<div class="col-md-6">
+	            <h5><a href="{{ material.get_absolute_url }}">
+	                {{ material.title }}, 
+	            </a>rate: {{ material.rating }}, {{ material.type_hike.type_hike }}, {{ material.region }}</h5>
+	            <p>{{ material.status }}</p>
+	            <h2>
+			</div>
+			{% endfor %}
+	</div>
+	</div>
+		<div class="panel panel-default">
+	<div class="panel-body">
+			<p style="font-size:20px;" align="center"><strong>Мои материалы - на модерации</strong></p>
+			<br>
+			<!-- <div class="login-or">
+	            <hr class="hr-or">
+	            <span class="span-or-public"><strong>Опубликованные</strong></span>
+	        </div> -->
+			{% for material in material_disable %}
+			<div class="col-md-6">
+	            <h5><a href="{{ material.get_absolute_url }}">
+	                {{ material.title }}, 
+	            </a>rate: {{ material.rating }}, {{ material.type_hike.type_hike }}, {{ material.region }}</h5>
+	            <p>{{ material.status }}</p>
+	            <h2>
+			</div>
+			{% endfor %}
+	</div>
+	</div>
+</div>
+
+<div class="col-md-3 right">
+    {% load page_navigation %}
+    {% page_navigation request %}
+</div>
+
+
+{% endblock %}

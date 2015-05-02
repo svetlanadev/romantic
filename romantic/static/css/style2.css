@@ -15,6 +15,24 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
   }
+  .span-or-public {
+    display: block;
+    position: absolute;
+    left: 44%;
+    top: -2px;
+    margin-left: -25px;
+    background-color: #fff;
+    text-align: center;
+  }
+  .span-or-not-public {
+    display: block;
+    position: absolute;
+    left: 44%;
+    top: -2px;
+    margin-left: -25px;
+    background-color: #fff;
+    text-align: center;
+  }
   .span-or {
     display: block;
     position: absolute;
@@ -97,3 +115,7 @@ body {
     font-size: 87px;
 }
 #login-nav input { margin-bottom: 15px; }
+
+.table th, .table td { 
+     border-top: none !important; 
+ }

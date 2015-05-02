@@ -5,10 +5,9 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 ELFINDER_OPTIONS = {
     ## required options
-    'root': os.path.join(PROJECT_ROOT, 'media', 'uploads'),
+    'root': '/home/ukrainem/domains/tkr.od.ua/public_html/media/uploads',
     'URL': '/media/uploads/',
 }
-print ELFINDER_OPTIONS
 
 CKEDITOR_OPTIONS = {
     'skin': 'bootstrapck',

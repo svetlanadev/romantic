@@ -2,12 +2,6 @@
 
 {% block meta_title %}Песочница{% endblock %}
 
-{% block navbar_block %}
-	{% if user.is_authenticated %}
-		<li><a href="/sandbox_new/"><strong style="font-size:14px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Материал в песочницу</strong></a></li>
-	{% endif %}
-{% endblock %} 
-
 {% block main %}
 {% load imagekit %}
 {% load urltag %}

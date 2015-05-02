@@ -1,8 +1,5 @@
-<!-- Родительский шаблон, в него мы будем вставлять наши блоки -->
 {% extends "base.html" %} 
 
-<!-- Первый блок meta_title, к который мы встаим просто текст -->
-<!-- Вот так выглядит этот блок в файле base.html - <title></title> -->
 {% block meta_title %}Новости{% endblock %} 
 
 {% block navbar_block %}
@@ -11,10 +8,8 @@
 	{% endif %}
 {% endblock %} 
 
-<!-- Открываем новый блок -->
 {% block main %}
-<!-- {% load imagekit %} -->
-<!-- Загружаем пользовательские теги -->
+
 {% load urltag %}
 {% load bootstrap_pagination %}
 {% load comments_tags %}
