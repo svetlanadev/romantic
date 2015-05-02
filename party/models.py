@@ -2,17 +2,18 @@
 
 from django.db import models
 from force_blog.models import AttachedFiles, Category
+from cked.fields import RichTextField
 
 
 class Party(models.Model):
     DISABLE = 0
     ENABLE = 1
-    DELETE = 2
+    PARTY = 2
 
     STATE_CHOICE = (
         (DISABLE, 'Disable'),
-        (ENABLE, 'Enable'),
-        (DELETE, 'Delete'),
+        (ENABLE, 'Встреча'),
+        (PARTY, 'Мероприятие'),
     )
 
     name = models.CharField(max_length=50, verbose_name=u'Мероприятие')
@@ -21,7 +22,7 @@ class Party(models.Model):
     date_start = models.DateTimeField(verbose_name=u'Начало мероприятия')
     data_finish = models.DateTimeField(verbose_name=u'Конец мероприятия')
 
-    state = models.SmallIntegerField(default=DISABLE,
+    state = models.SmallIntegerField(default=PARTY,
                                      choices=STATE_CHOICE,
                                      verbose_name=u'Статус')
 
@@ -31,7 +32,7 @@ class Party(models.Model):
     category = models.ManyToManyField(Category,
                                       verbose_name=u'Категории',
                                       related_name="party_category")
-    image = models.ImageField(upload_to='partys/')
+    image = models.ImageField(upload_to='PartyImages/')
     if_comments = models.BooleanField(default=True)
 
     class Meta:

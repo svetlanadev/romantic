@@ -54,7 +54,6 @@ INSTALLED_APPS = (
     'hike',
     'profile',
     'imagekit',
-    'django_summernote',
     'party',
     'force_blog',
     'bootstrap_pagination',
@@ -95,18 +94,24 @@ ROOT_URLCONF = 'romantic.urls'
 WSGI_APPLICATION = 'romantic.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',     # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),                        # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    "default": {
+        # Add "postgresql_psycopg2", "mysql", "sqlite3" or "oracle".
+        "ENGINE": "django.db.backends.mysql",
+        # DB name or path to database file if using sqlite3.
+        "NAME": "ukrainem_tkr",
+        # Not used with sqlite3.
+        "USER": "ukrainem_tkr",
+        # Not used with sqlite3.
+        "PASSWORD": "qwerty123456",
+        # Set to empty string for localhost. Not used with sqlite3.
+        "HOST": "10.0.0.2",
+        # Set to empty string for default. Not used with sqlite3.
+        "PORT": "",
     }
 }
 
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -116,15 +121,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-# MEDIA_ROOT = '/home/ukrainem/domains/tkr.od.ua/public_html/media/'
+MEDIA_ROOT = '/home/ukrainem/domains/tkr.od.ua/public_html/media/'
 STATIC_ROOT = '/home/ukrainem/domains/tkr.od.ua/public_html/static/'
 
-MEDIA_ROOT = u'/media/'
+# MEDIA_ROOT = u'/media/'
 
-ELFINDER_OPTIONS = {
-    'root': os.path.join(os.getcwd(), 'media', 'uploads'),
-    'URL': '/media/uploads/',
-}
+# ELFINDER_OPTIONS = {
+#     'root': os.path.join(os.getcwd(), 'media', 'uploads'),
+#     'URL': '/media/uploads/',
+# }
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -137,16 +142,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'toolbar': 'full',
-#         'height': '700',
-#     },
-#     'awesome_ckeditor': {
-#         'toolbar': 'Basic',
-#     },
-# }
-
 try:
     from local_settings import *
 except ImportError:
@@ -154,9 +149,10 @@ except ImportError:
 
 
 try:
-    from django_summernote_settings import *
+    from cked_settings import *
 except ImportError:
     pass
+
 
 SOCIAL_AUTH_FACEBOOK_KEY = '1602017563346275'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'ebc2b04baf9d0421d766d31be62e8e2b'

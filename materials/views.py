@@ -23,13 +23,13 @@ def materials(request, state):
                               context_instance=RequestContext(request))
 
 
-def sandbox(request, state):
-    type_material, name_material = _type_material(state)
-    materials = Material.objects.all().filter(state=type_material)
-    data = {'materials': materials, }
-    return render_to_response('materials/sandbox.html',
-                              data,
-                              context_instance=RequestContext(request))
+# def sandbox(request, state):
+#     type_material, name_material = _type_material(state)
+#     materials = Material.objects.all().filter(state=type_material)
+#     data = {'materials': materials, }
+#     return render_to_response('materials/sandbox.html',
+#                               data,
+#                               context_instance=RequestContext(request))
 
 
 def material_detail(request, material_id):
@@ -55,33 +55,33 @@ def library(request):
                               context_instance=RequestContext(request))
 
 
-@login_required
-def sandbox_new(request):
-    profile = CustomUser.objects.get(user=request.user)
-    type_hike = TypeHike.objects.all()
-    region = Region.objects.all()
-    difficulty = Difficulty.objects.all()
-    if request.method == "POST":
-        form = MaterialForm(request.POST)
-        if form.is_valid():
-            material = form.save(owner=profile)
-            material_last = Material.objects.first()
-            url = u'/materials/%s' % material_last.id
-            return redirect(url)
-        else:
-            data = {'form': form, 'type_hikes': type_hike,
-                    'regions': region, 'difficultys': difficulty}
-            return render_to_response('materials/sandbox_new.html',
-                                      data,
-                                      context_instance=RequestContext(request))
+# @login_required
+# def sandbox_new(request):
+#     profile = CustomUser.objects.get(user=request.user)
+#     type_hike = TypeHike.objects.all()
+#     region = Region.objects.all()
+#     difficulty = Difficulty.objects.all()
+#     if request.method == "POST":
+#         form = MaterialForm(request.POST)
+#         if form.is_valid():
+#             material = form.save(owner=profile)
+#             material_last = Material.objects.first()
+#             url = u'/materials/%s' % material_last.id
+#             return redirect(url)
+#         else:
+#             data = {'form': form, 'type_hikes': type_hike,
+#                     'regions': region, 'difficultys': difficulty}
+#             return render_to_response('materials/sandbox_new.html',
+#                                       data,
+#                                       context_instance=RequestContext(request))
 
-    else:  # GET
-        form = MaterialForm()
-        data = {'form': form, 'type_hikes': type_hike,
-                'regions': region, 'difficultys': difficulty}
-        return render_to_response('materials/sandbox_new.html',
-                                  data,
-                                  context_instance=RequestContext(request))
+#     else:  # GET
+#         form = MaterialForm()
+#         data = {'form': form, 'type_hikes': type_hike,
+#                 'regions': region, 'difficultys': difficulty}
+#         return render_to_response('materials/sandbox_new.html',
+#                                   data,
+#                                   context_instance=RequestContext(request))
 
 
 @login_required

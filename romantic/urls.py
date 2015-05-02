@@ -20,7 +20,6 @@ urlpatterns = patterns('',
 
     url(r'^', include('hike.urls')),
     url(r'^', include('profile.urls')),
-    url(r'^summernote/', include('django_summernote.urls')),
     url(r'^', include('party.urls')),
     url(r'^', include('force_blog.urls')),
     url(r'^', include('power_comments.urls')),

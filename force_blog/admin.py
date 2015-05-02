@@ -1,7 +1,6 @@
 # coding=utf-8
 
 from django.contrib import admin
-from django_summernote.admin import SummernoteModelAdmin
 from force_blog.models import BlogPost, AttachedFiles, Category, BlogEdit, DefaultImageBlog
 from django.forms import CharField, ModelForm
 from cked.widgets import CKEditorWidget
@@ -13,7 +12,7 @@ class ArticleForm(ModelForm):
 
 class BlogPostAdmin(admin.ModelAdmin):
     form = ArticleForm
-    filter_horizontal = ('files', 'category', 'blog_edit')
+    filter_horizontal = ('files', 'category')
     list_display = (
         'title', 'date_publication', 'owner', 'rating', 'state', 'if_comments')
     list_filter = ('date_creation',)

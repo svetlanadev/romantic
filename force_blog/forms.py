@@ -3,14 +3,12 @@
 
 from django import forms
 from django.forms import ModelForm
-from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from force_blog.models import BlogPost, Category
 from cked.widgets import CKEditorWidget
 
 
 class BlogPostForm(ModelForm):
     text = forms.CharField(widget=CKEditorWidget())
-    # category = forms.ModelMultipleChoiceField(queryset=Category.objects.all())
 
     class Meta:
         model = BlogPost

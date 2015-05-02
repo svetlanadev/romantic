@@ -48,15 +48,22 @@ class RegisterFormView(FormView):
         return super(RegisterFormView, self).form_valid(form)
 
 
-    def get_form(self, form_class):
-        return form_class(**self.get_form_kwargs())
+    # def get_form_kwargs(self):
+    #     kwargs = super(RegisterFormView, self).get_form_kwargs()
+    #     kwargs['request'] = self.request
+    #     print kwargs
+    #     return kwargs
 
 
-    def get(self, request, **kwargs):
-        if request.user.is_authenticated():
-            return HttpResponseRedirect("/blog/")
-        else:
-            return self.render_to_response(self.get_context_data(), **kwargs)
+    # def get_form(self, form_class):
+    #     return form_class(**self.get_form_kwargs())
+
+
+    # def get(self, request, **kwargs):
+    #     if request.user.is_authenticated():
+    #         return HttpResponseRedirect("/blog/")
+    #     else:
+    #         return self.render_to_response(self.get_context_data(), **kwargs)
 
 
 class LoginFormView(FormView):
@@ -77,15 +84,15 @@ class LoginFormView(FormView):
         return super(LoginFormView, self).form_valid(form)
 
 
-    def get_form(self, form_class):
-        return form_class(**self.get_form_kwargs())
+    # def get_form(self, form_class):
+    #     return form_class(**self.get_form_kwargs())
  
 
-    def get(self, request, **kwargs):
-        if request.user.is_authenticated():
-            return HttpResponseRedirect("/blog/")
-        else:
-            return self.render_to_response(self.get_context_data(), **kwargs)
+    # def get(self, request, **kwargs):
+    #     if request.user.is_authenticated():
+    #         return HttpResponseRedirect("/blog/")
+    #     else:
+    #         return self.render_to_response(self.get_context_data(), **kwargs)
 
 
 class LogoutView(View):

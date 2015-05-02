@@ -26,15 +26,3 @@ class CustomUserAdmin(admin.ModelAdmin):
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(CustomUser, CustomUserAdmin)
-
-
-# class MaterialAdmin(SummernoteModelAdmin):
-#     filter_horizontal = ('files',)
-#     list_display = ('title', 'owner', 'state')
-#     list_filter = ('date_creation',)
-#     ordering = ('-date_creation',)
-
-
-# class DirsAdmin(admin.ModelAdmin):
-# 	list_display = ('dir_name', 'state')
-# 	filter_horizontal = ('materials',)

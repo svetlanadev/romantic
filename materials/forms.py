@@ -3,12 +3,12 @@
 
 from django import forms
 from django.forms import ModelForm
-from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+from cked.widgets import CKEditorWidget
 from materials.models import Material
 
 
 class MaterialForm(ModelForm):
-    text = forms.CharField(widget=SummernoteWidget())
+    text = forms.CharField(widget=CKEditorWidget())
 
     class Meta:
         model = Material

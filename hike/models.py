@@ -3,21 +3,30 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
+from cked.fields import RichTextField
 
 
 class Hike(models.Model):
-    PROCESS = 0
-    COMPLETE = 1
-    FAIL = 2
+    NEW = 0
+    PROCESS = 1
+    COMPLETE = 2
 
     STATE_CHOICE = (
+        (NEW, 'Подготовка к походу'),
+        (PROCESS, 'В походе'),
         (COMPLETE, 'Поход завершен'),
-        (PROCESS, 'В процессе'),
-        (FAIL, 'Поход не пройден'),
+    )
+
+    STATE_CHOICE_GROUP = (
+        (NEW, 'Группы нет'),
+        (PROCESS, 'Группа набирается'),
+        (COMPLETE, 'Группа набрана'),
     )
 
     user = models.ForeignKey(settings.AUTH_PROFILE_MODULE,  verbose_name=u'Руководитель')
     type_hike = models.ForeignKey('TypeHike',  verbose_name=u'Тип похода')
+
+    text = models.TextField(verbose_name=u'Страничка', blank=True, null=True)
 
     creation_date = models.DateTimeField(auto_now_add=True)
     date_start = models.DateField(verbose_name=u'Начало похода', blank=True, null=True)
@@ -25,9 +34,10 @@ class Hike(models.Model):
 
     difficulty = models.ForeignKey('Difficulty', verbose_name=u'Категория')
 
-    requirements = models.TextField(verbose_name=u'Рекомендации')
+    state_group = models.SmallIntegerField(default=PROCESS,
+                                      choices=STATE_CHOICE_GROUP,
+                                      verbose_name=u'Статус')
 
-    state_group = models.ForeignKey('StateGroup', verbose_name=u'Группа')
     region = models.ForeignKey('Region', verbose_name=u'Район похода')
 
     status = models.SmallIntegerField(default=PROCESS,
@@ -54,6 +64,8 @@ class Hike(models.Model):
 # Тип похода - горный, или пеший например
 class TypeHike(models.Model):
     type_hike = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='TypeHikeImage/',
+                              verbose_name=u'Тип похода - изображение')
 
     class Meta:
         verbose_name = 'Тип похода'
@@ -68,30 +80,19 @@ class Region(models.Model):
     region = models.CharField(max_length=50)
 
     class Meta:
+        ordering = ["-region"]
         verbose_name = 'Регион'
         verbose_name_plural = 'Регионы'
 
     def __unicode__(self):
         return self.region
 
-
-# Состояние группы - набрана или нет
-class StateGroup(models.Model):
-    state_group = models.TextField()
-
-    class Meta:
-        verbose_name = 'Состояние группы'
-        verbose_name_plural = 'Состояния группы'
-
-    def __unicode__(self):
-        return self.state_group
-
-
 # Сложность похода
 class Difficulty(models.Model):
     difficulty = models.CharField(max_length=50)
 
     class Meta:
+        ordering = ["-difficulty"]
         verbose_name = 'Сложность'
         verbose_name_plural = 'Сложность'
 

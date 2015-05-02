@@ -91,12 +91,14 @@ class CustomUserForm(ModelForm):
 
     about = forms.CharField(
                 max_length=500,
+                required=False,
                 widget=forms.Textarea(attrs={
                             'placeholder':'Пару слов про себя',
                             'class':'form-control',
                         }))
     status = forms.CharField(
                 max_length=50,
+                required=False,
                 widget=forms.TextInput(attrs={
                             'placeholder':'Статус',
                             'class':'form-control',
@@ -130,6 +132,7 @@ class CustomUserForm(ModelForm):
                             'class':'form-control',
                         }))
     date_of_birth = forms.DateField(
+                required=False,
                 widget=forms.TextInput(attrs={
                             'placeholder':'Дата Рождения',
                             'class':'form-control',

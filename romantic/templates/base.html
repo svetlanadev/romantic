@@ -41,8 +41,11 @@
           <li><a href="/report/">Отчеты походов</a></li>
           <li><a href="/art/">Творчество</a></li>
           <li><a href="/art/">Статьи</a></li>
-          <li class="divider"></li>
-          <li><a href="/material_new/">Добавить</a></li>
+          {% if user.is_authenticated %} 
+            <li class="divider"></li>
+            <li><a href="/material_new/">Добавить материал</a></li>
+            <li><a href="/material_my/">Мои материалы</a></li>
+          {% endif %}
         </ul>
       </li>
       {% block navbar_block %}{% endblock %}
@@ -72,7 +75,9 @@
                             <div class="col-lg-8">
                                 <p class="text-left"><strong><a href="/profile_edit/"><span class="glyphicon glyphicon-pencil"></span></a> {{ user.get_full_name }}</strong></p>
                                 <p class="text-left"><span class="glyphicon glyphicon-envelope"></span> {{ user.email }}</p>
+                                {% if profile.phone %}
                                 <p class="text-left"><span class="glyphicon glyphicon-phone"></span> {{ profile.phone }}</p>
+                                {% endif %}
                                 <p class="text-left"><span class="glyphicon glyphicon-star"></span> Карма: {{ profile.karma }}</p>
                             </div>
                         </div>

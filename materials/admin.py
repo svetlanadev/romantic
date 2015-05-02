@@ -1,11 +1,17 @@
 # coding=utf-8
 
 from django.contrib import admin
-from django_summernote.admin import SummernoteModelAdmin
 from materials.models import *
+from cked.widgets import CKEditorWidget
+from django.forms import CharField, ModelForm
 
 
-class MaterialAdmin(SummernoteModelAdmin):
+class ArticleForm(ModelForm):
+    text = CharField(widget=CKEditorWidget())
+
+
+class MaterialAdmin(admin.ModelAdmin):
+    form = ArticleForm
     filter_horizontal = ('files',)
     list_display = ('title', 'owner', 'state')
     list_filter = ('date_creation',)

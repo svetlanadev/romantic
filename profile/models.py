@@ -49,7 +49,7 @@ class CustomUser(models.Model):
     moderator = models.BooleanField(default=False, verbose_name=u'Модератор') 
     goverment = models.BooleanField(default=False, verbose_name=u'Правление')
     instructor = models.BooleanField(default=False, verbose_name=u'Инструктор')
-    # black = models.BooleanField(default=False, verbose_name=u'Black')
+    black = models.BooleanField(default=False, verbose_name=u'Black')
 
     objects = UserManager()
 

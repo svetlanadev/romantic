@@ -3,6 +3,7 @@
 from django.db import models
 from django.conf import settings
 from hike.models import *
+from cked.fields import RichTextField
 
 
 class Material(models.Model):
