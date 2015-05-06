@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect, render
 from django.template import RequestContext
 from django.views.generic import ListView, DetailView
-from materials.forms import MaterialForm
+from materials.forms import MaterialForm, AttachedFilesForm
 from materials.models import Material, Dirs
 from hike.models import TypeHike, Region, Difficulty
 from profile.models import CustomUser
@@ -94,14 +94,14 @@ def material_new(request):
     difficulty = Difficulty.objects.all()
     if request.method == "POST":
         form = MaterialForm(request.POST)
-        print form.errors
+        form_file = AttachedFilesForm(request.POST, request.FILES)
         if form.is_valid():
             material = form.save(owner=owner)
             material_last = Material.objects.first()
             url = u'/materials/%s' % material_last.id
             return redirect(url)
         else:
-            data = {'form': form, 'type_hikes': type_hike,
+            data = {'form': form, 'form_file': form_file, 'type_hikes': type_hike,
                     'regions': region, 'difficultys': difficulty}
             return render_to_response('materials/material_new.html',
                                       data,
@@ -109,7 +109,8 @@ def material_new(request):
 
     else:  # GET
         form = MaterialForm()
-        data = {'form': form, 'type_hikes': type_hike,
+        form_file = AttachedFilesForm()
+        data = {'form': form, 'form_file': form_file, 'type_hikes': type_hike,
                 'regions': region, 'difficultys': difficulty}
         return render_to_response('materials/material_new.html',
                                   data,

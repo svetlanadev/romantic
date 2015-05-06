@@ -21,9 +21,9 @@ class Material(models.Model):
 
     title = models.CharField(max_length=150,
                              verbose_name=u'Заголовок',
-                             default='Отчет о походе')
+                             default='Руководитель')
     year = models.SmallIntegerField(verbose_name=u'Год', default=2000)
-    status = models.CharField(max_length=250,
+    status = models.CharField(max_length=800,
                               verbose_name=u'Маршрут',
                               blank=True, null=True)
 

@@ -4,7 +4,7 @@
 from django import forms
 from django.forms import ModelForm
 from cked.widgets import CKEditorWidget
-from materials.models import Material
+from materials.models import Material, AttachedFiles
 
 
 class MaterialForm(ModelForm):
@@ -21,3 +21,9 @@ class MaterialForm(ModelForm):
         obj.owner = owner
         obj.save()
         return obj
+
+
+class AttachedFilesForm(ModelForm):
+
+    class Meta:
+        model = AttachedFiles

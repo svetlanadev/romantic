@@ -51,7 +51,6 @@ class RegisterFormView(FormView):
     # def get_form_kwargs(self):
     #     kwargs = super(RegisterFormView, self).get_form_kwargs()
     #     kwargs['request'] = self.request
-    #     print kwargs
     #     return kwargs
 
 

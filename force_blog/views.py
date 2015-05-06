@@ -21,8 +21,18 @@ class BlogPostListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
-            'category', 'karma_users').exclude(state=0)
+        if not self.request.user.is_authenticated():
+            qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
+                    'category', 'karma_users').exclude(state=0)
+            return qs
+        else:
+            profile = CustomUser.objects.get(user=self.request.user)
+        if profile.moderator or profile.goverment or profile.user.is_superuser:
+            qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
+                    'category', 'karma_users')
+        else:
+            qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
+                    'category', 'karma_users').exclude(state=0)
         return qs
 
     def get_context_data(self, **kwargs):

@@ -17,6 +17,14 @@
 <body id="{% block body_id %}body{% endblock %}">
 
 <nav class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+  </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
         <p class="navbar-text" style="opacity: 0;">==Дима Ляпун тут был==</p>
@@ -43,18 +51,23 @@
           <li><a href="/art/">Статьи</a></li>
           {% if user.is_authenticated %} 
             <li class="divider"></li>
-            <li><a href="/material_new/">Добавить материал</a></li>
             <li><a href="/material_my/">Мои материалы</a></li>
+          {% endif %}
+          {% if user.is_authenticated %} 
+          <li><a href="/material_new/" style="color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить материал</a></li>
+          {% endif %}
+          {% if profile.moderator or profile.goverment or user.is_superuser %}
+            <li><a href="/blog_new/" style="color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить новость</a></li>
           {% endif %}
         </ul>
       </li>
       {% block navbar_block %}{% endblock %}
-      <!-- {% if user.is_authenticated  %} -->
-      <!-- {% endif %} -->
-
-      <!-- {% if profile.writer or profile.moderator or profile.goverment or user.is_superuser %}
-        <li><a href="/material_new/"><strong>Добавить материал</strong></a></li>
-      {% endif %} -->
+      {% if user.is_authenticated %} 
+      <li><a href="/material_new/" style="color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span><strong> Добавить материал</strong></a></li>
+      {% endif %}
+      {% if profile.moderator or profile.goverment or user.is_superuser %}
+        <li><a href="/blog_new/" style="color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span><strong> Добавить новость</strong></a></li>
+      {% endif %}
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
