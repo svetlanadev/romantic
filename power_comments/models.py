@@ -29,12 +29,12 @@ class PowerComment(models.Model):
                                      choices=STATE_CHOICE,
                                      verbose_name=u'Статус')
     app = models.CharField(max_length=1000)
-    position = models.SmallIntegerField(default=0)
+    position = models.SmallIntegerField(default=1)
     count_inc = models.SmallIntegerField(verbose_name=u'Кол-во вложений', blank=True, null=True,)
     pre_comment = models.CharField(max_length=1000, verbose_name=u'Пре коммент', blank=True, null=True,)
 
     class Meta:
-        ordering = ["date_creation"]
+        ordering = ["position"]
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
 

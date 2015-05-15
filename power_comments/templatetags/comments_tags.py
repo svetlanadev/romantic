@@ -22,6 +22,17 @@ def power_comments(request, app_url):
 
 
 @register.simple_tag()
+def count_inc_power_comments(count_inc):
+    if count_inc == None:
+        s = '<div class="col-md-10">'
+    else:
+        count = int(count_inc)
+        total = 10 - int(count_inc)
+        s = '<div class="col-md-%s"></div><div class="col-md-%s">' % (count, total)
+    return s
+
+
+@register.simple_tag()
 def count_power_comments(app_url):
     comments = PowerComment.objects.all().filter(app=app_url, state=1)
     count_power_comments = comments.count()

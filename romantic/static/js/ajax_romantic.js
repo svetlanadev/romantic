@@ -1,5 +1,22 @@
 // Магія розпочнеться лише після повного завантаження сторінки
 $(document).ready(function () {
+	$('.responce_comment').click(function()  {
+		var id = parseInt($(this).attr('id').split('-')[1]); //находим id
+		var user_name = $('#comment-'+id).attr('title');
+		// $('#id_text_comment').val(user_name+', ');
+		$('#comment_text').html('Ответ пользователю: '+user_name);
+
+		// var title = $(this).attr('title');
+		console.log(id, user_name, id);
+		$('#id_last_comment').val(id);
+		// return false; //запрещаем переход по ссылке
+	});
+	$('.response_default').click(function()  {
+		$('#comment_text').html('Новый комментарий');
+		$('#id_last_comment').val(0);
+		return false; //запрещаем переход по ссылке
+	});
+
     // Посилання з id="test" буде тригером події
     // $("#test_comment").click(function() {
     //     // AJAX-запит на потрібну адресу
@@ -84,7 +101,7 @@ $(document).ready(function () {
 						$('#new_comment_form').removeClass("has-error");
 						$('#comment_alert_dander').hide()
 						$('#id_text_comment').val("");
-						$('#power_comments').append(data);
+						$('#power_comments').html(data);
 					}
 				}
 				});

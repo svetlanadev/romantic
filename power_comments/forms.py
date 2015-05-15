@@ -5,6 +5,6 @@ from django import forms
 
 
 class PowerCommentForm(forms.Form):
-    text = forms.CharField(min_length=5,
-                           max_length=400,
-                           error_messages={'required': 'Миннимум 5 символов'})
+    text = forms.CharField(min_length=1,
+    					   max_length=1000,
+                           error_messages={'required': 'Максимум 1000 символов'})

@@ -23,7 +23,7 @@
 		<div class="col-md-4"><small>
 		Автор: <a href="{{ material.owner.get_absolute_url }}"><span class="glyphicon glyphicon-user"></span> {{ material.owner.get_full_name }}</a><br>
 		
-		{% if user.is_authenticated %}
+		<!-- {% if user.is_authenticated %}
 		<form action="/karma_force_blog/" method="post" role="form">{% csrf_token %}
 			Рейтинг:
 	  		<input type="hidden" name="id_blogpost" value="{{ material.id }}" />
@@ -33,7 +33,7 @@
 	  	</form>
 		{% else %}
 		    Рейтинг: <span class="badge"> {{ material.rating }}</span>
-		{% endif %}
+		{% endif %} -->
 		
 		</div>
 	</div>

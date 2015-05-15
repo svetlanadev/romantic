@@ -8,10 +8,11 @@ from profile.models import CustomUser
 from django.shortcuts import render_to_response, redirect, render
 from power_comments.models import PowerComment
 from power_comments.forms import PowerCommentForm
-# from django.utils import simplejson
+from django.utils import simplejson
 from django.http import HttpResponse
 from random import randint
 from django.template import RequestContext
+from django.core.exceptions import ObjectDoesNotExist
 
 
 @login_required
@@ -137,20 +138,76 @@ def new_power_comment(request):
     results = {'success':False}
 
     if request.is_ajax():
-        id_app = request.POST['id_app']
         form = PowerCommentForm(request.POST)
         text = request.POST['text']
         if form.is_valid():
-            comment = PowerComment(text=text,
-                                   app=id_app,
-                                   owner=owner)
-            comment.save()
-            new_comment = PowerComment.objects.last()
-            return render_to_response('power_comments/new_comment.html', { 
-                                      'comment': new_comment },
-                                      context_instance=RequestContext(request))
+            id_app = request.POST['id_app']
+            id_last_comment = request.POST['id_last_comment']
+            print id_last_comment
+
+            if id_last_comment != '0':
+                pre_comment = PowerComment.objects.get(id=id_last_comment)
+                print "PRE COMMENT:"
+                print pre_comment
+                try:
+                    last_comment = PowerComment.objects.filter(pre_comment=id_last_comment).last()
+                    if last_comment == None:
+                        position = pre_comment.position + 1
+
+                    else:
+                        position = last_comment.position + 1
+
+                except ObjectDoesNotExist:
+                    position = pre_comment.position + 1
+
+                if pre_comment.count_inc:
+                    count_inc = pre_comment.count_inc + 1
+                else:
+                    count_inc = 1
+
+                print position, pre_comment.id
+                comment = PowerComment(text=text,
+                                       app=id_app,
+                                       owner=owner,
+                                       position=position,
+                                       pre_comment=pre_comment.id,
+                                       count_inc=count_inc)
+                comment.save()
+                all_comments = PowerComment.objects.filter(app=id_app, position__gt=position)
+                for comment in all_comments:
+                    comment.position += 1
+                    comment.save()
+
+                comments = PowerComment.objects.all().filter(app=id_app, state=1)
+                new_comment = PowerComment.objects.last()
+                return render_to_response('power_comments/new_comment.html', { 
+                                          'comments': comments },
+                                          context_instance=RequestContext(request))
+                
+            
+            else:
+                try:
+                    last_comment = PowerComment.objects.filter(app=id_app).last()
+                    if last_comment == None:
+                        position = 1
+                    else:
+                        position = last_comment.position + 1
+                except ObjectDoesNotExist:
+                    position = 1
+                
+
+                comment = PowerComment(text=text,
+                                       app=id_app,
+                                       owner=owner,
+                                       position=position)
+                comment.save()
+                new_comment = PowerComment.objects.last()
+                comments = PowerComment.objects.all().filter(app=id_app, state=1)
+                return render_to_response('power_comments/new_comment.html', { 
+                                          'comments': comments },
+                                          context_instance=RequestContext(request))
         else:
-            results = {'success':False, 'message': 'Минимум 5 символов', 'text': text}
+            results = {'success':False, 'message': 'Максимум 1000 символов', 'text': text}
 
     json = simplejson.dumps(results)
     return HttpResponse(json, mimetype='application/json')
