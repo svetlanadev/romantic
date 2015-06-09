@@ -1,20 +1,11 @@
 // Магія розпочнеться лише після повного завантаження сторінки
 $(document).ready(function () {
-	handleKarmaChange();
-
-	$('.responce_comment').click(function()  {
-		var id = parseInt($(this).attr('id').split('-')[1]); //находим id
-		var user_name = $('#comment-'+id).attr('title');
-		// $('#id_text_comment').val(user_name+', ');
-		$('#comment_text').html('Ответ пользователю: '+user_name);
-
-		// var title = $(this).attr('title');
-		$('#id_last_comment').val(id);
-		// return false; //запрещаем переход по ссылке
-	});
+	setCommentsHandlers();
+	
 	$('.response_default').click(function()  {
 		$('#comment_text').html('Новый комментарий');
 		$('#id_last_comment').val(0);
+		console.log('response_default');
 		return false; //запрещаем переход по ссылке
 	});
 
@@ -29,8 +20,6 @@ $(document).ready(function () {
     // });
 	
 	
-	
-
 	$('.new_power_comment').submit(function(e){
 		//отменяем стандартное действие при отправке формы
 		e.preventDefault();
@@ -56,14 +45,14 @@ $(document).ready(function () {
 					$('#comment_alert_dander').hide()
 					$('#id_text_comment').val("");
 					$('#power_comments').html(data);
-					handleKarmaChange();
+					setCommentsHandlers();
 				}
 			}
 		});
 	});
 });
 
-function handleKarmaChange(){
+function setCommentsHandlers(){
 	$('.rating_form_minus').submit(function(e){
 		//отменяем стандартное действие при отправке формы
 		e.preventDefault();
@@ -106,6 +95,18 @@ function handleKarmaChange(){
 				console.log(result.rating, result.id_comment);
 				$('.comment_rating-'+result.id_comment).html(result.rating);
 			}
-			});
+		});		
+	});
+
+	$('.responce_comment').click(function()  {
+		var id = parseInt($(this).attr('id').split('-')[1]); //находим id
+		var user_name = $('#comment-'+id).attr('title');
+		// $('#id_text_comment').val(user_name+', ');
+		$('#comment_text').html('Ответ пользователю: '+user_name);
+
+		// var title = $(this).attr('title');
+		$('#id_last_comment').val(id);
+		console.log('responce_comment');
+		// return false; //запрещаем переход по ссылке
 	});
 }
