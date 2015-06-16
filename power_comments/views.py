@@ -173,10 +173,17 @@ def new_power_comment(request):
                                        pre_comment=pre_comment.id,
                                        count_inc=count_inc)
                 comment.save()
-                all_comments = PowerComment.objects.filter(app=id_app, position__gt=position)
+                all_comments = PowerComment.objects.filter(app=id_app)
                 for comment in all_comments:
-                    comment.position += 1
-                    comment.save()
+                    if comment.position <= position:
+                        pass
+                    else:
+                        print '==== =============='
+                        print comment, comment.position
+                        comment.position += 1
+                        comment.save()
+                        print comment, comment.position
+                        print '=================='
 
                 comments = PowerComment.objects.all().filter(app=id_app, state=1)
                 new_comment = PowerComment.objects.last()

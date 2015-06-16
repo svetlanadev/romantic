@@ -1,8 +1,11 @@
 *.pyc
 *.pyo
 *.db
-db.sqlite3
+db.*
 .DS_Store
 .coverage
 /media/*
 web-secret
+romantic/static/admin/*
+romantic/static/cked/*
+romantic/static/debug_toolbar/*

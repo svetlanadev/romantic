@@ -12,7 +12,8 @@ import debug_toolbar
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r"^$", TemplateView.as_view(template_name="index.html")),
+    url(r'^$', RedirectView.as_view(url='blog/'), name='blog'),
+    # url(r"^$", TemplateView.as_view(template_name="index.html")),
     url(r'^about/$', TemplateView.as_view(template_name="about.html")),
     url(r'^history/$', TemplateView.as_view(template_name="history.html")),
     url(r'^rules/$', TemplateView.as_view(template_name="rules.html")),

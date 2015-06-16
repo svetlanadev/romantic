@@ -12,16 +12,19 @@
 <div class="panel-body">
 <div id="material">
 	<div class="row" align="">
-		<div class="col-md-1"></div>
-		<div class="col-md-7">
-			<p style="font-size:26px" id="blog_title">
-			<strong>{{ material.title }}</strong>
-			</p>
-			<p class="text-muted" style="line-height: 1" >
-			Опубликовано: {{ material.date_publication|date:"d.m.Y, G:i" }}</p> 
+		<div class="col-md-2">
+			<p align="right"><img src="{{ material.type_hike.image.url }}" class="img-circle img-thumbnail" width="80px"></p>
 		</div>
-		<div class="col-md-4"><small>
-		Автор: <a href="{{ material.owner.get_absolute_url }}"><span class="glyphicon glyphicon-user"></span> {{ material.owner.get_full_name }}</a><br>
+		<div class="col-md-5">
+			Тип: {{ material.type_hike.type_hike }} поход, 
+	        Сложность: {{ material.difficulty }}<br><hr class="hr_sm">
+	        Регион: {{ material.region }}, 
+	        {{ material.year }} год<br><hr class="hr_sm">
+	        Руководитель - {{ material.title }}<br><hr class="hr_sm">
+			Опубликовано: {{ material.date_publication|date:"d.m.Y" }}, Автор: {{ material.owner.get_full_name }}<br><br>
+		</div>
+		<div class="col-md-5">
+		<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:280 }}
 		
 		<!-- {% if user.is_authenticated %}
 		<form action="/karma_force_blog/" method="post" role="form">{% csrf_token %}
@@ -38,6 +41,7 @@
 		</div>
 	</div>
 	<div class="body">
+	<hr class="hr_sm">
     {{ material.text|safe }}
     <br>
     {% if user.is_superuser %} <!-- Админка -->

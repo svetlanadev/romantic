@@ -11,12 +11,14 @@ class Material(models.Model):
     HIKE = 1
     ART = 2
     PASSPORT = 3
+    DOC = 4
 
     STATE_CHOICE = (
         (SANDBOX, 'Песочница'),
         (HIKE, 'Отчет'),
         (ART, 'Творчество'),
         (PASSPORT, 'Паспорт'),
+        (DOC, 'Документы'),
     )
 
     title = models.CharField(max_length=150,
@@ -87,6 +89,9 @@ class Material(models.Model):
             name_material = "Творчество"
         elif self.state == 0:
             name_material = "Песочница"
+        elif self.state == 4:
+            name_material = "Документы"
+
         else:
             name_material = "errors"
         return name_material
