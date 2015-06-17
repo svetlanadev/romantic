@@ -143,14 +143,13 @@ def new_power_comment(request):
         if form.is_valid():
             id_app = request.POST['id_app']
             id_last_comment = request.POST['id_last_comment']
-            print id_last_comment
 
             if id_last_comment != '0':
                 pre_comment = PowerComment.objects.get(id=id_last_comment)
-                print "PRE COMMENT:"
-                print pre_comment
+                print "PRE COMMENT: %s" % pre_comment
                 try:
                     last_comment = PowerComment.objects.filter(pre_comment=id_last_comment).last()
+                    print "LAST COMMENT: %s" % last_comment
                     if last_comment == None:
                         position = pre_comment.position + 1
 
@@ -165,33 +164,20 @@ def new_power_comment(request):
                 else:
                     count_inc = 1
 
-                print position, pre_comment.id
-                comment = PowerComment(text=text,
-                                       app=id_app,
-                                       owner=owner,
-                                       position=position,
-                                       pre_comment=pre_comment.id,
-                                       count_inc=count_inc)
-                comment.save()
+                print "POSITION: %s" % position
+
                 all_comments = PowerComment.objects.filter(app=id_app)
+
                 for comment in all_comments:
-                    if comment.position <= position:
-                        pass
-                    else:
-                        print '==== =============='
-                        print comment, comment.position
+                    print "COMMENT: %s" % comment
+                    if comment.position >= position:
                         comment.position += 1
                         comment.save()
-                        print comment, comment.position
-                        print '=================='
 
-                comments = PowerComment.objects.all().filter(app=id_app, state=1)
-                new_comment = PowerComment.objects.last()
-                return render_to_response('power_comments/new_comment.html', { 
-                                          'comments': comments },
-                                          context_instance=RequestContext(request))
-                
-            
+                comment = PowerComment(text=text, app=id_app, owner=owner, position=position, pre_comment=pre_comment.id, count_inc=count_inc)
+                comment.save()
+
+            ############################################################################
             else:
                 try:
                     last_comment = PowerComment.objects.filter(app=id_app).last()
@@ -201,18 +187,19 @@ def new_power_comment(request):
                         position = last_comment.position + 1
                 except ObjectDoesNotExist:
                     position = 1
-                
 
                 comment = PowerComment(text=text,
                                        app=id_app,
                                        owner=owner,
                                        position=position)
                 comment.save()
-                new_comment = PowerComment.objects.last()
-                comments = PowerComment.objects.all().filter(app=id_app, state=1)
-                return render_to_response('power_comments/new_comment.html', { 
-                                          'comments': comments },
-                                          context_instance=RequestContext(request))
+
+            comments = PowerComment.objects.all().filter(app=id_app, state=1)
+            new_comment = PowerComment.objects.last()
+            return render_to_response('power_comments/new_comment.html', { 
+                                      'comments': comments },
+                                      context_instance=RequestContext(request))
+
         else:
             results = {'success':False, 'message': 'Максимум 1000 символов', 'text': text}
 

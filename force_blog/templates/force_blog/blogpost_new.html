@@ -2,12 +2,6 @@
 
 {% block meta_title %}Добавление нового поста{% endblock %}
 
-{% block navbar_block %}
-	{% if profile.moderator or profile.goverment or user.is_superuser %}
-		<li><a href="/blog_new/"><strong style="font-size:12px; color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span> Добавить новость</strong></a></li>
-	{% endif %}
-{% endblock %} 
-
 {% block extra_css %}<link href="{{ STATIC_URL }}css/jquery.tokenize.css" rel="stylesheet" type="text/css">{% endblock %}
 
 {% block main %}

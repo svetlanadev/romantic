@@ -6,8 +6,8 @@
     <a href="/materials/{{ material.id }}"><h5>{{ material.get_type_material }}: {{ material.type_hike.type_hike }}: {{ material.difficulty }}, {{ material.region }}, {{ material.title }}, {{ material.year }} год</a></h5>
   {% endfor %}
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Что обсуждают?</strong></p><hr>
-  {% for comment in comments %}
-    <a href="{{ comment.app }}/"><h5>{% url_with_comment comment.app %}</a></h5>
+  {% for blog in blogs %}
+    <a href="{{ blog.get_absolute_url }}/"><h5>{{ blog.title }}</a></h5>
   {% endfor %}
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Не пропустите</strong></p>
   {% for party in partys %}
@@ -18,9 +18,6 @@
     <div class="">
         <p style="font-size:18px; color:" align="center">{{ party.name }} сезона</p>
         <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
-            <!-- <div align="center" style="color:#FFF; font-size:30px; background:url(/static/img/bg-text.png) repeat;">
-                {{ party.name }}
-            </div> -->
         </div>
         <div class="caption">
             <div align="center">
