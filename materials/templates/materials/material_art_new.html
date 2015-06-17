@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Новый материал{% endblock %}
+
+{% block extra_css %}<link href="{{ STATIC_URL }}css/jquery.tokenize.css" rel="stylesheet" type="text/css">{% endblock %}
+
+{% block main %}
+
+<div class="col-md-9 left">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="materials">
+				<h1 align="center">Творчество</h1>
+				<form action="/material_new/art/" method="post" role="form" enctype="multipart/form-data" class="dynamic-form">
+					<div class="row">
+						<div class="col-xs-4">
+							<label for="id_category">Руководитель:</label>
+						    <input id="id_title" name="title" type="text" class="form-control" placeholder="Руководитель/Автор" value="{{ form.title.value }}"><br>
+						</div>
+						<div class="col-xs-2">
+							<label for="id_category">Год:</label>
+						    <input id="id_year" name="year" type="text" pattern="[0-9]{4}" class="form-control" placeholder="Год проведения" value="{{ form.year.value }}"><br>
+						</div>
+					</div>
+					<select id="id_state" name="state" hidden>
+					<option value="0" selected="selected">Песочница</option>
+					</select>
+					<input type="hidden" name="status" id="id_status" value="Творчество" /><br>
+					{{ form.media }}
+					{{ form.text }}
+					<hr style="margin-top: 1px; margin-bottom: 14px;">
+					<button type="submit" class="btn btn-success">Сохранить изменения</button>
+					<a href="/blog/{{ blog.id }}"><button class="btn btn-default"> Отмена</button></a>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}<script src="{{ STATIC_URL }}js/jquery.tokenize.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $('#id_category').tokenize();
+</script>
+{% endblock %}
+

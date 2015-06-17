@@ -135,7 +135,7 @@ def ajax_karma_plus(request):
 @login_required
 def new_power_comment(request):
     owner = CustomUser.objects.get(user=request.user)
-    results = {'success':False}
+    results = {'success': False }
 
     if request.is_ajax():
         form = PowerCommentForm(request.POST)
@@ -146,10 +146,10 @@ def new_power_comment(request):
 
             if id_last_comment != '0':
                 pre_comment = PowerComment.objects.get(id=id_last_comment)
-                print "PRE COMMENT: %s" % pre_comment
+                # print "PRE COMMENT: %s" % pre_comment
                 try:
                     last_comment = PowerComment.objects.filter(pre_comment=id_last_comment).last()
-                    print "LAST COMMENT: %s" % last_comment
+                    # print "LAST COMMENT: %s" % last_comment
                     if last_comment == None:
                         position = pre_comment.position + 1
 
@@ -164,12 +164,12 @@ def new_power_comment(request):
                 else:
                     count_inc = 1
 
-                print "POSITION: %s" % position
+                # print "POSITION: %s" % position
 
                 all_comments = PowerComment.objects.filter(app=id_app)
 
                 for comment in all_comments:
-                    print "COMMENT: %s" % comment
+                    # print "COMMENT: %s" % comment
                     if comment.position >= position:
                         comment.position += 1
                         comment.save()

@@ -85,17 +85,31 @@ def library(request):
 
 
 @login_required
-def material_new(request):
+def material_page(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+
+    data = {'type_hikes': 'type_hike'}
+    return render_to_response('materials/material_new.html',
+                              data,
+                              context_instance=RequestContext(request))
+
+@login_required
+def material_new(request, state):
     if not request.user.is_authenticated():
         return redirect('/login/')
     owner = CustomUser.objects.get(user=request.user)
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
+    type_material, name_material = _type_material(state)
+
     if request.method == "POST":
+        print "==========+POST+++++++++++++++"
         form = MaterialForm(request.POST)
         form_file = AttachedFilesForm(request.POST, request.FILES)
         if form.is_valid():
+            print "FORM"
             material = form.save(owner=owner)
             material_last = Material.objects.first()
             url = u'/materials/%s' % material_last.id
@@ -103,7 +117,7 @@ def material_new(request):
         else:
             data = {'form': form, 'form_file': form_file, 'type_hikes': type_hike,
                     'regions': region, 'difficultys': difficulty}
-            return render_to_response('materials/material_new.html',
+            return render_to_response('materials/material_%s_new.html' % state,
                                       data,
                                       context_instance=RequestContext(request))
 
@@ -112,7 +126,7 @@ def material_new(request):
         form_file = AttachedFilesForm()
         data = {'form': form, 'form_file': form_file, 'type_hikes': type_hike,
                 'regions': region, 'difficultys': difficulty}
-        return render_to_response('materials/material_new.html',
+        return render_to_response('materials/material_%s_new.html' % state,
                                   data,
                                   context_instance=RequestContext(request))
 
@@ -161,6 +175,9 @@ def _type_material(state):
     elif state == 'sandbox':
         type_material = 0
         name_material = "Песочница"
+    elif state == 'article':
+        type_material = 5
+        name_material = "Статья"
     else:
         type_material = 999
         name_material = "errors"

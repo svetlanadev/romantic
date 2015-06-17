@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Новый отчет о походе{% endblock %}
+
+{% block extra_css %}<link href="{{ STATIC_URL }}css/jquery.tokenize.css" rel="stylesheet" type="text/css">{% endblock %}
+
+{% block main %}
+
+<div class="col-md-9 left">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="materials">
+				<h1 align="center">Отчет о походе</h1>
+				<form action="/material_new/" method="post" role="form" enctype="multipart/form-data" class="dynamic-form">
+					<div class="row">
+						<div class="col-xs-4">
+							<label for="id_category">Руководитель:</label>
+						    <input id="id_title" name="title" type="text" class="form-control" placeholder="Руководитель/Автор" value="{{ form.title.value }}"><br>
+						</div>
+						<div class="col-xs-2">
+							<label for="id_category">Тип похода:</label>
+							<select id="id_type_hike" name="type_hike" class="form-control">
+								{% for type_hike in type_hikes %}
+							    	<option value="{{ type_hike.id }}">{{ type_hike.type_hike }}</option>
+							    {% endfor %}
+							</select>
+						</div>
+						<div class="col-xs-2">
+							<label for="id_category">Категория:</label>
+							<select id="id_difficulty" name="difficulty" class="form-control">
+								{% for difficulty in difficultys %}
+							    	<option value="{{ difficulty.id }}">{{ difficulty.difficulty }}</option>
+							    {% endfor %}
+							</select>
+							<input type="hidden" checked="checked" id="id_if_comments" name="if_comments" type="checkbox">
+						</div>
+						<div class="col-xs-2">
+							<label for="id_category">Район похода:</label>
+							<select id="id_region" name="region" class="form-control">
+								{% for region in regions %}
+							    	<option value="{{ region.id }}">{{ region.region }}</option>
+							    {% endfor %}
+							</select>
+						</div>
+						<div class="col-xs-2">
+							<label for="id_category">Год:</label>
+						    <input id="id_year" name="year" type="text" pattern="[0-9]{4}" class="form-control" placeholder="Год проведения" value="{{ form.year.value }}"><br>
+						</div>
+					</div>
+					<select id="id_state" name="state" hidden>
+					<option value="0" selected="selected">Песочница</option>
+					</select>
+					<label for="id_category">Маршрут</label>
+					<textarea id="id_status" name="status" type="text" class="form-control" >{{ form.status.value }}</textarea><br>
+					{{ form.media }}
+					{{ form.text }}
+					<hr style="margin-top: 1px; margin-bottom: 14px;">
+					<button type="submit" class="btn btn-success">Сохранить изменения</button>
+					<a href="/blog/{{ blog.id }}"><button class="btn btn-default"> Отмена</button></a>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}<script src="{{ STATIC_URL }}js/jquery.tokenize.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $('#id_category').tokenize();
+</script>
+{% endblock %}
+
