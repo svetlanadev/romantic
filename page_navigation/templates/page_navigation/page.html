@@ -3,18 +3,17 @@
   <div class="panel-body">
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Новые материалы</strong></p><hr>
   {% for material in materials %}
-    <a href="/materials/{{ material.id }}"><h5>{{ material.get_type_material }}: {{ material.type_hike.type_hike }}: {{ material.difficulty }}, {{ material.region }}, {{ material.title }}, {{ material.year }} год</a></h5>
+    <a href="/materials/{{ material.id }}"><h5>{{ material.short_desc|truncatechars:60 }} - {{ material.title }}</a></h5>
   {% endfor %}
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Что обсуждают?</strong></p><hr>
-  {% for blog in blogs %}
-    <a href="{{ blog.get_absolute_url }}/"><h5>{{ blog.title }}</a></h5>
+  {% for conversation in conversation %}
+    <a href="{{ conversation.get_absolute_url }}/"><h5>{{ conversation.get_template_material }} {{ conversation.short_desc|truncatechars:60 }} {{ conversation.title }}</a></h5>
   {% endfor %}
   <p style="font-size:20px; color: #337ab7" align="center"><strong>Не пропустите</strong></p>
   {% for party in partys %}
-    <a href="/party/{{ party.get_absolute_url }}/"><h5>{{ party.name }}</a></h5>
+    <a href="{{ party.get_absolute_url }}/"><h5>{{ party.name }}</a></h5>
   {% endfor %}
-<hr>
-  {% for party in partys %}
+<!--   {% for party in partys %}
     <div class="">
         <p style="font-size:18px; color:" align="center">{{ party.name }} сезона</p>
         <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
@@ -30,7 +29,7 @@
             </div>
         </div>
     </div>
-{% endfor %}
+{% endfor %} -->
 </div>
 </div>
 

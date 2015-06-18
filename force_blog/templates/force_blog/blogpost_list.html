@@ -26,8 +26,8 @@
 	<div class="col-md-10" align="center">
 		<p style="font-size:24px">
 			<a href="{{ blog_post.get_absolute_url }}">
-				<strong>{{ blog_post.title }}{% if blog_post.state == 0 %} - Новость отключена{% endif %}</strong>
-			</a> 
+				<strong>{{ blog_post.title }}</strong></a> {% if blog_post.state == 0 %} <span class="label label-danger">disable</span>{% endif %}
+			
 		</p>
 	</div>
 	</div>
@@ -35,13 +35,6 @@
 	<!-- Вывод текста -->
 	{{ blog_post.text|safe }}
 	<br>
-	<!-- Проверяет или есть файлы. -->
-	<!-- {% if blog_post.files == True %}
-		<strong>Файлы:</strong>
-		{% for file in blog_post.files.all %}
-				<a href="{{ MEDIA_URL }}{{ file.one_file }}">{{ file.file_name }}</a>, 
-		{% endfor %}
-	{% endif %} -->
 	<div class="row">
         <div class="col-md-12 post-header-line">
         	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blog_post.date_creation|date:"d.m.Y, G:i" }} 
@@ -52,6 +45,7 @@
             	{% for category in blog_post.category.all %}
 					<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> 
 				{% endfor %}
+
 			{% if profile.moderator == True or user.is_superuser %} 
 		        <div class="btn-group show-on-hover">
 		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">

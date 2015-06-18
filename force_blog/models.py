@@ -19,7 +19,6 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=50, verbose_name=u'Заголовок')
     date_creation = models.DateTimeField(auto_now_add=True)
     date_publication = models.DateTimeField(blank=True, null=True)
-    rating = models.SmallIntegerField(default=0, verbose_name=u'Рейтинг')
 
     owner = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
                               verbose_name=u'Автор')
@@ -37,13 +36,6 @@ class BlogPost(models.Model):
                                        blank=True, null=True,
                                        verbose_name=u'Редактирование',
                                        related_name="blogpost_edit")
-
-    files = models.ManyToManyField('AttachedFiles', blank=True, null=True)
-
-    karma_users = models.ManyToManyField(settings.AUTH_PROFILE_MODULE,
-                                         blank=True, null=True,
-                                         verbose_name=u'Люди сделали отметки',
-                                         related_name="user_karma_blog")
 
     image = models.ImageField(upload_to='BlogImage/',
                               verbose_name=u'Изображение',

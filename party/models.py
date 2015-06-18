@@ -16,7 +16,7 @@ class Party(models.Model):
         (PARTY, 'Мероприятие'),
     )
 
-    name = models.CharField(max_length=50, verbose_name=u'Мероприятие')
+    title = models.CharField(max_length=50, verbose_name=u'Мероприятие')
 
     date_creation = models.DateTimeField(auto_now_add=True)
     date_start = models.DateTimeField(verbose_name=u'Начало мероприятия')

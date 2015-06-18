@@ -30,6 +30,7 @@
 		<div class="col-md-2">
 		
 		<span class="glyphicon glyphicon-star"></span> Рейтинг: <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong><br>
+		{% if request.user.is_authenticated %}
 			<div class="col-md-1">
 			  	<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
 			  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
@@ -49,6 +50,7 @@
 				</form>
 				{% endif %}
 			</div>
+		{% endif %}
 		</div>
 		</div>
 	{% endfor %}

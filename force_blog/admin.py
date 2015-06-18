@@ -12,9 +12,9 @@ class ArticleForm(ModelForm):
 
 class BlogPostAdmin(admin.ModelAdmin):
     form = ArticleForm
-    filter_horizontal = ('files', 'category')
+    filter_horizontal = ('category',)
     list_display = (
-        'title', 'date_publication', 'owner', 'rating', 'state', 'if_comments')
+        'title', 'date_publication', 'owner', 'state', 'if_comments')
     list_filter = ('date_creation',)
     ordering = ('-date_creation',)
 

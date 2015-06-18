@@ -13,7 +13,7 @@ class ArticleForm(ModelForm):
 class PartyAdmin(admin.ModelAdmin):
     form = ArticleForm
     filter_horizontal = ('files', 'category')
-    list_display = ('name', 'date_creation', 'state')
+    list_display = ('title', 'date_creation', 'state')
 
 
 admin.site.register(Party, PartyAdmin)

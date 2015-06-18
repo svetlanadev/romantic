@@ -12,8 +12,8 @@ class ArticleForm(ModelForm):
 
 class MaterialAdmin(admin.ModelAdmin):
     form = ArticleForm
-    filter_horizontal = ('files',)
-    list_display = ('title', 'owner', 'state')
+    filter_horizontal = ('category',)
+    list_display = ('title', 'owner', 'year', 'state', 'rank', 'status')
     list_filter = ('date_creation',)
     ordering = ('-date_creation',)
 
@@ -23,6 +23,5 @@ class DirsAdmin(admin.ModelAdmin):
     filter_horizontal = ('materials',)
 
 admin.site.register(Material, MaterialAdmin)
-admin.site.register(AttachedFiles)
 admin.site.register(Dirs, DirsAdmin)
 admin.site.register(MaterialEdit)

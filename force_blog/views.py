@@ -14,6 +14,11 @@ from django.core.exceptions import ObjectDoesNotExist
 import time
 
 
+DISABLE = 0
+ENABLE = 1
+HOT_POST = 2
+
+
 class BlogPostListView(ListView):
     model = BlogPost
     context_object_name = 'blog_posts'
@@ -23,16 +28,16 @@ class BlogPostListView(ListView):
     def get_queryset(self):
         if not self.request.user.is_authenticated():
             qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
-                    'category', 'karma_users').exclude(state=0)
+                    'category').exclude(state=0)
             return qs
         else:
             profile = CustomUser.objects.get(user=self.request.user)
         if profile.moderator or profile.goverment or profile.user.is_superuser:
             qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
-                    'category', 'karma_users')
+                    'category')
         else:
             qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
-                    'category', 'karma_users').exclude(state=0)
+                    'category').exclude(state=0)
         return qs
 
     def get_context_data(self, **kwargs):
@@ -47,12 +52,6 @@ class BlogPostListViewTag(BlogPostListView):
         return super(BlogPostListViewTag, self).get_queryset().filter(category=category)
 
 
-class BlogPostDetailView(DetailView):
-    model = BlogPost
-
-    context_object_name = 'blogpost'
-
-
 class BlogPostArhiveListView(ListView):
     model = BlogPost
     context_object_name = 'blog_posts'
@@ -63,8 +62,32 @@ class BlogPostArhiveListView(ListView):
 
     def get_queryset(self):
         qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
-            'category', 'karma_users').exclude(state=0)
+            'category').exclude(state=0)
         return qs
+
+
+def blog_detail(request, pk):
+    blogpost = BlogPost.objects.get(id=pk)
+
+    if blogpost.state == DISABLE:
+        try:
+            profile = CustomUser.objects.get(user=request.user)
+            if blogpost.owner.user == profile or profile.moderator or profile.goverment or profile.user.is_superuser:
+                data = {'blogpost': blogpost, }
+                return render_to_response('force_blog/blogpost_detail.html',
+                                          data,
+                                          context_instance=RequestContext(request))
+            else:
+                return redirect('/')
+        except:
+            return redirect('/')
+
+    else:
+        data = {'blogpost': blogpost, }
+        return render_to_response('force_blog/blogpost_detail.html',
+                                  data,
+                                  context_instance=RequestContext(request))
+
 
 
 @login_required
@@ -85,8 +108,6 @@ def blog_edit(request, blog_id):
         except KeyError:
             new_tag = Category.objects.create(category=request.POST['category'])
         
-        # tags = form.cleaned_data['category']
-
         if form.is_valid():
             for x in categorys:
                 blog.category.remove(x)
@@ -135,6 +156,7 @@ def blog_new(request):
             new_tag = Category.objects.create(category=request.POST['category'])
         
         if form.is_valid():
+            
             # tags = form.cleaned_data['category']
             form.save(owner=profile)
             blog = BlogPost.objects.first()
@@ -172,33 +194,33 @@ def hidden_blog(request):
         return redirect(blog.get_absolute_url())
 
 
-@login_required
-def karma_force_blog(request):
-    user = CustomUser.objects.get(user=request.user)
-    if request.method == "POST":
-        if user.karma < -10:
-            message = "Недостаточно кармы для голосования"
-            print message
-            pass
-        id_blogpost = request.POST['id_blogpost']
-        karma = request.POST['karma']
-        blogpost = BlogPost.objects.get(id=id_blogpost)
-        if user in blogpost.karma_users.all():
-            message = "Вы уже поставили рейтинг"
-            print message
-        else:
-            if karma == "minus":
-                blogpost.rating = blogpost.rating - 1
-                user.karma = user.karma - 3
-            if karma == "plus":
-                blogpost.rating = blogpost.rating + 1
-                user.karma = user.karma + 3
-            blogpost.save()
-            user.save()
-            blogpost.karma_users.add(user)
-    else:
-        return redirect('/')
-    return redirect(blogpost.get_absolute_url())
+# @login_required
+# def karma_force_blog(request):
+#     user = CustomUser.objects.get(user=request.user)
+#     if request.method == "POST":
+#         if user.karma < -10:
+#             message = "Недостаточно кармы для голосования"
+#             print message
+#             pass
+#         id_blogpost = request.POST['id_blogpost']
+#         karma = request.POST['karma']
+#         blogpost = BlogPost.objects.get(id=id_blogpost)
+#         if user in blogpost.karma_users.all():
+#             message = "Вы уже поставили рейтинг"
+#             print message
+#         else:
+#             if karma == "minus":
+#                 blogpost.rating = blogpost.rating - 1
+#                 user.karma = user.karma - 3
+#             if karma == "plus":
+#                 blogpost.rating = blogpost.rating + 1
+#                 user.karma = user.karma + 3
+#             blogpost.save()
+#             user.save()
+#             blogpost.karma_users.add(user)
+#     else:
+#         return redirect('/')
+#     return redirect(blogpost.get_absolute_url())
 
 
 def minus_karma_admin(request, blog_id):

@@ -4,28 +4,36 @@ from django.db import models
 from django.conf import settings
 from hike.models import *
 from cked.fields import RichTextField
+from force_blog.models import AttachedFiles, Category
 
 
 class Material(models.Model):
-    SANDBOX = 0
-    HIKE = 1
-    ART = 2
-    PASSPORT = 3
-    DOC = 4
-    TEXT = 5
+    
+    ENABLE = 1
+    DISABLE = 0
 
-    STATE_CHOICE = (
-        (SANDBOX, 'Песочница'),
-        (HIKE, 'Отчет'),
+    REPORT = 0
+    ART = 1
+    PASSPORT = 2
+    DOC = 3
+    ARTICLE = 4
+
+    RANK_CHOICE = (
+        (REPORT, 'Отчет'),
         (ART, 'Творчество'),
         (PASSPORT, 'Паспорт'),
-        (DOC, 'Документы'),
-        (TEXT, 'Статьи'),
+        (DOC, 'Документ'),
+        (ARTICLE, 'Статья'),
+    )
+
+    STATE_CHOICE = (
+        (ENABLE, 'Просмотр доступен'),
+        (DISABLE, 'Просмотр запрещен'),
     )
 
     title = models.CharField(max_length=150,
-                             verbose_name=u'Заголовок',
-                             default='Руководитель')
+                             verbose_name=u'Руководитель',
+                             default='Название')
     year = models.SmallIntegerField(verbose_name=u'Год', default=2000)
     status = models.CharField(max_length=800,
                               verbose_name=u'Маршрут',
@@ -42,29 +50,39 @@ class Material(models.Model):
                                verbose_name=u'Район похода',
                                blank=True, null=True,)
 
+    rank = models.SmallIntegerField(default=REPORT,
+                                     choices=RANK_CHOICE,
+                                     verbose_name=u'Тип материала')
+
+    state = models.SmallIntegerField(default=DISABLE,
+                                     choices=STATE_CHOICE,
+                                     verbose_name=u'Статус')
+
     date_creation = models.DateTimeField(auto_now_add=True)
     date_publication = models.DateTimeField(auto_now_add=True)
     rating = models.SmallIntegerField(default=0, verbose_name=u'Рейтинг')
 
     owner = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
                               verbose_name=u'Автор')
+
+    short_desc = models.CharField(max_length=250,
+                                  verbose_name=u'Краткое описание материала(сноска)')
+
     text = models.TextField(verbose_name=u'Страничка')
 
-    state = models.SmallIntegerField(default=HIKE,
-                                     choices=STATE_CHOICE,
-                                     verbose_name=u'Статус')
+    category = models.ManyToManyField(Category,
+                                      verbose_name=u'Категории',
+                                      related_name="material_category")
 
     material_edit = models.ManyToManyField('MaterialEdit',
                                            blank=True, null=True,
                                            verbose_name=u'Редактирование',
                                            related_name="material_edit")
 
-    files = models.ManyToManyField('AttachedFiles', blank=True, null=True)
-
     karma_users = models.ManyToManyField(settings.AUTH_PROFILE_MODULE,
                                          blank=True, null=True,
                                          verbose_name=u'Люди сделали отметки',
-                                         related_name="user_karma_blog2")
+                                         related_name="user_karma_materials")
 
     image = models.ImageField(upload_to='MaterialImage/',
                               verbose_name=u'Изображение',
@@ -83,21 +101,23 @@ class Material(models.Model):
         return u'/materials/%s' % self.id
 
     def get_type_material(self):
-        if self.state == 1:
-            name_material = "Отчет"
-        elif self.state == 3:
-            name_material = "Паспорт"
-        elif self.state == 2:
-            name_material = "Творчество"
-        elif self.state == 0:
-            name_material = "Песочница"
-        elif self.state == 4:
-            name_material = "Документы"
-        elif self.state == 5:
-            name_material = "Статьи"
-
+        if self.rank == 0 or self.rank == 2:
+            name_material = "report"
         else:
-            name_material = "errors"
+            name_material = "article"
+        return name_material
+
+    def get_template_material(self):
+        if self.rank == 0:
+            name_material = "Отчет:"
+        if self.rank == 1:
+            name_material = "Творчество:"
+        if self.rank == 2:
+            name_material = "Паспорт:"
+        if self.rank == 3:
+            name_material = "Документ:"
+        if self.rank == 4:
+            name_material = "Статья:"
         return name_material
 
     def __unicode__(self):
@@ -109,38 +129,54 @@ class Material(models.Model):
                                             self.region,)
 
 
-class AttachedFiles(models.Model):
-    file_name = models.CharField(max_length=50)
-    one_file = models.FileField(upload_to='files_materials/')
+# class AttachedFiles(models.Model):
+#     file_name = models.CharField(max_length=50)
+#     one_file = models.FileField(upload_to='files_materials/')
 
-    class Meta:
-        verbose_name = 'Файл'
-        verbose_name_plural = 'Файлы'
+#     class Meta:
+#         verbose_name = 'Файл'
+#         verbose_name_plural = 'Файлы'
 
-    def get_absolute_url(self):
-        return u'/files/%s' % self.id
+#     def get_absolute_url(self):
+#         return u'/files/%s' % self.id
 
-    def __unicode__(self):
-        return self.file_name
+#     def __unicode__(self):
+#         return self.file_name
 
 
 class Dirs(models.Model):
+    
+    ENABLE = 1
     DISABLE = 0
-    HIKE = 1
-    ART = 2
-    PASSPORT = 3
+
+    REPORT = 0
+    ART = 1
+    PASSPORT = 2
+    DOC = 3
+    ARTICLE = 4
 
     STATE_CHOICE = (
-        (DISABLE, 'Disable'),
-        (HIKE, 'Отчет'),
+        (REPORT, 'Отчет'),
         (ART, 'Творчество'),
         (PASSPORT, 'Паспорт'),
+        (DOC, 'Документ'),
+        (ARTICLE, 'Статья'),
+    )
+
+    RANK_CHOICE = (
+        (ENABLE, 'Просмотр доступен'),
+        (DISABLE, 'Просмотр запрещен'),
     )
 
     dir_name = models.CharField(max_length=30)
-    state = models.SmallIntegerField(default=HIKE,
+    state = models.SmallIntegerField(default=REPORT,
                                      choices=STATE_CHOICE,
                                      verbose_name=u'Статус')
+
+    rank = models.SmallIntegerField(default=ENABLE,
+                                     choices=RANK_CHOICE,
+                                     verbose_name=u'Статус')
+
     materials = models.ManyToManyField('Material',
                                        blank=True, null=True,
                                        verbose_name=u'Материалы',

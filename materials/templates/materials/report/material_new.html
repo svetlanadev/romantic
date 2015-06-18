@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block meta_title %}Паспорт препятствия{% endblock %}
+{% block meta_title %}Новый отчет о походе{% endblock %}
 
 {% block extra_css %}<link href="{{ STATIC_URL }}css/jquery.tokenize.css" rel="stylesheet" type="text/css">{% endblock %}
 
@@ -10,12 +10,12 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="materials">
-				<h1 align="center">Паспорт препятствия</h1>
-				<form action="/material_new/" method="post" role="form" enctype="multipart/form-data" class="dynamic-form">
+				<h1 align="center">{{ name_material }}</h1>
+				<form action="/material_new/{{ category_material }}/" method="post" role="form" enctype="multipart/form-data" class="dynamic-form">
 					<div class="row">
 						<div class="col-xs-4">
 							<label for="id_category">Руководитель:</label>
-						    <input id="id_title" name="title" type="text" class="form-control" placeholder="Руководитель/Автор" value="{{ form.title.value }}"><br>
+						    <input id="id_title" name="title" type="text" class="form-control" placeholder="Руководитель" value="{{ form.title.value }}"><br>
 						</div>
 						<div class="col-xs-2">
 							<label for="id_category">Тип похода:</label>
@@ -47,14 +47,36 @@
 						    <input id="id_year" name="year" type="text" pattern="[0-9]{4}" class="form-control" placeholder="Год проведения" value="{{ form.year.value }}"><br>
 						</div>
 					</div>
+					<select id="id_rank" name="rank" hidden>
+					<option value="{{ type_material }}" selected="selected">DISABLE</option>
+					</select>
 					<select id="id_state" name="state" hidden>
-					<option value="0" selected="selected">Песочница</option>
+					<option value="0" selected="selected">DISABLE</option>
 					</select>
 					<label for="id_category">Маршрут</label>
 					<textarea id="id_status" name="status" type="text" class="form-control" >{{ form.status.value }}</textarea><br>
+					<label for="id_category">Краткое описание</label>
+					<textarea id="id_short_desc" name="short_desc" type="text" class="form-control" >{{ form.short_desc.value }}</textarea><br>
 					{{ form.media }}
 					{{ form.text }}
 					<hr style="margin-top: 1px; margin-bottom: 14px;">
+					<div class="row"><br>
+						<div class="col-xs-6">
+						<p><label for="id_category">Теги:</label><br> 
+						<select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
+						{% for category in categorys %}
+						    <option value="{{ category.id }}">{{ category.category }}</option>
+						{% endfor %}
+						</select>
+						</p>
+						</div>
+						<div class="col-xs-6">
+							<label>Доступные теги:</label> 
+							{% for category in categorys %}
+							    {{ category.category }}, 
+							{% endfor %}
+						</div>
+					</div>
 					<button type="submit" class="btn btn-success">Сохранить изменения</button>
 					<a href="/blog/{{ blog.id }}"><button class="btn btn-default"> Отмена</button></a>
 				</form>

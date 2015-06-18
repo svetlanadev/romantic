@@ -11,7 +11,7 @@
     <div class="col-md-4">
         <center>
         <img src="{{ profile2.avatar.url }}" name="aboutme" width="200" height="200" border="0" class="img-circle">
-        <h3 class="media-heading">{{ profile2.get_full_name }} <small>{{ profile2.status }}</small></h3>
+        <h3 class="media-heading">{{ profile2.get_full_name }}<br> <small>{{ profile2.status }}</small></h3>
         <span><strong>Состоит в: </strong></span>
             {% if profile2.writer %}
             <span class="label label-default">Писатель</span>

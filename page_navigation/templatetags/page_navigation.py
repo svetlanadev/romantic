@@ -18,17 +18,34 @@ def page_navigation(request):
     partys = Party.objects.exclude(state=0)[:5]
     materials = Material.objects.exclude(state=0)[:5]
     comments = PowerComment.objects.order_by().values('app').distinct()
-    blogs = []
+
+    print comments
+    conversation = []
     for comment in comments:
-        id_content = ''.join(filter(lambda x: x.isdigit(), comment['app']))
-        blog = BlogPost.objects.get(id=id_content)
-        if blog.state != 0:
-            blogs.append(blog)
+        app_url = comment['app']
+        print app_url
+        id_content = ''.join(filter(lambda x: x.isdigit(), app_url))
+        print id_content
+        if "blog" in app_url:
+            obj = BlogPost.objects.get(id=id_content)
+            url = obj.title
+        elif "materials" in app_url:
+            obj = Material.objects.get(id=id_content)
+            url = obj.title
+        elif "party" in app_url:
+            obj = Party.objects.get(id=id_content)
+            url = obj.name
+
+        if obj.state != 0:
+            print obj.state
+            conversation.append(obj)
+        else:
+            pass
+
 
     url = template.loader.get_template("page_navigation/page.html")
     data = {'materials': materials, 
-            'partys': partys, 
-            'comments': comments, 
-            'blogs': blogs,}
+            'partys': partys,
+            'conversation': conversation}
 
     return url.render(Context(data))

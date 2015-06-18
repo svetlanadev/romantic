@@ -28,11 +28,13 @@
 							</label>
 						</div>
 					</div>
+					{{ form.text.errors }}
 					{{ form.media }}
 					{{ form.text }}
 					<hr>
 				<div class="row"><br>
 					<div class="col-xs-6">
+					{{ form.category.errors }}
 					<p><label for="id_category">Теги:</label><br> 
 					<select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
 						{% for category in categorys %}
