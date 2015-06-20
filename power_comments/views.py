@@ -146,15 +146,16 @@ def new_power_comment(request):
 
             if id_last_comment != '0':
                 pre_comment = PowerComment.objects.get(id=id_last_comment)
-                # print "PRE COMMENT: %s" % pre_comment
+                print "PRE COMMENT: %s" % pre_comment
                 try:
                     last_comment = PowerComment.objects.filter(pre_comment=id_last_comment).last()
-                    # print "LAST COMMENT: %s" % last_comment
+                    print "LAST COMMENT: %s" % last_comment
                     if last_comment == None:
                         position = pre_comment.position + 1
 
                     else:
-                        position = last_comment.position + 1
+                        last_comment2 = PowerComment.objects.filter(app=id_app).last()
+                        position = last_comment2.position + 1
 
                 except ObjectDoesNotExist:
                     position = pre_comment.position + 1
@@ -164,12 +165,12 @@ def new_power_comment(request):
                 else:
                     count_inc = 1
 
-                # print "POSITION: %s" % position
+                print "POSITION: %s" % position
 
                 all_comments = PowerComment.objects.filter(app=id_app)
 
                 for comment in all_comments:
-                    # print "COMMENT: %s" % comment
+                    print "COMMENT: %s" % comment
                     if comment.position >= position:
                         comment.position += 1
                         comment.save()
@@ -178,6 +179,14 @@ def new_power_comment(request):
                 comment.save()
 
             ############################################################################
+            # Надо выбирать все комментарии с одинаковым пре комментом и кол-вом вложений и эти комменты двигать
+            # PRE COMMENT: 1 root - 1
+            # LAST COMMENT: 11 root - 1
+            # POSITION: 3
+            # COMMENT: 1 root - 1
+            # COMMENT: 11 root - 1
+            # COMMENT: 111 root - 1
+
             else:
                 try:
                     last_comment = PowerComment.objects.filter(app=id_app).last()

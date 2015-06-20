@@ -52,6 +52,9 @@
           {% if user.is_authenticated %} 
             <li class="divider"></li>
             <li><a href="/material_my/">Мои материалы</a></li>
+            {% if profile.moderator or profile.goverment or user.is_superuser %}
+            <li><a href="/sandbox/">Песочница</a></li>
+            {% endif %}
           {% endif %}
         </ul>
       </li>

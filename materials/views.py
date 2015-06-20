@@ -44,14 +44,14 @@ def material_detail(request, material_id):
     if material.state == DISABLE:
         try:
             profile = CustomUser.objects.get(user=request.user)
-            if material.owner.user == profile or profile.moderator or profile.goverment or profile.user.is_superuser:
+            if profile.moderator or profile.user.is_superuser or material.owner == profile:
                 category_material = material.get_type_material()
                 data = {'material': material, }
                 return render_to_response('materials/%s/material_detail.html' % category_material,
                                           data,
                                           context_instance=RequestContext(request))
             else:
-                return redirect('/')
+                return redirect('/party/')
         except:
             return redirect('/')
 
@@ -76,35 +76,6 @@ def library(request):
     return render_to_response('materials/library.html',
                               data,
                               context_instance=RequestContext(request))
-
-
-# @login_required
-# def sandbox_new(request):
-#     profile = CustomUser.objects.get(user=request.user)
-#     type_hike = TypeHike.objects.all()
-#     region = Region.objects.all()
-#     difficulty = Difficulty.objects.all()
-#     if request.method == "POST":
-#         form = MaterialForm(request.POST)
-#         if form.is_valid():
-#             material = form.save(owner=profile)
-#             material_last = Material.objects.first()
-#             url = u'/materials/%s' % material_last.id
-#             return redirect(url)
-#         else:
-#             data = {'form': form, 'type_hikes': type_hike,
-#                     'regions': region, 'difficultys': difficulty}
-#             return render_to_response('materials/sandbox_new.html',
-#                                       data,
-#                                       context_instance=RequestContext(request))
-
-#     else:  # GET
-#         form = MaterialForm()
-#         data = {'form': form, 'type_hikes': type_hike,
-#                 'regions': region, 'difficultys': difficulty}
-#         return render_to_response('materials/sandbox_new.html',
-#                                   data,
-#                                   context_instance=RequestContext(request))
 
 
 @login_required
@@ -175,16 +146,20 @@ def material_new(request, state):
 @login_required
 def material_edit(request, material_id):
     profile = CustomUser.objects.get(user=request.user)
+    material = Material.objects.get(id=material_id)
 
-    if not profile.moderator and profile.goverment and profile.user.is_superuser:
+    if not profile.moderator and profile.user.is_superuser and material.owner == profile:
         return redirect('/login/')
+
+    if material.state == ENABLE and material.owner == profile:
+        url = u'/materials/%s' % material_id
+        return redirect(url)
 
     categorys = Category.objects.all()
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
 
-    material = Material.objects.get(id=material_id)
     category_material = material.get_type_material()
     # type_material, name_material, category_material2 = _type_material(state)
 
@@ -228,6 +203,69 @@ def material_edit(request, material_id):
     return render_to_response('materials/%s/material_edit.html' % category_material,
                               data,
                               context_instance=RequestContext(request))
+
+
+@login_required
+def material_hidden(request, material_id):
+    profile = CustomUser.objects.get(user=request.user)
+    if not profile.moderator and profile.user.is_superuser:
+        return redirect('/login/')
+
+    material = Material.objects.get(id=material_id)
+    if material.state == ENABLE:
+        material.state = 0 # DISABLE
+        material.save()
+    else:
+        material.state = 1 # ENABLE
+        material.save()
+
+    url = u'/materials/%s' % material_id
+    return redirect(url)
+
+
+@login_required
+def sandbox(request):
+    profile = CustomUser.objects.get(user=request.user)
+
+    if not profile.moderator and profile.goverment and profile.user.is_superuser:
+        return redirect('/login/')
+
+    articles = _get_disable_objects_articles()
+    reports = _get_disable_objects_reports()
+    print articles
+
+    data = {'articles': articles, 'reports': reports}
+    return render_to_response('materials/sandbox.html',
+                              data,
+                              context_instance=RequestContext(request))
+
+
+def _get_disable_objects_articles():    
+    articles = []
+    materials = Material.objects.filter(state=DISABLE, rank=1)
+
+    for material in materials:
+        articles.append(material)
+    materials = Material.objects.filter(state=DISABLE, rank=3)
+    for material in materials:
+        articles.append(material)
+    materials = Material.objects.filter(state=DISABLE, rank=4)
+    for material in materials:
+        articles.append(material)
+
+    return articles
+
+
+def _get_disable_objects_reports():    
+    reports = []
+    materials = Material.objects.filter(state=DISABLE, rank=0)
+
+    for material in materials:
+        reports.append(material)
+    materials = Material.objects.filter(state=DISABLE, rank=3)
+    for material in materials:
+        reports.append(material)
+    return reports
 
 
 @login_required

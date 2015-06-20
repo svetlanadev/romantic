@@ -57,6 +57,18 @@
 				<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>  
 			{% endfor %}
 				<!-- Admin panel -->
+			{% if material.state == 0 %}
+				{% if profile.id == material.owner.id %}
+					<div class="btn-group show-on-hover">
+			          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+			            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
+			          </button>
+			          <ul class="dropdown-menu" role="menu">
+			            <li><a href="/material_edit/{{ material.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
+			          </ul>
+			        </div>
+					{% endif %}
+				{% endif %}
 			{% if profile.moderator == True or user.is_superuser %} 
 	        <div class="btn-group show-on-hover">
 	          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
