@@ -19,7 +19,7 @@
 		<div class="col-md-6">
 		<div class="panel panel-default">
   		<div class="panel-body" style="padding: 10px; height:220px">
-  			<p><img src="{{ material.type_hike.image.url }}" width="80px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
+  			<p><img src="{{ material.type_hike.image.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
 	        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, 
 	        Сложность: {{ material.difficulty }}<br>
 	        <strong>Регион:</strong> {{ material.region }}, 
@@ -40,7 +40,7 @@
 		<div class="col-md-6">
 		<div class="panel panel-default">
   		<div class="panel-body" style="padding: 10px; height:150px">
-  			<p><img src="{{ material.owner.avatar.url }}" width="70px" hspace="10" vspace="10" align="left" class="img-circle"> 
+  			<p><img src="{{ material.owner.avatar.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="img-circle"> 
   			<strong>Автор:</strong> {{ material.owner.get_full_name }}<br>
   			<strong>Название:</strong> {{ material.title }}<br><hr class="hr_sm2">
   			Краткое описание - {{ material.short_desc|truncatechars:200 }}

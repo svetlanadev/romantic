@@ -43,9 +43,6 @@ def materials(request, state):
                               context_instance=RequestContext(request))
 
 
-
-
-
 def material_detail(request, material_id):
     material = Material.objects.get(id=material_id)
 
@@ -117,7 +114,7 @@ def material_new(request, state):
             except KeyError:
                 new_tag = Category.objects.create(category=request.POST['category'])
             # tags = form.cleaned_data['category']
-            material = form.save(owner=owner)
+            material = form.save_with_owner(owner=owner)
             material_last = Material.objects.first()
             for x in tags:
                 tag = Category.objects.get(category=x)
@@ -198,7 +195,7 @@ def material_edit(request, material_id):
                 except TypeError:
                     pass
 
-            form.save(owner=profile)
+            form.save()
             url = u'/materials/%s' % material_id
             return redirect(url)
 

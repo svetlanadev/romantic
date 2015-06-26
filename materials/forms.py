@@ -15,9 +15,9 @@ class MaterialForm(ModelForm):
         exclude = ['owner', 'date_publication', 'date_creation',
                    'rating', 'karma_users', 'material_edit', 'if_comments']
 
-    def save(self, *args, **kwargs):
+    def save_with_owner(self, *args, **kwargs):
         owner = kwargs.pop('owner')
-        obj = super(MaterialForm, self).save(commit=False)
+        obj = super(BlogPostForm, self).save(commit=False)
         obj.owner = owner
         obj.save()
         return obj

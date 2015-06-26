@@ -4,7 +4,7 @@
 	{% for comment in comments %}
 		<div id="comment_{{ comment.id }}">
 		<div class="row">
-		  {% count_inc_power_comments comment.count_inc %}<img src="{{ comment.owner.avatar.url }}" width="70px" hspace="10" vspace="10" align="left" class="img-circle">
+		  {% count_inc_power_comments comment.count_inc %}<img src="{{ comment.owner.avatar.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="img-circle">
 		  	{% if profile.moderator or profile.goverment or user.is_superuser %}
 		  		<a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">{{ comment.owner.get_full_name }}</a> - {{ comment.date_creation }}
 		  		<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span></a>
