@@ -125,7 +125,7 @@ def blog_edit(request, blog_id):
 
             blog_backup(blog, profile)
 
-            form.save(owner=profile)
+            form.save()
             url = u'/blog/%s' % blog_id
             return redirect(url)
 
@@ -158,7 +158,7 @@ def blog_new(request):
         if form.is_valid():
             
             # tags = form.cleaned_data['category']
-            form.save(owner=profile)
+            form.save_with_owner(owner=profile)
             blog = BlogPost.objects.first()
             for x in tags:
                 tag = Category.objects.get(category=x)
