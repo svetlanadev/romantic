@@ -2,16 +2,11 @@
 
 from party.models import Party
 from django.contrib import admin
-from cked.widgets import CKEditorWidget
+from django_summernote.admin import SummernoteModelAdmin
 from django.forms import CharField, ModelForm
 
 
-class ArticleForm(ModelForm):
-    text = CharField(widget=CKEditorWidget())
-
-
-class PartyAdmin(admin.ModelAdmin):
-    form = ArticleForm
+class PartyAdmin(SummernoteModelAdmin):
     filter_horizontal = ('files', 'category')
     list_display = ('title', 'date_creation', 'state')
 

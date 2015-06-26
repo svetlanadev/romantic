@@ -2,7 +2,6 @@
 
 from django.db import models
 from force_blog.models import AttachedFiles, Category
-from cked.fields import RichTextField
 
 
 class Party(models.Model):

@@ -3,7 +3,6 @@
 from django.db import models
 from django.conf import settings
 from hike.models import *
-from cked.fields import RichTextField
 from force_blog.models import AttachedFiles, Category
 
 

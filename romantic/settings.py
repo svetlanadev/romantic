@@ -61,7 +61,7 @@ INSTALLED_APPS = (
     'banner',
     'page_navigation',
     'materials',
-    'cked',
+    'django_summernote',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -141,7 +141,7 @@ except ImportError:
 
 
 try:
-    from cked_settings import *
+    from summernote_settings import *
 except ImportError:
     pass
 

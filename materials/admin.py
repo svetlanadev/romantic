@@ -2,16 +2,11 @@
 
 from django.contrib import admin
 from materials.models import *
-from cked.widgets import CKEditorWidget
+from django_summernote.admin import SummernoteModelAdmin
 from django.forms import CharField, ModelForm
 
 
-class ArticleForm(ModelForm):
-    text = CharField(widget=CKEditorWidget())
-
-
-class MaterialAdmin(admin.ModelAdmin):
-    form = ArticleForm
+class MaterialAdmin(SummernoteModelAdmin):
     filter_horizontal = ('category',)
     list_display = ('title', 'owner', 'year', 'state', 'rank', 'status')
     list_filter = ('date_creation',)

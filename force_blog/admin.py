@@ -3,15 +3,10 @@
 from django.contrib import admin
 from force_blog.models import BlogPost, AttachedFiles, Category, BlogEdit, DefaultImageBlog
 from django.forms import CharField, ModelForm
-from cked.widgets import CKEditorWidget
+from django_summernote.admin import SummernoteModelAdmin
 
 
-class ArticleForm(ModelForm):
-    text = CharField(widget=CKEditorWidget())
-
-
-class BlogPostAdmin(admin.ModelAdmin):
-    form = ArticleForm
+class BlogPostAdmin(SummernoteModelAdmin):
     filter_horizontal = ('category',)
     list_display = (
         'title', 'date_publication', 'owner', 'state', 'if_comments')
