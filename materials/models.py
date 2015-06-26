@@ -94,8 +94,8 @@ class Material(models.Model):
 
     class Meta:
         ordering = ["-date_creation"]
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
+        verbose_name = 'Материал'
+        verbose_name_plural = 'Материалы'
 
     def get_absolute_url(self):
         return u'/materials/%s' % self.id

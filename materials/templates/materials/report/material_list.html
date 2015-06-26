@@ -25,8 +25,46 @@
 <div class="panel-body">
 	<div class="col-md-12" align="center">
 		<p style="font-size:24px;" align="center"><strong>{{ name_material }}</strong></p>
-		<br>
 	</div>
+	<div class="row" align="">
+	<div class="col-md-12" align="center">
+		<p style="font-size:18px; color: #8D8D8D;" align="center">Фильтровать материалы</p>
+		<form action="/material_filter/" method="post"  role="form">
+		<div class="col-sm-6 col-md-3">
+			<label for="id_category">Категория:</label>
+			<select id="id_difficulty" name="difficulty" class="form-control">
+				<option value="0">-----</option>
+				{% for difficulty in difficultys %}
+			    	<option value="{{ difficulty.id }}">{{ difficulty.difficulty }}</option>
+			    {% endfor %}
+			</select>
+		</div>
+		<div class="col-sm-6 col-md-3">
+			<label for="id_category">Тип похода:</label>
+			<select id="id_type_hike" name="type_hike" class="form-control">
+				<option value="0">-----</option>
+				{% for type_hike in type_hikes %}
+			    	<option value="{{ type_hike.id }}">{{ type_hike.type_hike }} поход</option>
+			    {% endfor %}
+			</select>
+		</div>
+		<div class="col-sm-6 col-md-3">
+			<label for="id_category">Район похода:</label>
+			<select id="id_region" name="region" class="form-control">
+				<option value="0">-----</option>
+				{% for region in regions %}
+			    	<option value="{{ region.id }}">{{ region.region }}</option>
+			    {% endfor %}
+			</select>
+		</div>
+		<div class="col-sm-6 col-md-3">
+			<label for="id_category" style="opacity: 0;">Район похода:</label>
+			<button type="submit" class="btn btn-success">Применить фильтры</button>
+		</div>
+		</form>
+	</div>
+	</div>
+	<hr>
 	<div class="row" align="">
 		{% for dir in dirs %}
 		<div class="col-sm-6 col-md-3" align="center">
