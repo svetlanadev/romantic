@@ -154,6 +154,11 @@ except ImportError:
     pass
 
 
+try:
+    from power_comments.settings import *
+except ImportError:
+    pass
+
 SOCIAL_AUTH_FACEBOOK_KEY = '1602017563346275'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'ebc2b04baf9d0421d766d31be62e8e2b'
 
@@ -173,7 +178,6 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = '5HO4lXQiwRRfuoAFI4mh'
 
 AUTH_PROFILE_MODULE = "profile.CustomUser"
 
-DEFAULT_KARMA = 15
 DEFAULT_BANNER_TITLE = 3
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False

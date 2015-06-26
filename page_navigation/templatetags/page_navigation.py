@@ -19,13 +19,10 @@ def page_navigation(request):
     materials = Material.objects.exclude(state=0)[:5]
     comments = PowerComment.objects.order_by().values('app').distinct()
 
-    print comments
     conversation = []
     for comment in comments:
         app_url = comment['app']
-        print app_url
         id_content = ''.join(filter(lambda x: x.isdigit(), app_url))
-        print id_content
         if "blog" in app_url:
             obj = BlogPost.objects.get(id=id_content)
             url = obj.title

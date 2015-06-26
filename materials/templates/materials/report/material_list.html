@@ -23,16 +23,10 @@
 <div class="col-md-9 left">
 <div class="panel panel-default">
 <div class="panel-body">
-<div class="materials">
-	<div class="col-md-2">
-		<!-- <button type="button" class="btn btn-sm"><a href="/"><span class="glyphicon glyphicon-chevron-left"></span> Назад</a></button> -->
-	</div>
-	<div class="col-md-8" align="center">
+	<div class="col-md-12" align="center">
 		<p style="font-size:24px;" align="center"><strong>{{ name_material }}</strong></p>
 		<br>
-		<!-- <h1 align="center"><strong>{{ name_material }}</strong></h1> -->
 	</div>
-	<div class="col-md-2"></div>
 	<div class="row" align="">
 		{% for dir in dirs %}
 		<div class="col-sm-6 col-md-3" align="center">
@@ -56,20 +50,14 @@
 		<a href="{{ material.get_absolute_url }}" class="a_black">
 		<div class="col-md-6">
 		<div class="panel panel-default">
-  		<div class="panel-body" style="padding: 10px;">
-			<div class="row">
-				<div class="col-md-3">
-			        <img src="{{ material.type_hike.image.url }}" class="img-circle img-thumbnail" width="80px">
-			    </div>
-			    <div class="col-md-9">
-			        Тип: {{ material.type_hike.type_hike }} поход, 
-			        Сложность: {{ material.difficulty }}<br><hr class="hr_sm">
-			        Регион: {{ material.region }}, 
-			        {{ material.year }} год<br><hr class="hr_sm">
-			        Руководитель - {{ material.title }}<br><br>
-			    </div>
-			</div>
-			<p><strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:280 }}</p>
+  		<div class="panel-body" style="padding: 10px; height:220px">
+  			<p><img src="{{ material.type_hike.image.url }}" width="80px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
+	        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, 
+	        Сложность: {{ material.difficulty }}<br>
+	        <strong>Регион:</strong> {{ material.region }}, 
+	        {{ material.year }} год<br>
+	        <strong>Руководитель</strong> - {{ material.title }}<br><hr class="hr_sm2">
+			<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:250 }}</p>
 
 		</div>
 		</div>
@@ -77,7 +65,6 @@
 		</a>
 		{% endfor %}
 	</div>	
-</div>
 </div>
 </div>
 </div>

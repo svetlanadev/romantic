@@ -146,7 +146,43 @@ def profile(request, profile_id):
     profile2 = CustomUser.objects.get(id=profile_id)
     comments = PowerComment.objects.filter(owner=profile2)[:10]
     materials = Material.objects.filter(owner=profile2).exclude(state=2) 
-    data = {'profile2': profile2, 'comments': comments, 'materials':materials}
+
+    material_enable = Material.objects.filter(owner=profile2, state=1)
+    material_disable = Material.objects.filter(owner=profile2, state=0)
+
+    articles_disable = _get_articles(material_disable)
+    articles_enable = _get_articles(material_enable)
+
+    reports_disable = _get_reports(material_disable)
+    reports_enable = _get_reports(material_enable)
+    
+    data = {'profile2': profile2, 'comments': comments,
+            'articles_disable': articles_disable, 'articles_enable': articles_enable,
+            'reports_disable': reports_disable, "reports_enable": reports_enable,}
     return render_to_response('profile.html',
                               data,
                               context_instance=RequestContext(request))
+
+
+def _get_articles(materials):    
+    articles = []
+
+    for material in materials:
+        if material.rank == 1 or material.rank == 3 or material.rank == 4:
+            articles.append(material)
+        else:
+            pass    
+
+    return articles
+
+
+def _get_reports(materials):    
+    reports = []
+
+    for material in materials:
+        if material.rank == 0 or material.rank == 2:
+            reports.append(material)
+        else:
+            pass    
+
+    return reports

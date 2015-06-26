@@ -10,7 +10,7 @@ ELFINDER_OPTIONS = {
 }
 
 CKEDITOR_OPTIONS = {
-    'skin': 'bootstrapck',
+    'skin': 'moono',
     'toolbar': [
         { 'name': 'document', 'items': [ 'Source', '-', 'Preview', '-', 'Templates' ] }, #// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
         { 'name': 'clipboard', 'groups': [ 'clipboard', 'undo' ], 'items': [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },

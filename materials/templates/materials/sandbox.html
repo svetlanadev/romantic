@@ -5,17 +5,6 @@
 {% block main %}
 {% load imagekit %}
 {% load urltag %}
-{% load bootstrap_pagination %}
-{% load comments_tags %}
-
-<style type="text/css">
-	.hr_sm2 {
-		 margin-top: -6px; 
-		 margin-bottom: 6px; 
-		border: 0;
-		border-top: 1px solid #eee;
-	}
-</style>
 
 <div class="col-md-9 left">
 <div class="panel panel-default">
@@ -29,14 +18,14 @@
 		<a href="{{ material.get_absolute_url }}" class="a_black">
 		<div class="col-md-6">
 		<div class="panel panel-default">
-  		<div class="panel-body" style="padding: 10px;">
+  		<div class="panel-body" style="padding: 10px; height:220px">
   			<p><img src="{{ material.type_hike.image.url }}" width="80px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
-	        Тип: {{ material.type_hike.type_hike }} поход, 
+	        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, 
 	        Сложность: {{ material.difficulty }}<br>
-	        Регион: {{ material.region }}, 
+	        <strong>Регион:</strong> {{ material.region }}, 
 	        {{ material.year }} год<br>
-	        Руководитель - {{ material.title }}<br><hr class="hr_sm2">
-			<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:95 }}</p>
+	        <strong>Руководитель</strong> - {{ material.title }}<br><hr class="hr_sm2">
+			<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:250 }}</p>
 
 		</div>
 		</div>
@@ -50,21 +39,12 @@
 		<a href="{{ material.get_absolute_url }}" class="a_black">
 		<div class="col-md-6">
 		<div class="panel panel-default">
-  		<div class="panel-body" style="padding: 10px;">
+  		<div class="panel-body" style="padding: 10px; height:150px">
   			<p><img src="{{ material.owner.avatar.url }}" width="70px" hspace="10" vspace="10" align="left" class="img-circle"> 
   			<strong>Автор:</strong> {{ material.owner.get_full_name }}<br>
   			<strong>Название:</strong> {{ material.title }}<br><hr class="hr_sm2">
-  			Краткое описание - {{ material.short_desc|truncatechars:55 }}
+  			Краткое описание - {{ material.short_desc|truncatechars:200 }}
 			</p>
-<!-- 				<div class="col-md-3">
-			        <img src="{{ material.owner.avatar.url }}" class="img-circle" width="70px">
-			    </div>
-			    <div class="col-md-9">
-			        Автор: {{ material.owner.get_full_name }}<br><hr class="hr_sm">
-			        Название: {{ material.title }}, 
-			        {{ material.year }} год<br><hr class="hr_sm">
-			        Краткое описание - {{ material.short_desc|truncatechars:120 }}<br><br>
-			    </div> -->
 		</div>
 		</div>
 		</div>

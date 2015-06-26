@@ -137,7 +137,6 @@ def material_new(request, state):
                 'name_material': name_material,
                 'type_material': type_material,
                 'categorys': categorys}
-        print type_material
         return render_to_response('materials/%s/material_new.html' % category_material,
                                   data,
                                   context_instance=RequestContext(request))
@@ -151,9 +150,12 @@ def material_edit(request, material_id):
     if not profile.moderator and profile.user.is_superuser and material.owner == profile:
         return redirect('/login/')
 
-    if material.state == ENABLE and material.owner == profile:
-        url = u'/materials/%s' % material_id
-        return redirect(url)
+    if material.state == ENABLE:
+        if profile.moderator and profile.user.is_superuser:
+            pass
+        else:
+            url = u'/materials/%s' % material_id
+            return redirect(url)
 
     categorys = Category.objects.all()
     type_hike = TypeHike.objects.all()
@@ -230,42 +232,14 @@ def sandbox(request):
     if not profile.moderator and profile.goverment and profile.user.is_superuser:
         return redirect('/login/')
 
-    articles = _get_disable_objects_articles()
-    reports = _get_disable_objects_reports()
-    print articles
+    articles = _get_objects_articles(DISABLE)
+    reports = _get_objects_reports(DISABLE)
+    print reports
 
     data = {'articles': articles, 'reports': reports}
     return render_to_response('materials/sandbox.html',
                               data,
                               context_instance=RequestContext(request))
-
-
-def _get_disable_objects_articles():    
-    articles = []
-    materials = Material.objects.filter(state=DISABLE, rank=1)
-
-    for material in materials:
-        articles.append(material)
-    materials = Material.objects.filter(state=DISABLE, rank=3)
-    for material in materials:
-        articles.append(material)
-    materials = Material.objects.filter(state=DISABLE, rank=4)
-    for material in materials:
-        articles.append(material)
-
-    return articles
-
-
-def _get_disable_objects_reports():    
-    reports = []
-    materials = Material.objects.filter(state=DISABLE, rank=0)
-
-    for material in materials:
-        reports.append(material)
-    materials = Material.objects.filter(state=DISABLE, rank=3)
-    for material in materials:
-        reports.append(material)
-    return reports
 
 
 @login_required
@@ -302,7 +276,7 @@ def material_my(request):
 def _type_material(state):
     if state == 'report':
         type_material = 0
-        name_material = "Отчет"
+        name_material = "Отчеты"
         category_material = 'report'
     elif state == 'art':
         type_material = 1
@@ -310,17 +284,45 @@ def _type_material(state):
         category_material = 'article'
     elif state == 'passport':
         type_material = 2
-        name_material = "Паспорт"
+        name_material = "Паспорта препятствий"
         category_material = 'report'
     elif state == 'doc':
         type_material = 3
-        name_material = "Документ"
+        name_material = "Документы и МКК"
         category_material = 'article'
     elif state == 'article':
         type_material = 4
-        name_material = "Статья"
+        name_material = "Статьи"
         category_material = 'article'
     else:
         type_material = 999
         name_material = "errors"
     return type_material, name_material, category_material
+
+
+def _get_objects_articles(point):    
+    articles = []
+    materials = Material.objects.filter(state=point, rank=1)
+
+    for material in materials:
+        articles.append(material)
+    materials = Material.objects.filter(state=point, rank=3)
+    for material in materials:
+        articles.append(material)
+    materials = Material.objects.filter(state=point, rank=4)
+    for material in materials:
+        articles.append(material)
+
+    return articles
+
+
+def _get_objects_reports(point):    
+    reports = []
+    materials = Material.objects.filter(state=point, rank=0)
+
+    for material in materials:
+        reports.append(material)
+    materials = Material.objects.filter(state=point, rank=2)
+    for material in materials:
+        reports.append(material)
+    return reports

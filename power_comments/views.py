@@ -13,6 +13,7 @@ from django.http import HttpResponse
 from random import randint
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
+from power_comments.settings import *
 
 
 @login_required
@@ -79,14 +80,15 @@ def ajax_karma_minus(request):
     results = {'success':False}
     id_comment = request.POST['id_comment']
     comment = PowerComment.objects.get(id=id_comment)
+    owner = comment.owner
     message = ""
         
-    if user.karma > -10:
+    if user.karma > POWER_USER_KARMA_AVIABLE:
         if user not in comment.karma_users.all():
             comment.rating = comment.rating - 1
-            user.karma = user.karma - 1
+            owner.karma = owner.karma - 1
             comment.save()
-            user.save()
+            owner.save()
             comment.karma_users.add(user)
             message = "Ваш голос учтен"
         else:
@@ -108,14 +110,15 @@ def ajax_karma_plus(request):
     results = {'success':False}
     id_comment = request.POST['id_comment']
     comment = PowerComment.objects.get(id=id_comment)
+    owner = comment.owner
     message = ""
         
-    if user.karma > -10:
+    if user.karma > POWER_USER_KARMA_AVIABLE:
         if user not in comment.karma_users.all():
             comment.rating = comment.rating + 1
-            user.karma = user.karma + 1
+            owner.karma = owner.karma + 1
             comment.save()
-            user.save()
+            owner.save()
             comment.karma_users.add(user)
             message = "Ваш голос учтен"
         else:

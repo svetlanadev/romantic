@@ -5,6 +5,7 @@ from django.core import urlresolvers
 from django.core.urlresolvers import reverse, NoReverseMatch
 from power_comments.forms import PowerCommentForm
 from power_comments.models import PowerComment
+from profile.models import CustomUser
 
 
 register = template.Library()
@@ -12,11 +13,16 @@ register = template.Library()
 
 @register.inclusion_tag('power_comments/comments.html')
 def power_comments(request, app_url):
+    try:
+        profile = CustomUser.objects.get(user=request.user)
+    except:
+        profile = request.user
     comments = PowerComment.objects.all().filter(app=app_url, state=1)
     count_comments = comments
     data = {'comments': comments,
             'app_url': app_url,
             'count_comments': count_comments,
+            'profile': profile,
             'request': request}
     return data
 
@@ -24,11 +30,11 @@ def power_comments(request, app_url):
 @register.simple_tag()
 def count_inc_power_comments(count_inc):
     if count_inc == None:
-        s = '<div class="col-md-10">'
+        s = '<div class="col-xs-10">'
     else:
         count = int(count_inc)
         total = 10 - int(count_inc)
-        s = '<div class="col-md-%s"></div><div class="col-md-%s">' % (count, total)
+        s = '<div class="col-xs-%s"></div><div class="col-xs-%s">' % (count, total)
     return s
 
 

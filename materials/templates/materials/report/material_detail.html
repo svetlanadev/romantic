@@ -70,16 +70,21 @@
 					{% endif %}
 				{% endif %}
 			{% if profile.moderator == True or user.is_superuser %} 
-	        <div class="btn-group show-on-hover">
-	          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-	            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
-	          </button>
-	          <ul class="dropdown-menu" role="menu">
-	            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
-	            <li><a href="/material_edit/{{ material.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
-	          </ul>
-	        </div>
-	        {% endif %}
+		        <div class="btn-group show-on-hover">
+		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+		            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
+		          </button>
+		          <ul class="dropdown-menu" role="menu">
+		          	{% if material.state == 0 %}
+		          		<li><a href="/material_hidden/{{ material.id }}"><span class="glyphicon glyphicon-eye-close"></span> Показать</a></li>
+		          	{% endif %}
+		          	{% if material.state == 1 %}
+		          		<li><a href="/material_hidden/{{ material.id }}"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
+		          	{% endif %}
+		            <li><a href="/material_edit/{{ material.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
+		          </ul>
+		        </div>
+		        {% endif %}
 	        {% if user.is_superuser %} 
 	        	<div class="btn-group show-on-hover">
 	          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">

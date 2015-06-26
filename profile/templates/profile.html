@@ -49,31 +49,49 @@
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
-                    </span> Отчеты/Статьи</a>
+                    </span> Отчеты / Паспорта</a>
                 </h4>
               </div>
               <div id="collapseOne" class="panel-collapse collapse in">
-                {% for material in materials %}
+                {% for material in reports_enable %}
                 <div class="list-group">
                   <a href="/materials/{{ material.id }}" class="list-group-item">
-                    <h4 class="list-group-item-heading">{{ material.title }}</h4>
-                    <p class="list-group-item-text">{{ material.status }}</p>
+                    <h5 class="list-group-item-heading" align="center">
+                    {{ material.type_hike.type_hike }} поход, 
+                    Сложность: {{ material.difficulty }}
+                    Регион: {{ material.region }}, 
+                    {{ material.year }} год <span class="glyphicon glyphicon-star text-primary"></span> <strong>{{ material.rating }}</strong>
+                    </h5>
+                    <p class="list-group-item-text">{{ material.short_desc }}</p>
                   </a>
                 </div>
                 {% endfor %}
-
-                <!-- <ul class="list-group">
-                  <li class="list-group-item"><span class="glyphicon glyphicon-pencil text-primary"></span><a href="http://fb.com/moinakbarali">Articles</a>
-                  </li>
-                  <li class="list-group-item"> <span class="glyphicon glyphicon-comment text-success"></span><a href="http://fb.com/moinakbarali">Comments</a><span class="badge">42</span></li>
-                </ul> -->
-
               </div>
             </div>
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-file">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-book">
+                    </span> Статьи / Искусство</a>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse">
+              {% for material in articles_enable %}
+                <div class="list-group">
+                  <a href="/materials/{{ material.id }}" class="list-group-item">
+                    <h5 class="list-group-item-heading" align="center">
+                    {{ material.title }} <span class="glyphicon glyphicon-star text-primary"></span> <strong>{{ material.rating }}</strong>
+                    </h5>
+                    <p class="list-group-item-text">{{ material.short_desc }}</p>
+                  </a>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-comment">
                     </span> Комментарии</a>
                 </h4>
               </div>
@@ -83,38 +101,65 @@
                   <a href="{{ comment.app }}/#comment_{{ comment.id }}" class="list-group-item">
                     <h5 class="list-group-item-heading" align="center">Тема: {% url_with_comment comment.app %}</h5>
                     <p class="list-group-item-text">
-                      <span class="glyphicon glyphicon-star text-primary"></span><strong>{{ comment.rating }}</strong>; {{ comment.date_creation }} <br>{{ comment.text }}
+                      <span class="glyphicon glyphicon-star text-primary"></span> <strong> {{ comment.rating }}</strong>; {{ comment.date_creation }} <br>{{ comment.text }}
                     </p>
                   </a>
                 </div>
               {% endfor %}
               </div>
             </div>
-<!--             <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"><span class="glyphicon glyphicon-heart">
-                    </span> Творчетсво</a>
-                </h4>
-              </div>
-              <div id="collapseFive" class="panel-collapse collapse">
-                <div class="list-group">
-                  <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">List group item heading</h4>
-                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                  </a>
-                </div>
-                <div class="list-group">
-                  <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">List group item heading</h4>
-                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                  </a>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
     </div>
+    {% if profile == profile2 %} 
+    {% if not reports_disable and articles_disable %}
+    <div class="col-md-8">
+    <div class="row">
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne1"><span class="glyphicon glyphicon-minus-sign">
+              </span> Материалы на проверке:</a>
+          </h4>
+        </div>
+        <div id="collapseOne1" class="panel-collapse collapse">
+          {% if reports_disable %}
+            <h4>Отчеты / Паспорта</h4>
+          {% endif %}
+          {% for material in reports_disable %}
+          <div class="list-group">
+            <a href="/materials/{{ material.id }}" class="list-group-item">
+              <h5 class="list-group-item-heading" align="center">
+              {{ material.type_hike.type_hike }} поход, 
+              Сложность: {{ material.difficulty }}
+              Регион: {{ material.region }}, 
+              {{ material.year }} год <span class="glyphicon glyphicon-star text-primary"></span> <strong>{{ material.rating }}</strong>
+              </h5>
+              <p class="list-group-item-text">{{ material.short_desc }}</p>
+            </a>
+          </div>
+          {% endfor %}
+          {% if articles_disable %}
+            <h4>Статьи / Искусство</h4>
+          {% endif %}
+          {% for material in articles_disable %}
+          <div class="list-group">
+            <a href="/materials/{{ material.id }}" class="list-group-item">
+              <h5 class="list-group-item-heading" align="center">
+              {{ material.title }} <span class="glyphicon glyphicon-star text-primary"></span> <strong>{{ material.rating }}</strong>
+              </h5>
+              <p class="list-group-item-text">{{ material.short_desc }}</p>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    {% endif %}
+    {% endif %}
 </div>
 </div>
 </div>
