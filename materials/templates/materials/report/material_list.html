@@ -29,7 +29,7 @@
 	<div class="row" align="">
 	<div class="col-md-12" align="center">
 		<p style="font-size:18px; color: #8D8D8D;" align="center">Фильтровать материалы</p>
-		<form action="/material_filter/" method="post"  role="form">
+		<form action="{{ request.path }}" method="post"  role="form">
 		<div class="col-sm-6 col-md-3">
 			<label for="id_category">Категория:</label>
 			<select id="id_difficulty" name="difficulty" class="form-control">

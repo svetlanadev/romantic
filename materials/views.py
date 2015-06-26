@@ -20,60 +20,14 @@ DISABLE = 0
 
 def materials(request, state):
     type_material, name_material, category_material = _type_material(state)
-    materials = Material.objects.all().filter(rank=type_material, state=ENABLE)
-    type_hike = TypeHike.objects.all()
-    region = Region.objects.all()
-    difficulty = Difficulty.objects.all()
-    categorys = Category.objects.all()
-
-    dirs = Dirs.objects.all().filter(state=type_material)
-
-    data = {'materials': materials, 
-            'dirs': dirs,
-            'type_hikes': type_hike,
-            'regions': region, 
-            'difficultys': difficulty,
-            'name_material': name_material,
-            'categorys': categorys}
-    return render_to_response('materials/%s/material_list.html' % category_material,
-                              data,
-                              context_instance=RequestContext(request))
-
-
-def material_filter(request, state):
-    type_material, name_material, category_material = _type_material(state)
-    materials = Material.objects.all().filter(rank=type_material, state=ENABLE)
+    materials = Material.objects.filter(rank=type_material, state=ENABLE)
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
     categorys = Category.objects.all()
 
     if request.method == "POST":
-        try:
-            difficulty_filter = Difficulty.objects.get(id=request.POST['difficulty']) 
-        except ObjectDoesNotExist:
-            difficulty_filter = 0
-        try:
-            type_hike_filter = TypeHike.objects.get(id=request.POST['type_hike']) 
-        except ObjectDoesNotExist:
-            type_hike_filter = 0
-        try:
-            region_filter = Region.objects.get(id=request.POST['region']) 
-        except ObjectDoesNotExist:
-            region_filter = 0
-        
-
-        materials = Material.objects.filter(state=ENABLE, rank=type_material)
-
-        if type_hike_filter != 0:
-            materials = materials.filter(type_hike=type_hike_filter)
-        if difficulty_filter != 0:
-            materials = materials.filter(difficulty=difficulty_filter)
-        if region_filter != 0:
-            materials = materials.filter(region=region_filter)
-
-    else:  # GET]
-        materials = Material.objects.all().filter(rank=type_material, state=ENABLE)
+        materials = _material_filter(request, materials)
 
     dirs = Dirs.objects.all().filter(state=type_material)
 
@@ -89,17 +43,7 @@ def material_filter(request, state):
                               context_instance=RequestContext(request))
 
 
-def queryset_materials_filter(request):
-    pass
 
-
-# def sandbox(request, state):
-#     type_material, name_material = _type_material(state)
-#     materials = Material.objects.all().filter(state=type_material)
-#     data = {'materials': materials, }
-#     return render_to_response('materials/sandbox.html',
-#                               data,
-#                               context_instance=RequestContext(request))
 
 
 def material_detail(request, material_id):
@@ -307,25 +251,6 @@ def sandbox(request):
 
 
 @login_required
-def material_edit2(request, material_id):
-    user = CustomUser.objects.get(user=request.user)
-    material = Material.objects.get(id=material_id)
-
-    if request.method == "POST":
-        form = MaterialForm(request.POST, instance=material)
-        if form.is_valid():
-            form.save(owner=user)
-            url = u'/materials/%s' % material_id
-            return redirect(url)
-
-    form = MaterialForm(instance=material)
-    data = {'form': form, 'material': material}
-    return render_to_response('materials/material_edit.html',
-                              data,
-                              context_instance=RequestContext(request))
-
-
-@login_required
 def material_my(request):
     user = CustomUser.objects.get(user=request.user)
     material_enable = Material.objects.filter(owner=user, state=1)
@@ -390,3 +315,28 @@ def _get_objects_reports(point):
     for material in materials:
         reports.append(material)
     return reports
+
+
+def _material_filter(request, materials):
+    try:
+        difficulty_filter = Difficulty.objects.get(id=request.POST['difficulty']) 
+    except ObjectDoesNotExist:
+        difficulty_filter = 0
+    try:
+        type_hike_filter = TypeHike.objects.get(id=request.POST['type_hike']) 
+    except ObjectDoesNotExist:
+        type_hike_filter = 0
+    try:
+        region_filter = Region.objects.get(id=request.POST['region']) 
+    except ObjectDoesNotExist:
+        region_filter = 0
+        
+
+    if type_hike_filter != 0:
+        materials = materials.filter(type_hike=type_hike_filter)
+    if difficulty_filter != 0:
+        materials = materials.filter(difficulty=difficulty_filter)
+    if region_filter != 0:
+        materials = materials.filter(region=region_filter)
+
+    return materials
