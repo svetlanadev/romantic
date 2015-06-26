@@ -60,7 +60,6 @@ INSTALLED_APPS = (
     'power_comments',
     'banner',
     'page_navigation',
-    'debug_toolbar',
     'materials',
     'cked',
 )
@@ -86,7 +85,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'romantic.urls'
@@ -124,12 +122,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = '/home/ukrainem/domains/tkr.od.ua/public_html/media/'
 STATIC_ROOT = '/home/ukrainem/domains/tkr.od.ua/public_html/static/'
 
-# MEDIA_ROOT = u'/media/'
-
-# ELFINDER_OPTIONS = {
-#     'root': os.path.join(os.getcwd(), 'media', 'uploads'),
-#     'URL': '/media/uploads/',
-# }
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -179,17 +171,3 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = '5HO4lXQiwRRfuoAFI4mh'
 AUTH_PROFILE_MODULE = "profile.CustomUser"
 
 DEFAULT_BANNER_TITLE = 3
-
-DEBUG_TOOLBAR_PATCH_SETTINGS = False
-
-CONFIG_DEFAULTS = {
-    # Toolbar options
-    'DISABLE_PANELS': set(['debug_toolbar.panels.redirects.RedirectsPanel']),
-    'INSERT_BEFORE': '</body>',
-    'JQUERY_URL': '//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js',
-    'RENDER_PANELS': None,
-    'RESULTS_STORE_SIZE': 10,
-    'ROOT_TAG_EXTRA_ATTRS': '',
-    'SHOW_COLLAPSED': False,
-    'SHOW_TOOLBAR_CALLBACK': 'debug_toolbar.middleware.show_toolbar',
-}

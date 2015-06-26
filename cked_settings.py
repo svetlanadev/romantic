@@ -3,10 +3,29 @@ import os
 # Full filesystem path to the project.
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+
+SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+
+MEDIA_ROOT = os.path.normpath(os.path.join(SITE_ROOT, "./media"))
+
 ELFINDER_OPTIONS = {
     ## required options
-    'root': '/home/ukrainem/domains/tkr.od.ua/public_html/media/uploads',
+    'root': os.path.join(MEDIA_ROOT,  'uploads'),
     'URL': '/media/uploads/',
+    'lang' : 'ru',
+    'perms': {
+      'backup': {
+          'read': True,
+          'write': False,
+          'rm': False
+      },
+      '^/AdminFolder': {
+          'read': False,
+          'write': False,
+          'locked': True,
+          'rm': False
+      }
+    },
 }
 
 CKEDITOR_OPTIONS = {

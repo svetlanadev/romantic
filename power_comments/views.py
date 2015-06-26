@@ -8,8 +8,7 @@ from profile.models import CustomUser
 from django.shortcuts import render_to_response, redirect, render
 from power_comments.models import PowerComment
 from power_comments.forms import PowerCommentForm
-from django.utils import simplejson
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from random import randint
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
@@ -71,8 +70,8 @@ def ajax_test(request):
     if request.is_ajax():
         results = {'success':True, 'param1':'Good', 'param2':randint(0,40)}
 
-    json = simplejson.dumps(results)
-    return HttpResponse(json, mimetype='application/json')
+    # json = JsonResponse(results)
+    return JsonResponse(json, mimetype='application/json')
 
 
 def ajax_karma_minus(request):
@@ -98,8 +97,7 @@ def ajax_karma_minus(request):
 
     if request.is_ajax():
         results = {'success':True, 'rating':comment.rating, 'id_comment':comment.id, 'message':message, }
-        json = simplejson.dumps(results)
-        return HttpResponse(json, mimetype='application/json')
+        return JsonResponse(results)
 
     url = comment.app
     return redirect(url)
@@ -128,8 +126,7 @@ def ajax_karma_plus(request):
 
     if request.is_ajax():
         results = {'success':True, 'rating':comment.rating, 'id_comment':comment.id, 'message':message, }
-        json = simplejson.dumps(results)
-        return HttpResponse(json, mimetype='application/json')
+        return JsonResponse(results)
 
     url = comment.app
     return redirect(url)
@@ -215,5 +212,4 @@ def new_power_comment(request):
         else:
             results = {'success':False, 'message': 'Максимум 1000 символов', 'text': text}
 
-    json = simplejson.dumps(results)
-    return HttpResponse(json, mimetype='application/json')
+    return JsonResponse(results)
