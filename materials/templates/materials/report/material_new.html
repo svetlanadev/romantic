@@ -15,6 +15,7 @@
 					<div class="row">
 						<div class="col-xs-4">
 							<label for="id_category">Руководитель:</label>
+							{{ form.title.errors }}
 						    <input id="id_title" name="title" type="text" class="form-control" placeholder="Руководитель" value="{{ form.title.value }}"><br>
 						</div>
 						<div class="col-xs-2">
@@ -44,6 +45,7 @@
 						</div>
 						<div class="col-xs-2">
 							<label for="id_category">Год:</label>
+							{{ form.year.errors }}
 						    <input id="id_year" name="year" type="text" pattern="[0-9]{4}" class="form-control" placeholder="Год проведения" value="{{ form.year.value }}"><br>
 						</div>
 					</div>
@@ -54,15 +56,19 @@
 					<option value="0" selected="selected">DISABLE</option>
 					</select>
 					<label for="id_category">Маршрут</label>
+					{{ form.status.errors }}
 					<textarea id="id_status" name="status" type="text" class="form-control" >{{ form.status.value }}</textarea><br>
 					<label for="id_category">Краткое описание</label>
+					{{ form.short_desc.errors }}
 					<textarea id="id_short_desc" name="short_desc" type="text" class="form-control" >{{ form.short_desc.value }}</textarea><br>
+					{{ form.text.errors }}
 					{{ form.media }}
 					{{ form.text }}
 					<hr style="margin-top: 1px; margin-bottom: 14px;">
 					<div class="row"><br>
 						<div class="col-xs-6">
-						<p><label for="id_category">Теги:</label><br> 
+						<p><label for="id_category">Теги:</label><br>
+						{{ form.category.errors }}  
 						<select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
 						{% for category in categorys %}
 						    <option value="{{ category.id }}">{{ category.category }}</option>

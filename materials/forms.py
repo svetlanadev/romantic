@@ -17,7 +17,7 @@ class MaterialForm(ModelForm):
 
     def save_with_owner(self, *args, **kwargs):
         owner = kwargs.pop('owner')
-        obj = super(BlogPostForm, self).save(commit=False)
+        obj = super(MaterialForm, self).save(commit=False)
         obj.owner = owner
         obj.save()
         return obj
