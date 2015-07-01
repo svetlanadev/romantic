@@ -7,85 +7,90 @@
 {% load comments_tags %}
 
 <style type="text/css">
-	.post-header-line { border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
+	.post-header-line { border-bottom:1px solid #DDD;padding:10px 0px 10px 25px;font-size: 12px; }
 </style>
 
-<div class="col-md-9 left">
-<div class="panel panel-default">
-<div class="panel-body">
-<!-- Блог -->
-<div id="blogpost">
+<div id="events-banner" class="fill">
+	<div class="header-cone"></div>
+	<div class="header-cone right"></div>
+</div>
 
-	<!-- Заголовок -->
-	<div class="row" align="">
-		<div class="col-md-1"></div>
-		<div class="col-md-10" align="center">
-			<p style="font-size:24px;">
+<div id="events-view-buttons" >
+	<div class="restricted center-block link-like-text">
+		<div class="button calendar-view">
+			<a href="#" id="title">Новости</a>
+		</div>
+	</div>
+</div>
+
+<br>
+
+<div class="container">
+<div class="row">
+
+	<div id="blogpost" class="col-md-8 left" style="border: 1px solid #414141;">
+	<br>
+		<div class="col-md-12" align="center">
+			<p style="font-size:18px;">
 				<strong>{{ blogpost.title }}</strong>
 			</p>
 		</div>
-	</div>
-	<div class="body">
-	    {{ blogpost.text|safe }}
-	    <br>
-			<!-- <strong>Файлы:</strong>
-			{% for file in blogpost.files.all %}
-					<a href="{{ STATIC_URL }}{{ file.one_file }}">{{ file.file_name }}</a>, 
-			{% endfor %} -->
-		<div class="row">
-	        <div class="col-md-12 post-header-line">
-	        	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blogpost.date_creation|date:"d.m.Y, G:i" }} 
-	            | <span class="glyphicon glyphicon-user"></span> Автор: <a href="{{ blogpost.owner.get_absolute_url }}">{{ blogpost.owner.get_full_name }}</a> 
-	            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blogpost.get_absolute_url }}/#href_power_comments">
-				Комментарии ({% count_power_comments blogpost.get_absolute_url %})</a>
-	            | <span class="glyphicon glyphicon-tags"></span> Теги : 
-            	{% for category in blogpost.category.all %}
-					<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>  
-				{% endfor %}
-					<!-- Admin panel -->
-				{% if profile.moderator == True or user.is_superuser %} 
-		        <div class="btn-group show-on-hover">
-		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-		            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
-		          </button>
-		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
-		            <li><a href="/blog_edit/{{ blogpost.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
-		          </ul>
+		<div class="body">
+		    {{ blogpost.text|safe }}
+		    <br>
+			<div class="row">
+		        <div class="col-md-12 post-header-line">
+		        	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blogpost.date_creation|date:"d.m.Y, G:i" }} 
+		            | <span class="glyphicon glyphicon-user"></span> Автор: <a href="{{ blogpost.owner.get_absolute_url }}">{{ blogpost.owner.get_full_name }}</a> 
+		            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blogpost.get_absolute_url }}/#href_power_comments">
+					Комментарии ({% count_power_comments blogpost.get_absolute_url %})</a>
+		            | <span class="glyphicon glyphicon-tags"></span> Теги : 
+	            	{% for category in blogpost.category.all %}
+						<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>  
+					{% endfor %}
+						<!-- Admin panel -->
+					{% if profile.moderator == True or user.is_superuser %} 
+			        <div class="btn-group show-on-hover">
+			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
+			            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
+			          </button>
+			          <ul class="dropdown-menu" role="menu">
+			            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
+			            <li><a href="/blog_edit/{{ blogpost.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
+			          </ul>
+			        </div>
+			        {% endif %}
+			        {% if user.is_superuser %} 
+			        	<div class="btn-group show-on-hover">
+			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
+			            <span class="glyphicon glyphicon-tower"></span> Admin <span class="caret"></span>
+			          </button>
+			          <ul class="dropdown-menu" role="menu">
+			            <li><a href="{% url_edit blogpost %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
+			            <li><a href="/minus_karma_admin/{{ blogpost.id }}"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Понизить карму на 10</a></li>
+			            <li><a href="#"><span class="glyphicon glyphicon-ban-circle"></span> Забанить пользователя</a></li>
+			            <li class="divider"></li>
+			            <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Бан и скрытие всех постов</a></li>
+			          </ul>
+			        </div>
+			        {% endif %}
 		        </div>
-		        {% endif %}
-		        {% if user.is_superuser %} 
-		        	<div class="btn-group show-on-hover">
-		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-		            <span class="glyphicon glyphicon-tower"></span> Admin <span class="caret"></span>
-		          </button>
-		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="{% url_edit blogpost %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
-		            <li><a href="/minus_karma_admin/{{ blogpost.id }}"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Понизить карму на 10</a></li>
-		            <li><a href="#"><span class="glyphicon glyphicon-ban-circle"></span> Забанить пользователя</a></li>
-		            <li class="divider"></li>
-		            <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Бан и скрытие всех постов</a></li>
-		          </ul>
-		        </div>
-		        {% endif %}
-	        </div>
+		    </div>
+		    <br>
+			{% if blogpost.if_comments %} <!-- Комментарии -->
+				{% power_comments request blogpost.get_absolute_url %}
+			{% else %}
+				Вы настолько много матерились, что мы решили отключить комментарии к этой статье.
+			{% endif %}
 	    </div>
-	    <br>
-		{% if blogpost.if_comments %} <!-- Комментарии -->
-			{% power_comments request blogpost.get_absolute_url %}
-		{% else %}
-			Вы настолько много матерились, что мы решили отключить комментарии к этой статье.
-		{% endif %}
-    </div>
-<!-- Блог -->
-</div>
-</div>
-</div>
-</div>
+	</div>
 
-<div class="col-md-3 right">
-    {% load page_navigation %}
-    {% page_navigation request %}
+	<div class="col-md-4 right">
+	    {% load page_navigation %}
+	    {% page_navigation request %}
+	</div>
+
+</div>
 </div>
 
 {% endblock %}

@@ -11,71 +11,70 @@
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/style2.css" rel="stylesheet">
+    <!-- ИЗМЕНЕНИЕ ПАНЕЛЕЙ -->
+    <style type="text/css">
+      .panel-default {
+      border-color: #000;
+      }
+      .panel {
+        border-radius: 0px;
+      }
+    </style>
     {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 
-<nav class="navbar navbar-default" role="navigation">
-  <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-  </div>
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <ul class="nav navbar-nav">
-        <p class="navbar-text" style="opacity: 0;">==Дима Ляпун тут был==</p>
-        <!-- <li><a href="/"><strong>Главная</strong></a></li> -->
-      <li><a href="/blog/"><strong>Новости</strong></a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>О клубе</strong> <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="/about/">О нас</a></li>
-          <li><a href="/history/">История клуба</a></li>
-          <li><a href="/goverment/">Руководство</a></li>
-          <li><a href="/rules/">Устав</a></li>
-        </ul>
-      </li>
-      <!-- <li><a href="/party/"><strong>Мероприятия</strong></a></li> -->
-      <!-- <li><a href="/hikes/"><strong>Походы</strong></a></li> -->
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>Библиотека</strong> <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="/passport/">Паспорта препятствий</a></li>
-          <li><a href="/doc/">МКК и документация</a></li>
-          <li><a href="/report/">Отчеты походов</a></li>
-          <li><a href="/art/">Творчество</a></li>
-          <li><a href="/article/">Статьи</a></li>
-          {% if user.is_authenticated %} 
-            <li class="divider"></li>
-            <li><a href="/material_my/">Мои материалы</a></li>
-            {% if profile.moderator or profile.goverment or user.is_superuser %}
-            <li><a href="/sandbox/">Песочница</a></li>
-            {% endif %}
-          {% endif %}
-        </ul>
-      </li>
-      {% block navbar_block %}{% endblock %}
-      {% if user.is_authenticated %} 
-      <li><a href="/material_new/" style="color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span><strong> Добавить материал</strong></a></li>
-      {% endif %}
-      {% if profile.moderator or profile.goverment or user.is_superuser %}
-        <li><a href="/blog_new/" style="color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span><strong> Добавить новость</strong></a></li>
-      {% endif %}
-    </ul>
-
-    <ul class="nav navbar-nav navbar-right">
+<div id="header">
+      <ul id="header-menu" class="center-block list-inline list-inline-clear-padding link-like-text">
+        <li class="menu-list">
+          <div class="under-menu-shadow">
+            <ul class="list-inline topmenu">
+              <li><a href="/">Главная</a></li>
+              <li class="hover">
+                  <a href="#" >О клубе<span class="arrow"></span></a>
+                  <ul class="submenu">
+                    <li><a href="/history/">история</a></li>
+                    <li><a href="#">гимн</a></li>
+                    <li><a href="/rules/">устав</a></li>
+                    <li><a href="#">Контакты</a></li>
+                  </ul>
+              </li>
+              <li><a href="#">Галерея</a></li>
+              <li><a href="/blog/">Новости</a></li>
+            </ul>
+          </div>
+        </li><li class="logo hidden-sm hidden-xs" style="">
+          <a href="/">
+            <img src="{{ STATIC_URL }}images/logo.png">
+            ТУРКЛУБ &laquo;РОМАНТИК&raquo;
+          </a>
+        </li><li class="menu-list right">
+          <div class="under-menu-shadow">
+            <ul class="list-inline topmenu">
+              <li><a href="#">Мероприятия</a></li>
+              <li class="hover">
+                  <a href="#" >Библиотека<span class="arrow"></span></a>
+                  <ul class="submenu">
+                    <li><a href="/passport/">Паспорта препятствий</a></li>
+                    <li><a href="/doc/" class="hover">МКК и документация</a></li>
+                    <li><a href="/report/">Отчеты походов</a></li>
+                    <li><a href="/art/">Творчество</a></li>
+                    <li><a href="/article/">Статьи</a></li>
+                    <li class="devider"></li>
+                    <li><a href="/material_new/">Добавить материал</a></li>
+                    <li><a href="/material_my/">Мои материалы</a></li>
+                  </ul>
+              </li>
+              <li class="hover">
       {% if user.is_authenticated %}                
-        <li class="dropdown">
+        <li class="hover">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-user"></span> 
-                <strong>{{ user.username }}</strong>
-                <span class="glyphicon glyphicon-chevron-down"></span>
+                {{ user.username }}
+                <span class="arrow"></span>
             </a>
-            <ul class="dropdown-menu">
+            <ul class="submenu">
                 <li>
                     <div class="navbar-login">
                         <div class="row">
@@ -140,10 +139,9 @@
             </ul>
         </li>
       {% else %}                
-        <li><a href="/register/">Регистрация</a></li>
-        <li class="dropdown">
+        <li class="hover">
            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Вход <b class="caret"></b></a>
-           <ul class="dropdown-menu" style="padding: 15px;min-width: 330px;">
+           <ul class="submenu" style="padding: 15px;min-width: 330px;">
               <div class="main">
         <h4>Войдите, или <a href="/register/">Зарегистрируйтесь</a></h4>
         <!-- <div class="row">
@@ -179,14 +177,30 @@
                 Вход
             </button>
         </form>
-    </div>
+          </div>
            </ul>
         </li>
       {% endif %}
-      <p class="navbar-text" style="opacity: 0;">==Дима Ляпун тут был==</p>
-    </ul>
-  </div>
-</nav>
+
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+    <div style="position: relative;">
+      <div class="header-cone"></div>
+      <div class="header-cone right"></div>
+    </div>
+
+    <div id="events-banner" class="fill">
+      <div class="header-cone"></div>
+      <div class="header-cone right"></div>
+    </div>
+
+    <br>
 
 <div class="container">
     <div class="row">
@@ -194,60 +208,63 @@
     </div>
 </div>
 
-<div class="footer center-block">
-      <ul class="navigation list-inline list-inline-clear-padding">
-        <li>
-          <a href="/" style="font-size:16px;">Главная</a>
-        </li><li>
-          <a href="#" style="font-size:16px;">О нас</a>
-          <ul class="submenu">
-            <li><a href="#">история</a></li>
-            <li><a href="#">гимн</a></li>
-            <li><a href="#">устав</a></li>
-            <li><a href="#">походы</a></li>
-          </ul>
-        </li><li>
-          <a href="/blog/" style="font-size:16px;">Новости</a>
-          <ul class="submenu">
-            <li><a href="/arhive_news/">архив новостей</a></li>
-          </ul>
-        </li><li>
-          <a href="#" style="font-size:16px;">Календарь</a>
-        </li><li>
-          <a href="/library/" style="font-size:16px;">Библиотека</a>
-          <ul class="submenu">
-            <li><a href="/passport/">паспорта препятствий</a></li>
-            <li><a href="/report/">отчеты походов</a></li>
-            <li><a href="/art/">творчество</a></li>
-            <li><a href="/article/">статьи</a></li>
-            <li><a href="/doc/">документы</a></li>
-          </ul>
-        </li><li>
-          <a href="#" style="font-size:16px;">Контакты</a>
-        </li>
-      </ul>
 
-      <div class="bottom-bar">
-        <ul class="socials list-inline pull-left">
-          <li class="fb"></li>
-          <li class="vk"></li>
-          <li class="tw"></li>
-          <li class="goo"></li>
+<div id="footer">
+  <div class="center-block">
+    <ul class="navigation list-inline list-inline-clear-padding">
+      <li>
+        <a href="/">Главная</a>
+      </li><li>
+        <a href="/about/">О клубе</a>
+        <ul class="submenu">
+          <li><a href="/history/">история</a></li>
+          <li><a href="#">гимн</a></li>
+          <li><a href="/rules/">устав</a></li>
         </ul>
-        <form class="search-form form-inline pull-right">
-          <div class="form-group">
-            <input type="search" class="form-control" placeholder="ПОИСК">
-          </div><button type="submit" class="btn btn-default"></button>
-        </form>
-        <div class="copy">Powered by
-            <a href="http://www.djangoproject.com">Django</a>
-            <span class="separator">|</span>
-            by Dmitry Lyapun, <a href="mailto:dlyapun@gmail.com">dlyapun@gmail.com</a>
-            <span class="separator">|</span>
-            &copy; tkr.od.ua</div>
+      </li><li>
+        <a href="#">Галерея</a>
+      </li><li>
+        <a href="/blog/">Новости</a>
+      </li><li>
+        <a href="/party/">Мероприятия</a>
+      </li><li>
+        <a href="#">Библиотека</a>
+        <ul class="submenu">
+          <li><a href="/passport/">паспорта препятствий</a></li>
+          <li><a href="/doc/">МКК и документация</a></li>
+          <li><a href="/report/">отчёты походов</a></li>
+          <li><a href="/art/">творчество</a></li>
+          <li><a href="/article/">статьи</a></li>
+        </ul>
+      </li><li>
+        <a href="#">Контакты</a>
+      </li>
+    </ul>
+
+    <div class="bottom-bar">
+      <ul class="socials list-inline pull-left">
+        <li class="fb"></li>
+        <li class="vk"></li>
+        <li class="tw"></li>
+        <li class="goo"></li>
+      </ul>
+      <form class="search-form form-inline pull-right">
+        <div class="form-group">
+          <input type="search" class="form-control" placeholder="ПОИСК">
+        </div><button type="submit" class="btn btn-default"></button>
+      </form>
+      <div class="copy">Powered by
+        <a href="http://www.djangoproject.com">Django</a>
+        <span class="separator">|</span>
+        by Dmitry Lyapun, <a href="mailto:dlyapun@gmail.com">dlyapun@gmail.com</a>
+        <span class="separator">|</span>
+        &copy; tkr.od.ua</div>
       </div>
     </div>
-  <div id="goTop"></div>
+  </div>
+</div>
+
+<div id="goTop"></div>
 
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-2.1.3.min.js"></script>
 <!-- <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script> -->
