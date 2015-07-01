@@ -10,26 +10,9 @@
 	.post-header-line { border-bottom:1px solid #DDD;padding:10px 0px 10px 25px;font-size: 12px; }
 </style>
 
-<div id="events-banner" class="fill">
-	<div class="header-cone"></div>
-	<div class="header-cone right"></div>
-</div>
-
-<div id="events-view-buttons" >
-	<div class="restricted center-block link-like-text">
-		<div class="button calendar-view">
-			<a href="#" id="title">Новости</a>
-		</div>
-	</div>
-</div>
-
-<br>
-
-<div class="container">
-<div class="row">
-
-	<div id="blogpost" class="col-md-8 left" style="border: 1px solid #414141;">
-	<br>
+<div class="col-md-9 left">
+<div class="panel panel-default">
+<div class="panel-body">
 		<div class="col-md-12" align="center">
 			<p style="font-size:18px;">
 				<strong>{{ blogpost.title }}</strong>
@@ -84,14 +67,14 @@
 			{% endif %}
 	    </div>
 	</div>
+	</div>
+	</div>
 
-	<div class="col-md-4 right">
+	<div class="col-md-3">
 	    {% load page_navigation %}
 	    {% page_navigation request %}
 	</div>
 
-</div>
-</div>
 
 {% endblock %}
 
