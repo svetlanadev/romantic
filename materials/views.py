@@ -242,21 +242,3 @@ def sandbox(request):
     return render_to_response('materials/sandbox.html',
                               data,
                               context_instance=RequestContext(request))
-
-
-@login_required
-def material_my(request):
-    user = CustomUser.objects.get(user=request.user)
-    material_enable = Material.objects.select_related(
-                                'owner', 'owner__user'
-                                ).prefetch_related(
-                                'category').filter(owner=user, state=ENABLE)
-    material_disable = Material.objects.select_related(
-                                'owner', 'owner__user'
-                                ).prefetch_related(
-                                'category').filter(owner=user, state=DISABLE)
-
-    data = {'materials': material_enable, 'material_disable': material_disable}
-    return render_to_response('materials/material_my.html',
-                              data,
-                              context_instance=RequestContext(request))

@@ -35,7 +35,7 @@
         <ul class="dropdown-menu">
           <li><a href="/about/">О нас</a></li>
           <li><a href="/history/">История клуба</a></li>
-          <li><a href="/goverment/">Руководство</a></li>
+          <!-- <li><a href="/goverment/">Руководство</a></li> -->
           <li><a href="/rules/">Устав</a></li>
         </ul>
       </li>
@@ -50,9 +50,9 @@
           <li><a href="/art/">Творчество</a></li>
           <li><a href="/article/">Статьи</a></li>
           {% if user.is_authenticated %} 
-            <li class="divider"></li>
-            <li><a href="/material_my/">Мои материалы</a></li>
+            <!-- <li><a href="/material_my/">Мои материалы</a></li> -->
             {% if profile.moderator or profile.goverment or user.is_superuser %}
+            <li class="divider"></li>
             <li><a href="/sandbox/">Песочница</a></li>
             {% endif %}
           {% endif %}
@@ -214,7 +214,7 @@
         </li><li>
           <a href="#" style="font-size:16px;">Календарь</a>
         </li><li>
-          <a href="/library/" style="font-size:16px;">Библиотека</a>
+          <a href="#" style="font-size:16px;">Библиотека</a>
           <ul class="submenu">
             <li><a href="/passport/">паспорта препятствий</a></li>
             <li><a href="/report/">отчеты походов</a></li>
