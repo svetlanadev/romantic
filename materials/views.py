@@ -20,7 +20,10 @@ DISABLE = 0
 
 def materials(request, state):
     type_material, name_material, category_material = _type_material(state)
-    materials = Material.objects.filter(rank=type_material, state=ENABLE)
+    materials = Material.objects.select_related(
+                                'owner', 'owner__user'
+                                ).prefetch_related(
+                                'category').filter(rank=type_material, state=ENABLE)
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
