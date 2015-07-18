@@ -16,8 +16,8 @@
 
 
 <div class="col-md-9 left">
-<!-- <div class="panel panel-default"> -->
-<!-- <div class="panel-body"> -->
+<div class="panel panel-default">
+<div class="panel-body">
 	{% for blog_post in blog_posts %}
 		<div class="col-md-12" align="center">
 			<p style="font-size:18px">
@@ -44,29 +44,19 @@
 
 				{% if profile.moderator == True or user.is_superuser %} 
 			        <div class="btn-group show-on-hover">
-			          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-			            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
+			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
+			            <span class="glyphicon glyphicon-edit"></span>
 			          </button>
 			          <ul class="dropdown-menu" role="menu">
 			            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
 			            <li><a href="/blog_edit/{{ blog_post.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
+			            {% if user.is_superuser %} 
+			            	<li class="divider"></li>
+			            	<li><a href="{% url_edit blog_post %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
+			            {% endif %}
 			          </ul>
 			        </div>
-			        {% endif %}
-			        {% if user.is_superuser %} 
-			        	<div class="btn-group show-on-hover">
-			          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-			            <span class="glyphicon glyphicon-tower"></span> Admin <span class="caret"></span>
-			          </button>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="{% url_edit blog_post %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
-			            <li><a href="/minus_karma_admin/{{ blog_post.id }}"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Понизить карму на 10</a></li>
-			            <li><a href="#"><span class="glyphicon glyphicon-ban-circle"></span> Забанить пользователя</a></li>
-			            <li class="divider"></li>
-			            <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Бан и скрытие всех постов</a></li>
-			          </ul>
-			        </div>
-			        {% endif %}
+			    {% endif %}
 	        </div>
 	    </div>
 		<br>
@@ -74,8 +64,8 @@
 
 	{% bootstrap_paginate page_obj %}
 	</div>
-	<!-- </div> -->
-	<!-- </div> -->
+	</div>
+	</div>
 
 	<div class="col-md-3">
 	    {% load page_navigation %}

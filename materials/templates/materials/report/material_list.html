@@ -10,8 +10,8 @@
 
 <style type="text/css">
 	.hr_sm {
-		 margin-top: 3px; 
-		 margin-bottom: 3px; 
+		 margin-top: 5px; 
+		 margin-bottom: 5px; 
 		border: 0;
 		border-top: 1px solid #eee;
 	}
@@ -83,26 +83,30 @@
 		</div>
 		{% endfor %}
 	</div>
-	<div class="row" align="">
-		{% for material in materials %}
+	{% if materials %}
+	{% else %}
+	<h3>Материалов не найдено =(</h3>
+	{% endif %}
+	{% for material in materials %}
+		<div class="row" align="">
 		<a href="{{ material.get_absolute_url }}" class="a_black">
-		<div class="col-md-6">
-		<div class="panel panel-default">
-  		<div class="panel-body" style="padding: 10px; height:180px">
-  			<p><img src="{{ material.type_hike.image.url }}" width="80px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
-	        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, 
-	        Сложность: {{ material.difficulty }}<br>
-	        <strong>Регион:</strong> {{ material.region }}, 
-	        {{ material.year }} год<br>
-	        <strong>Руководитель</strong> - {{ material.title }}<br><hr class="hr_sm2">
-			<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:250 }}</p>
-
-		</div>
-		</div>
+		<div class="col-md-12">
+			<div class="col-md-6">
+				<p><img src="{{ material.type_hike.image.url }}" width="80px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
+		        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, 
+		        Сложность: {{ material.difficulty }}<br>
+		        <strong>Регион:</strong> {{ material.region }}, 
+		        {{ material.year }} год<br>
+		        <strong>Руководитель</strong> - {{ material.title }}<br>
+			</div>
+			<div class="col-md-6">
+				<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:250 }}</p>
+			</div>
 		</div>
 		</a>
-		{% endfor %}
-	</div>	
+		</div>	
+		<hr class="hr_sm">
+	{% endfor %}
 </div>
 </div>
 </div>

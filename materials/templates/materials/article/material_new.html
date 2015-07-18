@@ -6,19 +6,20 @@
 
 {% block main %}
 
-<div class="col-md-9 left">
+<div class="col-md-1"></div>
+<div class="col-md-10 left">
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="materials">
 				<h1 align="center">{{ name_material }}</h1>
 				<form action="/material_new/{{ category_material }}/" method="post" role="form" enctype="multipart/form-data" class="dynamic-form">
 					<div class="row">
-						<div class="col-xs-10">
+						<div class="col-md-10">
 							<label for="id_category">Название:</label>
 							{{ form.title.errors }}
 						    <input id="id_title" name="title" type="text" class="form-control" placeholder="Название" value="{{ form.title.value }}"><br>
 						</div>
-						<div class="col-xs-2">
+						<div class="col-md-2">
 							<label for="id_category">Год:</label>
 							{{ form.year.errors }}
 						    <input id="id_year" name="year" type="text" pattern="[0-9]{4}" class="form-control" placeholder="Год проведения" value="{{ form.year.value }}"><br>
@@ -38,7 +39,7 @@
 					{{ form.text }}
 					<hr style="margin-top: 1px; margin-bottom: 14px;">
 					<div class="row"><br>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 						<p><label for="id_category">Теги:</label><br> 
 						{{ form.category.errors }}  
 						<select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
@@ -48,7 +49,7 @@
 						</select>
 						</p>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<label>Доступные теги:</label> 
 							{% for category in categorys %}
 							    {{ category.category }}, 

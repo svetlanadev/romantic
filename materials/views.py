@@ -262,7 +262,7 @@ def material_my(request):
 def _type_material(state):
     if state == 'report':
         type_material = 0
-        name_material = "Отчеты"
+        name_material = "Отчет"
         category_material = 'report'
     elif state == 'art':
         type_material = 1
@@ -270,7 +270,7 @@ def _type_material(state):
         category_material = 'article'
     elif state == 'passport':
         type_material = 2
-        name_material = "Паспорта препятствий"
+        name_material = "Паспорт препятствия"
         category_material = 'report'
     elif state == 'doc':
         type_material = 3
@@ -278,7 +278,7 @@ def _type_material(state):
         category_material = 'article'
     elif state == 'article':
         type_material = 4
-        name_material = "Статьи"
+        name_material = "Статья"
         category_material = 'article'
     else:
         type_material = 999

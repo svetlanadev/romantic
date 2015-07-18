@@ -15,41 +15,41 @@
 		<br>
 	</div>
 		{% for material in reports %}
+		<div class="row" align="">
 		<a href="{{ material.get_absolute_url }}" class="a_black">
-		<div class="col-md-6">
-		<div class="panel panel-default">
-  		<div class="panel-body" style="padding: 10px; height:220px">
-  			<p><img src="{{ material.type_hike.image.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
-	        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, 
-	        Сложность: {{ material.difficulty }}<br>
-	        <strong>Регион:</strong> {{ material.region }}, 
-	        {{ material.year }} год<br>
-	        <strong>Руководитель</strong> - {{ material.title }}<br><hr class="hr_sm2">
-			<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:250 }}</p>
-
-		</div>
-		</div>
+		<div class="col-md-12">
+			<div class="col-md-6">
+				<p><img src="{{ material.type_hike.image.url }}" width="80px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
+		        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, 
+		        Сложность: {{ material.difficulty }}<br>
+		        <strong>Регион:</strong> {{ material.region }}, 
+		        {{ material.year }} год<br>
+		        <strong>Руководитель</strong> - {{ material.title }}<br>
+			</div>
+			<div class="col-md-6">
+				<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:250 }}</p>
+			</div>
 		</div>
 		</a>
-		{% endfor %}
+		</div>	
+		<hr class="hr_sm">
+	{% endfor %}
 	<div class="col-md-12" align="center">
 		<h2 class="media-heading">Статьи</h2><br><br>
 	</div>
 		{% for material in articles %}
+		<div class="row" align="">
 		<a href="{{ material.get_absolute_url }}" class="a_black">
-		<div class="col-md-6">
-		<div class="panel panel-default">
-  		<div class="panel-body" style="padding: 10px; height:150px">
-  			<p><img src="{{ material.owner.avatar.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="img-circle"> 
+		<div class="col-md-12">
+				<p><img src="{{ material.owner.avatar.url }}" width="60px" height="60px" hspace="10" vspace="10" align="left" class="img-circle"> 
   			<strong>Автор:</strong> {{ material.owner.get_full_name }}<br>
-  			<strong>Название:</strong> {{ material.title }}<br><hr class="hr_sm2">
-  			Краткое описание - {{ material.short_desc|truncatechars:200 }}
-			</p>
-		</div>
-		</div>
+  			<strong>Название:</strong> {{ material.title }}<br>
+			<strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}</p>
 		</div>
 		</a>
-		{% endfor %}
+		</div>	
+		<hr class="hr_sm">
+	{% endfor %}
 </div>
 </div>
 </div>

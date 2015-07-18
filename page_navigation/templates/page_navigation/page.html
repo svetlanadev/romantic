@@ -13,23 +13,6 @@
   {% for party in partys %}
     <a href="{{ party.get_absolute_url }}/"><h5>- {{ party.name }}</a></h5>
   {% endfor %}
-<!--   {% for party in partys %}
-    <div class="">
-        <p style="font-size:18px; color:" align="center">{{ party.name }} сезона</p>
-        <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
-        </div>
-        <div class="caption">
-            <div align="center">
-                <h4>Дата - {{ party.date_start|date:"d, F Y" }}<br>
-                Время - {{ party.date_start|date:"G:i" }}</h4>
-            </div>
-            <p>{{ party.text|safe|truncatechars:130 }}</p>
-            <div align="center">
-                <a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a>
-            </div>
-        </div>
-    </div>
-{% endfor %} -->
 </div>
 </div>
 

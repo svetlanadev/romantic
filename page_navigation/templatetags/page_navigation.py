@@ -34,10 +34,13 @@ def page_navigation(request):
             url = obj.name
 
         if obj.state != 0:
-            print obj.state
             conversation.append(obj)
         else:
             pass
+
+        print len(conversation)
+        if len(conversation) >= 5:
+            break
 
 
     url = template.loader.get_template("page_navigation/page.html")

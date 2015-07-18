@@ -11,10 +11,14 @@
     <div class="col-md-4">
         <center>
         <img src="{{ profile2.avatar.url }}" name="aboutme" width="200" height="200" border="0" class="img-circle">
-        <h3 class="media-heading">{{ profile2.get_full_name }}<br> <small>{{ profile2.status }}</small></h3>
+        <h3 class="media-heading">{{ profile2.get_full_name }}<br> 
+        {% if profile2.status %}
+          <small>{{ profile2.status }}</small></h3>
+        {% endif %}
+        {% if profile.get_status_profile == True %}
         <span><strong>Состоит в: </strong></span>
-            {% if profile2.writer %}
-            <span class="label label-default">Писатель</span>
+          {% if profile2.writer %}
+            <span class="label label-default" >Писатель</span>
           {% endif %}
           {% if profile2.valid_member %}
             <span class="label label-primary">Действильный член</span>
@@ -31,21 +35,27 @@
           {% if profile2.user.is_superuser %} 
             <span class="label label-danger"><span class="glyphicon glyphicon-tower"></span> Администратор</span>
           {% endif %}
+        {% endif %}
         </center>
         <hr>
         {% if profile == profile2 %} 
           <p align="center"><a href="/profile_edit/"><span class="glyphicon glyphicon-pencil"></span> Редактировать профиль</a></p>
         {% endif %}
         {% if user.is_authenticated %} 
-        <p><strong>Email: </strong> <a href="mailto:{{ profile2.user.email }}">{{ profile2.user.email }}</a></p>
-        <p><strong>Телефон: </strong> {{ profile2.phone }}</p>
+          <p><strong>Email: </strong> <a href="mailto:{{ profile2.user.email }}">{{ profile2.user.email }}</a></p>
+          {% if profile2.phone %}
+            <p><strong>Телефон: </strong> {{ profile2.phone }}</p>
+          {% endif %}
         {% endif %}
-        <p><strong>О себе: </strong> {{ profile2.about }}</p>
-    </div>
+        {% if profile2.about %}
+          <p><strong>О себе: </strong> {{ profile2.about }}</p>
+        {% endif %}
+        <a href="/logout/" class="btn btn-danger btn-block">Выход</a><br>
+        </div>
     <div class="col-md-8">
         <div class="row">
           <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="border-color: #CFCFCF;">
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
@@ -68,7 +78,7 @@
                 {% endfor %}
               </div>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="border-color: #CFCFCF;">
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-book">
@@ -88,7 +98,7 @@
                 {% endfor %}
               </div>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="border-color: #CFCFCF;">
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-comment">
@@ -116,7 +126,7 @@
     <div class="col-md-8">
     <div class="row">
     <div class="panel-group" id="accordion">
-      <div class="panel panel-default">
+      <div class="panel panel-default" style="border-color: #CFCFCF;">
         <div class="panel-heading">
           <h4 class="panel-title">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne1"><span class="glyphicon glyphicon-minus-sign">

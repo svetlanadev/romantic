@@ -6,6 +6,18 @@
 {% load imagekit %}
 {% load urltag %}
 
+<style type="text/css">
+	.hr_sm {
+		 margin-top: 5px; 
+		 margin-bottom: 5px; 
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+	.a_black {
+		color: #000000;
+	}
+</style>
+
 <div class="col-md-9 left">
 <div class="panel panel-default">
 <div class="panel-body">
@@ -32,21 +44,19 @@
 		</div>
 		{% endfor %}
 	</div>
-		{% for material in materials %}
+	{% for material in materials %}
+		<div class="row" align="">
 		<a href="{{ material.get_absolute_url }}" class="a_black">
-		<div class="col-md-6">
-		<div class="panel panel-default">
-  		<div class="panel-body" style="padding: 10px; height:120px">
-  			<p><img src="{{ material.owner.avatar.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="img-circle"> 
+		<div class="col-md-12">
+				<p><img src="{{ material.owner.avatar.url }}" width="60px" height="60px" hspace="10" vspace="10" align="left" class="img-circle"> 
   			<strong>Автор:</strong> {{ material.owner.get_full_name }}<br>
-  			<strong>Название:</strong> {{ material.title }}<br><hr class="hr_sm2">
-  			Краткое описание - {{ material.short_desc|truncatechars:200 }}
-			</p>
-		</div>
-		</div>
+  			<strong>Название:</strong> {{ material.title }}<br>
+			<strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}</p>
 		</div>
 		</a>
-		{% endfor %}
+		</div>	
+		<hr class="hr_sm">
+	{% endfor %}
 </div>
 </div>
 </div>

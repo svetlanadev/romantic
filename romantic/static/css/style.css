@@ -1,8 +1,8 @@
-body, a, a:hover{
-	color: black;	
-	/*font: normal 14px 'Open Sans', sans-serif;*/
+/*a{
+	color: rgba(0, 0, 0, 0.63);
+	font: normal 14px 'Open Sans', sans-serif;
 	font: 'Open Sans', sans-serif;
-}
+}*/
 
 .clear{
 	clear: both;
@@ -11,7 +11,7 @@ body, a, a:hover{
 #header-menu .menu-list a, 
 #footer, #footer a, #footer a:hover,
 .larger-font {
-	font: 600 16px 'Open Sans', sans-serif;
+	/*font: 600 16px 'Open Sans', sans-serif;*/
 }
 
 #header,
@@ -46,9 +46,12 @@ body .link-like-text a:focus{
 .right-column{
 	width: 260px;
 }
+a{
+	color: rgba(0, 0, 0, 0.7);
+}
 
 h2, h3{
-	font: bold 28px 'Roboto', sans-serif ;
+	font: bold 28px sans-serif ;
 	text-align: center;
 }
 
@@ -77,9 +80,9 @@ h3 {
 	margin-left: auto;
 }
 
-input[type="text"], textarea {
+/*input[type="text"], textarea {
 	border: 1px solid black;
-}
+}*/
 
 
 /*  Header  */
