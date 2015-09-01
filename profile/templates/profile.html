@@ -13,8 +13,8 @@
         <img src="{{ profile2.avatar.url }}" name="aboutme" width="200" height="200" border="0" class="img-circle">
         <h3 class="media-heading">{{ profile2.get_full_name }}<br> 
         {% if profile2.status %}
-          <small>{{ profile2.status }}</small></h3>
-        {% endif %}
+          <small>{{ profile2.status }}</small>
+        {% endif %}</h3>
         {% if profile.get_status_profile == True %}
         <span><strong>Состоит в: </strong></span>
           {% if profile2.writer %}

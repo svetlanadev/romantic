@@ -19,7 +19,7 @@ DISABLE = 0
 
 
 def materials(request, state):
-    type_material, name_material, category_material = _type_material(state)
+    type_material, name_material, name_material_many, category_material = _type_material(state)
     materials = Material.objects.filter(rank=type_material, state=ENABLE)
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
@@ -37,6 +37,7 @@ def materials(request, state):
             'regions': region, 
             'difficultys': difficulty,
             'name_material': name_material,
+            'name_material_many': name_material_many,
             'categorys': categorys}
     return render_to_response('materials/%s/material_list.html' % category_material,
                               data,
@@ -102,7 +103,7 @@ def material_new(request, state):
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
-    type_material, name_material, category_material = _type_material(state)
+    type_material, name_material, name_material_many, category_material = _type_material(state)
     categorys = Category.objects.all()
 
     if request.method == "POST":
@@ -127,6 +128,7 @@ def material_new(request, state):
                     'regions': region, 'difficultys': difficulty,
                     'category_material': category_material,
                     'name_material': name_material,
+                    'name_material_many': name_material_many,
                     'type_material': type_material,
                     'categorys': categorys}
             return render_to_response('materials/%s/material_new.html' % category_material,
@@ -140,6 +142,7 @@ def material_new(request, state):
                 'regions': region, 'difficultys': difficulty,
                 'category_material': category_material,
                 'name_material': name_material,
+                'name_material_many': name_material_many,
                 'type_material': type_material,
                 'categorys': categorys}
         return render_to_response('materials/%s/material_new.html' % category_material,
@@ -263,27 +266,34 @@ def _type_material(state):
     if state == 'report':
         type_material = 0
         name_material = "Отчет"
+        name_material_many = 'Отчеты'
         category_material = 'report'
     elif state == 'art':
         type_material = 1
         name_material = "Творчество"
+        name_material_many = "Творчество"
         category_material = 'article'
     elif state == 'passport':
         type_material = 2
-        name_material = "Паспорт препятствия"
+        name_material = "Паспорт препятствий"
+        name_material_many = "Паспорта препятствий"
         category_material = 'report'
     elif state == 'doc':
         type_material = 3
         name_material = "Документы и МКК"
+        name_material_many = "Документы и МКК"
         category_material = 'article'
     elif state == 'article':
         type_material = 4
         name_material = "Статья"
+        name_material_many = "Статьи"
         category_material = 'article'
     else:
         type_material = 999
         name_material = "errors"
-    return type_material, name_material, category_material
+        name_material_many = "errors"
+        category_material = 'article'
+    return type_material, name_material, name_material_many, category_material
 
 
 def _get_objects_articles(point):    

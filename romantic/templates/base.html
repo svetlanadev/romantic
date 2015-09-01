@@ -48,13 +48,12 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Главная</a></li>
             <li><a href="/blog/">Новости</a></li>
-            {% if profile.moderator or profile.goverment or user.is_superuser %} 
-              <li><a href="/blog_new/">Добавить новость</a></li>
-            {% endif %}
+            {% comment %}{% if profile.moderator or profile.goverment or user.is_superuser %}
+              <li><a href="/blog_new/">Новый пост</a></li>
+            {% endif %}{% endcomment %}
             {% if request.user.is_authenticated %}
               <li><a href="/profile/1">Профиль</a></li>
             {% endif %}
-            <hr class="hr_sm">
             <li><a href="/report/">Отчеты</a></li>
             <li><a href="/passport/">Паспорта</a></li>
             <li><a href="/art/">Творчество</a></li>
@@ -288,13 +287,13 @@
 
 <div id="footer" class="visible-xs visible-sm">
   <div class="center-block">
-    <ul class="navigation list-inline list-inline-clear-padding">
+    <ul class="navigation ">
       <li>
         <a href="/">Главная</a>
       </li><li>
         <a href="/about/">О клубе</a>
         <ul class="submenu">
-          <li><a href="/history/">история</a></li>
+          <li><a href="/history/">история11</a></li>
           <li><a href="#">гимн</a></li>
           <li><a href="/rules/">устав</a></li>
         </ul>
