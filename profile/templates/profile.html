@@ -50,7 +50,9 @@
         {% if profile2.about %}
           <p><strong>О себе: </strong> {{ profile2.about }}</p>
         {% endif %}
-        <a href="/logout/" class="btn btn-danger btn-block">Выход</a><br>
+        {% if profile == profile2 %}
+          <a href="/logout/" class="btn btn-danger btn-block">Выход</a><br>
+        {% endif %}
         </div>
     <div class="col-md-8">
         <div class="row">

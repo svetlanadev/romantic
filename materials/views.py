@@ -20,14 +20,16 @@ DISABLE = 0
 
 def materials(request, state):
     type_material, name_material, name_material_many, category_material = _type_material(state)
-    materials = Material.objects.filter(rank=type_material, state=ENABLE)
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
     categorys = Category.objects.all()
 
     if request.method == "POST":
+        materials = Material.objects.filter(rank=type_material, state=ENABLE)
         materials = _material_filter(request, materials)
+    else:
+        materials = Material.objects.filter(rank=type_material, state=ENABLE)[:10]
 
     dirs = Dirs.objects.all().filter(state=type_material)
 

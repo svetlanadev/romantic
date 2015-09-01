@@ -16,18 +16,15 @@
 
 
 <div class="col-md-9 left">
-{% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
-    <div class="panel panel-default">
-{#        <div class="panel-body">#}
-            <a href="/blog_new/"><button type="submit" class="btn btn-success">Добавить новость</button></a>
-            <a href="#"><button type="submit" class="btn btn-primary">Добавить мероприятие</button></a>
-            <a href="#"><button type="submit" class="btn btn-warning">Добавить документацию</button></a>
-            <a href="/sandbox/"><button type="submit" class="btn btn-info">Песочница</button></a>
-{#        </div>#}
-    </div>
-{% endif %}
 <div class="panel panel-default">
 <div class="panel-body">
+    {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
+        <a href="/blog_new/"><button type="submit" class="btn btn-success btn-xs">Добавить новость</button></a>
+        <a href="#"><button type="submit" class="btn btn-primary btn-xs">Добавить мероприятие</button></a>
+        <a href="#"><button type="submit" class="btn btn-warning btn-xs">Добавить документацию</button></a>
+        <a href="/sandbox/"><button type="submit" class="btn btn-info btn-xs">Песочница</button></a>
+    <hr>
+    {% endif %}
 	{% for blog_post in blog_posts %}
 		<div class="col-md-12" align="center">
 			<p style="font-size:18px">
