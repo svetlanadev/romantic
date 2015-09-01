@@ -32,7 +32,7 @@
 						<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>  
 					{% endfor %}
 						<!-- Admin panel -->
-					{% if profile.moderator == True or user.is_superuser %} 
+					{% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
 			        <div class="btn-group show-on-hover">
 			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
 			            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>

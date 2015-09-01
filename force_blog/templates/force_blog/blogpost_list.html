@@ -16,6 +16,16 @@
 
 
 <div class="col-md-9 left">
+{% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
+    <div class="panel panel-default">
+{#        <div class="panel-body">#}
+            <a href="/blog_new/"><button type="submit" class="btn btn-success">Добавить новость</button></a>
+            <a href="#"><button type="submit" class="btn btn-primary">Добавить мероприятие</button></a>
+            <a href="#"><button type="submit" class="btn btn-warning">Добавить документацию</button></a>
+            <a href="/sandbox/"><button type="submit" class="btn btn-info">Песочница</button></a>
+{#        </div>#}
+    </div>
+{% endif %}
 <div class="panel panel-default">
 <div class="panel-body">
 	{% for blog_post in blog_posts %}
@@ -42,7 +52,7 @@
 						<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> 
 					{% endfor %}
 
-				{% if profile.moderator == True or user.is_superuser %} 
+				{% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
 			        <div class="btn-group show-on-hover">
 			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
 			            <span class="glyphicon glyphicon-edit"></span>
