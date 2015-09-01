@@ -38,7 +38,6 @@ def page_navigation(request):
         else:
             pass
 
-        print len(conversation)
         if len(conversation) >= 5:
             break
 
