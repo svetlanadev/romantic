@@ -147,6 +147,7 @@ class Dirs(models.Model):
     
     ENABLE = 1
     DISABLE = 0
+    DELETE = 2
 
     REPORT = 0
     ART = 1
@@ -165,6 +166,7 @@ class Dirs(models.Model):
     RANK_CHOICE = (
         (ENABLE, 'Просмотр доступен'),
         (DISABLE, 'Просмотр запрещен'),
+        (DELETE, 'Удалено'),
     )
 
     dir_name = models.CharField(max_length=30)

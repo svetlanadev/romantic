@@ -102,6 +102,12 @@ def material_new(request, state):
         return redirect('/login/')
 
     owner = CustomUser.objects.get(user=request.user)
+
+    if state == 'doc':
+        if not owner.moderator and owner.user.is_superuser:
+            return redirect('/login/')
+
+
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
@@ -225,10 +231,10 @@ def material_hidden(request, material_id):
 
     material = Material.objects.get(id=material_id)
     if material.state == ENABLE:
-        material.state = 0 # DISABLE
+        material.state = DISABLE # DISABLE
         material.save()
     else:
-        material.state = 1 # ENABLE
+        material.state = ENABLE # ENABLE
         material.save()
 
     url = u'/materials/%s' % material_id
@@ -277,7 +283,7 @@ def _type_material(state):
         category_material = 'article'
     elif state == 'passport':
         type_material = 2
-        name_material = "Паспорт препятствий"
+        name_material = "Паспорт препятствия"
         name_material_many = "Паспорта препятствий"
         category_material = 'report'
     elif state == 'doc':

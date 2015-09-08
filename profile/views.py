@@ -21,7 +21,6 @@ from django.contrib.auth.decorators import login_required
 class ProfileListView(ListView):
     model = CustomUser
     context_object_name = 'users'
-    # Под данным именем наш список статей будет доступен в шаблоне
 
 
 class ProfileDetailView(DetailView):
@@ -43,6 +42,13 @@ class RegisterFormView(FormView):
     def form_valid(self, form):
         # Создаём пользователя, если данные в форму были введены корректно.
         form.save()
+
+        self.user = form.get_user()
+        # Выполняем аутентификацию пользователя.
+        self.user.is_active = False
+        self.user.save()
+
+        # login(self.request, self.user)
 
         # Вызываем метод базового класса
         return super(RegisterFormView, self).form_valid(form)
@@ -67,17 +73,14 @@ class RegisterFormView(FormView):
 
 class LoginFormView(FormView):
     form_class = UserLoginForm
-
     # Аналогично регистрации, только используем шаблон аутентификации.
     template_name = "login.html"
-
     # В случае успеха перенаправим на главную.
     success_url = "/blog/"
 
     def form_valid(self, form):
         # Получаем объект пользователя на основе введённых в форму данных.
         self.user = form.get_user()
-
         # Выполняем аутентификацию пользователя.
         login(self.request, self.user)
         return super(LoginFormView, self).form_valid(form)
@@ -111,6 +114,7 @@ def government(request):
                               context_instance=RequestContext(request))
 
 
+@login_required
 def profile_edit(request):
     profile = CustomUser.objects.get(user=request.user)
 
@@ -144,7 +148,7 @@ def profile_edit(request):
 @login_required
 def profile(request, profile_id):
     profile2 = CustomUser.objects.get(id=profile_id)
-    comments = PowerComment.objects.filter(owner=profile2)[:10]
+    comments = PowerComment.objects.filter(owner=profile2).order_by('-date_creation')[:10]
     materials = Material.objects.filter(owner=profile2).exclude(state=2) 
 
     material_enable = Material.objects.filter(owner=profile2, state=1)

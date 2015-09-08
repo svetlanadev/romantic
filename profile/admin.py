@@ -18,7 +18,8 @@ class UserAdmin(UserAdmin):
 
 
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'admin_thumbnail', 'status', 'karma')
+    # list_display = ('__str__', 'admin_thumbnail 'status', 'karma')
+    list_display = ('__str__', 'status', 'karma')
     admin_thumbnail = AdminThumbnail(image_field='avatar')
 
 

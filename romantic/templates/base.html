@@ -122,7 +122,7 @@
         </li><li class="menu-list right">
           <div class="under-menu-shadow">
             <ul class="list-inline topmenu">
-              <li><a href="#">Мероприятия</a></li>
+              <li><a href="/party/">Мероприятия</a></li>
               <li class="hover">
                   <a href="#" >Библиотека<span class="arrow"></span></a>
                   <ul class="submenu">
@@ -271,7 +271,8 @@
       <div class="header-cone right"></div>
     </div>
 
-    <div id="events-banner" class="fill">
+    <div id="events-banner" class="fill" style="background-image: url({{ STATIC_URL }}images/banners/{{ banner }})">
+{#        background-image: url(../images/calendar_view_icon.png);   #}
       <div class="header-cone"></div>
       <div class="header-cone right"></div>
     </div>

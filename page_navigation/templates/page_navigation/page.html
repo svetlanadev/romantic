@@ -5,7 +5,7 @@
   {% for material in materials %}
     <a href="/materials/{{ material.id }}"><h5>- {{ material.short_desc|truncatechars:60 }} - {{ material.title }}</a></h5>
   {% endfor %}
-  <p style="font-size:18px; color: #000" align="center"><strong>Что обсуждают?</strong></p><hr class="hr_red">
+  <p style="font-size:18px; color: #000" align="center"><strong>Что обсуждают</strong></p><hr class="hr_red">
   {% for conversation in conversation %}
     <a href="{{ conversation.get_absolute_url }}/"><h5>- {{ conversation.get_template_material }} {{ conversation.short_desc|truncatechars:60 }} {{ conversation.title }}</a></h5>
   {% endfor %}

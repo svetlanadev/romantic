@@ -123,8 +123,6 @@ def blog_edit(request, blog_id):
                 except TypeError:
                     pass
 
-            blog_backup(blog, profile)
-
             form.save()
             url = u'/blog/%s' % blog_id
             return redirect(url)
