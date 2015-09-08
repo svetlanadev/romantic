@@ -34,7 +34,7 @@ class RegisterFormView(FormView):
 
     # Ссылка, на которую будет перенаправляться пользователь в случае успешной регистрации.
     # В данном случае указана ссылка на страницу входа для зарегистрированных пользователей.
-    success_url = "/login/"
+    success_url = "/registration_complete/"
 
     # Шаблон, который будет использоваться при отображении представления.
     template_name = "registration_form.html"
@@ -43,10 +43,10 @@ class RegisterFormView(FormView):
         # Создаём пользователя, если данные в форму были введены корректно.
         form.save()
 
-        self.user = form.get_user()
+        last_user = CustomUser.objects.last()
         # Выполняем аутентификацию пользователя.
-        self.user.is_active = False
-        self.user.save()
+        last_user.user.is_active = False
+        last_user.user.save()
 
         # login(self.request, self.user)
 

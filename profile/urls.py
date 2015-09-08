@@ -2,6 +2,7 @@
 
 from django.conf.urls import patterns, url, include
 from profile.views import *
+from django.views.generic import TemplateView
 
 urlpatterns = patterns('profile.views',
 	url(r'^register/$', RegisterFormView.as_view()),
@@ -11,4 +12,5 @@ urlpatterns = patterns('profile.views',
     url(r'^profile_edit/$', 'profile_edit', name='profile_edit'),
     # url(r'^profile/(?P<pk>\d+)/$', ProfileDetailView.as_view()),
     url(r'^government/$', 'government', name='government'),
+    url(r'^registration_complete/$', TemplateView.as_view(template_name="registration_complete.html")),
 )
