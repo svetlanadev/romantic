@@ -5,8 +5,15 @@
 {% block main %}
 {% load urltag %}
 {% load comments_tags %}
+
+<div class="col-md-9 left">
+<div class="panel panel-default">
+<div class="panel-body">
 <!-- Походы -->
 <div id="party">
+    <div align="center">
+        {{ party.name }}
+    </div>
 	<div>{{ party.text|safe }}</div>
 
 	{% for file in party.files.all %}
@@ -14,13 +21,15 @@
         <img src="http://avelino.ru/assets/templates/main/img/doc.png" width="25px"><a href="{{ file.one_file }}">{{ file.file_name }}</a><br>
     </div>
     {% endfor %}
+    {% if blogpost.if_comments %} <!-- Комментарии -->
+        {% power_comments request blogpost.get_absolute_url %}
+    {% else %}
+        Вы настолько много матерились, что мы решили отключить комментарии к этой статье.
+    {% endif %}
 </div>
-<div id="comments">
-	<div class="body">
-		<div class="col-md-12 right">
-		<hr>
-			{% power_comments request party.get_absolute_url %}
-		</div>
-	</div>
+
+<div class="col-md-3">
+    {% load page_navigation %}
+    {% page_navigation request %}
 </div>
 {% endblock %}

@@ -5,17 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
     <meta name="description" content="{% block meta_description %}{% endblock %}">
-    <title>{% block meta_title %}{% endblock %} | Романтик</title>
+    <title>{% block meta_title %}{% endblock %} |  Романтик v0.1</title>
     <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.png" type="image/png">
 
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}css/style2.css" rel="stylesheet">
+    <!-- ИЗМЕНЕНИЕ ПАНЕЛЕЙ -->
+    <style type="text/css">
+      .panel-default {
+      border-color: #000;
+      }
+      .panel {
+        border-radius: 0px;
+      }
+      .hr_sm {
+         margin-top: 5px; 
+         margin-bottom: 5px; 
+        border: 0;
+        border-top: 1px solid #eee;
+      }
+    </style>
     {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 
+<<<<<<< HEAD
 <nav class="navbar navbar-default" role="navigation">
   <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -54,28 +69,146 @@
             {% if profile.moderator or profile.goverment or user.is_superuser %}
             <li class="divider"></li>
             <li><a href="/sandbox/">Песочница</a></li>
-            {% endif %}
-          {% endif %}
-        </ul>
-      </li>
-      {% block navbar_block %}{% endblock %}
-      {% if user.is_authenticated %} 
-      <li><a href="/material_new/" style="color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span><strong> Добавить материал</strong></a></li>
-      {% endif %}
-      {% if profile.moderator or profile.goverment or user.is_superuser %}
-        <li><a href="/blog_new/" style="color: #5cb85c"><span class="glyphicon glyphicon-pencil"></span><strong> Добавить новость</strong></a></li>
-      {% endif %}
-    </ul>
+=======
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-    <ul class="nav navbar-nav navbar-right">
-      {% if user.is_authenticated %}                
-        <li class="dropdown">
+<div class="visible-xs visible-sm">
+  <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img src="{{ STATIC_URL }}images/logo.png" height="40" hspace="4" vspace="4">
+          <a class="navbar-brand" href="#">турклуб "Романтик"</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Главная</a></li>
+            <li><a href="/blog/">Новости</a></li>
+            {% comment %}{% if profile.moderator or profile.goverment or user.is_superuser %}
+              <li><a href="/blog_new/">Новый пост</a></li>
+            {% endif %}{% endcomment %}
+            {% if request.user.is_authenticated %}
+              <li><a href="/profile/1">Профиль</a></li>
+>>>>>>> design
+            {% endif %}
+            <li><a href="/report/">Отчеты</a></li>
+            <li><a href="/passport/">Паспорта</a></li>
+            <li><a href="/art/">Творчество</a></li>
+            <li><a href="/article/">Статьи</a></li>
+            <li><a href="/doc/">Документы</a></li>
+          </ul>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </div>
+</div>
+
+<div id="header" class="visible-lg visible-md">
+      <ul id="header-menu" class="center-block list-inline list-inline-clear-padding link-like-text">
+        <li class="menu-list">
+          <div class="under-menu-shadow">
+            <ul class="list-inline topmenu">
+              <li><a href="/">Главная</a></li>
+              <li class="hover">
+                  <a href="#" >О клубе<span class="arrow"></span></a>
+                  <ul class="submenu">
+                    <li><a href="/history/">История</a></li>
+                    <li><a href="#">Гимн</a></li>
+                    <li><a href="/rules/">Устав</a></li>
+                    <li><a href="#">Контакты</a></li>
+                    {% if user.is_superuser %} 
+                      <hr class="hr_red">
+                      <li><a href="/login/">login</a></li>
+                      <li><a href="/profile/1">profile</a></li>
+                      <li><a href="/profile_edit/">profile_edit</a></li>
+                      <li><a href="/register/">register</a></li>
+                      <hr class="hr_red">
+                      <li><a href="/about/">about</a></li>
+                      <li><a href="/history/">history</a></li>
+                      <li><a href="/rules/">rules</a></li>
+                      <li><a href="/contact-only/">contact-only</a></li>
+                      <li><a href="government/">government</a></li>
+                      <hr class="hr_red">
+                      <li><a href="/blog/">blog</a></li>
+                      <li><a href="/blog/1">blog 1</a></li>
+                      <li><a href="/blog_edit/1">blog_edit</a></li>
+                      <li><a href="/blog_new/">blog_new</a></li>
+                      <hr class="hr_red">
+                      <li><a href="/report/">report</a></li>
+                      <li><a href="/passport/">passport</a></li>
+                      <li><a href="/art/">art</a></li>
+                      <li><a href="/article/">article</a></li>
+                      <li><a href="/doc/">doc</a></li>
+                      <li><a href="/material_new/">material_new</a></li>
+                      <li><a href="/sandbox/">sandbox</a></li>
+                      <li><a href="/materials/1">materials 1</a></li>
+                      <li><a href="/material_edit/1">material_edit</a></li>
+                      <li><a href="/material_new/art">materials new art</a></li>
+                      <li><a href="/material_new/report">materials new report</a></li>
+                    {% endif %}
+                  </ul>
+              </li>
+              <li><a href="https://vk.com/albums-1025962" target="_blank">Галерея</a></li>
+              <li><a href="/blog/">Новости</a></li>
+            </ul>
+          </div>
+        </li><li class="logo hidden-sm hidden-xs" style="">
+          <a href="/">
+            <img src="{{ STATIC_URL }}images/logo.png">
+            ТУРКЛУБ &laquo;РОМАНТИК&raquo;
+          </a>
+        </li><li class="menu-list right">
+          <div class="under-menu-shadow">
+            <ul class="list-inline topmenu">
+              <li><a href="/party/">Мероприятия</a></li>
+              <li class="hover">
+                  <a href="#" >Библиотека<span class="arrow"></span></a>
+                  <ul class="submenu">
+                    <li><a href="/passport/">Паспорта препятствий</a></li>
+                    <li><a href="/doc/" class="hover">МКК и документация</a></li>
+                    <li><a href="/report/">Отчеты походов</a></li>
+                    <li><a href="/art/">Творчество</a></li>
+                    <li><a href="/article/">Статьи</a></li>
+                    {% if user.is_authenticated %}
+                      <li class="devider"></li>
+                      <li><a href="/material_new/">Добавить материал</a></li>
+                    {% endif %}
+                    {% if profile.moderator == True or user.is_superuser %} 
+                    <li><a href="/sandbox/">Материалы на проверку</a></li>
+                    {% endif %}
+                  </ul>
+              </li>
+              <li class="hover">
+      {% if user.is_authenticated %}    
+        <li><a href="/profile/{{ profile.id }}">Мой профиль</a></li>            
+        <!-- <li class="hover">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-user"></span> 
-                <strong>{{ user.username }}</strong>
-                <span class="glyphicon glyphicon-chevron-down"></span>
+                {{ user.username }}
+                <span class="arrow"></span>
             </a>
-            <ul class="dropdown-menu">
+            <ul class="submenu">
                 <li>
                     <div class="navbar-login">
                         <div class="row">
@@ -138,55 +271,72 @@
                     </div>
                 </li>
             </ul>
-        </li>
+        </li> -->
       {% else %}                
-        <li><a href="/register/">Регистрация</a></li>
-        <li class="dropdown">
+        <li class="hover">
            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Вход <b class="caret"></b></a>
-           <ul class="dropdown-menu" style="padding: 15px;min-width: 330px;">
-              <div class="main">
-        <h4>Войдите, или <a href="/register/">Зарегистрируйтесь</a></h4>
-        <!-- <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6">
-              <a href="/login/facebook" class="btn btn-lg btn-primary btn-block">Facebook</a>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
-              <a href="/login/vk-oauth2" class="btn btn-lg btn-info btn-block">VK</a>
-            </div>
-        </div> -->
-        <!-- <div class="login-or">
-            <hr class="hr-or">
-            <span class="span-or">или</span>
-        </div> -->
-        <form method="post" action="/login/" role="form">
-            {{ form.non_field_errors }}
-            <div class="form-group">
-                {{ form.username.errors }}
-              <label for="inputUsernameEmail">Логин</label>
-              <input id="id_username" name="username" type="text" class="form-control" placeholder="username">
-              <!-- {{ form.username }} -->
-            </div>
-            <div class="form-group">
-              {{ form.password.errors }}
-              <label for="inputPassword">Пароль</label>
-              <input id="id_password" name="password" class="form-control" type="password" placeholder="***********">
-              <!-- {{ form.password }} -->
-            </div>
-            <div class="checkbox pull-right">
-                <a class="pull-right" href="#">Забыли пароль?</a>
-            </div>
-            <button type="submit" class="btn btn btn-primary">
-                Вход
-            </button>
-        </form>
-    </div>
-           </ul>
+           <ul class="submenu">
+              <div class="main"><div class="col-md-12 left">
+              <h4 align="center">Войдите</h4>
+              <a href="/register/"> или зарегистрируйтесь</a>
+              <!-- <div class="row">
+                  <div class="col-xs-6 col-sm-6 col-md-6">
+                    <a href="/login/facebook" class="btn btn-lg btn-primary btn-block">Facebook</a>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-md-6">
+                    <a href="/login/vk-oauth2" class="btn btn-lg btn-info btn-block">VK</a>
+                  </div>
+              </div> -->
+              <!-- <div class="login-or">
+                  <hr class="hr-or">
+                  <span class="span-or">или</span>
+              </div> -->
+              <form method="post" action="/login/" role="form">
+                  {{ form.non_field_errors }}
+                  <div class="form-group">
+                      {{ form.username.errors }}
+                    <label for="inputUsernameEmail">Логин</label>
+                    <input id="id_username" name="username" type="text" class="form-control" placeholder="username">
+                    <!-- {{ form.username }} -->
+                  </div>
+                  <div class="form-group">
+                    {{ form.password.errors }}
+                    <label for="inputPassword">Пароль</label>
+                    <input id="id_password" name="password" class="form-control" type="password" placeholder="***********">
+                    <!-- {{ form.password }} -->
+                  </div>
+                  <div class="checkbox pull-right">
+                      <!-- <a class="pull-right" href="#">Забыли пароль?</a> -->
+                  </div>
+                  <button type="submit" class="btn btn btn-primary">
+                      Вход
+                  </button>
+              </form>
+              </div></div>
+            </ul>
         </li>
       {% endif %}
-      <p class="navbar-text" style="opacity: 0;">==Дима Ляпун тут был==</p>
-    </ul>
-  </div>
-</nav>
+
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+    <div style="position: relative;">
+      <div class="header-cone"></div>
+      <div class="header-cone right"></div>
+    </div>
+
+    <div id="events-banner" class="fill" style="background-image: url({{ STATIC_URL }}images/banners/{{ banner }})">
+{#        background-image: url(../images/calendar_view_icon.png);   #}
+      <div class="header-cone"></div>
+      <div class="header-cone right"></div>
+    </div>
+
+    <br>
 
 <div class="container">
     <div class="row">
@@ -194,60 +344,118 @@
     </div>
 </div>
 
-<div class="footer center-block">
-      <ul class="navigation list-inline list-inline-clear-padding">
-        <li>
-          <a href="/" style="font-size:16px;">Главная</a>
-        </li><li>
-          <a href="#" style="font-size:16px;">О нас</a>
-          <ul class="submenu">
-            <li><a href="#">история</a></li>
-            <li><a href="#">гимн</a></li>
-            <li><a href="#">устав</a></li>
-            <li><a href="#">походы</a></li>
-          </ul>
-        </li><li>
-          <a href="/blog/" style="font-size:16px;">Новости</a>
-          <ul class="submenu">
-            <li><a href="/arhive_news/">архив новостей</a></li>
-          </ul>
-        </li><li>
-          <a href="#" style="font-size:16px;">Календарь</a>
-        </li><li>
-          <a href="#" style="font-size:16px;">Библиотека</a>
-          <ul class="submenu">
-            <li><a href="/passport/">паспорта препятствий</a></li>
-            <li><a href="/report/">отчеты походов</a></li>
-            <li><a href="/art/">творчество</a></li>
-            <li><a href="/article/">статьи</a></li>
-            <li><a href="/doc/">документы</a></li>
-          </ul>
-        </li><li>
-          <a href="#" style="font-size:16px;">Контакты</a>
-        </li>
-      </ul>
-
-      <div class="bottom-bar">
-        <ul class="socials list-inline pull-left">
-          <li class="fb"></li>
-          <li class="vk"></li>
-          <li class="tw"></li>
-          <li class="goo"></li>
+<div id="footer" class="visible-xs visible-sm">
+  <div class="center-block">
+    <ul class="navigation ">
+      <li>
+        <a href="/">Главная</a>
+      </li><li>
+        <a href="/about/">О клубе</a>
+        <ul class="submenu">
+          <li><a href="/history/">история11</a></li>
+          <li><a href="#">гимн</a></li>
+          <li><a href="/rules/">устав</a></li>
         </ul>
-        <form class="search-form form-inline pull-right">
-          <div class="form-group">
-            <input type="search" class="form-control" placeholder="ПОИСК">
-          </div><button type="submit" class="btn btn-default"></button>
-        </form>
-        <div class="copy">Powered by
-            <a href="http://www.djangoproject.com">Django</a>
-            <span class="separator">|</span>
-            by Dmitry Lyapun, <a href="mailto:dlyapun@gmail.com">dlyapun@gmail.com</a>
-            <span class="separator">|</span>
-            &copy; tkr.od.ua</div>
+      </li><li>
+        <a href="#">Галерея</a>
+      </li><li>
+        <a href="/blog/">Новости</a>
+      </li><li>
+        <a href="/party/">Мероприятия</a>
+      </li><li>
+        <a href="#">Библиотека</a>
+        <ul class="submenu">
+          <li><a href="/passport/">паспорта препятствий</a></li>
+          <li><a href="/doc/">МКК и документация</a></li>
+          <li><a href="/report/">отчёты походов</a></li>
+          <li><a href="/art/">творчество</a></li>
+          <li><a href="/article/">статьи</a></li>
+        </ul>
+      </li><li>
+        <a href="#">Контакты</a>
+      </li>
+    </ul>
+
+    <div class="bottom-bar">
+      <ul class="socials list-inline pull-left">
+        <li class="fb"></li>
+        <li class="vk"></li>
+        <li class="tw"></li>
+        <li class="goo"></li>
+      </ul>
+      <form class="search-form form-inline pull-right">
+        <div class="form-group">
+          <input type="search" class="form-control" placeholder="ПОИСК">
+        </div><button type="submit" class="btn btn-default"></button>
+      </form>
+      <div class="copy">Powered by
+        <a href="http://www.djangoproject.com">Django</a>
+        <span class="separator">|</span>
+        by Dmitry Lyapun, <a href="mailto:dlyapun@gmail.com">dlyapun@gmail.com</a>
+        <span class="separator">|</span>
+        &copy; tkr.od.ua</div>
       </div>
     </div>
-  <div id="goTop"></div>
+  </div>
+</div>
+</div>
+
+<div id="footer" class="visible-lg visible-md">
+  <div class="center-block">
+    <ul class="navigation list-inline list-inline-clear-padding">
+      <li>
+        <a href="/">Главная</a>
+      </li><li>
+        <a href="/about/">О клубе</a>
+        <ul class="submenu">
+          <li><a href="/history/">история</a></li>
+          <li><a href="#">гимн</a></li>
+          <li><a href="/rules/">устав</a></li>
+        </ul>
+      </li><li>
+        <a href="#">Галерея</a>
+      </li><li>
+        <a href="/blog/">Новости</a>
+      </li><li>
+        <a href="/party/">Мероприятия</a>
+      </li><li>
+        <a href="#">Библиотека</a>
+        <ul class="submenu">
+          <li><a href="/passport/">паспорта препятствий</a></li>
+          <li><a href="/doc/">МКК и документация</a></li>
+          <li><a href="/report/">отчёты походов</a></li>
+          <li><a href="/art/">творчество</a></li>
+          <li><a href="/article/">статьи</a></li>
+        </ul>
+      </li><li>
+        <a href="#">Контакты</a>
+      </li>
+    </ul>
+
+    <div class="bottom-bar">
+      <ul class="socials list-inline pull-left">
+        <li class="fb"></li>
+        <li class="vk"></li>
+        <li class="tw"></li>
+        <li class="goo"></li>
+      </ul>
+      <form class="search-form form-inline pull-right">
+        <div class="form-group">
+          <input type="search" class="form-control" placeholder="ПОИСК">
+        </div><button type="submit" class="btn btn-default"></button>
+      </form>
+      <div class="copy">Powered by
+        <a href="http://www.djangoproject.com">Django</a>
+        <span class="separator">|</span>
+        by Dmitry Lyapun, <a href="mailto:dlyapun@gmail.com">dlyapun@gmail.com</a>
+        <span class="separator">|</span>
+        &copy; tkr.od.ua</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="goTop"></div>
 
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-2.1.3.min.js"></script>
 <!-- <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script> -->

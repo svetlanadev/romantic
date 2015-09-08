@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block meta_title %}{{ name_material }}{% endblock %}
+{% block meta_title %}{{ name_material_many }}{% endblock %}
 
 {% block main %}
 {% load imagekit %}
@@ -10,8 +10,8 @@
 
 <style type="text/css">
 	.hr_sm {
-		 margin-top: 3px; 
-		 margin-bottom: 3px; 
+		 margin-top: 5px; 
+		 margin-bottom: 5px; 
 		border: 0;
 		border-top: 1px solid #eee;
 	}
@@ -24,7 +24,7 @@
 <div class="panel panel-default">
 <div class="panel-body">
 	<div class="col-md-12" align="center">
-		<p style="font-size:24px;" align="center"><strong>{{ name_material }}</strong></p>
+		<p style="font-size:24px;" align="center"><strong>{{ name_material_many }}</strong></p>
 	</div>
 	<div class="row" align="">
 	<div class="col-md-12" align="center">
@@ -59,8 +59,8 @@
 		</div>
 		<div class="col-sm-6 col-md-3">
 			<label for="id_category" style="opacity: 0;">Район похода:</label>
-			<button type="submit" class="btn btn-success">Применить фильтры</button>
 		</div>
+        <button type="submit" class="btn btn-success">Применить</button>
 		</form>
 	</div>
 	</div>
@@ -83,26 +83,30 @@
 		</div>
 		{% endfor %}
 	</div>
-	<div class="row" align="">
-		{% for material in materials %}
+	{% if materials %}
+	{% else %}
+	<h3>Материалов не найдено =(</h3>
+	{% endif %}
+	{% for material in materials %}
+		<div class="row" align="">
 		<a href="{{ material.get_absolute_url }}" class="a_black">
-		<div class="col-md-6">
-		<div class="panel panel-default">
-  		<div class="panel-body" style="padding: 10px; height:180px">
-  			<p><img src="{{ material.type_hike.image.url }}" width="80px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
-	        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, 
-	        Сложность: {{ material.difficulty }}<br>
-	        <strong>Регион:</strong> {{ material.region }}, 
-	        {{ material.year }} год<br>
-	        <strong>Руководитель</strong> - {{ material.title }}<br><hr class="hr_sm2">
-			<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:250 }}</p>
-
-		</div>
-		</div>
+		<div class="col-md-12">
+			<div class="col-md-6">
+				<p><img src="{{ material.type_hike.image.url }}" width="90px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail">
+		        <br><strong>Тип:</strong> {{ material.type_hike.type_hike }} поход,
+		        Сложность: {{ material.difficulty }}<br>
+		        <strong>Регион:</strong> {{ material.region }}, 
+		        {{ material.year }} год<br>
+		        <strong>Руководитель</strong> - {{ material.title }}<br>
+			</div>
+			<div class="col-md-6">
+				<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:250 }}</p>
+			</div>
 		</div>
 		</a>
-		{% endfor %}
-	</div>	
+		</div>	
+		<hr class="hr_sm">
+	{% endfor %}
 </div>
 </div>
 </div>

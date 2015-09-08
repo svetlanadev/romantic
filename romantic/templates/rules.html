@@ -8,7 +8,8 @@
 	.post-header-line { border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
 </style>
 
-<div class="col-md-9 left">
+<div class="col-md-2"></div>
+<div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
 <div class="blog">
@@ -149,13 +150,4 @@
 </div>
 </div>
 
-<div class="col-md-3 right">
-	<!-- Тег, который в зависимости от url возвращает разные шаблоны -->
-	<!-- Допустим, в одном случае он возвратит кусочек мероприятий -->
-	<!-- Ну а в другом вообще ничего -->
-    {% load page_navigation %}
-    {% page_navigation request %}
-</div>
-
-<!-- И в конце закрывается блок -->
 {% endblock %}

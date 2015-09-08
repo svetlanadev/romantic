@@ -2,6 +2,7 @@
 
 from banner.models import BannerTitle
 from profile.models import CustomUser
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -13,6 +14,11 @@ def contex_banner(request):
             profile = request.user
     else:
         profile = ""
-    
-    banners = BannerTitle.objects.filter(state=1)
-    return {'banner_title': banners, 'profile':profile}
+
+    if request.path == '/passport/':
+        banner = 'passport.png'
+    else:
+        banner = 'general.png'
+
+    print banner
+    return {'banner': banner, 'profile':profile, 'mode_site': settings.DEBUG}

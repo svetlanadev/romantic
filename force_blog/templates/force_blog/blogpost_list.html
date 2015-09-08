@@ -10,86 +10,78 @@
 {% load urltag %}
 
 <style type="text/css">
-	.post-header-line { border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
+	.post-header-line { border-bottom:1px solid #DDD;padding:10px 0px 10px 25px;font-size: 12px; }
 </style>
+
+
 
 <div class="col-md-9 left">
 <div class="panel panel-default">
 <div class="panel-body">
-<div class="blog">
+    {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
+        <a href="/blog_new/"><button type="submit" class="btn btn-success btn-xs">Добавить новость</button></a>
+        <a href="#"><button type="submit" class="btn btn-primary btn-xs">Добавить мероприятие</button></a>
+        <a href="/material_new/doc/"><button type="submit" class="btn btn-warning btn-xs">Добавить документацию</button></a>
+        <a href="/sandbox/"><button type="submit" class="btn btn-info btn-xs">Песочница</button></a>
+        {% if user.is_superuser %}
+            <a href="/admin/"><button type="submit" class="btn btn-default btn-xs">Админка</button></a>
+            <a href="/admin/auth/user/?is_active__exact=0"><button type="submit" class="btn btn-default btn-xs">New users</button></a>
+        {% endif %}
+    <hr>
+    {% endif %}
+	{% for blog_post in blog_posts %}
+		<div class="col-md-12" align="center">
+			<p style="font-size:18px">
+				<a href="{{ blog_post.get_absolute_url }}">
+					<strong>{{ blog_post.title }}</strong>
+				</a> 
+				{% if blog_post.state == 0 %} 
+					<span class="label label-danger">disable</span>
+				{% endif %}
+			</p>
+		</div>
+		{{ blog_post.text|safe }}
+		<br>
+		<div class="row">
+	        <div class="col-md-12 post-header-line">
+	        	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blog_post.date_creation|date:"d.m.Y, G:i" }} 
+	            | <span class="glyphicon glyphicon-user"></span> Автор: <a href="{{ blog_post.owner.get_absolute_url }}">{{ blog_post.owner.get_full_name }}</a> 
+	            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blog_post.get_absolute_url }}/#href_power_comments">
+				Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a>
+	            | <span class="glyphicon glyphicon-tags"></span> Теги : 
+	            	{% for category in blog_post.category.all %}
+						<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> 
+					{% endfor %}
 
-<!-- Цикл, который выводит все посты новостей, которые мы передали -->
-<!-- То есть, у нас будет выведено пять таких одинаковых блоков, но с разной инфой -->
-{% for blog_post in blog_posts %}
-	<div class="row disable_post" align="">
-	<div class="col-md-1"></div>
-	<div class="col-md-10" align="center">
-		<p style="font-size:24px">
-			<a href="{{ blog_post.get_absolute_url }}">
-				<strong>{{ blog_post.title }}</strong></a> {% if blog_post.state == 0 %} <span class="label label-danger">disable</span>{% endif %}
-			
-		</p>
+				{% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
+			        <div class="btn-group show-on-hover">
+			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
+			            <span class="glyphicon glyphicon-edit"></span>
+			          </button>
+			          <ul class="dropdown-menu" role="menu">
+			            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
+			            <li><a href="/blog_edit/{{ blog_post.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
+			            {% if user.is_superuser %} 
+			            	<li class="divider"></li>
+			            	<li><a href="{% url_edit blog_post %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
+			            {% endif %}
+			          </ul>
+			        </div>
+			    {% endif %}
+	        </div>
+	    </div>
+		<br>
+	{% endfor %}
+
+	{% bootstrap_paginate page_obj %}
 	</div>
 	</div>
-	<!-- {{ blog_post.text|safe|truncatewords:40 }} - обрезание по 40 символов -->
-	<!-- Вывод текста -->
-	{{ blog_post.text|safe }}
-	<br>
-	<div class="row">
-        <div class="col-md-12 post-header-line">
-        	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blog_post.date_creation|date:"d.m.Y, G:i" }} 
-            | <span class="glyphicon glyphicon-user"></span> Автор: <a href="{{ blog_post.owner.get_absolute_url }}">{{ blog_post.owner.get_full_name }}</a> 
-            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blog_post.get_absolute_url }}/#href_power_comments">
-			Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a>
-            | <span class="glyphicon glyphicon-tags"></span> Теги : 
-            	{% for category in blog_post.category.all %}
-					<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> 
-				{% endfor %}
+	</div>
 
-			{% if profile.moderator == True or user.is_superuser %} 
-		        <div class="btn-group show-on-hover">
-		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-		            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
-		          </button>
-		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
-		            <li><a href="/blog_edit/{{ blog_post.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
-		          </ul>
-		        </div>
-		        {% endif %}
-		        {% if user.is_superuser %} 
-		        	<div class="btn-group show-on-hover">
-		          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-		            <span class="glyphicon glyphicon-tower"></span> Admin <span class="caret"></span>
-		          </button>
-		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="{% url_edit blog_post %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
-		            <li><a href="/minus_karma_admin/{{ blog_post.id }}"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Понизить карму на 10</a></li>
-		            <li><a href="#"><span class="glyphicon glyphicon-ban-circle"></span> Забанить пользователя</a></li>
-		            <li class="divider"></li>
-		            <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Бан и скрытие всех постов</a></li>
-		          </ul>
-		        </div>
-		        {% endif %}
-        </div>
-    </div>
-	<br>
-{% endfor %}
+	<div class="col-md-3">
+	    {% load page_navigation %}
+	    {% page_navigation request %}
+	</div>
 
-<!-- Пагинация -->
-{% bootstrap_paginate page_obj %}
-</div>
-</div>
-</div>
-</div>
 
-<div class="col-md-3 right">
-	<!-- Тег, который в зависимости от url возвращает разные шаблоны -->
-	<!-- Допустим, в одном случае он возвратит кусочек мероприятий -->
-	<!-- Ну а в другом вообще ничего -->
-    {% load page_navigation %}
-    {% page_navigation request %}
-</div>
-
-<!-- И в конце закрывается блок -->
 {% endblock %}

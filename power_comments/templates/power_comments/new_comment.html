@@ -7,32 +7,62 @@
 		  {% count_inc_power_comments comment.count_inc %}<img src="{{ comment.owner.avatar.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="img-circle">
 		  	{% if profile.moderator or profile.goverment or user.is_superuser %}
 		  		<a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">{{ comment.owner.get_full_name }}</a> - {{ comment.date_creation }}
-		  		<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span></a>
+		  		<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span> Редактировать</a>
+				<a class="responce_comment" href="#new_comment_link" id="comment-{{ comment.id }}" title="{{ comment.owner.get_full_name }}"> |
+				<span class="glyphicon glyphicon-share"></span> Ответить</a>
 			{% else %}
 		  		<strong><a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">{{ comment.owner.get_full_name }}</a> </strong> - {{ comment.date_creation }}
 			{% endif %}
 			<br>
 			{{ comment.text }}
 		  </div>
+        <div class="visible-xs visible-sm">
+		  <div class="col-xs-2">
+		  	<span class="glyphicon glyphicon-star"></span> <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong><br>
+			{% if request.user.is_authenticated %}
+				{% if not request.user == comment.owner.user %}
+				<div class="col-xs-1">
+				  	<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
+				  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+				  		<button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+				  	</form>
+				</div>
+				<div class="col-xs-4">
+					<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
+				  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+				  		<button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+				  	</form>
+				</div>
+				{% endif %}
+			{% endif %}
+		  </div>
+        </div>
+
+        <div class="visible-lg visible-md">
 		  <div class="col-xs-2">
 		  	<span class="glyphicon glyphicon-star"></span> Рейтинг: <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong><br>
-				{% if request.user.is_authenticated %}
-					{% if not request.user == comment.owner.user %}
-					<div class="col-xs-1">
-					  	<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
-					  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-					  		<button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
-					  	</form>
-					</div>
-					<div class="col-xs-4">
-						<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
-					  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
-					  		<button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
-					  	</form>
-					</div>
-					{% endif %}
+			{% if request.user.is_authenticated %}
+				{% if not request.user == comment.owner.user %}
+                {% if not profile in comment.karma_users.all %}
+
+				<div class="col-xs-1">
+				  	<form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
+				  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+				  		<button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+				  	</form>
+				</div>
+				<div class="col-xs-4">
+					<form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
+				  		<input type="hidden" name="id_comment" value="{{ comment.id }}" />
+				  		<button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+				  	</form>
+				</div>
 				{% endif %}
+                {% endif %}
+			{% endif %}
 		  </div>
+        </div>
+
 		</div>
 		</div><hr>
 	{% endfor %}

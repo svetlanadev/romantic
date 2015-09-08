@@ -46,6 +46,9 @@ def page_navigation(request):
         else:
             pass
 
+        if len(conversation) >= 5:
+            break
+
 
     conversation.reverse()
     url = template.loader.get_template("page_navigation/page.html")

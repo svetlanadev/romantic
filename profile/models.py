@@ -60,5 +60,11 @@ class CustomUser(models.Model):
     def get_full_name(self):
         return u'%s %s' % (self.user.first_name, self.user.last_name)
 
+    def get_status_profile(self):
+        if self.writer == False and self.valid_member == False and self.moderator == False and self.goverment == False and self.instructor == False:
+            return False
+        else:
+            return True
+
     def __unicode__(self):
         return self.user.username

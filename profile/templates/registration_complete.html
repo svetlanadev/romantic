@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Регистрация завершена{% endblock %}
+
+{% block main %}
+
+<div class="col-md-3"></div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+    <div class="panel-body">
+        {% if user.is_authenticated %}
+        Что такое, {{ user.username }}? Вы же уже авторизорваны. 
+        {% else %}
+        <h3 align="center">Поздравляем! Регистрация завершена.</h3>
+            <div class="alert alert-success" role="alert">
+                <p class="text-justify">Теперь модераторы ресурса в скором времени проверят вашу заявку,
+                   и зарегестрируют вас в системе! Если вы подали заявку, а ее не приняли в течении
+                двоих суток, напишите пожалуйста мне на <a href="mailto:dlyapun@gmail.com" class="alert-link">почту</a> и мы разберемся в ситуации.
+                Как только закончится бета-тестирование - регистрация станет открытой!</p>
+            </div>
+        {% endif %}
+        </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

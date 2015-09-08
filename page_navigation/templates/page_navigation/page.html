@@ -1,35 +1,18 @@
 {% load comments_tags %}
 <div class="panel panel-default">
   <div class="panel-body">
-  <p style="font-size:20px; color: #337ab7" align="center"><strong>Новые материалы</strong></p><hr>
+  <p style="font-size:18px; color: #000" align="center"><strong>Новые материалы</strong></p><hr class="hr_red">
   {% for material in materials %}
-    <a href="/materials/{{ material.id }}"><h5>{{ material.short_desc|truncatechars:60 }} - {{ material.title }}</a></h5>
+    <a href="/materials/{{ material.id }}"><h5>- {{ material.short_desc|truncatechars:60 }} - {{ material.title }}</a></h5>
   {% endfor %}
-  <p style="font-size:20px; color: #337ab7" align="center"><strong>Что обсуждают?</strong></p><hr>
+  <p style="font-size:18px; color: #000" align="center"><strong>Что обсуждают</strong></p><hr class="hr_red">
   {% for conversation in conversation %}
-    <a href="{{ conversation.get_absolute_url }}/"><h5>{{ conversation.get_template_material }} {{ conversation.short_desc|truncatechars:60 }} {{ conversation.title }}</a></h5>
+    <a href="{{ conversation.get_absolute_url }}/"><h5>- {{ conversation.get_template_material }} {{ conversation.short_desc|truncatechars:60 }} {{ conversation.title }}</a></h5>
   {% endfor %}
-  <p style="font-size:20px; color: #337ab7" align="center"><strong>Не пропустите</strong></p>
+  <p style="font-size:18px; color: #000" align="center"><strong>Не пропустите</strong></p>
   {% for party in partys %}
-    <a href="{{ party.get_absolute_url }}/"><h5>{{ party.name }}</a></h5>
+    <a href="{{ party.get_absolute_url }}/"><h5>- {{ party.name }}</a></h5>
   {% endfor %}
-<!--   {% for party in partys %}
-    <div class="">
-        <p style="font-size:18px; color:" align="center">{{ party.name }} сезона</p>
-        <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
-        </div>
-        <div class="caption">
-            <div align="center">
-                <h4>Дата - {{ party.date_start|date:"d, F Y" }}<br>
-                Время - {{ party.date_start|date:"G:i" }}</h4>
-            </div>
-            <p>{{ party.text|safe|truncatechars:130 }}</p>
-            <div align="center">
-                <a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a>
-            </div>
-        </div>
-    </div>
-{% endfor %} -->
 </div>
 </div>
 

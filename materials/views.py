@@ -20,18 +20,22 @@ DISABLE = 0
 
 
 def materials(request, state):
-    type_material, name_material, category_material = _type_material(state)
     materials = Material.objects.select_related(
                                 'owner', 'owner__user'
                                 ).prefetch_related(
                                 'category').filter(rank=type_material, state=ENABLE)
+    type_material, name_material, name_material_many, category_material = _type_material(state)
+
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
     categorys = Category.objects.all()
 
     if request.method == "POST":
+        materials = Material.objects.filter(rank=type_material, state=ENABLE)
         materials = _material_filter(request, materials)
+    else:
+        materials = Material.objects.filter(rank=type_material, state=ENABLE)[:10]
 
     dirs = Dirs.objects.all().filter(state=type_material)
 
@@ -41,6 +45,7 @@ def materials(request, state):
             'regions': region, 
             'difficultys': difficulty,
             'name_material': name_material,
+            'name_material_many': name_material_many,
             'categorys': categorys}
     return render_to_response('materials/%s/material_list.html' % category_material,
                               data,
@@ -96,10 +101,16 @@ def material_new(request, state):
         return redirect('/login/')
 
     owner = CustomUser.objects.get(user=request.user)
+
+    if state == 'doc':
+        if not owner.moderator and owner.user.is_superuser:
+            return redirect('/login/')
+
+
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
-    type_material, name_material, category_material = _type_material(state)
+    type_material, name_material, name_material_many, category_material = _type_material(state)
     categorys = Category.objects.all()
 
     if request.method == "POST":
@@ -124,6 +135,7 @@ def material_new(request, state):
                     'regions': region, 'difficultys': difficulty,
                     'category_material': category_material,
                     'name_material': name_material,
+                    'name_material_many': name_material_many,
                     'type_material': type_material,
                     'categorys': categorys}
             return render_to_response('materials/%s/material_new.html' % category_material,
@@ -137,6 +149,7 @@ def material_new(request, state):
                 'regions': region, 'difficultys': difficulty,
                 'category_material': category_material,
                 'name_material': name_material,
+                'name_material_many': name_material_many,
                 'type_material': type_material,
                 'categorys': categorys}
         return render_to_response('materials/%s/material_new.html' % category_material,
@@ -217,10 +230,10 @@ def material_hidden(request, material_id):
 
     material = Material.objects.get(id=material_id)
     if material.state == ENABLE:
-        material.state = 0 # DISABLE
+        material.state = DISABLE # DISABLE
         material.save()
     else:
-        material.state = 1 # ENABLE
+        material.state = ENABLE # ENABLE
         material.save()
 
     url = u'/materials/%s' % material_id
@@ -242,3 +255,102 @@ def sandbox(request):
     return render_to_response('materials/sandbox.html',
                               data,
                               context_instance=RequestContext(request))
+
+
+@login_required
+def material_my(request):
+    user = CustomUser.objects.get(user=request.user)
+    material_enable = Material.objects.filter(owner=user, state=1)
+    material_disable = Material.objects.filter(owner=user, state=0)
+
+    data = {'materials': material_enable, 'material_disable': material_disable}
+    return render_to_response('materials/material_my.html',
+                              data,
+                              context_instance=RequestContext(request))
+
+
+def _type_material(state):
+    if state == 'report':
+        type_material = 0
+        name_material = "Отчет"
+        name_material_many = 'Отчеты'
+        category_material = 'report'
+    elif state == 'art':
+        type_material = 1
+        name_material = "Творчество"
+        name_material_many = "Творчество"
+        category_material = 'article'
+    elif state == 'passport':
+        type_material = 2
+        name_material = "Паспорт препятствия"
+        name_material_many = "Паспорта препятствий"
+        category_material = 'report'
+    elif state == 'doc':
+        type_material = 3
+        name_material = "Документы и МКК"
+        name_material_many = "Документы и МКК"
+        category_material = 'article'
+    elif state == 'article':
+        type_material = 4
+        name_material = "Статья"
+        name_material_many = "Статьи"
+        category_material = 'article'
+    else:
+        type_material = 999
+        name_material = "errors"
+        name_material_many = "errors"
+        category_material = 'article'
+    return type_material, name_material, name_material_many, category_material
+
+
+def _get_objects_articles(point):    
+    articles = []
+    materials = Material.objects.filter(state=point, rank=1)
+
+    for material in materials:
+        articles.append(material)
+    materials = Material.objects.filter(state=point, rank=3)
+    for material in materials:
+        articles.append(material)
+    materials = Material.objects.filter(state=point, rank=4)
+    for material in materials:
+        articles.append(material)
+
+    return articles
+
+
+def _get_objects_reports(point):    
+    reports = []
+    materials = Material.objects.filter(state=point, rank=0)
+
+    for material in materials:
+        reports.append(material)
+    materials = Material.objects.filter(state=point, rank=2)
+    for material in materials:
+        reports.append(material)
+    return reports
+
+
+def _material_filter(request, materials):
+    try:
+        difficulty_filter = Difficulty.objects.get(id=request.POST['difficulty']) 
+    except ObjectDoesNotExist:
+        difficulty_filter = 0
+    try:
+        type_hike_filter = TypeHike.objects.get(id=request.POST['type_hike']) 
+    except ObjectDoesNotExist:
+        type_hike_filter = 0
+    try:
+        region_filter = Region.objects.get(id=request.POST['region']) 
+    except ObjectDoesNotExist:
+        region_filter = 0
+        
+
+    if type_hike_filter != 0:
+        materials = materials.filter(type_hike=type_hike_filter)
+    if difficulty_filter != 0:
+        materials = materials.filter(difficulty=difficulty_filter)
+    if region_filter != 0:
+        materials = materials.filter(region=region_filter)
+
+    return materials

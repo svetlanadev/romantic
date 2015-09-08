@@ -6,7 +6,13 @@
 
 <div class="col-md-4"></div>
   <div class="col-md-4">
-    <div class="main">
+    <div class="panel panel-default">
+    <div class="panel-body">
+        {% if user.is_authenticated %}
+        Что такое, {{ user.username }}? Вы же уже авторизорваны. 
+        {% else %}
+
+        
         <h4>Войдите, или <a href="/register/">Зарегистрируйтесь</a></h4>
         <!-- <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6">
@@ -22,14 +28,11 @@
         </div> -->
         <form method="post" action="" role="form">
             {{ form.non_field_errors }}
-                {{ form.username.errors }}
+              {{ form.username.errors }}
               <label for="inputUsernameEmail">Логин</label>
-              <!-- <input id="id_username" name="username" type="text" class="form-control"> -->
               {{ form.username }}<br>
-              <!-- <a class="pull-right" href="#">Забыли пароль?</a> -->
               {{ form.password.errors }}
               <label for="inputPassword">Пароль</label>
-              <!-- <input id="id_password" name="password" type="password"> -->
               {{ form.password }}<br>
 <!--             <div class="checkbox pull-right">
                 <label>
@@ -40,27 +43,11 @@
                 Вход
             </button>
         </form>
+        {% endif %}
+        </div>
+        </div>
     </div>
 </div>
-<br><br><br><br><br><br><br><br><br>
-<!-- {% if user.is_authenticated %}
-Что такое, {{ user.username }}? Вы же уже авторизорваны. 
-{% else %}
-    {% if form.non_field_errors %}
-    {{ form.non_field_errors }}
-    {% endif %}
 
-<form method="post" action="">
-<dl class="register">   
-{% for field in form %}
-    <dt>{{ field.label_tag }}</dt>
-    <dd class="clearfix">{{ field }}
-    {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
-    {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
-    </dd>
-{% endfor %}
-</dl>
-<input type="submit" value="Вход" / class="clearfix">
-</form>
-{% endif %} -->
+
 {% endblock %}

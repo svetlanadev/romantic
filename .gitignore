@@ -9,3 +9,5 @@ web-secret
 romantic/static/admin/*
 romantic/static/cked/*
 romantic/static/debug_toolbar/*
+.idea/*
+*.sqlite3
