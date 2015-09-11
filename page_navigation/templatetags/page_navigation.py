@@ -21,7 +21,11 @@ def page_navigation(request):
 
     comments = PowerComment.objects.values('app').distinct()
     comments_count = comments.count() - 5
-    comments = comments[comments_count:]
+    try:
+        comments = comments[comments_count:]
+    except AssertionError:
+        pass
+
 
     # comments = PowerComment.objects.order_by().values('app').distinct()
 
