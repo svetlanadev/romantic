@@ -43,4 +43,4 @@ class Party(models.Model):
         return u'/party/%s' % self.id
 
     def __unicode__(self):
-        return self.name
+        return self.title
