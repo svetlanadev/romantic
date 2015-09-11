@@ -12,6 +12,7 @@ from materials.models import Material, Dirs
 from hike.models import TypeHike, Region, Difficulty
 from force_blog.models import Category
 from profile.models import CustomUser
+from materials.logic import _type_material, _material_filter, _get_objects_articles, _get_objects_reports
 
 
 ENABLE = 1
@@ -19,7 +20,12 @@ DISABLE = 0
 
 
 def materials(request, state):
+    materials = Material.objects.select_related(
+                                'owner', 'owner__user'
+                                ).prefetch_related(
+                                'category').filter(rank=type_material, state=ENABLE)
     type_material, name_material, name_material_many, category_material = _type_material(state)
+
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
@@ -75,13 +81,6 @@ def material_folder(request, dir_id):
     one_dir = Dirs.objects.get(id=dir_id)
     data = {'one_dir': one_dir, }
     return render_to_response('materials/material_dir.html',
-                              data,
-                              context_instance=RequestContext(request))
-
-
-def library(request):
-    data = {'one_dir': 'one_dir', }
-    return render_to_response('materials/library.html',
                               data,
                               context_instance=RequestContext(request))
 

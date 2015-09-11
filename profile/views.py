@@ -4,6 +4,7 @@
 # from django.shortcuts import render_to_response
 # from django.template import RequestContext
 from django.contrib.auth import logout, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect, render
@@ -11,11 +12,10 @@ from django.template import RequestContext
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.views.generic.edit import FormView
-from profile.models import CustomUser
 from materials.models import Material
 from power_comments.models import PowerComment
 from profile.forms import UserCreateForm, UserLoginForm, CustomUserForm
-from django.contrib.auth.decorators import login_required
+from profile.models import CustomUser
 
 
 class ProfileListView(ListView):
@@ -145,7 +145,6 @@ def profile_edit(request):
                               context_instance=RequestContext(request))
 
 
-@login_required
 def profile(request, profile_id):
     profile2 = CustomUser.objects.get(id=profile_id)
     comments = PowerComment.objects.filter(owner=profile2).order_by('-date_creation')[:10]

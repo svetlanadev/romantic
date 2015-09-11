@@ -17,7 +17,15 @@ register = template.Library()
 def page_navigation(request):
     partys = Party.objects.exclude(state=0)[:5]
     materials = Material.objects.exclude(state=0)[:5]
-    comments = PowerComment.objects.order_by().values('app').distinct()
+
+
+    comments = PowerComment.objects.values('app').distinct()
+    comments_count = comments.count() - 5
+    comments = comments[comments_count:]
+
+    # comments = PowerComment.objects.order_by().values('app').distinct()
+
+    # comments = comments.order_by('date_creation')
 
     conversation = []
     for comment in comments:
@@ -42,6 +50,7 @@ def page_navigation(request):
             break
 
 
+    conversation.reverse()
     url = template.loader.get_template("page_navigation/page.html")
     data = {'materials': materials, 
             'partys': partys,
