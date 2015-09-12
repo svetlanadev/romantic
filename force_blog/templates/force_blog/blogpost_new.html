@@ -32,7 +32,7 @@
 					{{ form.media }}
 					{{ form.text }}
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-12">
 					{{ form.category.errors }}
 					<p><label for="id_category">Теги:</label><br> 
 					<select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
@@ -42,7 +42,7 @@
 					</select>
 					</p>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<label>Доступные теги:</label> 
 						{% for category in categorys %}
 						    {{ category.category }}, 
