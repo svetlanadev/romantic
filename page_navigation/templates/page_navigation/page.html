@@ -65,27 +65,23 @@
         </div>
     {% else %}
         <p style="font-size:18px; color: #000" align="center"><strong>Вход в профиль</strong></p>
-        <h5 align="center">Войдите, или <a href="/register/">Зарегистрируйтесь</a></h5>
         <form method="post" action="/login/" role="form">
           {{ form.non_field_errors }}
           <div class="form-group">
               {{ form.username.errors }}
-            <label for="inputUsernameEmail">Логин</label>
-            <input id="id_username" name="username" type="text" class="form-control" placeholder="username">
-            <!-- {{ form.username }} -->
+                <input id="id_username" name="username" type="text" class="form-control" placeholder="Логин">
+                <!-- {{ form.username }} -->
           </div>
           <div class="form-group">
             {{ form.password.errors }}
-            <label for="inputPassword">Пароль</label>
-            <input id="id_password" name="password" class="form-control" type="password" placeholder="***********">
-            <!-- {{ form.password }} -->
+                <input id="id_password" name="password" class="form-control" type="password" placeholder="Пароль">
+                <!-- {{ form.password }} -->
           </div>
           <div class="checkbox pull-right">
               <!-- <a class="pull-right" href="#">Забыли пароль?</a> -->
           </div>
-          <button type="submit" class="btn btn btn-primary">
-              Вход
-          </button>
+          <button type="submit" class="btn btn btn-success btn-sm">Войдите</button>
+          <a href="/register/"> или зарегистрируйтесь</a>
       </form>
     {% endif %}
   </div>
