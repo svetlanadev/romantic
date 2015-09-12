@@ -27,11 +27,12 @@
             <a href="/admin/"><button type="submit" class="btn btn-default btn-xs">Админка</button></a>
             <a href="/admin/auth/user/?is_active__exact=0"><button type="submit" class="btn btn-default btn-xs">New users</button></a>
         {% endif %}
-    <hr>
+        <hr>
     {% endif %}
+    <p style="font-size:24px; color: #000" align="center"><strong>Новости турклуба</strong></p>
 	{% for blog_post in blog_posts %}
 		<div class="col-md-12" align="center">
-			<p style="font-size:18px">
+			<p style="font-size:16px">
 				<a href="{{ blog_post.get_absolute_url }}">
 					<strong>{{ blog_post.title }}</strong>
 				</a> 
