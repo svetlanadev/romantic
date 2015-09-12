@@ -16,7 +16,7 @@ def contex_banner(request):
         profile = ""
 
     if request.path == '/party/':
-        banner = 'pano.jpg'
+        banner = 'winter.jpg'
     else:
         banner = 'general.jpg'
 
