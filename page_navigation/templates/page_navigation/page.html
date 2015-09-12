@@ -3,7 +3,15 @@
   <div class="panel-body">
   <p style="font-size:18px; color: #000" align="center"><strong>Новые материалы</strong></p><hr class="hr_red">
   {% for material in materials %}
-    <a href="/materials/{{ material.id }}"><h5>- {{ material.short_desc|truncatechars:60 }} - {{ material.title }}</a></h5>
+      <img src="{{ material.owner.avatar.url }}" width="45px" height="45px" hspace="8" vspace="8" align="left" class="img-circle">
+      <a href="{{ material.owner.get_absolute_url }}" id="user_full_name">
+          {{ material.owner.get_full_name }}
+      </a> - {{ material.date_creation|date:"d F Y" }}
+      <br>
+      <a href="/materials/{{ material.id }}">
+          <p>- {{ material.short_desc|truncatechars:75 }} - {{ material.title }}<hr class="hr_sm"></p>
+      </a>
+
   {% endfor %}
   <p style="font-size:18px; color: #000" align="center"><strong>Что обсуждают</strong></p><hr class="hr_red">
   {% for conversation in conversation %}
@@ -11,7 +19,7 @@
   {% endfor %}
   <p style="font-size:18px; color: #000" align="center"><strong>Не пропустите</strong></p>
   {% for party in partys %}
-    <a href="{{ party.get_absolute_url }}/"><h5>- {{ party.name }}</a></h5>
+    <a href="{{ party.get_absolute_url }}/"><h5>- {{ party.title }}</a></h5>
   {% endfor %}
 </div>
 </div>

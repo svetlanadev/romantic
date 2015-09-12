@@ -12,7 +12,6 @@ from power_comments.models import PowerComment
 
 register = template.Library()
 
-
 @register.simple_tag()
 def page_navigation(request):
     partys = Party.objects.exclude(state=0)[:5]
@@ -25,7 +24,6 @@ def page_navigation(request):
         comments = comments[comments_count:]
     except AssertionError:
         pass
-
 
     # comments = PowerComment.objects.order_by().values('app').distinct()
 
