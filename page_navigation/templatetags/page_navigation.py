@@ -73,6 +73,8 @@ def page_navigation(request):
 
 
     conversation.reverse()
+
+    print conversation
     url = template.loader.get_template("page_navigation/page.html")
     data = {'materials': materials, 
             'partys': partys,
@@ -82,3 +84,18 @@ def page_navigation(request):
             'custom_user': custom_user}
 
     return url.render(Context(data))
+
+
+@register.simple_tag()
+def sandbox_user_count(request):
+    if request.user.is_authenticated():
+        try:
+            custom_user = CustomUser.objects.get(user=request.user)
+        except ObjectDoesNotExist:
+            custom_user = request.user
+
+        materials = Material.objects.filter(owner=custom_user, state=0)
+    else:
+        materials = ""
+
+    return materials.count()
