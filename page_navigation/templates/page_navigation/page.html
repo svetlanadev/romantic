@@ -3,8 +3,8 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-  <p style="font-size:18px; color: #000" align="center"><strong>Мой профиль</strong></p>
     {% if request.user.is_authenticated %}
+        <p style="font-size:18px; color: #000" align="center"><strong>Мой профиль</strong></p>
         <div class="row">
             <div class="col-lg-4">
                 <img src="{{ custom_user.avatar.url }}" class="img-circle" width="100px">
@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col-lg-12" align="center">
                 <p>
-                    <a href="/profile/{{ profile.id }}" class="btn btn-primary btn-block btn-sm">Профиль</a>
+                    <a href="/profile/{{ custom_user.id }}" class="btn btn-primary btn-block btn-sm">Профиль</a>
                     <a href="/logout/" class="btn btn-danger btn-block btn-sm">Выход</a>
                 </p>
             </div>

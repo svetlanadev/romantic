@@ -5,16 +5,16 @@
 {% block main %}
 {% load urltag %}
 {% load comments_tags %}
-<div class="col-md-9 left">
+<div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
     <div class="col-md-4">
         <center>
         <img src="{{ profile2.avatar.url }}" name="aboutme" width="200" height="200" border="0" class="img-circle">
-        <h3 class="media-heading">{{ profile2.get_full_name }}<br> 
+        <h4 class="media-heading">{{ profile2.get_full_name }} <span class="glyphicon glyphicon-star"></span> {{ profile2.karma }}<br>
         {% if profile2.status %}
           <small>{{ profile2.status }}</small>
-        {% endif %}</h3>
+        {% endif %}</h4>
         {% if profile.get_status_profile == True %}
         <span><strong>Состоит в: </strong></span>
           {% if profile2.writer %}
@@ -176,7 +176,7 @@
 </div>
 </div>
 
-<div class="col-md-3 right">
+<div class="col-md-4 right">
     <!-- Тег, который в зависимости от url возвращает разные шаблоны -->
     <!-- Допустим, в одном случае он возвратит кусочек мероприятий -->
     <!-- Ну а в другом вообще ничего -->
