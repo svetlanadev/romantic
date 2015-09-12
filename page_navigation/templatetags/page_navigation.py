@@ -15,6 +15,15 @@ register = template.Library()
 
 @register.simple_tag()
 def page_navigation(request):
+
+    if request.user.is_authenticated():
+        try:
+            custom_user = CustomUser.objects.get(user=request.user)
+        except ObjectDoesNotExist:
+            custom_user = request.user
+    else:
+        custom_user = ""
+
     partys = Party.objects.exclude(state=0)[:5]
     materials = Material.objects.exclude(state=0)[:5]
 
@@ -68,6 +77,8 @@ def page_navigation(request):
     data = {'materials': materials, 
             'partys': partys,
             'conversation': conversation,
-            'active_users': active_users}
+            'active_users': active_users,
+            'request': request,
+            'custom_user': custom_user}
 
     return url.render(Context(data))
