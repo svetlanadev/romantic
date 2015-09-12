@@ -16,9 +16,9 @@ def contex_banner(request):
         profile = ""
 
     if request.path == '/passport/':
-        banner = 'passport.png'
+        banner = 'pano.jpg'
     else:
-        banner = 'general.png'
+        banner = 'general.jpg'
 
     print banner
     return {'banner': banner, 'profile':profile, 'mode_site': settings.DEBUG}

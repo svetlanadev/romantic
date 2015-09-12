@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response, redirect, render
 from django.template import Context
 from party.models import Party
 from materials.models import Material
+from profile.models import CustomUser
 from force_blog.models import BlogPost
 from power_comments.models import PowerComment
 
@@ -17,6 +18,20 @@ def page_navigation(request):
     partys = Party.objects.exclude(state=0)[:5]
     materials = Material.objects.exclude(state=0)[:5]
 
+    comments_active_users = PowerComment.objects.values('owner').distinct()
+    comments_active_users_count = comments_active_users.count() - 8
+    try:
+        comments_active_users = comments_active_users[comments_active_users_count:]
+    except AssertionError:
+        pass
+
+    active_users = []
+    for x in comments_active_users:
+        active_user = CustomUser.objects.get(id=x['owner'])
+        active_users.append(active_user)
+
+        if len(active_users) >= 8:
+            break
 
     comments = PowerComment.objects.values('app').distinct()
     comments_count = comments.count() - 5
@@ -24,10 +39,6 @@ def page_navigation(request):
         comments = comments[comments_count:]
     except AssertionError:
         pass
-
-    # comments = PowerComment.objects.order_by().values('app').distinct()
-
-    # comments = comments.order_by('date_creation')
 
     conversation = []
     for comment in comments:
@@ -56,6 +67,7 @@ def page_navigation(request):
     url = template.loader.get_template("page_navigation/page.html")
     data = {'materials': materials, 
             'partys': partys,
-            'conversation': conversation}
+            'conversation': conversation,
+            'active_users': active_users}
 
     return url.render(Context(data))

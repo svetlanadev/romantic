@@ -1,27 +1,60 @@
 {% load comments_tags %}
 <div class="panel panel-default">
   <div class="panel-body">
-  <p style="font-size:18px; color: #000" align="center"><strong>Новые материалы</strong></p><hr class="hr_red">
+  <p style="font-size:18px; color: #000" align="center"><strong>Новые материалы</strong></p>
   {% for material in materials %}
-      <img src="{{ material.owner.avatar.url }}" width="45px" height="45px" hspace="8" vspace="8" align="left" class="img-circle">
-      <a href="{{ material.owner.get_absolute_url }}" id="user_full_name">
-          {{ material.owner.get_full_name }}
-      </a> - {{ material.date_creation|date:"d F Y" }}
+      {% if material.rank == 0 %}
+          <img src="{{ material.type_hike.image.url }}" style="border: 1px solid #dddddd;" width="47px" height="47px" hspace="8" vspace="8" align="left" class="img-circle">
+      {% else %}
+          <a href="{{ material.owner.get_absolute_url }}" id="user_full_name">
+            <img src="{{ material.owner.avatar.url }}" width="45px" height="45px" hspace="8" vspace="8" align="left" class="img-circle">
+          </a>
+      {% endif %}
+      <a href="/{{ material.get_rank_material }}/">
+          {{ material.get_template_material }}
+      </a> - {{ material.date_creation|date:"d M. Y" }}
       <br>
       <a href="/materials/{{ material.id }}">
           <p>- {{ material.short_desc|truncatechars:75 }} - {{ material.title }}<hr class="hr_sm"></p>
       </a>
 
   {% endfor %}
-  <p style="font-size:18px; color: #000" align="center"><strong>Что обсуждают</strong></p><hr class="hr_red">
+  <p style="font-size:18px; color: #000" align="center"><strong>Что обсуждают</strong></p>
   {% for conversation in conversation %}
     <a href="{{ conversation.get_absolute_url }}/"><h5>- {{ conversation.get_template_material }} {{ conversation.short_desc|truncatechars:60 }} {{ conversation.title }}</a></h5>
   {% endfor %}
   <p style="font-size:18px; color: #000" align="center"><strong>Не пропустите</strong></p>
   {% for party in partys %}
-    <a href="{{ party.get_absolute_url }}/"><h5>- {{ party.title }}</a></h5>
+    <div class="thumbnail">
+        <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
+            <div align="center" class="background_text">
+                <a href="{{ party.get_absolute_url }}/"><h3>- {{ party.title }}</h3></a>
+            </div>
+        </div>
+        <div class="caption">
+            <div align="center">
+{#                <h3><small>Начало - {{ party.date_start|date:"d.m.Y, G:i" }}</small></h3>#}
+            </div>
+            <div align="center">
+                <a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a>
+            </div>
+        </div>
+    </div>
+
   {% endfor %}
 </div>
 </div>
 
+<div class="panel panel-default">
+  <div class="panel-body">
+      <p style="font-size:18px; color: #000" align="center"><strong>Активные пользователи</strong></p>
+      {% for active_user in active_users %}
+          <a href="{{ active_user.get_absolute_url }}" id="user_full_name">
+            <img src="{{ active_user.avatar.url }}" width="74px" height="74px" hspace="4" vspace="4" align="left" class="img-rounded">
+          </a>
+      {% endfor %}
+  </div>
+</div>
+
 {% include "page_navigation/sponsors.html" %}
+

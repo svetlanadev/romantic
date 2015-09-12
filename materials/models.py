@@ -108,16 +108,30 @@ class Material(models.Model):
 
     def get_template_material(self):
         if self.rank == 0:
-            name_material = "Отчет:"
+            name_material = "Отчет похода"
         if self.rank == 1:
-            name_material = "Творчество:"
+            name_material = "Творчество"
         if self.rank == 2:
-            name_material = "Паспорт:"
+            name_material = "Паспорт препятствия"
         if self.rank == 3:
-            name_material = "Документ:"
+            name_material = "Документ"
         if self.rank == 4:
-            name_material = "Статья:"
+            name_material = "Статья"
         return name_material
+
+    def get_rank_material(self):
+        if self.rank == 0:
+            name_material = "report"
+        if self.rank == 1:
+            name_material = "art"
+        if self.rank == 2:
+            name_material = "passport"
+        if self.rank == 3:
+            name_material = "doc"
+        if self.rank == 4:
+            name_material = "article"
+        return name_material
+
 
     def __unicode__(self):
         return u'%s, %s, %s, %s, %s, %s' % (self.title,
