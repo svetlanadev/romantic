@@ -30,6 +30,7 @@
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 
+<!-- БАННЕР ПОД МАЛЕНЬКИЕ ЭКРАНЫ -->
 <div class="visible-xs visible-sm">
   <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
@@ -47,183 +48,108 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Главная</a></li>
             <li><a href="/blog/">Новости</a></li>
-            {% comment %}{% if profile.moderator or profile.goverment or user.is_superuser %}
-              <li><a href="/blog_new/">Новый пост</a></li>
-            {% endif %}{% endcomment %}
-            {% if request.user.is_authenticated %}
-              <li><a href="/profile/1">Профиль</a></li>
-            {% endif %}
             <li><a href="/report/">Отчеты</a></li>
             <li><a href="/passport/">Паспорта</a></li>
             <li><a href="/art/">Творчество</a></li>
             <li><a href="/article/">Статьи</a></li>
             <li><a href="/doc/">Документы</a></li>
           </ul>
-        </div><!-- /.nav-collapse -->
-      </div><!-- /.container -->
+        </div>
+      </div>
     </div>
 </div>
+<!-- КОНЕЦ БАННЕРА ПОД МАЛЕНЬКИЕ ЭКРАНЫ -->
 
+<!-- БАННЕР ПОД БОЛЬШТЕ ЭКРАНЫ -->
 <div id="header" class="visible-lg visible-md">
-      <ul id="header-menu" class="center-block list-inline list-inline-clear-padding link-like-text">
-        <li class="menu-list">
-          <div class="under-menu-shadow">
-            <ul class="list-inline topmenu">
-              <li><a href="/">Главная</a></li>
-              <li class="hover">
-                  <a href="#" >О клубе<span class="arrow"></span></a>
-                  <ul class="submenu">
-                    <li><a href="/history/">История</a></li>
-                    <li><a href="#">Гимн</a></li>
-                    <li><a href="/rules/">Устав</a></li>
-                    <li><a href="#">Контакты</a></li>
-                    {% if user.is_superuser %} 
-                      <hr class="hr_red">
-                      <li><a href="/login/">login</a></li>
-                      <li><a href="/profile/1">profile</a></li>
-                      <li><a href="/profile_edit/">profile_edit</a></li>
-                      <li><a href="/register/">register</a></li>
-                      <hr class="hr_red">
-                      <li><a href="/about/">about</a></li>
-                      <li><a href="/history/">history</a></li>
-                      <li><a href="/rules/">rules</a></li>
-                      <li><a href="/contact-only/">contact-only</a></li>
-                      <li><a href="government/">government</a></li>
-                      <hr class="hr_red">
-                      <li><a href="/blog/">blog</a></li>
-                      <li><a href="/blog/1">blog 1</a></li>
-                      <li><a href="/blog_edit/1">blog_edit</a></li>
-                      <li><a href="/blog_new/">blog_new</a></li>
-                      <hr class="hr_red">
-                      <li><a href="/report/">report</a></li>
-                      <li><a href="/passport/">passport</a></li>
-                      <li><a href="/art/">art</a></li>
-                      <li><a href="/article/">article</a></li>
-                      <li><a href="/doc/">doc</a></li>
-                      <li><a href="/material_new/">material_new</a></li>
-                      <li><a href="/sandbox/">sandbox</a></li>
-                      <li><a href="/materials/1">materials 1</a></li>
-                      <li><a href="/material_edit/1">material_edit</a></li>
-                      <li><a href="/material_new/art">materials new art</a></li>
-                      <li><a href="/material_new/report">materials new report</a></li>
-                    {% endif %}
-                  </ul>
-              </li>
-              <li><a href="https://vk.com/albums-1025962" target="_blank">Галерея</a></li>
-              <li><a href="/blog/">Новости</a></li>
-            </ul>
-          </div>
-        </li><li class="logo hidden-sm hidden-xs" style="">
-          <a href="/">
-            <img src="{{ STATIC_URL }}images/logo.png" weight="95" height="100">
-            ТУРКЛУБ &laquo;РОМАНТИК&raquo;
-          </a>
-        </li><li class="menu-list right">
-          <div class="under-menu-shadow">
-            <ul class="list-inline topmenu">
-              <li><a href="/party/">Мероприятия</a></li>
-              <li class="hover">
-                  <a href="#" >Библиотека<span class="arrow"></span></a>
-                  <ul class="submenu">
-                    <li><a href="/passport/">Паспорта препятствий</a></li>
-                    <li><a href="/doc/" class="hover">МКК и документация</a></li>
-                    <li><a href="/report/">Отчеты походов</a></li>
-                    <li><a href="/art/">Творчество</a></li>
-                    <li><a href="/article/">Статьи</a></li>
-                    {% if user.is_authenticated %}
-                      <li class="devider"></li>
-                      <li><a href="/material_new/">Добавить материал</a></li>
-                    {% endif %}
-                    {% if profile.moderator == True or user.is_superuser %} 
-                    <li><a href="/sandbox/">Материалы на проверку</a></li>
-                    {% endif %}
-                  </ul>
-              </li>
+  <ul id="header-menu" class="center-block list-inline list-inline-clear-padding link-like-text">
+    <li class="menu-list">
+      <div class="under-menu-shadow">
+        <ul class="list-inline topmenu">
+          <li><a href="/">Главная</a></li>
+          <li class="hover">
+              <a href="#" >О клубе<span class="arrow"></span></a>
+              <ul class="submenu">
+                <li><a href="/history/">История</a></li>
+                <li><a href="#">Гимн</a></li>
+                <li><a href="/rules/">Устав</a></li>
+                <li><a href="#">Контакты</a></li>
+                {% if user.is_superuser %}
+                  <hr class="hr_red">
+                  <li><a href="/login/">login</a></li>
+                  <li><a href="/profile/1">profile</a></li>
+                  <li><a href="/profile_edit/">profile_edit</a></li>
+                  <li><a href="/register/">register</a></li>
+                  <hr class="hr_red">
+                  <li><a href="/about/">about</a></li>
+                  <li><a href="/history/">history</a></li>
+                  <li><a href="/rules/">rules</a></li>
+                  <li><a href="/contact-only/">contact-only</a></li>
+                  <li><a href="government/">government</a></li>
+                  <hr class="hr_red">
+                  <li><a href="/blog/">blog</a></li>
+                  <li><a href="/blog/1">blog 1</a></li>
+                  <li><a href="/blog_edit/1">blog_edit</a></li>
+                  <li><a href="/blog_new/">blog_new</a></li>
+                  <hr class="hr_red">
+                  <li><a href="/report/">report</a></li>
+                  <li><a href="/passport/">passport</a></li>
+                  <li><a href="/art/">art</a></li>
+                  <li><a href="/article/">article</a></li>
+                  <li><a href="/doc/">doc</a></li>
+                  <li><a href="/material_new/">material_new</a></li>
+                  <li><a href="/sandbox/">sandbox</a></li>
+                  <li><a href="/materials/1">materials 1</a></li>
+                  <li><a href="/material_edit/1">material_edit</a></li>
+                  <li><a href="/material_new/art">materials new art</a></li>
+                  <li><a href="/material_new/report">materials new report</a></li>
+                {% endif %}
+              </ul>
+          </li>
+          <li><a href="https://vk.com/albums-1025962" target="_blank">Галерея</a></li>
+          <li><a href="/blog/">Новости</a></li>
+        </ul>
+      </div>
+    </li><li class="logo hidden-sm hidden-xs" style="">
+      <a href="/">
+        <img src="{{ STATIC_URL }}images/logo.png" weight="95" height="100">
+        ТУРКЛУБ &laquo;РОМАНТИК&raquo;
+      </a>
+    </li><li class="menu-list right">
+      <div class="under-menu-shadow">
+        <ul class="list-inline topmenu">
+          <li><a href="/party/">Мероприятия</a></li>
+          <li class="hover">
+              <a href="#" >Библиотека<span class="arrow"></span></a>
+              <ul class="submenu">
+                <li><a href="/passport/">Паспорта препятствий</a></li>
+                <li><a href="/doc/" class="hover">МКК и документация</a></li>
+                <li><a href="/report/">Отчеты походов</a></li>
+                <li><a href="/art/">Творчество</a></li>
+                <li><a href="/article/">Статьи</a></li>
+                {% if user.is_authenticated %}
+                  <li class="devider"></li>
+                  <li><a href="/material_new/">Добавить материал</a></li>
+                {% endif %}
+                {% if profile.moderator == True or user.is_superuser %}
+                <li><a href="/sandbox/">Материалы на проверку</a></li>
+                {% endif %}
+              </ul>
+          </li>
 
-              <li class="hover">
-      {% if user.is_authenticated %}    
-        <li><a href="/profile/{{ profile.id }}">Мой профиль</a></li>            
-        <!-- <li class="hover">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <span class="glyphicon glyphicon-user"></span> 
-                {{ user.username }}
-                <span class="arrow"></span>
-            </a>
-            <ul class="submenu">
-                <li>
-                    <div class="navbar-login">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <img src="{{ profile.avatar.url }}" class="img-circle" width="100px">
-                            </div>
-                            <div class="col-lg-8">
-                                <p class="text-left"><strong><a href="/profile_edit/"><span class="glyphicon glyphicon-pencil"></span></a> {{ user.get_full_name }}</strong></p>
-                                <p class="text-left"><span class="glyphicon glyphicon-envelope"></span> {{ user.email }}</p>
-                                {% if profile.phone %}
-                                <p class="text-left"><span class="glyphicon glyphicon-phone"></span> {{ profile.phone }}</p>
-                                {% endif %}
-                                <p class="text-left"><span class="glyphicon glyphicon-star"></span> Карма: {{ profile.karma }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="divider"></li>
-
-                <li>
-                    <div class="navbar-login navbar-login-session">
-                        <div class="row">
-                            <div class="col-lg-12" align="center">
-                                <p>
-                                  {% if profile.writer %}
-                                    <span class="label label-default">Писатель</span>
-                                  {% endif %}
-                                  {% if profile.valid_member %}
-                                    <span class="label label-primary">Действильный член</span>
-                                  {% endif %}
-                                  {% if profile.moderator %}
-                                    <span class="label label-info">Модератор</span>
-                                  {% endif %}
-                                  {% if profile.goverment %}
-                                    <span class="label label-success">Правление</span>
-                                  {% endif %}
-                                  {% if profile.instructor %}
-                                    <span class="label label-warning">Инструктор</span>
-                                  {% endif %}
-                                  {% if user.is_superuser %} 
-                                    <span class="label label-danger"><span class="glyphicon glyphicon-tower"></span> Администратор</span>
-                                  {% endif %}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <div class="navbar-login navbar-login-session">
-                        <div class="row">
-                            <div class="col-lg-12" align="center">
-                                <p>
-                                    <a href="/profile/{{ profile.id }}" class="btn btn-info btn-block ">Профиль</a>
-
-                                    <a href="/logout/" class="btn btn-danger btn-block">Выход</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </li> -->
-      {% else %}                
-        <li><a href="/register/">Регистрация</a></li>
-      {% endif %}
-
-              </li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </div>
-
+          <li class="hover">
+          {% if user.is_authenticated %}
+            <li><a href="/profile/{{ profile.id }}">Мой профиль</a></li>
+          {% else %}
+            <li><a href="/register/">Регистрация</a></li>
+ы         {% endif %}
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>
+<!-- КОНЕЦ БАННЕРА ПОД БОЛЬШТЕ ЭКРАНЫ -->
 
     <div style="position: relative;">
       <div class="header-cone"></div>
@@ -231,11 +157,9 @@
     </div>
 
     <div id="events-banner" class="fill" style="background-image: url({{ STATIC_URL }}images/banners/{{ banner }})">
-{#        background-image: url(../images/calendar_view_icon.png);   #}
       <div class="header-cone"></div>
       <div class="header-cone right"></div>
     </div>
-
     <br>
 
 <div class="container">
@@ -347,7 +271,7 @@
       <div class="copy">Powered by
         <a href="http://www.djangoproject.com">Django</a>
         <span class="separator">|</span>
-        by Dmitry Lyapun, <a href="mailto:dlyapun@gmail.com">dlyapun@gmail.com</a>
+        by Dmytro Lyapun, <a href="mailto:dlyapun@gmail.com">dlyapun@gmail.com</a>
         <span class="separator">|</span>
         &copy; tkr.od.ua</div>
       </div>
