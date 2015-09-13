@@ -181,44 +181,16 @@ def blog_backup(blog, user):
 
 
 @login_required
-def hidden_blog(request):
-    if request.POST:
-        blog_id = request.POST['blog_id']
+def blog_hidden(request, blog_id):
+    profile = CustomUser.objects.get(user=request.user)
+
+    if not profile.moderator and profile.goverment and profile.user.is_superuser:
+        return redirect('/login/')
+    else:
         blog = BlogPost.objects.get(id=int(blog_id))
         blog.state = BlogPost.DISABLE
         blog.save()
-        return redirect('/blog/')
-    else:
         return redirect(blog.get_absolute_url())
-
-
-# @login_required
-# def karma_force_blog(request):
-#     user = CustomUser.objects.get(user=request.user)
-#     if request.method == "POST":
-#         if user.karma < -10:
-#             message = "Недостаточно кармы для голосования"
-#             print message
-#             pass
-#         id_blogpost = request.POST['id_blogpost']
-#         karma = request.POST['karma']
-#         blogpost = BlogPost.objects.get(id=id_blogpost)
-#         if user in blogpost.karma_users.all():
-#             message = "Вы уже поставили рейтинг"
-#             print message
-#         else:
-#             if karma == "minus":
-#                 blogpost.rating = blogpost.rating - 1
-#                 user.karma = user.karma - 3
-#             if karma == "plus":
-#                 blogpost.rating = blogpost.rating + 1
-#                 user.karma = user.karma + 3
-#             blogpost.save()
-#             user.save()
-#             blogpost.karma_users.add(user)
-#     else:
-#         return redirect('/')
-#     return redirect(blogpost.get_absolute_url())
 
 
 def minus_karma_admin(request, blog_id):
