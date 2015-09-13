@@ -15,16 +15,21 @@
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li>
-                        <form action="/disable_power_comments/" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
+                        <form action="/disable_power_comments/" method="post" role="form">{% csrf_token %}
                             <input type="hidden" name="id_comment" value="{{ comment.id }}" />
                             <button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-trash"></span> Удалить комментарий</button>
                         </form>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Забанить пользователя</a></li>
+                    <li>
+                        <form action="/ban_user_power_comments/" method="post" role="form">{% csrf_token %}
+                            <input type="hidden" name="id_user" value="{{ comment.owner.id }}" />
+                            <button type="submit" class="btn btn-link"></span> <span class="glyphicon glyphicon-eye-close"></span> Забанить пользователя</button>
+                        </form>
+                    </li>
                     <li class="divider"></li>
-                    <li><a class="responce_comment" href="#new_comment_link" id="comment-{{ comment.id }}" title="{{ comment.owner.get_full_name }}">
-                    <span class="glyphicon glyphicon-share"></span> Ответить</a></li>
+{#                    <li><a class="responce_comment" href="#new_comment_link" id="comment-{{ comment.id }}" title="{{ comment.owner.get_full_name }}">#}
+{#                    <span class="glyphicon glyphicon-share"></span> Ответить</a></li>#}
                     {% if user.is_superuser %}
                         <li class="divider"></li>
                         <li<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span>Страница админки</a></li>

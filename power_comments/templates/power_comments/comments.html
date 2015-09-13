@@ -29,8 +29,8 @@
                         </form>
                     </li>
                     <li class="divider"></li>
-                    <li><a class="responce_comment" href="#new_comment_link" id="comment-{{ comment.id }}" title="{{ comment.owner.get_full_name }}">
-                    <span class="glyphicon glyphicon-share"></span> Ответить</a></li>
+{#                    <li><a class="responce_comment" href="#new_comment_link" id="comment-{{ comment.id }}" title="{{ comment.owner.get_full_name }}">#}
+{#                    <span class="glyphicon glyphicon-share"></span> Ответить</a></li>#}
                     {% if user.is_superuser %}
                         <li class="divider"></li>
                         <li<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span>Страница админки</a></li>
