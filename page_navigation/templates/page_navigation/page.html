@@ -114,7 +114,7 @@
 
               {% for conversation in conversation %}
                 <p>
-                    <a href="{{ conversation.get_absolute_url }}/">
+                    <a href="{{ conversation.get_absolute_url }}/#comments">
                         <span class="badge">
                             <span class="glyphicon glyphicon-comment"></span>
                             {% count_power_comments conversation.get_absolute_url %}
