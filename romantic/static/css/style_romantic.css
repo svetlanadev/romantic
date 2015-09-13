@@ -14,7 +14,7 @@
 .label {
     display: inline;
     padding: .2em .6em .3em;
-    font-size: 83%;
+    font-size: 82%;
     font-weight: bold;
     line-height: 1;
     color: #fff;
@@ -22,4 +22,10 @@
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: .25em;
+}
+
+.post-header-line {
+    border-bottom:1px solid #DDD;
+    padding:10px 0px 10px 25px;
+    font-size: 13px;
 }

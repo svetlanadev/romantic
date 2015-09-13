@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 
-{% block meta_title %}Архив Новостей{% endblock %}
+{% block meta_title %}
+    Архив Новостей
+{% endblock %}
 
 {% block main %}
+
 {% load urltag %}
 {% load bootstrap_pagination %}
 {% load comments_tags %}
-
-<style type="text/css">
-	.post-header-line { border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
-</style>
 
 <div class="col-md-8 left">
 <div class="panel panel-default">

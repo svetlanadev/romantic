@@ -1,68 +1,60 @@
 {% extends "base.html" %}
 
-{% block meta_title %}{{ blogpost.title }}{% endblock %}
+{% block meta_title %}
+    {{ blogpost.title }}
+{% endblock %}
 
 {% block main %}
 {% load urltag %}
 {% load comments_tags %}
 
-<style type="text/css">
-	.post-header-line { border-bottom:1px solid #DDD;padding:0px 0px 10px 25px;font-size: 13px; }
-</style>
-
 <div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
-		<div class="col-md-12" align="center">
-			<p style="font-size:18px;">
-                {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
-			        <div class="btn-group show-on-hover">
-			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
-			            <span class="glyphicon glyphicon-edit"></span><span class="caret"></span>
-			          </button>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
-			            <li><a href="/blog_edit/{{ blogpost.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
-			            {% if user.is_superuser %}
-			            	<li class="divider"></li>
-			            	<li><a href="{% url_edit blogpost %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
-			            {% endif %}
-			          </ul>
-			        </div>
-			        {% endif %}
-				<strong>{{ blogpost.title }}</strong>
-			</p>
-		</div>
-		<div class="body">
-		    {{ blogpost.text|safe }}
-		    <br>
-			<div class="row">
-		        <div class="col-md-12 post-header-line">
-		        	<span class="glyphicon glyphicon-calendar"></span> {{ blogpost.date_creation|date:"d.m.Y, G:i" }}
-		            | <span class="glyphicon glyphicon-user"></span> <a href="{{ blogpost.owner.get_absolute_url }}">{{ blogpost.owner.get_full_name }}</a>
-		            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blogpost.get_absolute_url }}/#href_power_comments">
-					Комментарии ({% count_power_comments blogpost.get_absolute_url %})</a>
-		            | <span class="glyphicon glyphicon-tags"></span> Теги : 
-	            	{% for category in blogpost.category.all %}
-						<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>  
-					{% endfor %}
-						<!-- Admin panel -->
+    <div class="col-md-12" align="center">
+        <p style="font-size:20px;">
+            <strong>{{ blogpost.title }}</strong>
+        </p>
+    </div>
+    <div class="body">
+        {{ blogpost.text|safe }}
+        <div class="row">
+            <div class="col-md-12 post-header-line">
+                <span class="glyphicon glyphicon-calendar"></span> {{ blogpost.date_creation|date:"d.m.Y, G:i" }}
+                | <span class="glyphicon glyphicon-user"></span> <a href="{{ blogpost.owner.get_absolute_url }}">{{ blogpost.owner.get_full_name }}</a>
+                | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blogpost.get_absolute_url }}/#href_power_comments">
+                Комментарии ({% count_power_comments blogpost.get_absolute_url %})</a>
+                | <span class="glyphicon glyphicon-tags"></span> Теги :
+                {% for category in blogpost.category.all %}
+                    <a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>
+                {% endfor %}
+            </div>
+            <!-- MODERATOR PANEL -->
+            {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
+                <div class="col-md-12 post-header-line">
+                    <span class="glyphicon glyphicon-tower"></span>
+                    <a href="/blog_edit/{{ blogpost.id }}"><span class="label label-primary">Редактировать</span></a>
+                    <a href="#"><span class="label label-primary">Скрыть</span></a>
+                    {% if user.is_superuser %}
+                        <a href="{% url_edit blogpost %}"><span class="label label-primary">Страница админки</span></a>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <!-- MODERATOR PANEL -->
+        </div>
+        <br>
+        {% if blogpost.if_comments %} <!-- Комментарии -->
+            {% power_comments request blogpost.get_absolute_url %}
+        {% else %}
+            К.
+        {% endif %}
+    </div>
+</div>
+</div>
+</div>
 
-		        </div>
-		    </div>
-		    <br>
-			{% if blogpost.if_comments %} <!-- Комментарии -->
-				{% power_comments request blogpost.get_absolute_url %}
-			{% else %}
-				К.
-			{% endif %}
-	    </div>
-	</div>
-	</div>
-	</div>
-
-    {% load page_navigation %}
-    {% page_navigation request %}
+{% load page_navigation %}
+{% page_navigation request %}
 
 {% endblock %}
 
