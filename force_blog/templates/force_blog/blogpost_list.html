@@ -18,7 +18,7 @@
         {% if blog_post.state == 0 %}
             {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
                 <div id="blogpost-{{ blog_post.id }}" class="well well-sm" style="margin-bottom: 0px;">
-                <span class="label label-danger">disable</span>
+                <span class="label label-danger">НОВОСТЬ СКРЫТА</span>
             {% endif %}
         {% else %}
             <div id="blogpost-{{ blog_post.id }}">

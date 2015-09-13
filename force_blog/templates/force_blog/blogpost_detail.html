@@ -11,6 +11,9 @@
 <div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
+    {% if blogpost.state == 0 %}
+        <span class="label label-danger">НОВОСТЬ СКРЫТА</span>
+    {% endif %}
     <div class="col-md-12" align="center">
         <p style="font-size:20px;" id="title">
             <strong>{{ blogpost.title }}</strong>
@@ -34,7 +37,12 @@
                 <div class="col-md-12 post-header-line">
                     <span class="glyphicon glyphicon-tower"></span>
                     <a href="/blog_edit/{{ blogpost.id }}"><span class="label label-primary">Редактировать</span></a>
-                    <a href="/blog_hidden/{{ blogpost.id }}"><span class="label label-danger">Скрыть</span></a>
+                    {% if blogpost.state == 0 %}
+                        <a href="/blog_hidden/show/{{ blogpost.id }}"><span class="label label-success">Показать</span></a>
+                    {% else %}
+                        <a href="/blog_hidden/hide/{{ blogpost.id }}"><span class="label label-danger">Скрыть</span></a>
+                    {% endif %}
+
                     {% if user.is_superuser %}
                         <a href="{% url_edit blogpost %}"><span class="label label-default">Страница админки</span></a>
                     {% endif %}

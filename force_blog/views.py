@@ -181,14 +181,20 @@ def blog_backup(blog, user):
 
 
 @login_required
-def blog_hidden(request, blog_id):
+def blog_hidden(request, action, blog_id):
     profile = CustomUser.objects.get(user=request.user)
 
     if not profile.moderator and profile.goverment and profile.user.is_superuser:
         return redirect('/login/')
     else:
         blog = BlogPost.objects.get(id=int(blog_id))
-        blog.state = BlogPost.DISABLE
+        if action == "hide":
+            blog.state = BlogPost.DISABLE
+        elif action == "show":
+            blog.state = BlogPost.ENABLE
+        else:
+            pass
+
         blog.save()
         return redirect(blog.get_absolute_url())
 
