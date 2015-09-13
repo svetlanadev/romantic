@@ -4,7 +4,12 @@
     border: 0;
     border-top: 1px solid #eee;
 }
-
+.panel-default {
+    border-color: #000;
+}
+.panel {
+    border-radius: 0px;
+}
 .hr_sm2 {
      margin-top: -6px;
      margin-bottom: 6px;
@@ -23,7 +28,6 @@
     vertical-align: baseline;
     border-radius: .25em;
 }
-
 .post-header-line {
     border-bottom:1px solid #DDD;
     padding:10px 0px 10px 25px;

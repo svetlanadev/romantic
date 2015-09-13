@@ -17,7 +17,7 @@
 	{% for blog_post in blog_posts %}
 		<div class="col-md-12" align="center">
 			<p style="font-size:16px">
-				<a href="{{ blog_post.get_absolute_url }}">
+				<a href="{{ blog_post.get_absolute_url }}#title">
 					<strong>{{ blog_post.title }}</strong>
 				</a>
 				{% if blog_post.state == 0 %}
@@ -31,7 +31,7 @@
 	        <div class="col-md-12 post-header-line">
 	        	<span class="glyphicon glyphicon-calendar"></span> {{ blog_post.date_creation|date:"d.m.Y, G:i" }}
 	            | <span class="glyphicon glyphicon-user"></span> <a href="{{ blog_post.owner.get_absolute_url }}">{{ blog_post.owner.get_full_name }}</a>
-	            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blog_post.get_absolute_url }}/#href_power_comments">
+	            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blog_post.get_absolute_url }}/#comments">
 				Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a>
 	            | <span class="glyphicon glyphicon-tags"></span> Теги : 
 	            	{% for category in blog_post.category.all %}
