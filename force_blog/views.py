@@ -197,17 +197,3 @@ def blog_hidden(request, action, blog_id):
 
         blog.save()
         return redirect(blog.get_absolute_url())
-
-
-def minus_karma_admin(request, blog_id):
-    if not request.user.is_authenticated():
-        print "You not superuser"
-        return redirect('/')
-
-    blog = BlogPost.objects.get(id=blog_id)
-    user = blog.owner
-    user.karma = user.karma - 10
-    user.save()
-
-    url = u'/blog/%s' % blog_id
-    return redirect(url)

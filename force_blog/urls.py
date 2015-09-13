@@ -11,6 +11,4 @@ urlpatterns = patterns('force_blog.views',
     url(r'^blog_hidden/(?P<action>\w+)/(?P<blog_id>\w+)/$', 'blog_hidden', name='blog_hidden'),
     url(r'^arhive_news/$', BlogPostArhiveListView.as_view()),
     url(r'^blog/category/(?P<category_id>\d+)/$', BlogPostListViewTag.as_view()),
-
-    url(r'^minus_karma_admin/(?P<blog_id>\w+)/$', 'minus_karma_admin', name="minus_karma_admin"),
 )
