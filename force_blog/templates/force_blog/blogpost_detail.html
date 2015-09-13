@@ -34,9 +34,9 @@
                 <div class="col-md-12 post-header-line">
                     <span class="glyphicon glyphicon-tower"></span>
                     <a href="/blog_edit/{{ blogpost.id }}"><span class="label label-primary">Редактировать</span></a>
-                    <a href="#"><span class="label label-primary">Скрыть</span></a>
+                    <a href="#"><span class="label label-danger">Скрыть</span></a>
                     {% if user.is_superuser %}
-                        <a href="{% url_edit blogpost %}"><span class="label label-primary">Страница админки</span></a>
+                        <a href="{% url_edit blogpost %}"><span class="label label-default">Страница админки</span></a>
                     {% endif %}
                 </div>
             {% endif %}
