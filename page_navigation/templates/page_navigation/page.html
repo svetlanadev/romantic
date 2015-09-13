@@ -48,8 +48,8 @@
                     </p>
                     <div class="collapse" id="collapseExample" aria-expanded="false" style="height: 0px;">
                         {% if custom_user.user.is_superuser %}
-                            <a href="/admin/" class="btn btn-default btn-block btn-sm">Админка</a>
-                            <a href="/admin/auth/user/?is_active__exact=0" class="btn btn-default btn-block btn-sm">New users</a>
+                            <a href="/admin/" class="btn btn-admin btn-block btn-sm">Админка</a>
+                            <a href="/admin/auth/user/?is_active__exact=0" class="btn btn-admin btn-block btn-sm">New users</a>
                             <hr>
                         {% endif %}
                         <a href="/blog_new/" class="btn btn-success btn-block btn-sm">Добавить новость</a>
@@ -134,19 +134,21 @@
           <p style="font-size:18px; color: #000" align="center"><strong>Будущие мероприятия</strong></p>
           {% for party in partys %}
             <div class="thumbnail">
+            <a href="{{ party.get_absolute_url }}/">
                 <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
                     <div align="center" class="background_text">
-                        <a href="{{ party.get_absolute_url }}/"><h3>- {{ party.title }}</h3></a>
+                        <h3>- {{ party.title }}</h3>
                     </div>
                 </div>
-                <div class="caption">
-                    <div align="center">
-        {#                <h3><small>Начало - {{ party.date_start|date:"d.m.Y, G:i" }}</small></h3>#}
-                    </div>
-                    <div align="center">
-                        <a href="/party/{{ party.id }}"><button type="button" class="btn btn-success btn-sm">Подробнее/Обсудить</button></a>
-                    </div>
+            </a>
+                <div align="center">
+                    <h3 style="margin-top: 4px;"><small>Начало - {{ party.date_start|date:"d.m.Y, G:i" }}</small><br>
+                    <small>Конец - {{ party.date_start|date:"d.m.Y, G:i" }}</small></h3>
                 </div>
+                <div align="center">
+                    <a href="/party/{{ party.id }}"><button type="button" class="btn btn-success btn-sm">Подробнее/Обсудить</button></a>
+                </div>
+
             </div>
 
           {% endfor %}
