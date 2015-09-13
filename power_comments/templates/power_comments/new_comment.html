@@ -5,14 +5,34 @@
 		<div id="comment_{{ comment.id }}">
 		<div class="row">
 		  {% count_inc_power_comments comment.count_inc %}<img src="{{ comment.owner.avatar.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="img-circle">
-		  	{% if profile.moderator or profile.goverment or user.is_superuser %}
-		  		<a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">{{ comment.owner.get_full_name }}</a> - {{ comment.date_creation }}
-		  		<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span> Редактировать</a>
-				<a class="responce_comment" href="#new_comment_link" id="comment-{{ comment.id }}" title="{{ comment.owner.get_full_name }}"> |
-				<span class="glyphicon glyphicon-share"></span> Ответить</a>
-			{% else %}
-		  		<strong><a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">{{ comment.owner.get_full_name }}</a> </strong> - {{ comment.date_creation }}
-			{% endif %}
+
+            <strong><a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">{{ comment.owner.get_full_name }}</a> </strong> - {{ comment.date_creation }}
+
+            {% if profile.moderator == True or user.is_superuser %}
+                <div class="btn-group show-on-hover">
+                  <button type="button" class="btn btn-link btn-md dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-edit"></span> <span class="caret"> </span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <form action="/disable_power_comments/" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
+                            <input type="hidden" name="id_comment" value="{{ comment.id }}" />
+                            <button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-trash"></span> Удалить комментарий</button>
+                        </form>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Забанить пользователя</a></li>
+                    <li class="divider"></li>
+                    <li><a class="responce_comment" href="#new_comment_link" id="comment-{{ comment.id }}" title="{{ comment.owner.get_full_name }}">
+                    <span class="glyphicon glyphicon-share"></span> Ответить</a></li>
+                    {% if user.is_superuser %}
+                        <li class="divider"></li>
+                        <li<a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span>Страница админки</a></li>
+                    {% endif %}
+                  </ul>
+                </div>
+             {% endif %}
+
 			<br>
 			{{ comment.text }}
 		  </div>

@@ -37,10 +37,15 @@ def page_navigation(request):
     active_users = []
     for x in comments_active_users:
         active_user = CustomUser.objects.get(id=x['owner'])
-        active_users.append(active_user)
+
+        if not active_user in active_users:
+            active_users.append(active_user)
 
         if len(active_users) >= 8:
             break
+
+
+
 
     comments = PowerComment.objects.values('app').distinct()
     comments_count = comments.count() - 5
@@ -71,10 +76,8 @@ def page_navigation(request):
         if len(conversation) >= 5:
             break
 
-
     conversation.reverse()
 
-    print conversation
     url = template.loader.get_template("page_navigation/page.html")
     data = {'materials': materials, 
             'partys': partys,

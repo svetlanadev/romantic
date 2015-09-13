@@ -47,7 +47,6 @@
                       </button>
                     </p>
                     <div class="collapse" id="collapseExample" aria-expanded="false" style="height: 0px;">
-                      <div class="well">
                         {% if custom_user.user.is_superuser %}
                             <a href="/admin/" class="btn btn-default btn-block btn-sm">Админка</a>
                             <a href="/admin/auth/user/?is_active__exact=0" class="btn btn-default btn-block btn-sm">New users</a>
@@ -57,7 +56,6 @@
                         <a href="#" class="btn btn-success btn-block btn-sm">Добавить мероприятие</a>
                         <a href="/material_new/doc/" class="btn btn-success btn-block btn-sm">Добавить документацию</a>
                         <a href="/sandbox/" class="btn btn-info btn-block btn-sm">Песочница</a>
-                      </div>
                     </div>
                     </div>
                     </div>
@@ -90,30 +88,37 @@
            <div class="panel-body">
               <p style="font-size:18px; color: #000" align="center"><strong>Новые материалы</strong></p>
               {% for material in materials %}
-                  {% if material.rank == 0 %}
-                      <img src="{{ material.type_hike.image.url }}" style="border: 1px solid #dddddd;" width="47px" height="47px" hspace="8" vspace="8" align="left" class="img-circle">
-                  {% else %}
-                      <a href="{{ material.owner.get_absolute_url }}" id="user_full_name">
-                        <img src="{{ material.owner.avatar.url }}" width="45px" height="45px" hspace="8" vspace="8" align="left" class="img-circle">
-                      </a>
-                  {% endif %}
-                  <a href="/{{ material.get_rank_material }}/">
-                      {{ material.get_template_material }}
-                  </a> - {{ material.date_creation|date:"d M. Y" }}
-                  <br>
-                  <a href="/materials/{{ material.id }}">
-                      <p>- {{ material.short_desc|truncatechars:75 }} - {{ material.title }}<hr class="hr_sm"></p>
-                  </a>
-
-              {% endfor %}
+                  <div class="media">
+                      {% if material.rank == 0 %}
+                          <div class="media-left">
+                            <img src="{{ material.type_hike.image.url }}" style="border: 1px solid #dddddd;" width="53px" height="53px" class="img-circle">
+                          </div>
+                      {% else %}
+                          <div class="media-left">
+                            <img src="{{ material.owner.avatar.url }}" width="50px" height="50px" class="img-circle">
+                          </div>
+                      {% endif %}
+                      <div class="media-body">
+                          <a href="/{{ material.get_rank_material }}/">
+                              {{ material.get_template_material }}
+                          </a> - {{ material.date_creation|date:"d M. Y" }}
+                          <br>
+                          <a href="/materials/{{ material.id }}">
+                              <p> {{ material.short_desc|truncatechars:75 }}  {{ material.title }}</p>
+                          </a>
+                      </div>
+                  </div>
+                  <hr class="hr_sm">
+              {% endfor %}<br>
               <p style="font-size:18px; color: #000" align="center"><strong>Что обсуждают</strong></p>
+
               {% for conversation in conversation %}
                 <p>
                     <a href="{{ conversation.get_absolute_url }}/">
-                    <span class="badge">
-                        <span class="glyphicon glyphicon-comment"></span>
-                        {% count_power_comments conversation.get_absolute_url %}
-                    </span>
+                        <span class="badge">
+                            <span class="glyphicon glyphicon-comment"></span>
+                            {% count_power_comments conversation.get_absolute_url %}
+                        </span>
                         {{ conversation.short_desc|truncatechars:60 }} {{ conversation.title }}
                     </a>
                 </p>
@@ -126,7 +131,7 @@
         <div class="panel panel-default">
         <div class="panel-body">
 
-          <p style="font-size:18px; color: #000" align="center"><strong>Не пропустите</strong></p>
+          <p style="font-size:18px; color: #000" align="center"><strong>Будущие мероприятия</strong></p>
           {% for party in partys %}
             <div class="thumbnail">
                 <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
@@ -139,7 +144,7 @@
         {#                <h3><small>Начало - {{ party.date_start|date:"d.m.Y, G:i" }}</small></h3>#}
                     </div>
                     <div align="center">
-                        <a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a>
+                        <a href="/party/{{ party.id }}"><button type="button" class="btn btn-success btn-sm">Подробнее/Обсудить</button></a>
                     </div>
                 </div>
             </div>
@@ -148,16 +153,16 @@
         </div>
         </div>
 
-        <div class="panel panel-default">
-          <div class="panel-body">
-              <p style="font-size:18px; color: #000" align="center"><strong>Активные пользователи</strong></p>
-              {% for active_user in active_users %}
-                  <a href="{{ active_user.get_absolute_url }}" id="user_full_name">
-                    <img src="{{ active_user.avatar.url }}" width="74px" height="74px" hspace="4" vspace="4" align="left" class="img-rounded">
-                  </a>
-              {% endfor %}
-          </div>
-        </div>
+{#        <div class="panel panel-default">#}
+{#          <div class="panel-body">#}
+{#              <p style="font-size:18px; color: #000" align="center"><strong>Активные пользователи</strong></p>#}
+{#              {% for active_user in active_users %}#}
+{#                  <a href="{{ active_user.get_absolute_url }}" id="user_full_name">#}
+{#                    <img src="{{ active_user.avatar.url }}" width="74px" height="74px" hspace="4" vspace="4" align="left" class="img-rounded">#}
+{#                  </a>#}
+{#              {% endfor %}#}
+{#          </div>#}
+{#        </div>#}
 
         {% include "page_navigation/sponsors.html" %}
 

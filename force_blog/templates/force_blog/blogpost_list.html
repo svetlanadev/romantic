@@ -9,7 +9,7 @@
 {% load comments_tags %}
 
 <style type="text/css">
-	.post-header-line { border-bottom:1px solid #DDD;padding:10px 0px 10px 25px;font-size: 12px; }
+	.post-header-line { border-bottom:1px solid #DDD;padding:0px 0px 10px 25px;font-size: 13px; }
 </style>
 
 
@@ -21,9 +21,25 @@
 	{% for blog_post in blog_posts %}
 		<div class="col-md-12" align="center">
 			<p style="font-size:16px">
+                {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
+			        <div class="btn-group show-on-hover">
+			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
+			            <span class="glyphicon glyphicon-edit"></span>
+			          </button>
+			          <ul class="dropdown-menu" role="menu">
+			            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
+			            <li><a href="/blog_edit/{{ blog_post.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
+			            {% if user.is_superuser %}
+			            	<li class="divider"></li>
+			            	<li><a href="{% url_edit blog_post %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
+			            {% endif %}
+			          </ul>
+			        </div>
+			    {% endif %}
 				<a href="{{ blog_post.get_absolute_url }}">
 					<strong>{{ blog_post.title }}</strong>
-				</a> 
+				</a>
+
 				{% if blog_post.state == 0 %} 
 					<span class="label label-danger">disable</span>
 				{% endif %}
@@ -33,8 +49,8 @@
 		<br>
 		<div class="row">
 	        <div class="col-md-12 post-header-line">
-	        	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blog_post.date_creation|date:"d.m.Y, G:i" }} 
-	            | <span class="glyphicon glyphicon-user"></span> Автор: <a href="{{ blog_post.owner.get_absolute_url }}">{{ blog_post.owner.get_full_name }}</a> 
+	        	<span class="glyphicon glyphicon-calendar"></span> {{ blog_post.date_creation|date:"d.m.Y, G:i" }}
+	            | <span class="glyphicon glyphicon-user"></span> <a href="{{ blog_post.owner.get_absolute_url }}">{{ blog_post.owner.get_full_name }}</a>
 	            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blog_post.get_absolute_url }}/#href_power_comments">
 				Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a>
 	            | <span class="glyphicon glyphicon-tags"></span> Теги : 
@@ -42,21 +58,7 @@
 						<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> 
 					{% endfor %}
 
-				{% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
-			        <div class="btn-group show-on-hover">
-			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
-			            <span class="glyphicon glyphicon-edit"></span>
-			          </button>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
-			            <li><a href="/blog_edit/{{ blog_post.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
-			            {% if user.is_superuser %} 
-			            	<li class="divider"></li>
-			            	<li><a href="{% url_edit blog_post %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
-			            {% endif %}
-			          </ul>
-			        </div>
-			    {% endif %}
+
 	        </div>
 	    </div>
 		<br>

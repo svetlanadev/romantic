@@ -9,15 +9,15 @@ $(document).ready(function () {
 		return false; //запрещаем переход по ссылке
 	});
 
-    // Посилання з id="test" буде тригером події
-    // $("#test_comment").click(function() {
-    //     // AJAX-запит на потрібну адресу
-    //     var id_comment = $('#id_comment:value')
-    //     $.post("/ajax_test/", {'id_comment': 'id_comment'}, function(data) {
-    //         // Замінюємо текст тегу з id="target" на отримані дані
-    //         $("#target_comment").html(data.param1+' '+data.param2);
-    //     });
-    // });
+     //Посилання з id="test" буде тригером події
+     $("#ajax_disable_power_comment").click(function() {
+         // AJAX-запит на потрібну адресу
+         var id_comment = $('#id_comment:value')
+         $.post("/ajax_test/", {'id_comment': 'id_comment'}, function(data) {
+             // Замінюємо текст тегу з id="target" на отримані дані
+             $("#target_comment").html(data.param1+' '+data.param2);
+         });
+     });
 	
 	
 	$('.new_power_comment').submit(function(e){
@@ -50,6 +50,7 @@ $(document).ready(function () {
 			}
 		});
 	});
+
 });
 
 function setCommentsHandlers(){

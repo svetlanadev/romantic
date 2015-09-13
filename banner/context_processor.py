@@ -20,5 +20,4 @@ def contex_banner(request):
     else:
         banner = 'general.jpg'
 
-    print banner
     return {'banner': banner, 'profile':profile, 'mode_site': settings.DEBUG}

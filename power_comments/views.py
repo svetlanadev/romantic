@@ -44,22 +44,41 @@ def karma_power_comments(request):
 
 @login_required
 def disable_power_comments(request):
-    user = CustomUser.objects.get(user=request.user)
-    if not user:
-        pass
-    else:
+    profile = CustomUser.objects.get(user=request.user)
+
+    if profile.moderator or profile.user.is_superuser:
         if request.method == "POST":
             id_comment = request.POST['id_comment']
-            disable = request.POST['disable']
             comment = PowerComment.objects.get(id=id_comment)
-            if disable == "true":
-                comment.state = 0 # DISABLE
-                comment.save()
-        else: 
-            return redirect('/')            
-        return redirect(comment.app)
+            comment.state = 0 # DISABLE
+            comment.save()
+        else:
+            return redirect('/')
 
-# <django.db.models.fields.related.ManyRelatedManager object at 0x7f50182ede90>
+        return redirect(comment.app)
+    else:
+        return redirect('/')
+
+
+@login_required
+def ban_user_power_comments(request):
+    profile = CustomUser.objects.get(user=request.user)
+
+    if profile.moderator or profile.user.is_superuser:
+        if request.method == "POST":
+            id_user = request.POST['id_user']
+            custom_user = CustomUser.objects.get(id=id_user)
+            custom_user.user.is_active = False # DISABLE
+            custom_user.karma = -999
+            custom_user.save()
+        else:
+            return redirect('/')
+
+        path = request.META['HTTP_REFERER']
+        return redirect(path)
+    else:
+        return redirect('/')
+
 
 def ajax_test(request):
     results = {'success':False}
@@ -146,10 +165,8 @@ def new_power_comment(request):
 
             if id_last_comment != '0':
                 pre_comment = PowerComment.objects.get(id=id_last_comment)
-                print "PRE COMMENT: %s" % pre_comment
                 try:
                     last_comment = PowerComment.objects.filter(pre_comment=id_last_comment).last()
-                    print "LAST COMMENT: %s" % last_comment
                     if last_comment == None:
                         position = pre_comment.position + 1
 
@@ -165,27 +182,15 @@ def new_power_comment(request):
                 else:
                     count_inc = 1
 
-                print "POSITION: %s" % position
-
                 all_comments = PowerComment.objects.filter(app=id_app)
 
                 for comment in all_comments:
-                    print "COMMENT: %s" % comment
                     if comment.position >= position:
                         comment.position += 1
                         comment.save()
 
                 comment = PowerComment(text=text, app=id_app, owner=owner, position=position, pre_comment=pre_comment.id, count_inc=count_inc)
                 comment.save()
-
-            ############################################################################
-            # Надо выбирать все комментарии с одинаковым пре комментом и кол-вом вложений и эти комменты двигать
-            # PRE COMMENT: 1 root - 1
-            # LAST COMMENT: 11 root - 1
-            # POSITION: 3
-            # COMMENT: 1 root - 1
-            # COMMENT: 11 root - 1
-            # COMMENT: 111 root - 1
 
             else:
                 try:
@@ -213,3 +218,5 @@ def new_power_comment(request):
             results = {'success':False, 'message': 'Максимум 1000 символов', 'text': text}
 
     return JsonResponse(results)
+
+

@@ -1,0 +1,25 @@
+.hr_sm {
+     margin-top: 3px; 
+     margin-bottom: 3px; 
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.hr_sm2 {
+     margin-top: -6px;
+     margin-bottom: 6px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 83%;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
