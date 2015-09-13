@@ -24,7 +24,7 @@ def page_navigation(request):
     else:
         custom_user = ""
 
-    partys = Party.objects.exclude(state=0)[:5]
+    partys = Party.objects.exclude(state=0)[:3]
     materials = Material.objects.exclude(state=0)[:5]
 
     comments_active_users = PowerComment.objects.values('owner').distinct()

@@ -35,7 +35,6 @@
             <!-- MODERATOR PANEL -->
             {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
                 <div class="col-md-12 post-header-line">
-                    <span class="glyphicon glyphicon-tower"></span>
                     <a href="/blog_edit/{{ blogpost.id }}"><span class="label label-primary">Редактировать</span></a>
                     {% if blogpost.state == 0 %}
                         <a href="/blog_hidden/show/{{ blogpost.id }}"><span class="label label-success">Показать</span></a>
