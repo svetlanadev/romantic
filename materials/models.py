@@ -31,7 +31,7 @@ class Material(models.Model):
     )
 
     title = models.CharField(max_length=150,
-                             verbose_name=u'Руководитель',
+                             verbose_name=u'Название / Руководитель',
                              default='Название')
     year = models.SmallIntegerField(verbose_name=u'Год', default=2000)
     status = models.CharField(max_length=800,

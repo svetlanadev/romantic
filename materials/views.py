@@ -207,14 +207,8 @@ def material_edit(request, material_id):
                 except TypeError:
                     pass
 
-            old_material.pk = None
-            old_material.id = None
-            old_material.title = material.title+ ' backup - ' + str(profile.user) + ', date' + time.ctime()
-            old_material.state = 0
-            old_material.save()
-            # material_edit_backup(old_material, profile)
+            material_edit_backup(old_material, profile, material_id)
             form.save()
-            # material_edit_backup(material, profile)
             url = u'/materials/%s' % material_id
             return redirect(url)
 
@@ -231,12 +225,18 @@ def material_edit(request, material_id):
                               context_instance=RequestContext(request))
 
 
-def material_edit_backup(material, profile):
-    material.pk = None
-    material.id = None
-    material.title = material.title+ ' backup - ' + str(profile.user) + ', date' + time.ctime()
-    material.state = 0
-    material.save()
+def material_edit_backup(old_material, profile, material_id):
+
+    old_material_tags = old_material.category.all()
+    old_material_karma_users = old_material.karma_users.all()
+
+    old_material.pk = None
+    old_material.id = None
+    old_material.title = material_id + '$ ' + old_material.title+ ' backup - ' + str(profile.user) + ', ' + time.ctime()
+    old_material.state = 0
+    old_material.save()
+    old_material.category = old_material_tags
+    old_material.karma_users = old_material_karma_users
 
 
 @login_required
