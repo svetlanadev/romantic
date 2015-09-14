@@ -13,6 +13,7 @@ from hike.models import TypeHike, Region, Difficulty
 from force_blog.models import Category
 from profile.models import CustomUser
 from materials.logic import _type_material, _material_filter, _get_objects_articles, _get_objects_reports
+import time
 
 
 ENABLE = 1
@@ -95,6 +96,7 @@ def material_page(request):
                               data,
                               context_instance=RequestContext(request))
 
+
 @login_required
 def material_new(request, state):
     if not request.user.is_authenticated():
@@ -161,6 +163,7 @@ def material_new(request, state):
 def material_edit(request, material_id):
     profile = CustomUser.objects.get(user=request.user)
     material = Material.objects.get(id=material_id)
+    old_material = Material.objects.get(id=material_id)
 
     if not profile.moderator and profile.user.is_superuser and material.owner == profile:
         return redirect('/login/')
@@ -183,8 +186,7 @@ def material_edit(request, material_id):
     if request.method == "POST":
         form = MaterialForm(request.POST, instance=material)
         form.is_valid()
-        
-        
+
         if form.is_valid():
             try:
                 tags = form.cleaned_data['category']
@@ -205,7 +207,14 @@ def material_edit(request, material_id):
                 except TypeError:
                     pass
 
+            old_material.pk = None
+            old_material.id = None
+            old_material.title = material.title+ ' backup - ' + str(profile.user) + ', date' + time.ctime()
+            old_material.state = 0
+            old_material.save()
+            # material_edit_backup(old_material, profile)
             form.save()
+            # material_edit_backup(material, profile)
             url = u'/materials/%s' % material_id
             return redirect(url)
 
@@ -220,6 +229,14 @@ def material_edit(request, material_id):
     return render_to_response('materials/%s/material_edit.html' % category_material,
                               data,
                               context_instance=RequestContext(request))
+
+
+def material_edit_backup(material, profile):
+    material.pk = None
+    material.id = None
+    material.title = material.title+ ' backup - ' + str(profile.user) + ', date' + time.ctime()
+    material.state = 0
+    material.save()
 
 
 @login_required
