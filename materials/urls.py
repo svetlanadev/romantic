@@ -16,4 +16,5 @@ urlpatterns = patterns('materials.views',
     url(r'^materials/(?P<material_id>\w+)/$', 'material_detail'),
     url(r'^materials/dirs/(?P<dir_id>\w+)/$', 'material_folder'),
     url(r'^material_hidden/(?P<material_id>\w+)/$', 'material_hidden'),
+    url(r'^material_delete/(?P<material_id>\w+)/$', 'material_delete'),
 )

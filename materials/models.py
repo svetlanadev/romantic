@@ -10,6 +10,8 @@ class Material(models.Model):
     
     ENABLE = 1
     DISABLE = 0
+    BACKUP = 2
+    DELETE = 3
 
     REPORT = 0
     ART = 1
@@ -28,6 +30,8 @@ class Material(models.Model):
     STATE_CHOICE = (
         (ENABLE, 'Просмотр доступен'),
         (DISABLE, 'Просмотр запрещен'),
+        (BACKUP, 'Материал в архиве'),
+        (DELETE, 'Материал удален'),
     )
 
     title = models.CharField(max_length=150,

@@ -18,6 +18,8 @@ import time
 
 ENABLE = 1
 DISABLE = 0
+BACKUP = 2
+DELETE = 3
 
 
 def materials(request, state):
@@ -233,7 +235,7 @@ def material_edit_backup(old_material, profile, material_id):
     old_material.pk = None
     old_material.id = None
     old_material.title = material_id + '$ ' + old_material.title+ ' backup - ' + str(profile.user) + ', ' + time.ctime()
-    old_material.state = 0
+    old_material.state = BACKUP
     old_material.save()
     old_material.category = old_material_tags
     old_material.karma_users = old_material_karma_users
@@ -255,6 +257,20 @@ def material_hidden(request, material_id):
 
     url = u'/materials/%s' % material_id
     return redirect(url)
+
+
+@login_required
+def material_delete(request, material_id):
+    profile = CustomUser.objects.get(user=request.user)
+
+    if not profile.moderator and profile.user.is_superuser:
+        return redirect('/login/')
+
+    material = Material.objects.get(id=material_id)
+    material.state = DELETE # DELETE
+    material.save()
+
+    return redirect('/sandbox/')
 
 
 @login_required
