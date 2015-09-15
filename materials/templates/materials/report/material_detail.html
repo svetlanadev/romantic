@@ -25,8 +25,7 @@
 <div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
-<div id="material">
-	<div class="row" align="">
+	<div class="row" id="material">
 		<div class="col-md-2">
 			<p align="right"><img src="{{ material.type_hike.image.url }}" class="img-circle img-thumbnail" width="80px"></p>
 		</div>
@@ -84,36 +83,26 @@
                 {% endif %}
             {% endif %}
         </div>
-			<!-- MODERATOR PANEL -->
-            {% if profile.moderator == True or profile.user.is_superuser %}
-                <div class="col-md-12 post-header-line">
-                    <a href="/material_edit/{{ material.id }}"><span class="label label-primary">Редактировать</span></a>
-                    {% if material.state == 0 %}
-                        <a href="/material_hidden/{{ material.id }}"><span class="label label-success">Показать</span></a>
-                    {% endif %}
-                    {% if material.state == 1 %}
-                        <a href="/material_hidden/{{ material.id }}"><span class="label label-danger">Скрыть</span></a>
-                    {% endif %}
-                    <a href="/material_delete/{{ material.id }}"><span class="label label-danger">Удалить</span></a>
-                    {% if profile.user.is_superuser %}
-                        <a href="{% url_edit material %}"><span class="label label-default">Страница админки</span></a>
-                    {% endif %}
-                </div>
-            {% endif %}
-            <!-- MODERATOR PANEL -->
-
+        <!-- MODERATOR PANEL -->
+        {% if profile.moderator == True or profile.user.is_superuser %}
+            <div class="col-md-12 post-header-line">
+                <a href="/material_edit/{{ material.id }}"><span class="label label-primary">Редактировать</span></a>
+                {% if material.state == 0 %}
+                    <a href="/material_hidden/{{ material.id }}"><span class="label label-success">Показать</span></a>
+                {% endif %}
+                {% if material.state == 1 %}
+                    <a href="/material_hidden/{{ material.id }}"><span class="label label-danger">Скрыть</span></a>
+                {% endif %}
+                <a href="/material_delete/{{ material.id }}"><span class="label label-danger">Удалить</span></a>
+                {% if profile.user.is_superuser %}
+                    <a href="{% url_edit material %}"><span class="label label-default">Страница админки</span></a>
+                {% endif %}
+            </div>
+        {% endif %}
+        <!-- MODERATOR PANEL -->
     </div>
-<!--     <br>
-    {% if user.is_superuser %} 
-		<form method="post" class="form-inline">{% csrf_token %}
-			<button type="button" class="btn btn-sm">
-				<a href="{% url_edit material %}"><span class="glyphicon glyphicon-cog"></span> Admin</a>
-			</button>
-				<button class="btn btn-sm" data-toggle="modal" data-target="#myModal"><a href="/material_edit/{{ material.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a></button>
-		</form>
-	{% endif %} -->
-    <br>
-		{% if material.if_comments %} <!-- Комментарии -->
+        <br>
+		{% if material.if_comments %}
 			{% power_comments request material.get_absolute_url %}
 		{% else %}
 			Комментарии отключены администрацией.
@@ -122,11 +111,9 @@
 </div>
 </div>
 </div>
-</div>
 
-
-    {% load page_navigation %}
-    {% page_navigation request %}
+{% load page_navigation %}
+{% page_navigation request %}
 
 {% endblock %}
 
