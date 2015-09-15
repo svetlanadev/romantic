@@ -11,47 +11,37 @@
 <div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
-<div id="material">
-	<div class="row" align="">
+	<div class="row" id="material">
 		<div class="col-md-1"></div>
 		<div class="col-md-10" align="center">
 			<h2 class="media-heading">{{ material.title }}<br></h2>
 			<h3 class="media-heading"><small>{{ material.short_desc }}</small></h3>
 		</div>
-		{% if user.is_authenticated %}
-		<form action="/karma_force_blog/" method="post" role="form">{% csrf_token %}
-			Рейтинг:
-	  		<input type="hidden" name="id_blogpost" value="{{ material.id }}" />
-	  		<button type="submit" name="karma" value="minus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-down"></span></button>
-	  		<span class="badge">{{ material.rating }}</span>
-	  		<button type="submit" name="karma" value="plus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-	  	</form>
-		{% else %}
-		    Рейтинг: <span class="badge"> {{ material.rating }}</span>
-		{% endif %}
+{#		{% if user.is_authenticated %}#}
+{#		<form action="/karma_force_blog/" method="post" role="form">{% csrf_token %}#}
+{#			Рейтинг:#}
+{#	  		<input type="hidden" name="id_blogpost" value="{{ material.id }}" />#}
+{#	  		<button type="submit" name="karma" value="minus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-down"></span></button>#}
+{#	  		<span class="badge">{{ material.rating }}</span>#}
+{#	  		<button type="submit" name="karma" value="plus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-up"></span></button>#}
+{#	  	</form>#}
+{#		{% else %}#}
+{#		    Рейтинг: <span class="badge"> {{ material.rating }}</span>#}
+{#		{% endif %}#}
 		
 	</div>
 	<div class="body">
-		
 	    {{ material.text|safe }}
-
-        {% include "materials/material_info_panel.html" %}
-
-	    <br>
-		{% if material.if_comments %} <!-- Комментарии -->
-			{% power_comments request material.get_absolute_url %}
-		{% else %}
-			Комментарии отключены администрацией.
-		{% endif %}
+        {% include "materials/material_info_panel_detail.html" %}<br>
+        <!-- Комментарии -->
+		{% power_comments request material.get_absolute_url material.if_comments %}
     </div>
 </div>
 </div>
 </div>
-</div>
 
-
-    {% load page_navigation %}
-    {% page_navigation request %}
+{% load page_navigation %}
+{% page_navigation request %}
 
 {% endblock %}
 

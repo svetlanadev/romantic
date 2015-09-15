@@ -251,9 +251,11 @@ def material_hidden(request, material_id):
     if material.state == ENABLE:
         material.state = DISABLE # DISABLE
         material.save()
-    else:
+    elif material.state == DISABLE:
         material.state = ENABLE # ENABLE
         material.save()
+    else:
+        pass
 
     url = u'/materials/%s' % material_id
     return redirect(url)

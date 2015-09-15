@@ -10,6 +10,7 @@ from materials.models import Material
 from profile.models import CustomUser
 from force_blog.models import BlogPost
 from power_comments.models import PowerComment
+from django.core.exceptions import ObjectDoesNotExist
 
 register = template.Library()
 
@@ -25,7 +26,12 @@ def page_navigation(request):
         custom_user = ""
 
     partys = Party.objects.exclude(state=0)[:3]
-    materials = Material.objects.exclude(state=0)[:5]
+
+    try:
+        materials = Material.objects.filter(state=1)[:5]
+    except ObjectDoesNotExist:
+        materials = ''
+
 
     comments_active_users = PowerComment.objects.values('owner').distinct()
     comments_active_users_count = comments_active_users.count() - 8
@@ -44,10 +50,8 @@ def page_navigation(request):
         if len(active_users) >= 8:
             break
 
-
-
-
     comments = PowerComment.objects.values('app').distinct()
+    print comments
     comments_count = comments.count() - 5
     try:
         comments = comments[comments_count:]
@@ -62,8 +66,12 @@ def page_navigation(request):
             obj = BlogPost.objects.get(id=id_content)
             url = obj.title
         elif "materials" in app_url:
-            obj = Material.objects.get(id=id_content)
-            url = obj.title
+            try:
+                obj = Material.objects.get(id=id_content)
+                url = obj.title
+            except ObjectDoesNotExist:
+                break
+
         elif "party" in app_url:
             obj = Party.objects.get(id=id_content)
             url = obj.name

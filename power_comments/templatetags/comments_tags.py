@@ -12,7 +12,7 @@ register = template.Library()
 
 
 @register.inclusion_tag('power_comments/comments.html')
-def power_comments(request, app_url):
+def power_comments(request, app_url, if_comment):
     try:
         profile = CustomUser.objects.get(user=request.user)
     except:
@@ -21,6 +21,7 @@ def power_comments(request, app_url):
     count_comments = comments
     data = {'comments': comments,
             'app_url': app_url,
+            'if_comments': if_comment,
             'count_comments': count_comments,
             'profile': profile,
             'request': request}

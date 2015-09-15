@@ -1,59 +1,49 @@
 {% extends "base.html" %}
 
-{% block meta_title %}{{ name_material_many }}{% endblock %}
+{% block meta_title %}
+    {{ name_material_many }}
+{% endblock %}
 
 {% block main %}
 {% load imagekit %}
 {% load urltag %}
-
-<style type="text/css">
-	.hr_sm {
-		 margin-top: 5px; 
-		 margin-bottom: 5px; 
-		border: 0;
-		border-top: 1px solid #eee;
-	}
-	.a_black {
-		color: #000000;
-	}
-</style>
 
 <div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
 	<div class="col-md-12" align="center">
 		<p style="font-size:24px;" align="center"><strong>{{ name_material_many }}</strong></p>
-		<br>
-		<!-- <h1 align="center"><strong>{{ name_material }}</strong></h1> -->
 	</div>
-		<div class="row" align="">
-		{% for dir in dirs %}
-		<div class="col-sm-6 col-md-3" align="center">
-			<a href="{{ dir.get_absolute_url }}">
-			{% if dir.image %}
-				<img src="{{ MEDIA_URL }}{{ dir.image }}" width="100">
-			{% else %}
-			    <img src="{{ STATIC_URL }}images/folder.png" width="100">
-			{% endif %}
-		    <div class="caption">
-		        <div align="center">
-		            <h4>{{ dir.dir_name }}</h4>
-		        </div>
-		    </div>
-		    </a>
-		</div>
-		{% endfor %}
-	</div>
+    {#  ОТОБРАЖЕНИЕ ПАПОК  #}
+    <div class="row">
+        {% for dir in dirs %}
+            <div class="col-sm-6 col-md-3" align="center">
+                <a href="{{ dir.get_absolute_url }}">
+                    {% if dir.image %}
+                        <img src="{{ MEDIA_URL }}{{ dir.image }}" width="100">
+                    {% else %}
+                        <img src="{{ STATIC_URL }}images/folder.png" width="100">
+                    {% endif %}
+                    <div class="caption">
+                        <div align="center">
+                            <h4>{{ dir.dir_name }}</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    {#  ОТОБРАЖЕНИЕ СТАТЕЙ  #}
 	{% for material in materials %}
 		<div class="row" align="">
-		<a href="{{ material.get_absolute_url }}" class="a_black">
-		<div class="col-md-12">
-				<p><img src="{{ material.owner.avatar.url }}" width="75px" height="75px" hspace="12" vspace="5" align="left" class="img-circle">
-  			<strong>Автор:</strong> {{ material.owner.get_full_name }}<br>
-  			<strong>Название:</strong> {{ material.title }}<br>
-			<strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}</p>
-		</div>
-		</a>
+            <a href="{{ material.get_absolute_url }}" class="a_black">
+                <div class="col-md-12">
+                        <p><img src="{{ material.owner.avatar.url }}" width="75px" height="75px" hspace="12" vspace="5" align="left" class="img-circle">
+                    <strong>Автор:</strong> {{ material.owner.get_full_name }}<br>
+                    <strong>Название:</strong> {{ material.title }}<br>
+                    <strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}</p>
+                </div>
+            </a>
 		</div>	
 		<hr class="hr_sm">
     {% empty %}
@@ -63,9 +53,8 @@
 </div>
 </div>
 
-    {% load page_navigation %}
-    {% page_navigation request %}
-
+{% load page_navigation %}
+{% page_navigation request %}
 {% endblock %}
 
 

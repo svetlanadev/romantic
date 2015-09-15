@@ -49,12 +49,9 @@
             {% endif %}
             <!-- MODERATOR PANEL -->
         </div>
-        <br>
-        {% if blogpost.if_comments %} <!-- Комментарии -->
-            {% power_comments request blogpost.get_absolute_url %}
-        {% else %}
-            Комментарии отключены администрацией.
-        {% endif %}
+
+        {% power_comments request blogpost.get_absolute_url blogpost.if_comments %}
+
     </div>
 </div>
 </div>

@@ -1,3 +1,4 @@
+{% if if_comments %}
 <div id="power_comments">
 {% load comments_tags %}
 <div id="comments">
@@ -120,3 +121,7 @@
     <p>Чтобы публиковать комментарии, <a href="/register/"> зарегистрируйтесь</a> или <a href="/login/">войдите.</a></p>
 {% endif %}
 </div>
+
+{% else %}
+    Комментарии отключены администрацией.
+{% endif %}

@@ -1,0 +1,33 @@
+{% load urltag %}
+{% load comments_tags %}
+
+{% include "materials/material_info_panel.html" %}
+
+<div class="row">
+    <!-- MODERATOR PANEL -->
+    {% if material.state == 0 %}
+        {% if profile.id == material.owner.id %}
+            <div class="col-md-12 post-header-line">
+                <a href="/material_edit/{{ material.id }}"><span class="label label-primary">Редактировать</span></a>
+            </div>
+        {% endif %}
+    {% endif %}
+    {% if profile.moderator == True or profile.user.is_superuser %}
+        <div class="col-md-12 post-header-line">
+            <a href="/material_edit/{{ material.id }}"><span class="label label-primary">Редактировать</span></a>
+            {% if material.state == 0 %}
+                {% if profile.id != material.owner.id %}
+                    <a href="/material_hidden/{{ material.id }}"><span class="label label-success">Показать</span></a>
+                {% endif %}
+            {% endif %}
+            {% if material.state == 1 %}
+                <a href="/material_hidden/{{ material.id }}"><span class="label label-danger">Скрыть</span></a>
+            {% endif %}
+            <a href="/material_delete/{{ material.id }}"><span class="label label-danger">Удалить</span></a>
+            {% if profile.user.is_superuser %}
+                <a href="{% url_edit material %}"><span class="label label-default">Страница админки</span></a>
+            {% endif %}
+        </div>
+    {% endif %}
+    <!-- MODERATOR PANEL -->
+</div>

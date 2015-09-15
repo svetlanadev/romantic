@@ -8,18 +8,6 @@
 {% load bootstrap_pagination %}
 {% load comments_tags %}
 
-<style type="text/css">
-	.hr_sm {
-		 margin-top: 5px; 
-		 margin-bottom: 5px; 
-		border: 0;
-		border-top: 1px solid #eee;
-	}
-	.a_black {
-		color: #000000;
-	}
-</style>
-
 <div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
@@ -111,8 +99,8 @@
 </div>
 </div>
 
-    {% load page_navigation %}
-    {% page_navigation request %}
+{% load page_navigation %}
+{% page_navigation request %}
 
 {% endblock %}
 

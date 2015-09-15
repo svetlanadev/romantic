@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block meta_title %}{{ material.title }}{% endblock %}
+{% block meta_title %}
+    {{ material.title }}
+{% endblock %}
 
 {% block main %}
 {% load urltag %}
@@ -39,17 +41,13 @@
 		</div>
 	</div>
 	<div class="body">
-    <p><strong>Краткое описание:</strong> {{ material.short_desc }}</p>
-    <hr>
-    {{ material.text|safe }}
+        <p><strong>Краткое описание:</strong> {{ material.short_desc }}</p>
+        <hr>
+        {{ material.text|safe }}
 
-    {% include "materials/material_info_panel.html" %}
-        <br>
-		{% if material.if_comments %}
-			{% power_comments request material.get_absolute_url %}
-		{% else %}
-			Комментарии отключены администрацией.
-		{% endif %}
+        {% include "materials/material_info_panel_detail.html" %}
+        <!-- Комментарии -->
+        {% power_comments request material.get_absolute_url material.if_comments %}
     </div>
 </div>
 </div>
