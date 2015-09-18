@@ -47,7 +47,9 @@
 
         {% include "materials/material_info_panel_detail.html" %}
         <!-- Комментарии -->
-        {% power_comments request material.get_absolute_url material.if_comments %}
+        <div id="comments" class="hidden-print">
+            {% power_comments request material.get_absolute_url material.if_comments %}
+        </div>
     </div>
 </div>
 </div>

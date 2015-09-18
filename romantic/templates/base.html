@@ -48,7 +48,7 @@
 <!-- КОНЕЦ БАННЕРА ПОД МАЛЕНЬКИЕ ЭКРАНЫ -->
 
 <!-- БАННЕР ПОД БОЛЬШТЕ ЭКРАНЫ -->
-<div id="header" class="visible-lg visible-md">
+<div id="header" class="visible-lg visible-md hidden-print">
   <ul id="header-menu" class="center-block list-inline list-inline-clear-padding link-like-text">
     <li class="menu-list">
       <div class="under-menu-shadow">
@@ -138,12 +138,12 @@
 </div>
 <!-- КОНЕЦ БАННЕРА ПОД БОЛЬШТЕ ЭКРАНЫ -->
 
-    <div style="position: relative;">
+    <div style="position: relative;" class="hidden-print">
       <div class="header-cone"></div>
       <div class="header-cone right"></div>
     </div>
 
-    <div id="events-banner" class="fill" style="background-image: url({{ STATIC_URL }}images/banners/{{ banner }})">
+    <div id="events-banner" class="fill hidden-print" style="background-image: url({{ STATIC_URL }}images/banners/{{ banner }})">
       <div class="header-cone"></div>
       <div class="header-cone right"></div>
     </div>
@@ -155,7 +155,7 @@
     </div>
 </div>
 
-<div id="footer" class="visible-xs visible-sm">
+<div id="footer" class="visible-xs visible-sm hidden-print">
   <div class="center-block">
     <ul class="navigation ">
       <li>

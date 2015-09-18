@@ -1,7 +1,7 @@
 {% load urltag %}
 {% load comments_tags %}
 
-<div class="row">
+<div class="row hidden-print">
     <div class="col-md-12 post-header-line">
         <span class="glyphicon glyphicon-calendar"></span> Дата: {{ material.date_creation|date:"d.m.Y, G:i" }}
         | <span class="glyphicon glyphicon-user"></span> Автор: <a href="{{ material.owner.get_absolute_url }}">{{ material.owner.get_full_name }}</a>

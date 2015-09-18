@@ -3,7 +3,7 @@
 
 {% include "materials/material_info_panel.html" %}
 
-<div class="row">
+<div class="row hidden-print">
     <!-- MODERATOR PANEL -->
     {% if material.state == 0 %}
         {% if profile.id == material.owner.id %}
