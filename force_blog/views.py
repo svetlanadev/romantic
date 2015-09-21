@@ -148,13 +148,13 @@ def blog_new(request):
     if request.method == "POST":
         form = BlogPostForm(request.POST)
         form.is_valid()
-        try:
-            tags = form.cleaned_data['category']
-        except KeyError:
-            new_tag = Category.objects.create(category=request.POST['category'])
-        
         if form.is_valid():
-            
+
+            try:
+                tags = form.cleaned_data['category']
+            except KeyError:
+                new_tag = Category.objects.create(category=request.POST['category'])
+
             # tags = form.cleaned_data['category']
             form.save_with_owner(owner=profile)
             blog = BlogPost.objects.first()
