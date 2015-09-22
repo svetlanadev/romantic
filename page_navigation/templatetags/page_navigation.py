@@ -51,7 +51,6 @@ def page_navigation(request):
             break
 
     comments = PowerComment.objects.values('app').distinct()
-    print comments
     comments_count = comments.count() - 5
     try:
         comments = comments[comments_count:]

@@ -1,35 +1,86 @@
 {% extends "base.html" %}
 
-{% block meta_title %}Мероприятие - {{ party.name }}{% endblock %}
+{% block meta_title %}
+    Мероприятие - {{ party.name }}
+{% endblock %}
 
 {% block main %}
 {% load urltag %}
 {% load comments_tags %}
 
-<div class="col-md-9 left">
+<div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
-<!-- Походы -->
-<div id="party">
-    <div align="center">
-        {{ party.name }}
-    </div>
-	<div>{{ party.text|safe }}</div>
-
-	{% for file in party.files.all %}
-	<div class="well">
-        <img src="http://avelino.ru/assets/templates/main/img/doc.png" width="25px"><a href="{{ file.one_file }}">{{ file.file_name }}</a><br>
-    </div>
-    {% endfor %}
-    {% if blogpost.if_comments %} <!-- Комментарии -->
-        {% power_comments request blogpost.get_absolute_url %}
-    {% else %}
-        Вы настолько много матерились, что мы решили отключить комментарии к этой статье.
+    {% if blogpost.state == 0 %}
+        <span class="label label-danger">НОВОСТЬ СКРЫТА</span>
     {% endif %}
+    <div class="col-md-12" align="center">
+        <p style="font-size:20px;" id="title">
+            <strong>{{ party.title }}</strong>
+        </p>
+    </div>
+
+    <div class="body">
+        <div class="col-md-12">
+            <p>
+                {% if party.image %}
+                    <img src="{{ party.image.url }}" width="200px" class="img"><br>
+                {% else %}
+                    <img src="{{ party.default_image.image.url }}" class="img"><br>
+                {% endif %}
+{#                <img src="{{ party.owner.avatar.url }}" width="75px" height="75px" hspace="12" vspace="5" align="left">#}
+                <strong>Автор:</strong> {{ material.owner.get_full_name }}<br>
+                <strong>Название:</strong> {{ material.title }}<br>
+                <strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}
+            </p>
+        </div>
+
+        {{ party.text|safe }}
+        <br>
+
+        {% for file in party.files.all %}
+            <div class="well well-sm">
+                <a href="{{ file.one_file }}"><img src="http://avelino.ru/assets/templates/main/img/doc.png" width="25px">{{ file.file_name }}</a><br>
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-md-12 post-header-line">
+                <span class="glyphicon glyphicon-calendar"></span> Опубликовано: {{ party.date_creation|date:"d.m.Y, G:i" }}
+                | <span class="glyphicon glyphicon-comment"></span>
+                Комментарии ({% count_power_comments party.get_absolute_url %})
+                | <span class="glyphicon glyphicon-tags"></span> Теги :
+                {% for category in party.category.all %}
+                    <a href="/party/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>
+                {% endfor %}
+            </div>
+            <!-- MODERATOR PANEL -->
+            {% if profile.moderator == True or user.is_superuser %}
+                <div class="col-md-12 post-header-line">
+{#                    <a href="/party_edit/{{ party.id }}"><span class="label label-primary">Редактировать</span></a>#}
+{#                    {% if blogpost.state == 0 %}#}
+{#                        <a href="/party_hidden/show/{{ party.id }}"><span class="label label-success">Показать</span></a>#}
+{#                    {% else %}#}
+{#                        <a href="/party_hidden/hide/{{ party.id }}"><span class="label label-danger">Скрыть</span></a>#}
+{#                    {% endif %}#}
+
+                    {% if user.is_superuser %}
+                        <a href="{% url_edit party %}"><span class="label label-default">Страница админки</span></a>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <!-- MODERATOR PANEL -->
+        </div>
+
+        {% power_comments request party.get_absolute_url party.if_comments %}
+
+    </div>
+</div>
+</div>
 </div>
 
-<div class="col-md-3">
-    {% load page_navigation %}
-    {% page_navigation request %}
-</div>
+{% load page_navigation %}
+{% page_navigation request %}
+
+
 {% endblock %}
