@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_material_new.html" %}
 
 {% block meta_title %}{{ material.title }} - Редактирование{% endblock %}
 
@@ -6,10 +6,12 @@
 
 {% block main %}
 <!-- Походы -->
-<div class="col-md-9 left">
-<div class="panel panel-default">
-<div class="panel-body">
+<div class="col-md-2"></div>
+<div class="col-md-8">
+{#<div class="panel panel-default">#}
+{#<div class="panel-body">#}
 <div id="material">
+    <h1 align="center">{{ material.title }} - Редактирование</h1>
 	<form action="/material_edit/{{ material.id }}/" method="post">{% csrf_token %}
 		<div class="row">
 			<div class="col-xs-4">
@@ -21,7 +23,17 @@
 				<label for="id_category">Тип похода:</label>
 				<select id="id_type_hike" name="type_hike" class="form-control">
 					{% for type_hike in type_hikes %}
-				    	<option value="{{ type_hike.id }}">{{ type_hike.type_hike }}</option>
+                        {% if type_hike.id == material.type_hike.id %}
+                            <option value="{{ type_hike.id }}" checked>{{ type_hike.type_hike }}</option>
+                        {% endif %}
+
+				    {% endfor %}
+                    {% for type_hike in type_hikes %}
+                        {% if type_hike.id == material.type_hike.id %}
+                        {% else %}
+                            <option value="{{ type_hike.id }}">{{ type_hike.type_hike }}</option>
+                        {% endif %}
+
 				    {% endfor %}
 				</select>
 			</div>
@@ -35,7 +47,7 @@
 				<input type="hidden" checked="checked" id="id_if_comments" name="if_comments" type="checkbox">
 			</div>
 			<div class="col-xs-2">
-				<label for="id_category">Район похода:</label>
+				<label for="id_category">Район:</label>
 				<select id="id_region" name="region" class="form-control">
 					{% for region in regions %}
 				    	<option value="{{ region.id }}">{{ region.region }}</option>
@@ -61,14 +73,10 @@
 		<label for="id_category">Краткое описание</label>
 		{{ form.short_desc.errors }}
 		<textarea id="id_short_desc" name="short_desc" type="text" class="form-control" >{{ form.short_desc.value }}</textarea><br>
-		{{ form.text.errors }}
-		{{ form.media }}
-		{{ form.text }}
-		<hr style="margin-top: 1px; margin-bottom: 14px;">
-		<div class="row"><br>
-			<div class="col-xs-6">
+        <div class="row"><br>
+			<div class="col-xs-12">
 			<p><label for="id_category">Теги:</label><br>
-			{{ form.category.errors }} 
+			{{ form.category.errors }}
 			<select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
 				{% for category in categorys %}
 			    <option value="{{ category.id }}">{{ category.category }}</option>
@@ -79,21 +87,23 @@
 			</select>
 			</p>
 			</div>
-			<div class="col-xs-6">
-				<label>Доступные теги:</label> 
+			<div class="col-xs-12">
+				<label>Доступные теги:</label>
 				{% for category in categorys %}
-				    {{ category.category }}, 
+				    {{ category.category }},
 				{% endfor %}
 			</div>
 		</div>
+		{{ form.text.errors }}
+		{{ form.media }}
+		{{ form.text }}
 		<hr style="margin-top: 1px; margin-bottom: 14px;">
-		<p>После редактирования запись снова отправляется на проверку.</p>
 		<button type="submit" class="btn btn-success">Сохранить изменения</button>
 		<a href="/materials/{{ material.id }}"><button class="btn btn-default"> Отмена</button></a>
 	</form>
 </div>
-</div>
-</div>
+{#</div>#}
+{#</div>#}
 </div>
 
 {% endblock %}

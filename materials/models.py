@@ -10,6 +10,8 @@ class Material(models.Model):
     
     ENABLE = 1
     DISABLE = 0
+    BACKUP = 2
+    DELETE = 3
 
     REPORT = 0
     ART = 1
@@ -28,10 +30,12 @@ class Material(models.Model):
     STATE_CHOICE = (
         (ENABLE, 'Просмотр доступен'),
         (DISABLE, 'Просмотр запрещен'),
+        (BACKUP, 'Материал в архиве'),
+        (DELETE, 'Материал удален'),
     )
 
     title = models.CharField(max_length=150,
-                             verbose_name=u'Руководитель',
+                             verbose_name=u'Название / Руководитель',
                              default='Название')
     year = models.SmallIntegerField(verbose_name=u'Год', default=2000)
     status = models.CharField(max_length=800,
@@ -108,16 +112,30 @@ class Material(models.Model):
 
     def get_template_material(self):
         if self.rank == 0:
-            name_material = "Отчет:"
+            name_material = "Отчет похода"
         if self.rank == 1:
-            name_material = "Творчество:"
+            name_material = "Творчество"
         if self.rank == 2:
-            name_material = "Паспорт:"
+            name_material = "Паспорт препятствия"
         if self.rank == 3:
-            name_material = "Документ:"
+            name_material = "Документ"
         if self.rank == 4:
-            name_material = "Статья:"
+            name_material = "Статья"
         return name_material
+
+    def get_rank_material(self):
+        if self.rank == 0:
+            name_material = "report"
+        if self.rank == 1:
+            name_material = "art"
+        if self.rank == 2:
+            name_material = "passport"
+        if self.rank == 3:
+            name_material = "doc"
+        if self.rank == 4:
+            name_material = "article"
+        return name_material
+
 
     def __unicode__(self):
         return u'%s, %s, %s, %s, %s, %s' % (self.title,

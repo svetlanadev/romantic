@@ -1,87 +1,82 @@
 {% extends "base.html" %} 
 
-{% block meta_title %}Новости{% endblock %} 
+{% block meta_title %}
+    Новости
+{% endblock %}
 
 {% block main %}
 
 {% load urltag %}
 {% load bootstrap_pagination %}
 {% load comments_tags %}
-{% load urltag %}
 
-<style type="text/css">
-	.post-header-line { border-bottom:1px solid #DDD;padding:10px 0px 10px 25px;font-size: 12px; }
-</style>
-
-
-
-<div class="col-md-9 left">
+<div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
-    {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
-        <a href="/blog_new/"><button type="submit" class="btn btn-success btn-xs">Добавить новость</button></a>
-        <a href="#"><button type="submit" class="btn btn-primary btn-xs">Добавить мероприятие</button></a>
-        <a href="/material_new/doc/"><button type="submit" class="btn btn-warning btn-xs">Добавить документацию</button></a>
-        <a href="/sandbox/"><button type="submit" class="btn btn-info btn-xs">Песочница</button></a>
-        {% if user.is_superuser %}
-            <a href="/admin/"><button type="submit" class="btn btn-default btn-xs">Админка</button></a>
-            <a href="/admin/auth/user/?is_active__exact=0"><button type="submit" class="btn btn-default btn-xs">New users</button></a>
-        {% endif %}
-    <hr>
-    {% endif %}
+    <p style="font-size:26px; color: #000" align="center"><strong>Новости турклуба</strong></p>
 	{% for blog_post in blog_posts %}
+        {% if blog_post.state == 0 %}
+            {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
+                <div id="blogpost-{{ blog_post.id }}" class="well well-sm" style="margin-bottom: 0px;">
+                <span class="label label-danger">НОВОСТЬ СКРЫТА</span>
+            {% endif %}
+        {% else %}
+            <div id="blogpost-{{ blog_post.id }}">
+        {% endif %}
 		<div class="col-md-12" align="center">
-			<p style="font-size:18px">
-				<a href="{{ blog_post.get_absolute_url }}">
+			<p style="font-size:16px">
+				<a href="{{ blog_post.get_absolute_url }}#title">
 					<strong>{{ blog_post.title }}</strong>
-				</a> 
-				{% if blog_post.state == 0 %} 
-					<span class="label label-danger">disable</span>
-				{% endif %}
+				</a>
 			</p>
 		</div>
 		{{ blog_post.text|safe }}
 		<br>
-		<div class="row">
-	        <div class="col-md-12 post-header-line">
-	        	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ blog_post.date_creation|date:"d.m.Y, G:i" }} 
-	            | <span class="glyphicon glyphicon-user"></span> Автор: <a href="{{ blog_post.owner.get_absolute_url }}">{{ blog_post.owner.get_full_name }}</a> 
-	            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blog_post.get_absolute_url }}/#href_power_comments">
-				Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a>
-	            | <span class="glyphicon glyphicon-tags"></span> Теги : 
-	            	{% for category in blog_post.category.all %}
-						<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> 
-					{% endfor %}
 
-				{% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
-			        <div class="btn-group show-on-hover">
-			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
-			            <span class="glyphicon glyphicon-edit"></span>
-			          </button>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
-			            <li><a href="/blog_edit/{{ blog_post.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
-			            {% if user.is_superuser %} 
-			            	<li class="divider"></li>
-			            	<li><a href="{% url_edit blog_post %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
-			            {% endif %}
-			          </ul>
-			        </div>
-			    {% endif %}
-	        </div>
-	    </div>
+        {% if blog_post.state == 1 or blog_post.state == 2 %}
+            <div class="row">
+                <div class="col-md-12 post-header-line">
+                    <span class="glyphicon glyphicon-calendar"></span> {{ blog_post.date_creation|date:"d.m.Y, G:i" }}
+                    | <span class="glyphicon glyphicon-user"></span> <a href="{{ blog_post.owner.get_absolute_url }}">{{ blog_post.owner.get_full_name }}</a>
+                    | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blog_post.get_absolute_url }}/#comments">
+                    Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a>
+                    | <span class="glyphicon glyphicon-tags"></span> Теги :
+                        {% for category in blog_post.category.all %}
+                            <a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>
+                        {% endfor %}
+                </div>
+            </div>
 		<br>
+        </div>
+        {% else %}
+
+            {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
+                <div class="row">
+                    <div class="col-md-12 post-header-line-disable">
+                        <span class="glyphicon glyphicon-calendar"></span> {{ blog_post.date_creation|date:"d.m.Y, G:i" }}
+                        | <span class="glyphicon glyphicon-user"></span> <a href="{{ blog_post.owner.get_absolute_url }}">{{ blog_post.owner.get_full_name }}</a>
+                        | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blog_post.get_absolute_url }}/#comments">
+                        Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a>
+                        | <span class="glyphicon glyphicon-tags"></span> Теги :
+                            {% for category in blog_post.category.all %}
+                                <a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>
+                            {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row"><div class="col-md-12 post-header-line"></div></div><br>
+            {% endif %}
+
+        {% endif %}
+
 	{% endfor %}
 
 	{% bootstrap_paginate page_obj %}
-	</div>
-	</div>
-	</div>
+</div>
+</div>
+</div>
 
-	<div class="col-md-3">
-	    {% load page_navigation %}
-	    {% page_navigation request %}
-	</div>
-
+{% load page_navigation %}
+{% page_navigation request %}
 
 {% endblock %}

@@ -8,19 +8,7 @@
 {% load bootstrap_pagination %}
 {% load comments_tags %}
 
-<style type="text/css">
-	.hr_sm {
-		 margin-top: 5px; 
-		 margin-bottom: 5px; 
-		border: 0;
-		border-top: 1px solid #eee;
-	}
-	.a_black {
-		color: #000000;
-	}
-</style>
-
-<div class="col-md-9 left">
+<div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
 	<div class="col-md-12" align="center">
@@ -111,13 +99,8 @@
 </div>
 </div>
 
-<div class="col-md-3 right">
-	<!-- Тег, который в зависимости от url возвращает разные шаблоны -->
-	<!-- Допустим, в одном случае он возвратит кусочек мероприятий -->
-	<!-- Ну а в другом вообще ничего -->
-    {% load page_navigation %}
-    {% page_navigation request %}
-</div>
+{% load page_navigation %}
+{% page_navigation request %}
 
 {% endblock %}
 

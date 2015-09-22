@@ -1,32 +1,17 @@
 {% extends "base.html" %}
 
-{% block meta_title %}{{ material.title }}{% endblock %}
+{% block meta_title %}
+    {{ material.title }}
+{% endblock %}
 
 {% block main %}
 {% load urltag %}
 {% load comments_tags %}
 
-<style type="text/css">
-	.post-header-line { border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
-</style>
-
-<style type="text/css">
-	.hr_sm {
-		 margin-top: 5px; 
-		 margin-bottom: 5px; 
-		border: 0;
-		border-top: 1px solid #eee;
-	}
-	.a_black {
-		color: #000000;
-	}
-</style>
-
-<div class="col-md-9 left">
+<div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
-<div id="material">
-	<div class="row" align="">
+	<div class="row" id="material">
 		<div class="col-md-2">
 			<p align="right"><img src="{{ material.type_hike.image.url }}" class="img-circle img-thumbnail" width="80px"></p>
 		</div>
@@ -56,78 +41,23 @@
 		</div>
 	</div>
 	<div class="body">
-    {{ material.text|safe }}
-    <br>
-    <div class="row">
-        <div class="col-md-12 post-header-line">
-        	<span class="glyphicon glyphicon-calendar"></span> Дата: {{ material.date_creation|date:"d.m.Y, G:i" }} 
-            | <span class="glyphicon glyphicon-user"></span> Автор: <a href="{{ material.owner.get_absolute_url }}">{{ material.owner.get_full_name }}</a> 
-            | <span class="glyphicon glyphicon-comment"></span> <a href="{{ material.get_absolute_url }}/#href_power_comments">
-			Комментарии ({% count_power_comments material.get_absolute_url %})</a>
-            | <span class="glyphicon glyphicon-tags"></span> Теги : 
-        	{% for category in material.category.all %}
-				<a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>  
-			{% endfor %}
-				<!-- Admin panel -->
-			{% if material.state == 0 %}
-				{% if profile.id == material.owner.id %}
-					<div class="btn-group show-on-hover">
-			          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
-			            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
-			          </button>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="/material_edit/{{ material.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
-			          </ul>
-			        </div>
-					{% endif %}
-				{% endif %}
-			{% if profile.moderator == True or user.is_superuser %} 
-		        <div class="btn-group show-on-hover">
-		          <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
-		            <span class="glyphicon glyphicon-edit"></span> Mode <span class="caret"></span>
-		          </button>
-		          <ul class="dropdown-menu" role="menu">
-		          	{% if material.state == 0 %}
-		          		<li><a href="/material_hidden/{{ material.id }}"><span class="glyphicon glyphicon-eye-close"></span> Показать</a></li>
-		          	{% endif %}
-		          	{% if material.state == 1 %}
-		          		<li><a href="/material_hidden/{{ material.id }}"><span class="glyphicon glyphicon-eye-close"></span> Скрыть</a></li>
-		          	{% endif %}
-		            <li><a href="/material_edit/{{ material.id }}"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
-		            {% if user.is_superuser %} 
-		            	<li class="divider"></li>
-		            	<li><a href="{% url_edit material %}"><span class="glyphicon glyphicon-cog"></span> Страница админки</a></li>
-		            {% endif %}
-		          </ul>
-		        </div>
-		        {% endif %}
+        <p><strong>Краткое описание:</strong> {{ material.short_desc }}</p>
+        <hr>
+        {{ material.text|safe }}
+
+        {% include "materials/material_info_panel_detail.html" %}
+        <!-- Комментарии -->
+        <div id="comments" class="hidden-print">
+            {% power_comments request material.get_absolute_url material.if_comments %}
         </div>
     </div>
-<!--     <br>
-    {% if user.is_superuser %} 
-		<form method="post" class="form-inline">{% csrf_token %}
-			<button type="button" class="btn btn-sm">
-				<a href="{% url_edit material %}"><span class="glyphicon glyphicon-cog"></span> Admin</a>
-			</button>
-				<button class="btn btn-sm" data-toggle="modal" data-target="#myModal"><a href="/material_edit/{{ material.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a></button>
-		</form>
-	{% endif %} -->
-    <br>
-		{% if material.if_comments %} <!-- Комментарии -->
-			{% power_comments request material.get_absolute_url %}
-		{% else %}
-			Вы настолько много матерились, что мы решили отключить комментарии к этой статье.
-		{% endif %}
-    </div>
-</div>
 </div>
 </div>
 </div>
 
-<div class="col-md-3 right">
-    {% load page_navigation %}
-    {% page_navigation request %}
-</div>
+{% load page_navigation %}
+{% page_navigation request %}
+
 {% endblock %}
 
 

@@ -8,8 +8,8 @@ from django.forms import CharField, ModelForm
 
 class MaterialAdmin(SummernoteModelAdmin):
     filter_horizontal = ('category',)
-    list_display = ('title', 'owner', 'year', 'state', 'rank', 'status')
-    list_filter = ('date_creation',)
+    list_display = ('title', 'id', 'owner', 'year', 'state', 'rank', 'status')
+    list_filter = ('date_creation', 'state', 'rank')
     ordering = ('-date_creation',)
 
 

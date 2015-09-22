@@ -6,8 +6,8 @@
 
 {% block main %}
 
-<div class="col-md-1"></div>
-<div class="col-md-10 left">
+<div class="col-md-2"></div>
+<div class="col-md-8 left">
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="materials">
@@ -39,7 +39,7 @@
 					{{ form.text }}
 					<hr style="margin-top: 1px; margin-bottom: 14px;">
 					<div class="row"><br>
-						<div class="col-md-6">
+						<div class="col-md-12">
 						<p><label for="id_category">Теги:</label><br> 
 						{{ form.category.errors }}  
 						<select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
@@ -49,13 +49,13 @@
 						</select>
 						</p>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<label>Доступные теги:</label> 
 							{% for category in categorys %}
 							    {{ category.category }}, 
 							{% endfor %}
 						</div>
-					</div>
+					</div><br>
 					<button type="submit" class="btn btn-success">Сохранить изменения</button>
 					<a href="/blog/{{ blog.id }}"><button class="btn btn-default"> Отмена</button></a>
 				</form>

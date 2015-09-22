@@ -148,13 +148,13 @@ def blog_new(request):
     if request.method == "POST":
         form = BlogPostForm(request.POST)
         form.is_valid()
-        try:
-            tags = form.cleaned_data['category']
-        except KeyError:
-            new_tag = Category.objects.create(category=request.POST['category'])
-        
         if form.is_valid():
-            
+
+            try:
+                tags = form.cleaned_data['category']
+            except KeyError:
+                new_tag = Category.objects.create(category=request.POST['category'])
+
             # tags = form.cleaned_data['category']
             form.save_with_owner(owner=profile)
             blog = BlogPost.objects.first()
@@ -181,55 +181,19 @@ def blog_backup(blog, user):
 
 
 @login_required
-def hidden_blog(request):
-    if request.POST:
-        blog_id = request.POST['blog_id']
-        blog = BlogPost.objects.get(id=int(blog_id))
-        blog.state = BlogPost.DISABLE
-        blog.save()
-        return redirect('/blog/')
+def blog_hidden(request, action, blog_id):
+    profile = CustomUser.objects.get(user=request.user)
+
+    if not profile.moderator and profile.goverment and profile.user.is_superuser:
+        return redirect('/login/')
     else:
+        blog = BlogPost.objects.get(id=int(blog_id))
+        if action == "hide":
+            blog.state = BlogPost.DISABLE
+        elif action == "show":
+            blog.state = BlogPost.ENABLE
+        else:
+            pass
+
+        blog.save()
         return redirect(blog.get_absolute_url())
-
-
-# @login_required
-# def karma_force_blog(request):
-#     user = CustomUser.objects.get(user=request.user)
-#     if request.method == "POST":
-#         if user.karma < -10:
-#             message = "Недостаточно кармы для голосования"
-#             print message
-#             pass
-#         id_blogpost = request.POST['id_blogpost']
-#         karma = request.POST['karma']
-#         blogpost = BlogPost.objects.get(id=id_blogpost)
-#         if user in blogpost.karma_users.all():
-#             message = "Вы уже поставили рейтинг"
-#             print message
-#         else:
-#             if karma == "minus":
-#                 blogpost.rating = blogpost.rating - 1
-#                 user.karma = user.karma - 3
-#             if karma == "plus":
-#                 blogpost.rating = blogpost.rating + 1
-#                 user.karma = user.karma + 3
-#             blogpost.save()
-#             user.save()
-#             blogpost.karma_users.add(user)
-#     else:
-#         return redirect('/')
-#     return redirect(blogpost.get_absolute_url())
-
-
-def minus_karma_admin(request, blog_id):
-    if not request.user.is_authenticated():
-        print "You not superuser"
-        return redirect('/')
-
-    blog = BlogPost.objects.get(id=blog_id)
-    user = blog.owner
-    user.karma = user.karma - 10
-    user.save()
-
-    url = u'/blog/%s' % blog_id
-    return redirect(url)

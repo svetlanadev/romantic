@@ -4,37 +4,6 @@
 
 {% block extra_css %}
 <style type="text/css">
-	#menu { 
-	  float: right;
-	  width:100%;
-	}
-
-	#menu, #menu ul{
-	  list-style-type: none;
-	  padding: 0;
-	  margin: 0;
-	}
-
-	#menu li { 
-	  cursor:pointer;
-	  background:no-repeat right top;
-	}
-
-	#menu li a {
-	  text-decoration: none;
-	}
-
-	#menu>li>a { 
-	  padding: 2px 10px; font-weight:bold;
-	}
-
-	#menu li li{ 
-	  cursor:auto;
-	  border:0;
-	  padding:0 14px;
-	  background-image: none;
-	}
-
 	#disclaimer, #intro {
 	  width: 400px;
 	}
@@ -84,12 +53,13 @@
 	            {{ form.phone }}<br>
 	        </div>
 	    </div>
-
-        <ul id="menu">
-          <li><a href="#"><span class="glyphicon glyphicon-sort-by-attributes"></span> Социальные сети:</a>
-            <ul class="active">
-            <br>
-              {{ form.vk.errors }}
+        <p>
+          <button class="btn btn-primary collapsed btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Социальные сети:
+          </button>
+        </p>
+        <div class="collapse" id="collapseExample" aria-expanded="false" style="height: 0px;">
+            {{ form.vk.errors }}
 	        <label for="id_last_name">Вконтакте</label>
 	        {{ form.vk }}<br>
 
@@ -100,9 +70,7 @@
 		    {{ form.od_class.errors }}
 	        <label for="id_last_name">Одноклассники</label>
 	        {{ form.od_class }}<br>
-            </ul>
-          </li>
-
+        </div>
         <hr>
         <div class="row">
 	        <div class="col-xs-6 col-md-6">
@@ -124,37 +92,10 @@
 {% block extra_js %}
 <script src="{{ STATIC_URL }}js/bootstrap.file-input.js" type="text/javascript"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-$( '#menu > li > ul' )
-	.hide()
-	.click(function( e ){
-		e.stopPropagation();
-	});
-  $('#menu > li').toggle(function(){
-	  $(this)
-      .removeClass('waiting')/**/
-      .css('background-position', 'right -20px')
-      .find('ul').slideDown();
-  }, function(){
-  	$( this )
-      .removeClass('waiting')/**/
-      .css('background-position', 'right top')
-      .find('ul').slideUp();
-  });
-
-  $('#menu > li').hover(function() {
-    $(this).addClass('waiting');
-   setTimeout(function() {
-      $('#menu .waiting')
-        .click()
-        .removeClass('waiting');
-    }, 700); /**/
-  }, function() {
-    $('#menu .waiting').removeClass('waiting');
-  });
-});
-
+$(document).ready(function() {
     $('input[type=file]').bootstrapFileInput();
-	$('.file-inputs').bootstrapFileInput();
+    $('.file-inputs').bootstrapFileInput();
+
+})
 </script>
 {% endblock %}

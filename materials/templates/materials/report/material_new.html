@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_material_new.html" %}
 
 {% block meta_title %}Новый отчет о походе{% endblock %}
 
@@ -8,8 +8,8 @@
 
 <div class="col-md-1"></div>
 <div class="col-md-10 left">
-	<div class="panel panel-default">
-		<div class="panel-body">
+{#	<div class="panel panel-default">#}
+{#		<div class="panel-body">#}
 			<div class="materials">
 				<h1 align="center">{{ name_material }}</h1>
 				<form action="/material_new/{{ category_material }}/" method="post" role="form" enctype="multipart/form-data" class="dynamic-form">
@@ -51,10 +51,10 @@
 						</div>
 					</div>
 					<select id="id_rank" name="rank" hidden>
-					<option value="{{ type_material }}" selected="selected">DISABLE</option>
+					    <option value="{{ type_material }}" selected="selected">DISABLE</option>
 					</select>
 					<select id="id_state" name="state" hidden>
-					<option value="0" selected="selected">DISABLE</option>
+					    <option value="0" selected="selected">DISABLE</option>
 					</select>
 					<label for="id_category">Маршрут</label>
 					{{ form.status.errors }}
@@ -62,14 +62,10 @@
 					<label for="id_category">Краткое описание</label>
 					{{ form.short_desc.errors }}
 					<textarea id="id_short_desc" name="short_desc" type="text" class="form-control" >{{ form.short_desc.value }}</textarea><br>
-					{{ form.text.errors }}
-					{{ form.media }}
-					{{ form.text }}
-					<hr style="margin-top: 1px; margin-bottom: 14px;">
-					<div class="row"><br>
-						<div class="col-md-6">
+                    <div class="row"><br>
+						<div class="col-md-12">
 						<p><label for="id_category">Теги:</label><br>
-						{{ form.category.errors }}  
+						{{ form.category.errors }}
 						<select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
 						{% for category in categorys %}
 						    <option value="{{ category.id }}">{{ category.category }}</option>
@@ -77,20 +73,23 @@
 						</select>
 						</p>
 						</div>
-						<div class="col-md-6">
-							<label>Доступные теги:</label> 
+						<div class="col-md-12">
+							<label>Доступные теги:</label>
 							{% for category in categorys %}
-							    {{ category.category }}, 
-							{% endfor %}
+							    {{ category.category }},
+							{% endfor %}<br>
 						</div>
 					</div>
+					{{ form.text.errors }}
+					{{ form.media }}
+					{{ form.text }}
 					<button type="submit" class="btn btn-success">Сохранить изменения</button>
 					<a href="/blog/{{ blog.id }}"><button class="btn btn-default"> Отмена</button></a>
 				</form>
 
 			</div>
-		</div>
-	</div>
+{#		</div>#}
+{#	</div>#}
 </div>
 
 {% endblock %}
