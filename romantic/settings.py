@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     # "django.contrib.redirects",
     # "django.contrib.sites",
     # "django.contrib.sitemaps",
+    # 'south',
     'hike',
     'profile',
     'imagekit',

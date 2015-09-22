@@ -31,16 +31,15 @@ def party_new(request):
 
     if request.method == "POST":
         form = PartyForm(request.POST)
-        #form.is_valid()
-        try:
-            tags = form.cleaned_data['category']
-        except KeyError:
-            new_tag = Category.objects.create(category=request.POST['category'])
-        
+
         if form.is_valid():
+            try:
+                tags = form.cleaned_data['category']
+            except KeyError:
+                new_tag = Category.objects.create(category=request.POST['category'])
             
             # tags = form.cleaned_data['category']
-            #form.save_with_owner(owner=profile)
+            form.save_with_owner(owner=profile)
             form.save()
             party = Party.objects.first()
             for x in tags:
@@ -49,6 +48,7 @@ def party_new(request):
 
             url = u'/party/%s' % party.id
             return redirect(url)
+
     data = {'form': form, 'categorys': categorys}
     return render_to_response('party/party_new.html',
                               data,

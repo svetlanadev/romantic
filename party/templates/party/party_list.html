@@ -1,41 +1,42 @@
 {% extends "base.html" %}
 
-{% block meta_title %}Мероприятия{% endblock %}
+{% block meta_title %}
+    Мероприятия
+{% endblock %}
 
 {% block main %}
 {% load imagekit %}
 
-<div class="col-md-9 left">
+<div class="col-md-8 left">
 <div class="panel panel-default">
-<div class="panel-body">
-<h1 align="center"><strong>Мероприятия Клуба</strong></h1>
-{% for party in partys %}
-<div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-        <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
-            <div align="center" class="background_text">
-                {{ party.name }}
+    <div class="panel-body">
+        <p style="font-size:26px; color: #000" align="center"><strong>>Мероприятия Клуба</strong></p>
+        {% for party in partys %}
+        <div class="col-sm-12 col-md-6">
+            <div class="thumbnail">
+                <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
+                    <div align="center" class="background_text">
+                        {{ party.name }}
+                    </div>
+                </div>
+                <div class="caption">
+                    <div align="center">
+                        <h4>Начало - <strong>{{ party.date_start }}</strong></h4>
+                    </div>
+                    <p>{{ party.text|truncatechars:130 }}</p>
+                    <div align="center">
+                        <a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="caption">
-            <div align="center">
-                <h4>Начало - <strong>{{ party.date_start }}</strong></h4>
-            </div>
-            <p>{{ party.text|safe|truncatechars:130 }}</p>
-            <div align="center">
-                <a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-</div>
-{% endfor %}
-</div>
 </div>
 </div>
 
-<div class="col-md-3">
-    {% load page_navigation %}
-    {% page_navigation request %}
-</div>
+{% load page_navigation %}
+{% page_navigation request %}
+
 {% endblock %}
 
