@@ -6,6 +6,7 @@
 
 {% block main %}
 {% load imagekit %}
+{% load party_tags %}
 
 <div class="col-md-8 left">
 <div class="panel panel-default">
@@ -15,15 +16,14 @@
         <div class="col-sm-12 col-md-6">
             <div class="thumbnail">
                 <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
-                    <div align="center" class="background_text">
-                        {{ party.name }}
-                    </div>
                 </div>
                 <div class="caption">
                     <div align="center">
-                        <h4>Начало - <strong>{{ party.date_start }}</strong></h4>
-                    </div>
-                    <p>{{ party.short_desc|truncatechars:140 }}</p>
+                        <p style="font-size: 18px;"><strong>{{ party.title }}</strong></p>
+                        {% party_date_tag party %}
+                    </div><br>
+{#                    <hr class="hr_sm">#}
+{#                    <p>{{ party.short_desc|truncatechars:140 }}</p>#}
                     <div align="center">
                         <a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a>
                     </div>
@@ -40,3 +40,5 @@
 
 {% endblock %}
 
+<span class="glyphicon glyphicon-time" aria-hidden="true"></span> Начало - {{ party.date_start|date:"d.m.Y, G:i" }}<br>
+<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Конец - {{ party.date_start|date:"d.m.Y, G:i" }}
