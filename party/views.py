@@ -18,7 +18,15 @@ class PartyListView(ListView):
     context_object_name = 'partys'
 
     def get_queryset(self):
-        qs = Party.objects.prefetch_related('category').filter(date_start__gt=datetime.now()).exclude(state=0)
+        if not self.request.user.is_authenticated():
+            qs = Party.objects.prefetch_related('category').filter(date_start__gt=datetime.now()).exclude(state=0)
+            return qs
+        else:
+            profile = CustomUser.objects.get(user=self.request.user)
+        if profile.moderator or profile.goverment or profile.user.is_superuser:
+            qs = Party.objects.prefetch_related('category').filter(date_start__gt=datetime.now())
+        else:
+            qs = Party.objects.prefetch_related('category').filter(date_start__gt=datetime.now()).exclude(state=0)
         return qs
 
     def get_context_data(self, **kwargs):

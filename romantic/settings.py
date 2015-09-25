@@ -74,7 +74,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.core.context_processors.tz",
-    'banner.context_processor.contex_banner',
     'profile.context_processor.contex_profile',
     'party.context_processor.contex_party',
     'django.core.context_processors.request',

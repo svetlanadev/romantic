@@ -15,6 +15,25 @@
 {#        <p style="font-size:18px;"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Осенний сезон</p>#}
         <hr>
         {% for party in partys %}
+        {% if party.state == 0 %}
+            {% if profile.moderator == True or user.is_superuser %}
+                <div class="col-sm-12 col-md-6">
+                    <div class="thumbnail" style="background-color: #999999">
+                        <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
+                        </div>
+                        <div class="caption">
+                            <div align="center">
+                                <p style="font-size: 18px;"><strong><span class="label label-danger">DISABLE</span> {{ party.title }}</strong></p>
+                                {% party_date_tag party %}
+                            </div><br>
+                            <div align="center">
+                                <a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
         <div class="col-sm-12 col-md-6">
             <div class="thumbnail">
                 <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
@@ -24,14 +43,13 @@
                         <p style="font-size: 18px;"><strong>{{ party.title }}</strong></p>
                         {% party_date_tag party %}
                     </div><br>
-{#                    <hr class="hr_sm">#}
-{#                    <p>{{ party.short_desc|truncatechars:140 }}</p>#}
                     <div align="center">
                         <a href="/party/{{ party.id }}"><button type="button" class="btn btn-info btn-sm">Подробнее/Обсудить</button></a>
                     </div>
                 </div>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>

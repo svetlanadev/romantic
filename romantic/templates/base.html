@@ -14,6 +14,7 @@
 
     {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
+    {% load banner_tags %}
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 
@@ -144,11 +145,9 @@
     </div>
 
     {% block extra_banner %}{% endblock %}
-    <div id="events-banner" class="fill hidden-print" style="background-image: url({{ STATIC_URL }}images/banners/{{ banner }})">
-      <div class="header-cone"></div>
-      <div class="header-cone right"></div>
-    </div>
-    <br>
+
+    {% banner_template request %}
+
 
 <div class="container">
     <div class="row">

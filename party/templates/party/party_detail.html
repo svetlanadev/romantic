@@ -1,7 +1,18 @@
 {% extends "base.html" %}
 
 {% block extra_banner %}
-<h1>ПАТИ</h1>
+{% if party.image %}
+    <div id="events-banner" class="fill hidden-print" style="background-image: url({{ party.image.url }})">
+        <div class="header-cone"></div>
+        <div class="header-cone right"></div>
+    </div>
+{% else %}
+    <div id="events-banner" class="fill hidden-print" style="background-image: url({{ party.image.url }})">
+        <div class="header-cone"></div>
+        <div class="header-cone right"></div>
+    </div>
+{% endif %}
+<br>
 {% endblock %}
 
 {% block meta_title %}
@@ -15,18 +26,17 @@
 
 <div class="col-md-8 left">
 
-<img src="{{ party.image.url }}" class="object-fit_cover" height="200px" width="100%">
 <div class="panel panel-default">
 <div class="panel-body">
     {% if blogpost.state == 0 %}
         <span class="label label-danger">НОВОСТЬ СКРЫТА</span>
     {% endif %}
     <div class="col-md-2">
-        {% if party.image %}
-            <img src="{{ party.image.url }}" class="object-fit_cover_radius" height="100px" width="100px">
-        {% else %}
-            <img src="{{ party.default_image.image.url }}" class="object-fit_cover_radius" height="100px" width="100px">
-        {% endif %}
+{#        {% if party.image %}#}
+{#            <img src="{{ party.image.url }}" class="object-fit_cover_radius" height="100px" width="100px">#}
+{#        {% else %}#}
+{#            <img src="{{ party.default_image.image.url }}" class="object-fit_cover_radius" height="100px" width="100px">#}
+{#        {% endif %}#}
     </div>
     <div class="col-md-8" align="center">
         <p style="font-size:20px;" id="title">
