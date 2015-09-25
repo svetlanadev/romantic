@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extra_banner %}
+<h1>ПАТИ</h1>
+{% endblock %}
+
 {% block meta_title %}
     Мероприятие - {{ party.name }}
 {% endblock %}
@@ -7,43 +11,41 @@
 {% block main %}
 {% load urltag %}
 {% load comments_tags %}
+{% load party_tags %}
 
 <div class="col-md-8 left">
+
+<img src="{{ party.image.url }}" class="object-fit_cover" height="200px" width="100%">
 <div class="panel panel-default">
 <div class="panel-body">
     {% if blogpost.state == 0 %}
         <span class="label label-danger">НОВОСТЬ СКРЫТА</span>
     {% endif %}
-    <div class="col-md-12" align="center">
+    <div class="col-md-2">
+        {% if party.image %}
+            <img src="{{ party.image.url }}" class="object-fit_cover_radius" height="100px" width="100px">
+        {% else %}
+            <img src="{{ party.default_image.image.url }}" class="object-fit_cover_radius" height="100px" width="100px">
+        {% endif %}
+    </div>
+    <div class="col-md-8" align="center">
         <p style="font-size:20px;" id="title">
-            <strong>{{ party.title }}</strong>
+            <strong>{{ party.title }}</strong><br>
+        </p>
+        <p style="font-size:17px;">
+            <small>{% party_date_tag party %}</small>
         </p>
     </div>
-
+    <div class="col-md-2"></div>
+<br><br><br><br><br><br>
     <div class="body">
-        <div class="col-md-12">
-            <p>
-                {% if party.image %}
-                    <img src="{{ party.image.url }}" width="200px" class="img"><br>
-                {% else %}
-                    <img src="{{ party.default_image.image.url }}" class="img"><br>
-                {% endif %}
-{#                <img src="{{ party.owner.avatar.url }}" width="75px" height="75px" hspace="12" vspace="5" align="left">#}
-                <strong>Автор:</strong> {{ material.owner.get_full_name }}<br>
-                <strong>Название:</strong> {{ material.title }}<br>
-                <strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}
-            </p>
-        </div>
-
         {{ party.text|safe }}
-        <br>
-
+    <hr>
         {% for file in party.files.all %}
             <div class="well well-sm">
                 <a href="{{ file.one_file }}"><img src="http://avelino.ru/assets/templates/main/img/doc.png" width="25px">{{ file.file_name }}</a><br>
             </div>
         {% endfor %}
-
         <div class="row">
             <div class="col-md-12 post-header-line">
                 <span class="glyphicon glyphicon-calendar"></span> Опубликовано: {{ party.date_creation|date:"d.m.Y, G:i" }}

@@ -84,3 +84,10 @@ fieldset[disabled] .btn-admin.active {
   color: #5cb85c;
   background-color: #fff;
 }
+
+.object-fit_fill { object-fit: fill }
+.object-fit_contain { object-fit: contain }
+.object-fit_cover { object-fit: cover }
+.object-fit_cover_radius { object-fit: cover; border-radius: 50%}
+.object-fit_none { object-fit: none }
+.object-fit_scale-down { object-fit: scale-down }
