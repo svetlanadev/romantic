@@ -11,6 +11,8 @@ from profile.models import CustomUser
 from force_blog.models import BlogPost
 from power_comments.models import PowerComment
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import datetime
+
 
 register = template.Library()
 
@@ -25,7 +27,7 @@ def page_navigation(request):
     else:
         custom_user = ""
 
-    partys = Party.objects.exclude(state=0)[:3]
+    partys = Party.objects.prefetch_related('category').filter(date_start__gt=datetime.now()).exclude(state=0)[:3]
 
     try:
         materials = Material.objects.filter(state=1)[:5]
@@ -109,3 +111,20 @@ def sandbox_user_count(request):
         materials = ""
 
     return materials.count()
+
+
+# def party_season(partys):
+#     autumn_partys = []
+#     winter_partys = []
+#     spring_partys = []
+#     summer_partys = []
+#
+#     for party in partys:
+#         start_date = party.date_start.date()
+#
+#         if start_date.month == 09 or 10 or 11:
+#             print
+#         _month_name(start_date.month)
+#
+#         conversation.append(obj)
+

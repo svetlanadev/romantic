@@ -8,7 +8,7 @@ from django.forms import CharField, ModelForm
 
 class PartyAdmin(SummernoteModelAdmin):
     filter_horizontal = ('files', 'category')
-    list_display = ('title', 'date_creation', 'state')
+    list_display = ('title', 'date_creation', 'date_start', 'data_finish', 'state')
 
 
 admin.site.register(Party, PartyAdmin)

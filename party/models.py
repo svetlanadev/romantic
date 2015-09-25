@@ -53,7 +53,7 @@ class Party(models.Model):
         default=True, verbose_name=u'Комментарии включены')
 
     class Meta:
-        ordering = ["-date_creation"]
+        ordering = ["date_start"]
         verbose_name = 'Мероприятие'
         verbose_name_plural = 'Мероприятия'
 

@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from force_blog.models import Category
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from datetime import datetime
 
 
 class PartyListView(ListView):
@@ -17,16 +18,8 @@ class PartyListView(ListView):
     context_object_name = 'partys'
 
     def get_queryset(self):
-        if not self.request.user.is_authenticated():
-            qs = Party.objects.prefetch_related('category').exclude(state=0)
-            return qs
-        else:
-            profile = CustomUser.objects.get(user=self.request.user)
-            if profile.moderator or profile.user.is_superuser:
-                qs = Party.objects.prefetch_related('category')
-            else:
-                qs = Party.objects.prefetch_related('category').exclude(state=0)
-            return qs
+        qs = Party.objects.prefetch_related('category').filter(date_start__gt=datetime.now()).exclude(state=0)
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super(PartyListView, self).get_context_data(**kwargs)
