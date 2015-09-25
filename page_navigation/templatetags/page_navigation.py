@@ -75,10 +75,13 @@ def page_navigation(request):
 
         elif "party" in app_url:
             obj = Party.objects.get(id=id_content)
-            url = obj.name
+            url = obj.title
 
         if obj.state != 0:
-            conversation.append(obj)
+            if obj in conversation:
+                pass
+            else:
+                conversation.append(obj)
         else:
             pass
 
