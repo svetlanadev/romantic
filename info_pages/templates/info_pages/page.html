@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load comments_tags %}
+
+{% block meta_title %}
+    {{ page.title }}
+{% endblock %}
+
+{% block main %}
+<!-- Походы -->
+<div class="col-md-1"></div>
+<div class="col-md-10 left">
+	<div class="panel panel-default">
+		<div class="panel-body">
+    		{{ page.text|safe }}
+
+            {% power_comments request page.get_absolute_url page.if_comments %}
+
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+
+

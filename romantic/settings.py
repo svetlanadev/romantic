@@ -63,6 +63,7 @@ INSTALLED_APPS = (
     'page_navigation',
     'materials',
     'django_summernote',
+    'info_pages',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

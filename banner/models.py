@@ -44,18 +44,18 @@ class BannerTitle(models.Model):
     def get_absolute_url(self):
         return u'/banner_title/%s' % self.id
 
-    def save(self, force_insert=False, force_update=False, using=None):
-        if self.state == 1:
-            enable_banner = 0
-            banners = BannerTitle.objects.all()
-            for banner in banners:
-                if banner.state == 1:
-                    if enable_banner == settings.DEFAULT_BANNER_TITLE:
-                        banner.state = 0
-                        #banner.save()
-                    else:
-                        enable_banner = enable_banner + 1
-        super(BannerTitle, self).save()
+    # def save(self, force_insert=False, force_update=False, using=None):
+    #     if self.state == 1:
+    #         enable_banner = 0
+    #         banners = BannerTitle.objects.all()
+    #         for banner in banners:
+    #             if banner.state == 1:
+    #                 if enable_banner == settings.DEFAULT_BANNER_TITLE:
+    #                     banner.state = 0
+    #                     #banner.save()
+    #                 else:
+    #                     enable_banner = enable_banner + 1
+    #     super(BannerTitle, self).save()
 
     def __unicode__(self):
         return u'%s %s - %s' % (self.title,
