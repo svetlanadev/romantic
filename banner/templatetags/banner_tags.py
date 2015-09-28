@@ -30,7 +30,10 @@ def banner_template(request):
         # IF REQUEST PATH =  "/page/history", WE GET "history"
         link = re.split(r'/', path)[2]
         page = InfoPage.objects.get(url_link=link)
-        banner = str(settings.MEDIA_URL) + str(page.banner.image)
+        try:
+            banner = str(settings.MEDIA_URL) + str(page.banner.image)
+        except AttributeError:
+            banner = str(settings.STATIC_URL) + 'images/banners/general.jpg'
 
     else:
         banner = str(settings.STATIC_URL) + 'images/banners/general.jpg'
