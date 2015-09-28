@@ -34,7 +34,6 @@ TEMPLATE_LOADERS = (
     "django.template.loaders.app_directories.Loader",
 )
 
-
 TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
 
 for root, dirs, files in os.walk(PROJECT_ROOT):
@@ -48,10 +47,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # "django.contrib.redirects",
-    # "django.contrib.sites",
-    # "django.contrib.sitemaps",
-    # 'south',
     'hike',
     'profile',
     'imagekit',
