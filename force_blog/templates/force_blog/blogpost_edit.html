@@ -15,26 +15,25 @@
     <div id="blogpost">
         <form action="/blog_edit/{{ blog.id }}/" method="post" role="form">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-8">
                     <input id="id_title" name="title" type="text" class="form-control" placeholder="Заголовок" value="{{ form.title.value }}"><br>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-4">
                         <select id="id_state" name="state" class="form-control">
                             <option value="0">Новость отключена</option>
                             <option value="1" selected="selected">Обычная Новость</option>
                             <option value="2">Важная Новость</option>
                         </select>
                 </div>
-                <div class="col-xs-3 checkbox">
-                    <label>
-                      <input checked="checked" id="id_if_comments" name="if_comments" type="checkbox"> Включить комментарии
-                    </label>
-                </div>
             </div>
             {{ form.media }}
             {{ form.text }}
 
             <div class="row"><br>
+                <label>
+                  <input checked="checked" id="id_if_comments" name="if_comments" type="checkbox"> Включить комментарии
+                </label>
+                <br>
                 <div class="col-xs-12">
                 <p><label for="id_category">Теги:</label><br>
                 <select id="id_category" multiple="multiple" name="category" class="tokenize-sample">
@@ -65,6 +64,9 @@
 </div>
 </div>
 {% endblock %}
+
+{% load page_navigation %}
+{% page_navigation request %}
 
 {% block extra_js %}
     <script src="{{ STATIC_URL }}js/jquery.tokenize.js" type="text/javascript"></script>

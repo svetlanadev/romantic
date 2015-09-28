@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load comments_tags %}
+{% load urltag %}
 
 {% block meta_title %}
     {{ page.title }}
@@ -8,12 +9,16 @@
 
 {% block main %}
 <!-- Походы -->
-<div class="col-md-1"></div>
+<div class="col-md-1">
+    {% if request.user.is_superuser %}
+    <a href="{% url_edit page %}"><span class="label label-default">EDIT</span></a>
+    {% endif %}
+</div>
 <div class="col-md-10 left">
 	<div class="panel panel-default">
 		<div class="panel-body">
     		{{ page.text|safe }}
-
+            <hr>
             {% power_comments request page.get_absolute_url page.if_comments %}
 
 		</div>

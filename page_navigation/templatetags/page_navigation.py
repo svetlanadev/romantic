@@ -9,9 +9,11 @@ from party.models import Party
 from materials.models import Material
 from profile.models import CustomUser
 from force_blog.models import BlogPost
+from info_pages.models import InfoPage
 from power_comments.models import PowerComment
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
+import re
 
 
 register = template.Library()
@@ -65,24 +67,25 @@ def page_navigation(request):
         id_content = ''.join(filter(lambda x: x.isdigit(), app_url))
         if "blog" in app_url:
             obj = BlogPost.objects.get(id=id_content)
-            url = obj.title
         elif "materials" in app_url:
             try:
                 obj = Material.objects.get(id=id_content)
-                url = obj.title
             except ObjectDoesNotExist:
                 break
 
         elif "party" in app_url:
             obj = Party.objects.get(id=id_content)
-            url = obj.title
 
-        if obj.state != 0:
-            if obj in conversation:
-                pass
-            else:
-                conversation.append(obj)
         else:
+            pass
+
+        try:
+            if obj.state != 0:
+                if obj in conversation:
+                    pass
+                else:
+                    conversation.append(obj)
+        except UnboundLocalError:
             pass
 
         if len(conversation) >= 5:
@@ -114,20 +117,3 @@ def sandbox_user_count(request):
         materials = ""
 
     return materials.count()
-
-
-# def party_season(partys):
-#     autumn_partys = []
-#     winter_partys = []
-#     spring_partys = []
-#     summer_partys = []
-#
-#     for party in partys:
-#         start_date = party.date_start.date()
-#
-#         if start_date.month == 09 or 10 or 11:
-#             print
-#         _month_name(start_date.month)
-#
-#         conversation.append(obj)
-
