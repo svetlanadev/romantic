@@ -71,7 +71,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.core.context_processors.tz",
     'profile.context_processor.contex_profile',
-    'party.context_processor.contex_party',
+    'info_pages.context_processor.contex_info_pages',
     'django.core.context_processors.request',
 )
 
