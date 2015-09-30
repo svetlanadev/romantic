@@ -20,40 +20,30 @@ FULLMEMBERS = 2
 GOVERNMENTS = 3
 MODERATORS = 4
 
+
 def contex_info_pages(request):
     info_pages = InfoPage.objects.filter(state=ENABLE, place=NATIVE_PLACE)
+    pages = []
+    # conversation.append(obj)
+    try:
+        profile = CustomUser.objects.get(user=request.user)
+    except:
+        info_pages = InfoPage.objects.filter(state=ENABLE, place=NATIVE_PLACE, access=ALL_USERS)
+        data = {'info_pages': info_pages, }
+        return data
 
-    # try:
-    #     profile = CustomUser.objects.get(user=request.user)
-    #     if profile.valid_member:
-    #         data = {'page': page, }
-    #         return render_to_response('info_pages/page.html',
-    #                                   data,
-    #                                   context_instance=RequestContext(request))
-    #
-    #     elif page.access == GOVERNMENTS and profile.goverment:
-    #         data = {'page': page, }
-    #         return render_to_response('info_pages/page.html',
-    #                                   data,
-    #                                   context_instance=RequestContext(request))
-    #
-    #     elif page.access == MODERATORS and profile.moderator:
-    #         data = {'page': page, }
-    #         return render_to_response('info_pages/page.html',
-    #                                   data,
-    #                                   context_instance=RequestContext(request))
-    #     else
-    #
-    # except ObjectDoesNotExist:
-    #     profile = request.user
-    #     info_pages = info_pages.filter(access=ALL_USERS)
+    if profile.user.is_superuser or profile.moderator:
+        info_pages = InfoPage.objects.filter(state=ENABLE, place=NATIVE_PLACE)
+    elif profile.goverment and profile.valid_member:
+        info_pages = info_pages.exclude(access=MODERATORS)
+    elif profile.goverment:
+        info_pages = info_pages.exclude(access=MODERATORS).exclude(access=FULLMEMBERS)
+    elif profile.valid_member:
+        info_pages = info_pages.exclude(access=MODERATORS).exclude(access=GOVERNMENTS)
+    else:
+        info_pages = info_pages.exclude(access=MODERATORS).exclude(access=FULLMEMBERS).exclude(access=GOVERNMENTS)
+
+    print info_pages
 
     data = {'info_pages': info_pages, }
     return data
-
-# (ALL_USERS, 'Доступно для всех'),
-#         (REGISTERS, 'Зарегестрированные пользователи'),
-#         (FULLMEMBERS, 'Доступно только для ДЧ'),
-#         (GOVERNMENTS, 'Доступно только правления'),
-#         (MODERATORS, 'Только модераторы'),
-#     )
