@@ -60,7 +60,9 @@ def url_with_comment(app_url):
     elif "party" in app_url:
         from party.models import Party
         obj = Party.objects.get(id=id_content)
-        url = obj.name
+        url = obj.title
+    else:
+        url = ""
     return url
 
 

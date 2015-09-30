@@ -40,6 +40,7 @@
         <hr>
         {% if profile == profile2 %} 
           <p align="center"><a href="/profile_edit/"><span class="glyphicon glyphicon-pencil"></span> Редактировать профиль</a></p>
+          <p align="center"><a href="/password_change/"><span class="glyphicon glyphicon-pencil"></span> Изменить пароль</a></p>
         {% endif %}
         {% if user.is_authenticated %} 
           <p><strong>Email: </strong> <a href="mailto:{{ profile2.user.email }}">{{ profile2.user.email }}</a></p>

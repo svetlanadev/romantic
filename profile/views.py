@@ -5,6 +5,7 @@
 # from django.template import RequestContext
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect, render
@@ -16,6 +17,7 @@ from materials.models import Material
 from power_comments.models import PowerComment
 from profile.forms import UserCreateForm, UserLoginForm, CustomUserForm
 from profile.models import CustomUser
+from django.contrib.auth import update_session_auth_hash
 
 
 class ProfileListView(ListView):
@@ -25,84 +27,45 @@ class ProfileListView(ListView):
 
 class ProfileDetailView(DetailView):
     model = CustomUser
-
     context_object_name = 'profile'
 
 
 class RegisterFormView(FormView):
     form_class = UserCreateForm
-
-    # Ссылка, на которую будет перенаправляться пользователь в случае успешной регистрации.
-    # В данном случае указана ссылка на страницу входа для зарегистрированных пользователей.
     success_url = "/registration_complete/"
-
-    # Шаблон, который будет использоваться при отображении представления.
     template_name = "registration_form.html"
 
     def form_valid(self, form):
-        # Создаём пользователя, если данные в форму были введены корректно.
         form.save()
-
         last_user = CustomUser.objects.last()
-        # Выполняем аутентификацию пользователя.
         last_user.user.is_active = False
         last_user.user.save()
-
-        # login(self.request, self.user)
-
-        # Вызываем метод базового класса
         return super(RegisterFormView, self).form_valid(form)
 
 
-    # def get_form_kwargs(self):
-    #     kwargs = super(RegisterFormView, self).get_form_kwargs()
-    #     kwargs['request'] = self.request
-    #     return kwargs
-
-
-    # def get_form(self, form_class):
-    #     return form_class(**self.get_form_kwargs())
-
-
-    # def get(self, request, **kwargs):
-    #     if request.user.is_authenticated():
-    #         return HttpResponseRedirect("/blog/")
-    #     else:
-    #         return self.render_to_response(self.get_context_data(), **kwargs)
+class PasswordChangeView(FormView):
+    form_class = PasswordChangeForm
+    template_name = "password_change.html"
+    success_url = "/blog/"
+    def form_valid(self, form):
+        form.save()
+        return super(PasswordChangeView, self).form_valid(form)
 
 
 class LoginFormView(FormView):
     form_class = UserLoginForm
-    # Аналогично регистрации, только используем шаблон аутентификации.
     template_name = "login.html"
-    # В случае успеха перенаправим на главную.
     success_url = "/blog/"
 
     def form_valid(self, form):
-        # Получаем объект пользователя на основе введённых в форму данных.
         self.user = form.get_user()
-        # Выполняем аутентификацию пользователя.
         login(self.request, self.user)
         return super(LoginFormView, self).form_valid(form)
 
 
-    # def get_form(self, form_class):
-    #     return form_class(**self.get_form_kwargs())
- 
-
-    # def get(self, request, **kwargs):
-    #     if request.user.is_authenticated():
-    #         return HttpResponseRedirect("/blog/")
-    #     else:
-    #         return self.render_to_response(self.get_context_data(), **kwargs)
-
-
 class LogoutView(View):
     def get(self, request):
-        # Выполняем выход для пользователя, запросившего данное представление.
         logout(request)
-
-        # После чего, перенаправляем пользователя на главную страницу.
         return HttpResponseRedirect("/blog/")
 
 
@@ -112,6 +75,22 @@ def government(request):
     return render_to_response('profile/government.html',
                               data,
                               context_instance=RequestContext(request))
+
+
+@login_required
+def password_change(request):
+    form = PasswordChangeForm(user=request.user)
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            redirect('/password_change_done/')
+
+    return render(request, 'password_change.html', {
+        'form': form,
+    })
 
 
 @login_required
