@@ -168,3 +168,12 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = '5HO4lXQiwRRfuoAFI4mh'
 AUTH_PROFILE_MODULE = "profile.CustomUser"
 
 DEFAULT_BANNER_TITLE = 3
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'support@tkr.od.ua'
+EMAIL_USE_TLS = True
+EMAIL_HOST = '148.251.236.139'
+EMAIL_HOST_USER = 'support@tkr.od.ua'
+EMAIL_HOST_PASSWORD = 'blasco5454588407'
+EMAIL_PORT = 587
+SERVER_EMAIL = 'support@tkr.od.ua'
