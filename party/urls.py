@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from django.conf.urls import patterns, url, include
-from party.views import PartyListView, PartyDetailView, PartyPostListViewTag
+from party.views import *
 
 urlpatterns = patterns('party.views',
     url(r'^party/$', PartyListView.as_view()),
