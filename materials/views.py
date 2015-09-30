@@ -13,6 +13,7 @@ from hike.models import TypeHike, Region, Difficulty
 from force_blog.models import Category
 from profile.models import CustomUser
 from materials.logic import _type_material, _material_filter, _get_objects_articles, _get_objects_reports
+from django.core.mail import send_mail
 import time
 
 
@@ -90,9 +91,6 @@ def material_folder(request, dir_id):
 
 @login_required
 def material_page(request):
-    if not request.user.is_authenticated():
-        return redirect('/login/')
-
     data = {'type_hikes': 'type_hike'}
     return render_to_response('materials/material_new.html',
                               data,
