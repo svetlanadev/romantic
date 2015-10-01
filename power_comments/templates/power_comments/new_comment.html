@@ -5,7 +5,7 @@
 		<div id="comment_{{ comment.id }}">
 		<div class="row">
 		  {% count_inc_power_comments comment.count_inc %}
-          <img src="{{ comment.owner.avatar.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="img-circle">
+          <img src="{{ comment.owner.avatar.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="object-fit_cover_radius">
             <strong><a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">{{ comment.owner.get_full_name }}</a> </strong> - {{ comment.date_creation }}
 
             {% if profile.moderator == True or user.is_superuser %}

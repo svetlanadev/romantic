@@ -13,17 +13,18 @@
 <div class="panel-body">
 	<div class="row" id="material">
 		<div class="col-md-2">
-			<p align="right"><img src="{{ material.type_hike.image.url }}" class="img-circle img-thumbnail" width="80px"></p>
+			<p align="right"><img src="{{ material.type_hike.image.url }}" class="img-circle img-thumbnail" width="70px"></p>
 		</div>
-		<div class="col-md-5">
-			Тип: {{ material.type_hike.type_hike }} поход, 
-	        Сложность: {{ material.difficulty }}<br><hr class="hr_sm">
+		<div class="col-md-4">
+			Тип: {{ material.type_hike.type_hike }} поход,
+	        {{ material.difficulty }}<br><hr class="hr_sm">
 	        Регион: {{ material.region }}, 
 	        {{ material.year }} год<br><hr class="hr_sm">
 	        Руководитель - {{ material.title }}<br><hr class="hr_sm">
-			Опубликовано: {{ material.date_publication|date:"d.m.Y" }}, Автор: {{ material.owner.get_full_name }}<br><br>
+			Опубликовано: {{ material.date_publication|date:"d.m.Y" }}<br>
+            Автор: {{ material.owner.get_full_name }}<br><br>
 		</div>
-		<div class="col-md-5">
+		<div class="col-md-6">
 		<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:280 }}
 		
 		<!-- {% if user.is_authenticated %}

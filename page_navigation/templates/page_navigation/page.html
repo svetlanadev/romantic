@@ -10,7 +10,7 @@
             <a href="/profile/{{ custom_user.id }}"><p style="font-size:18px; color: #000" align="center"><strong>{{ custom_user.user.get_full_name }}</strong></p>
             <div class="row">
                 <div class="col-xs-4">
-                    <img src="{{ custom_user.avatar.url }}" class="img-circle" width="110%">
+                    <img src="{{ custom_user.avatar.url }}" class="object-fit_cover_radius" width="110px" height="110px">
                 </div></a>
                 <div class="col-xs-8">
                     <p class="text-left"><span class="glyphicon glyphicon-envelope"></span> На проверке: {% sandbox_user_count request %}</p>
@@ -91,11 +91,11 @@
               <div class="media">
                   {% if material.rank == 0 %}
                       <div class="media-left">
-                        <img src="{{ material.type_hike.image.url }}" style="border: 1px solid #dddddd;" width="53px" height="53px" class="img-circle">
+                        <img src="{{ material.type_hike.image.url }}" style="border: 1px solid #dddddd;" width="53px" height="53px" class="object-fit_cover_radius">
                       </div>
                   {% else %}
                       <div class="media-left">
-                        <img src="{{ material.owner.avatar.url }}" width="50px" height="50px" class="img-circle">
+                        <img src="{{ material.owner.avatar.url }}" width="50px" height="50px" class="object-fit_cover_radiusx">
                       </div>
                   {% endif %}
                   <div class="media-body">
