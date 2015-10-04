@@ -83,6 +83,36 @@
       </div>
     </div>
 
+    {# МЕРОПРИЯТИЯ #}
+    {% if not request.path == "/party/" %}
+        <div class="panel panel-default">
+    <div class="panel-body">
+
+      <p style="font-size:18px; color: #000" align="center"><strong>Будущие мероприятия</strong></p>
+      {% for party in partys %}
+        <div class="thumbnail">
+        <a href="{{ party.get_absolute_url }}/">
+            <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
+                <div align="center" class="background_text">
+{#                        <h3>- {{ party.title }}</h3>#}
+                </div>
+            </div>
+        </a>
+            <div align="center">
+                <p style="font-size: 18px;"><strong>{{ party.title }}</strong></p>
+                {% party_date_tag party %}
+            </div><br>
+            <div align="center">
+                <a href="/party/{{ party.id }}"><button type="button" class="btn btn-success btn-sm">Подробнее/Обсудить</button></a>
+            </div>
+
+        </div>
+
+      {% endfor %}
+    </div>
+    </div>
+    {% endif %}
+
     {# МАТЕРИАЛЫ #}
     <div class="panel panel-default">
        <div class="panel-body">
@@ -91,11 +121,11 @@
               <div class="media">
                   {% if material.rank == 0 %}
                       <div class="media-left">
-                        <img src="{{ material.type_hike.image.url }}" style="border: 1px solid #dddddd;" width="53px" height="53px" class="object-fit_cover_radius">
+                        <img src="{{ material.type_hike.image.url }}" style="border: 1px solid #dddddd;" width="53px" height="53px" class="img-circle">
                       </div>
                   {% else %}
                       <div class="media-left">
-                        <img src="{{ material.owner.avatar.url }}" width="50px" height="50px" class="object-fit_cover_radiusx">
+                        <img src="{{ material.owner.avatar.url }}" width="50px" height="50px" class="object-fit_cover_radius">
                       </div>
                   {% endif %}
                   <div class="media-body">
@@ -127,35 +157,7 @@
        </div>
     </div>
 
-    {# МЕРОПРИЯТИЯ #}
-    {% if not request.path == "/party/" %}
-        <div class="panel panel-default">
-    <div class="panel-body">
 
-      <p style="font-size:18px; color: #000" align="center"><strong>Будущие мероприятия</strong></p>
-      {% for party in partys %}
-        <div class="thumbnail">
-        <a href="{{ party.get_absolute_url }}/">
-            <div style="background-image:url({{ party.image.url }}); background-size: cover;  padding-top:20px; height:180px; width:100%">
-                <div align="center" class="background_text">
-{#                        <h3>- {{ party.title }}</h3>#}
-                </div>
-            </div>
-        </a>
-            <div align="center">
-                <p style="font-size: 18px;"><strong>{{ party.title }}</strong></p>
-                {% party_date_tag party %}
-            </div><br>
-            <div align="center">
-                <a href="/party/{{ party.id }}"><button type="button" class="btn btn-success btn-sm">Подробнее/Обсудить</button></a>
-            </div>
-
-        </div>
-
-      {% endfor %}
-    </div>
-    </div>
-    {% endif %}
 {#        <div class="panel panel-default">#}
 {#          <div class="panel-body">#}
 {#              <p style="font-size:18px; color: #000" align="center"><strong>Активные пользователи</strong></p>#}

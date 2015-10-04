@@ -6,6 +6,9 @@ from django.core.urlresolvers import reverse, NoReverseMatch
 from power_comments.forms import PowerCommentForm
 from power_comments.models import PowerComment
 from profile.models import CustomUser
+from force_blog.models import BlogPost
+from materials.models import Material
+from info_pages.models import InfoPage
 
 
 register = template.Library()

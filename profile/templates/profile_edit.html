@@ -20,7 +20,7 @@
 		<div class="row">
 	        <div class="col-xs-5 col-md-5">
 	            {{ form.avatar.errors }}
-	            <img src="{{ profile.avatar.url }}" name="aboutme" width="150" height="150" border="0" class="img-circle"><br><br>
+	            <img src="{{ profile.avatar.url }}" name="aboutme" class="object-fit_cover_radius" width="150px" height="150px"><br><br>
 	            <input id="id_avatar" name="avatar" title="Изменить аватар" type="file" data-filename-placement="default">
 	        </div>
 	        <div class="col-xs-7 col-md-7">
