@@ -27,17 +27,14 @@ class BlogPostListView(ListView):
 
     def get_queryset(self):
         if not self.request.user.is_authenticated():
-            qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
-                    'category').exclude(state=0)
+            qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related('category').exclude(state=0)
             return qs
         else:
             profile = CustomUser.objects.get(user=self.request.user)
         if profile.moderator or profile.goverment or profile.user.is_superuser:
-            qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
-                    'category')
+            qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related('category')
         else:
-            qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related(
-                    'category').exclude(state=0)
+            qs = BlogPost.objects.select_related('owner', 'owner__user').prefetch_related('category').exclude(state=0)
         return qs
 
     def get_context_data(self, **kwargs):

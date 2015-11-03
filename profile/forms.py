@@ -147,3 +147,7 @@ class CustomUserForm(ModelForm):
         self.instance.user.first_name = self.cleaned_data.get('first_name')
         self.instance.user.last_name = self.cleaned_data.get('last_name')
         self.instance.user.save()
+
+
+class RestartPasswordForm(forms.Form):
+    email = forms.EmailField()

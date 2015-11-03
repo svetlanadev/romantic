@@ -1,12 +1,14 @@
 # coding: utf-8
 # author: dlyapun
 
-# from django.shortcuts import render_to_response
-# from django.template import RequestContext
 from django.contrib.auth import logout, login
+from django.contrib.auth import authenticate
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
+from django.core import signing
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect, render
 from django.template import RequestContext
@@ -15,9 +17,12 @@ from django.views.generic.base import View
 from django.views.generic.edit import FormView
 from materials.models import Material
 from power_comments.models import PowerComment
-from profile.forms import UserCreateForm, UserLoginForm, CustomUserForm
+from profile.forms import UserCreateForm, UserLoginForm, CustomUserForm, RestartPasswordForm
 from profile.models import CustomUser
-from django.contrib.auth import update_session_auth_hash
+from django.core.mail import send_mail, BadHeaderError
+from django.template.loader import render_to_string
+import random
+import string
 
 
 class ProfileListView(ListView):
@@ -40,13 +45,42 @@ class RegisterFormView(FormView):
         last_user = CustomUser.objects.last()
         last_user.user.is_active = False
         last_user.user.save()
+        value = signing.dumps({"id": last_user.user.id})
+        x = value.replace(':', '___')
+        message = _email_message(x)
+        try:
+            send_mail("Регистрация на сайте tkr.od.ua",
+                      message,
+                      'support@tkr.od.ua',
+                      [last_user.user.email],
+                      fail_silently=False)
+        except BadHeaderError:
+            print "NOW WORKING"
+
         return super(RegisterFormView, self).form_valid(form)
+
+
+def _email_message(value):
+    message = render_to_string('send_message.txt', {
+                               'value': value, })
+    return message
+
+
+def complete_registration(request, value):
+    x = value.replace('___', ':')
+    decript_string = signing.loads(x)
+    user_id = decript_string['id']
+    user = User.objects.get(id=user_id)
+    user.is_active = True
+    user.save()
+    return redirect('/login/')
 
 
 class PasswordChangeView(FormView):
     form_class = PasswordChangeForm
     template_name = "password_change.html"
     success_url = "/blog/"
+
     def form_valid(self, form):
         form.save()
         return super(PasswordChangeView, self).form_valid(form)
@@ -93,6 +127,51 @@ def password_change(request):
     })
 
 
+def restart_password(request):
+    form = RestartPasswordForm()
+
+    errors = []
+    if request.method == 'POST':
+        form = RestartPasswordForm(request.POST)
+        if form.is_valid():
+            print "VELID"
+            email = form.cleaned_data['email']
+            try:
+                user = User.objects.get(email=email)
+                token = randstring(6)
+                user.set_password(token)
+                user.save()
+                message = email_message_pass(user.username, token)
+                try:
+                    send_mail("Сброс пароля на сайте tkr.od.ua",
+                              message,
+                              'support@tkr.od.ua',
+                              [user.email],
+                              fail_silently=False)
+                    return redirect('/restart_password_done/')
+                except BadHeaderError:
+                    print "NOW WORKING"
+            except:
+                errors.append('Пользователь с данным e-mail - не существует.')
+
+    return render(request, 'password_reset.html', {
+        'errors': errors,
+        'form': form,
+    })
+
+
+def randstring(n):
+    a = string.ascii_letters + string.digits
+    return ''.join([random.choice(a) for i in range(n)])
+
+
+def email_message_pass(login, token):
+    message = render_to_string('send_message_pass.txt', {
+                               'login': login,
+                               'pass': token, })
+    return message
+
+
 @login_required
 def profile_edit(request):
     profile = CustomUser.objects.get(user=request.user)
@@ -127,7 +206,7 @@ def profile_edit(request):
 def profile(request, profile_id):
     profile2 = CustomUser.objects.get(id=profile_id)
     comments = PowerComment.objects.filter(owner=profile2).order_by('-date_creation')[:10]
-    materials = Material.objects.filter(owner=profile2).exclude(state=2) 
+    materials = Material.objects.filter(owner=profile2).exclude(state=2)
 
     material_enable = Material.objects.filter(owner=profile2, state=1)
     material_disable = Material.objects.filter(owner=profile2, state=0)
@@ -137,28 +216,30 @@ def profile(request, profile_id):
 
     reports_disable = _get_reports(material_disable)
     reports_enable = _get_reports(material_enable)
-    
+
     data = {'profile2': profile2, 'comments': comments,
-            'articles_disable': articles_disable, 'articles_enable': articles_enable,
-            'reports_disable': reports_disable, "reports_enable": reports_enable,}
+            'articles_disable': articles_disable,
+            'articles_enable': articles_enable,
+            'reports_disable': reports_disable,
+            "reports_enable": reports_enable, }
     return render_to_response('profile.html',
                               data,
                               context_instance=RequestContext(request))
 
 
-def _get_articles(materials):    
+def _get_articles(materials):
     articles = []
 
     for material in materials:
         if material.rank == 1 or material.rank == 3 or material.rank == 4:
             articles.append(material)
         else:
-            pass    
+            pass
 
     return articles
 
 
-def _get_reports(materials):    
+def _get_reports(materials):
     reports = []
 
     for material in materials:

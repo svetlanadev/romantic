@@ -7,7 +7,7 @@ from force_blog.models import AttachedFiles, Category
 
 
 class Material(models.Model):
-    
+
     ENABLE = 1
     DISABLE = 0
     BACKUP = 2
