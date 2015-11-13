@@ -55,6 +55,7 @@ class RegisterFormView(FormView):
                       [last_user.user.email],
                       fail_silently=False)
         except BadHeaderError:
+            pass
             print "NOW WORKING"
 
         return super(RegisterFormView, self).form_valid(form)
@@ -134,7 +135,6 @@ def restart_password(request):
     if request.method == 'POST':
         form = RestartPasswordForm(request.POST)
         if form.is_valid():
-            print "VELID"
             email = form.cleaned_data['email']
             try:
                 user = User.objects.get(email=email)
@@ -150,7 +150,7 @@ def restart_password(request):
                               fail_silently=False)
                     return redirect('/restart_password_done/')
                 except BadHeaderError:
-                    print "NOW WORKING"
+                    pass
             except:
                 errors.append('Пользователь с данным e-mail - не существует.')
 

@@ -1,10 +1,28 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
-    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1; text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="description" content="{% block meta_description %}{% endblock %}Турклуб Романтик - старейший туристический клуб при Одесском Национальном Политехническом Университете, который существует с 1957 года.">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}Турклуб, Романтик, турклуб-романтик, горы, лыжи, горные походы, лыжные походы, пешие походы, сплавы, вело походы, Кавказ, Тянь-Шань, Алтай, Карпаты, Памир, Говерла, Одесский романтик, Романтики,">
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Турклуб Романтик - походы и не только!" />
+    <meta property="og:description" content="Турклуб Романтик - Походы в горы Карпат, Кавказа, Тянь-Шаня и Памира, сплавы на реках, Спелео туризм и прочий активный отдых!" />
+    <meta property="og:image" content="http://www.tkr.od.ua/static/images/logo.png">
+    <link rel="image_src" href="http://www.tkr.od.ua/static/images/logo.png">
+
+    <meta property="og:image" content="http://www.tkr.od.ua/static/images/banners/winter.jpg">
+    <link rel="image_src" href="http://www.tkr.od.ua/static/images/banners/winter.jpg">
+    
+    <meta property="og:url" content="http://gromyk.info/" />
+    <meta property="og:image" content="http://www.tkr.od.ua/static/images/logo.png" />
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>{% block meta_title %}{% endblock %} |  Романтик v0.1</title>
     <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.png" type="image/png">
 
@@ -15,6 +33,37 @@
     {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
     {% load banner_tags %}
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function() {
+                try {
+                    w.yaCounter33520153 = new Ya.Metrika({
+                        id:33520153,
+                        clickmap:true,
+                        trackLinks:true,
+                        accurateTrackBounce:true,
+                        webvisor:true
+                    });
+                } catch(e) { }
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () { n.parentNode.insertBefore(s, n); };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else { f(); }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/33520153" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 
@@ -54,7 +103,7 @@
     <li class="menu-list">
       <div class="under-menu-shadow">
         <ul class="list-inline topmenu">
-          <li><a href="/">Главная</a></li>
+          <li><a href="/">Новости</a></li>
           <li class="hover">
               <a href="#" >О клубе<span class="arrow"></span></a>
               <ul class="submenu">
@@ -94,7 +143,7 @@
               </ul>
           </li>
           <li><a href="https://vk.com/albums-1025962" target="_blank">Галерея</a></li>
-          <li><a href="/blog/">Новости</a></li>
+          <li><a href="#">Походы</a></li>
         </ul>
       </div>
     </li><li class="logo hidden-sm hidden-xs" style="">

@@ -27,7 +27,7 @@ class BannerTitle(models.Model):
     text_author = models.CharField(max_length=150,
                                    blank=True,
                                    null=True,
-                                   verbose_name=u'Автор')
+                                   verbose_name=u'Ссылка на страницу')
     state = models.SmallIntegerField(default=DISABLE, choices=STATE_CHOICE)
     creation_date = models.DateTimeField(auto_now_add=True)
     button_name = models.CharField(max_length=40,
@@ -43,6 +43,15 @@ class BannerTitle(models.Model):
 
     def get_absolute_url(self):
         return u'/banner_title/%s' % self.id
+
+    def image_view(self):
+        if self.image:
+            url = u'<img src="%s" width="500px"/>' % self.image.url
+        else:
+            return 'null'
+        return url
+    image_view.short_description = 'Изображение'
+    image_view.allow_tags = True
 
     # def save(self, force_insert=False, force_update=False, using=None):
     #     if self.state == 1:
@@ -61,4 +70,3 @@ class BannerTitle(models.Model):
         return u'%s %s - %s' % (self.title,
                                 self.text,
                                 self.state)
-    

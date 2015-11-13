@@ -12,27 +12,28 @@ class CustomUser(models.Model):
     user = models.OneToOneField("auth.User")
     date_of_birth = models.DateField(blank=True, null=True)
     about = models.TextField(verbose_name=u'Про себя', blank=True, null=True)
-    status = models.CharField(max_length=50, verbose_name=u'Статус', blank=True, null=True)
+    status = models.CharField(max_length=50,
+                              verbose_name=u'Статус',
+                              blank=True, null=True)
     karma = models.SmallIntegerField(default=POWER_USER_KARMA_DEFAULT,
                                      verbose_name=u'Карма')
 
-    avatar = models.ImageField(upload_to='avatars/', 
+    avatar = models.ImageField(upload_to='avatars/',
                                blank=True, null=True,
                                default="avatars/no_avatar.png",
                                verbose_name=u'Аватар')
 
-    phone = models.CharField(max_length=30, 
-                             verbose_name=u'Номер', 
+    phone = models.CharField(max_length=30,
+                             verbose_name=u'Номер',
                              blank=True, null=True)
-
-    vk = models.CharField(max_length=90, 
-                          verbose_name=u'VK', 
+    vk = models.CharField(max_length=90,
+                          verbose_name=u'VK',
                           blank=True, null=True)
-    facebook = models.CharField(max_length=90, 
-                                verbose_name=u'Facebook', 
+    facebook = models.CharField(max_length=90,
+                                verbose_name=u'Facebook',
                                 blank=True, null=True)
-    od_class = models.CharField(max_length=90, 
-                                verbose_name=u'Одноклассники', 
+    od_class = models.CharField(max_length=90,
+                                verbose_name=u'Одноклассники',
                                 blank=True, null=True)
 
     avatar_150 = ImageSpecField(source='avatar',
@@ -45,9 +46,10 @@ class CustomUser(models.Model):
                                 format='PNG',
                                 options={'quality': 80})
 
-    writer = models.BooleanField(default=False, verbose_name=u'Писатель') 
-    valid_member = models.BooleanField(default=False, verbose_name=u'Действильный член') 
-    moderator = models.BooleanField(default=False, verbose_name=u'Модератор') 
+    writer = models.BooleanField(default=False, verbose_name=u'Писатель')
+    valid_member = models.BooleanField(default=False,
+                                       verbose_name=u'Действильный член')
+    moderator = models.BooleanField(default=False, verbose_name=u'Модератор')
     goverment = models.BooleanField(default=False, verbose_name=u'Правление')
     instructor = models.BooleanField(default=False, verbose_name=u'Инструктор')
     black = models.BooleanField(default=False, verbose_name=u'Black')

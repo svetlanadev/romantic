@@ -1,17 +1,32 @@
-<div class="col-md-8">
-    <form action="/new_power_comment/" class="new_power_comment" method="post" role="form">{% csrf_token %}
-    	<div id="new_comment_form" class="form-group">
-			<label for="exampleInputEmail1">Новый комментарий</label>
-			<input type="hidden" name="id_app" value="{{ app_url }}" /><br>
-			<input type="hidden" name="id_last_comment" id="id_last_comment" value="0" /><br>
-			<label id="comment_alert_dander" class="control-label" for="inputError" style="display: none;">Input with error</label>
-			<textarea id="id_text_comment" mixlength="10" rows="2" name="text" class="form-control" value="{{ app_url }}"></textarea>
-		</div>
-    	<div class="form-group">
-			<button type="submit" class="btn btn-sm">Отправить</button>
-			{% if profile.moderator or profile.goverment or user.is_superuser %}
-			<button class="btn btn-sm btn-default response_default">Новый комментарий</button>
-			{% endif %}
-		</div>
-    </form> 
+<div class="col-md-12" id="new_comment_link">
+  {% if request.user.is_authenticated %} {% if 0 >= profile.karma %}
+  <label id="comment_text">У вас недостаточно кармы для отправки комментариев</label>
+  {% else %}
+  <form action="/new_power_comment/" class="new_power_comment" method="post" role="form">{% csrf_token %}
+    <div id="new_comment_form" class="form-group">
+      <label id="comment_text">Новый комментарий</label>
+      <input type="hidden" name="id_app" value="{{ app_url }}" />
+      <br>
+      <input type="hidden" name="id_last_comment" id="id_last_comment" value="0" />
+      <br>
+      <label id="comment_alert_dander" class="control-label" for="inputError" style="display: none;">Input with error</label>
+      {% if profile.moderator == True or user.is_superuser %}
+      	<label>ТЕКСТ</label>
+	      {{ form.media }}
+	      {{ form.text }}
+	    {% else %}
+	    	<textarea id="id_text_comment" mixlength="10" rows="2" name="text" class="form-control" value="{{ app_url }}"></textarea>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-sm btn-success">Отправить</button>
+      {% if profile.moderator or profile.goverment or user.is_superuser %}
+      <button class="btn btn-sm btn-default response_default">Сбросить ответ</button>
+      {% endif %}
+    </div>
+  </form>
+  {% endif %} {% else %}
+  <p>Чтобы публиковать комментарии, <a href="/register/"> зарегистрируйтесь</a> или <a href="/login/">войдите.</a></p>
+  {% endif %}
 </div>
+{% else %} Комментарии отключены администрацией. {% endif %}

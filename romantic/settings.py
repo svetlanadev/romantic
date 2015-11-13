@@ -8,9 +8,9 @@ SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 SECRET_KEY = '=q@eild4ch4mg#lyso0^^gnd4r2bc&@lj*sw=ua1gpe$#ua4x6'
 
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
 ADMINS = (
     ('Dmitry Lyapun', 'dlyapun@gmail.com'),

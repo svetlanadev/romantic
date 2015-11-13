@@ -96,7 +96,7 @@ class Material(models.Model):
         default=True, verbose_name=u'Комментарии включены')
 
     class Meta:
-        ordering = ["-date_publication"]
+        ordering = ["-date_creation"]
         verbose_name = 'Материал'
         verbose_name_plural = 'Материалы'
 
@@ -136,9 +136,6 @@ class Material(models.Model):
             name_material = "article"
         return name_material
 
-    def save(self, force_insert=False, force_update=False, using=None):
-        print "asdasdasdasdasdasd=+++++++++++++"
-        super(Material, self).save()
 
     def __unicode__(self):
         return u'%s, %s, %s, %s, %s, %s' % (self.title,

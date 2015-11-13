@@ -17,22 +17,22 @@
                     <p class="text-left"><span class="glyphicon glyphicon-star"></span> Карма: {{ custom_user.karma }}</p>
                     {% if custom_user.get_status_profile == True %}
                         {% if custom_user.writer %}
-                        <span class="label label-default">Писатель</span>
+                        <span class="label label-info"><span class="glyphicon glyphicon-pencil"></span> Писатель</span>
                       {% endif %}
                       {% if custom_user.valid_member %}
-                        <span class="label label-primary">Действильный член</span>
+                        <span class="label label-primary"><span class="glyphicon glyphicon-user"></span> Действильный член</span>
                       {% endif %}
                       {% if custom_user.moderator %}
-                        <span class="label label-info">Модератор</span>
+                        <span class="label label-default"><span class="glyphicon glyphicon-sunglasses"></span> Модератор</span>
                       {% endif %}
                       {% if custom_user.goverment %}
-                        <span class="label label-success">Правление</span>
+                        <span class="label label-success"><span class="glyphicon glyphicon-education"></span> Правление</span>
                       {% endif %}
                       {% if custom_user.instructor %}
-                        <span class="label label-warning">Инструктор</span>
+                        <span class="label label-warning"><span class="glyphicon glyphicon-fire"></span> Инструктор</span>
                       {% endif %}
                       {% if custom_user.user.is_superuser %}
-                        <span class="label label-danger"><span class="glyphicon glyphicon-tower"></span> Администратор</span>
+                        <span class="label label-danger"><span class="glyphicon glyphicon-king"></span> Администратор</span>
                       {% endif %}
                   {% endif %}
                 </div>
@@ -85,6 +85,7 @@
 
     {# МЕРОПРИЯТИЯ #}
     {% if not request.path == "/party/" %}
+    {% if partys %}
         <div class="panel panel-default">
     <div class="panel-body">
 
@@ -111,6 +112,7 @@
       {% endfor %}
     </div>
     </div>
+    {% endif %}
     {% endif %}
 
     {# МАТЕРИАЛЫ #}

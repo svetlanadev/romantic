@@ -52,6 +52,11 @@ class BlogPost(models.Model):
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
 
+    def get_owner_fullname(self):
+        return self.owner.get_full_name()
+    get_owner_fullname.short_description = 'Автор'
+    get_owner_fullname.allow_tags = True
+
     def get_absolute_url(self):
         return u'/blog/%s' % self.id
 
@@ -112,6 +117,15 @@ class DefaultImageBlog(models.Model):
     class Meta:
         verbose_name = 'Изображение по умолчанию'
         verbose_name_plural = 'Изображения по умолчанию'
+
+    def image_view(self):
+        if self.image:
+            url = u'<img src="%s" width="300px"/>' % self.image.url
+        else:
+            return 'null'
+        return url
+    image_view.short_description = 'Изображение'
+    image_view.allow_tags = True
 
     def __unicode__(self):
         return self.name

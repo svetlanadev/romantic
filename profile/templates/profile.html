@@ -33,7 +33,7 @@
             <span class="label label-warning">Инструктор</span>
           {% endif %}
           {% if profile2.user.is_superuser %} 
-            <span class="label label-danger"><span class="glyphicon glyphicon-tower"></span> Администратор</span>
+            <span class="label label-danger"><span class="glyphicon glyphicon-king"></span> Администратор</span>
           {% endif %}
         {% endif %}
         </center>
@@ -125,7 +125,7 @@
         </div>
     </div>
     {% if profile == profile2 %} 
-    {% if not reports_disable and articles_disable %}
+    {% if articles_disable %}
     <div class="col-md-8">
     <div class="row">
     <div class="panel-group" id="accordion">
@@ -133,13 +133,38 @@
         <div class="panel-heading">
           <h4 class="panel-title">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne1"><span class="glyphicon glyphicon-minus-sign">
-              </span> Материалы на проверке:</a>
+              </span> Статьи на проверке:</a>
           </h4>
         </div>
         <div id="collapseOne1" class="panel-collapse collapse">
-          {% if reports_disable %}
-            <h4>Отчеты / Паспорта</h4>
-          {% endif %}
+          {% for material in articles_disable %}
+          <div class="list-group">
+            <a href="/materials/{{ material.id }}" class="list-group-item">
+              <h5 class="list-group-item-heading" align="center">
+              {{ material.title }} <span class="glyphicon glyphicon-star text-primary"></span> <strong>{{ material.rating }}</strong>
+              </h5>
+              <p class="list-group-item-text">{{ material.short_desc }}</p>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    {% endif %}
+    {% if reports_disable %}
+    <div class="col-md-8">
+    <div class="row">
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default" style="border-color: #CFCFCF;">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne2"><span class="glyphicon glyphicon-minus-sign">
+              </span> Отчеты на проверке:</a>
+          </h4>
+        </div>
+        <div id="collapseOne2" class="panel-collapse collapse">
           {% for material in reports_disable %}
           <div class="list-group">
             <a href="/materials/{{ material.id }}" class="list-group-item">
@@ -148,19 +173,6 @@
               Сложность: {{ material.difficulty }}
               Регион: {{ material.region }}, 
               {{ material.year }} год <span class="glyphicon glyphicon-star text-primary"></span> <strong>{{ material.rating }}</strong>
-              </h5>
-              <p class="list-group-item-text">{{ material.short_desc }}</p>
-            </a>
-          </div>
-          {% endfor %}
-          {% if articles_disable %}
-            <h4>Статьи / Искусство</h4>
-          {% endif %}
-          {% for material in articles_disable %}
-          <div class="list-group">
-            <a href="/materials/{{ material.id }}" class="list-group-item">
-              <h5 class="list-group-item-heading" align="center">
-              {{ material.title }} <span class="glyphicon glyphicon-star text-primary"></span> <strong>{{ material.rating }}</strong>
               </h5>
               <p class="list-group-item-text">{{ material.short_desc }}</p>
             </a>

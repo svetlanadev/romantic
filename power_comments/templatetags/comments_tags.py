@@ -22,12 +22,14 @@ def power_comments(request, app_url, if_comment):
         profile = request.user
     comments = PowerComment.objects.all().filter(app=app_url, state=1)
     count_comments = comments
+    form = PowerCommentForm()
     data = {'comments': comments,
             'app_url': app_url,
             'if_comments': if_comment,
             'count_comments': count_comments,
             'profile': profile,
-            'request': request}
+            'request': request,
+            'form': form}
     return data
 
 

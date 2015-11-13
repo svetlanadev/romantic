@@ -43,7 +43,5 @@ def contex_info_pages(request):
     else:
         info_pages = info_pages.exclude(access=MODERATORS).exclude(access=FULLMEMBERS).exclude(access=GOVERNMENTS)
 
-    print info_pages
-
     data = {'info_pages': info_pages, }
     return data

@@ -84,7 +84,7 @@ def ajax_test(request):
     results = {'success':False}
 
     if request.is_ajax():
-        print request.POST
+        pass
     # Тут — потрібні нам алгоритми
     if request.is_ajax():
         results = {'success':True, 'param1':'Good', 'param2':randint(0,40)}
@@ -95,12 +95,12 @@ def ajax_test(request):
 
 def ajax_karma_minus(request):
     user = CustomUser.objects.get(user=request.user)
-    results = {'success':False}
+    results = {'success': False}
     id_comment = request.POST['id_comment']
     comment = PowerComment.objects.get(id=id_comment)
     owner = comment.owner
     message = ""
-        
+
     if user.karma > POWER_USER_KARMA_AVIABLE:
         if user not in comment.karma_users.all():
             comment.rating = comment.rating - 1
@@ -115,7 +115,10 @@ def ajax_karma_minus(request):
         message = "Недостаточно кармы для голосования"
 
     if request.is_ajax():
-        results = {'success':True, 'rating':comment.rating, 'id_comment':comment.id, 'message':message, }
+        results = {'success': True,
+                   'rating': comment.rating,
+                   'id_comment': comment.id,
+                   'message': message, }
         return JsonResponse(results)
 
     url = comment.app

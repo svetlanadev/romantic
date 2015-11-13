@@ -12,7 +12,7 @@
 <div class="col-md-8 left">
 <div class="panel panel-default">
 <div class="panel-body">
-    <p style="font-size:26px; color: #000" align="center"><strong>Новости турклуба</strong></p>
+    <!-- <p style="font-size:26px; color: #000" align="center"><strong>Новости турклуба</strong></p> -->
 	{% for blog_post in blog_posts %}
         {% if blog_post.state == 0 %}
             {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}

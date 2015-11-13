@@ -30,8 +30,11 @@ class PowerComment(models.Model):
                                      verbose_name=u'Статус')
     app = models.CharField(max_length=1000)
     position = models.SmallIntegerField(default=1)
-    count_inc = models.SmallIntegerField(verbose_name=u'Кол-во вложений', blank=True, null=True,)
-    pre_comment = models.CharField(max_length=1000, verbose_name=u'Пре коммент', blank=True, null=True,)
+    count_inc = models.SmallIntegerField(verbose_name=u'Кол-во вложений',
+                                         blank=True, null=True,)
+    pre_comment = models.CharField(max_length=1000,
+                                   verbose_name=u'Пре коммент',
+                                   blank=True, null=True,)
 
     class Meta:
         ordering = ["position"]
@@ -43,7 +46,8 @@ class PowerComment(models.Model):
 
     def get_full_name(self):
         if self.owner.first_name or self.owner.last_name:
-            full_name = u'%s %s' % (self.owner.first_name, self.owner.last_name)
+            full_name = u'%s %s' % (self.owner.first_name,
+                                    self.owner.last_name)
             return full_name
         else:
             return "No first or last name"

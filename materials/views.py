@@ -282,7 +282,6 @@ def sandbox(request):
 
     articles = _get_objects_articles(DISABLE)
     reports = _get_objects_reports(DISABLE)
-    print reports
 
     data = {'articles': articles, 'reports': reports}
     return render_to_response('materials/sandbox.html',
