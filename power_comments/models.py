@@ -37,7 +37,7 @@ class PowerComment(models.Model):
                                    blank=True, null=True,)
 
     class Meta:
-        ordering = ["position"]
+        ordering = ["-date_creation"]
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
 

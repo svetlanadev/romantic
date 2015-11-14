@@ -211,7 +211,7 @@ def new_power_comment(request):
                                        position=position)
                 comment.save()
 
-            comments = PowerComment.objects.all().filter(app=id_app, state=1)
+            comments = PowerComment.objects.all().filter(app=id_app, state=1).order_by('date_creation')
             new_comment = PowerComment.objects.last()
             return render_to_response('power_comments/new_comment.html', { 
                                       'comments': comments },

@@ -18,6 +18,7 @@ import re
 
 register = template.Library()
 
+
 @register.simple_tag()
 def page_navigation(request):
 
@@ -54,6 +55,35 @@ def page_navigation(request):
         if len(active_users) >= 8:
             break
 
+    comments = []
+    apps = []
+
+    last_comment = PowerComment.objects.exclude(state=0)[0:]
+    last_comment = last_comment[0]
+
+    print last_comment.id
+    comments.append(last_comment)
+    apps.append(last_comment.app)
+
+    iteration = last_comment.id
+
+    while iteration > 0:
+        iteration -= 1
+        try:
+            comment = PowerComment.objects.get(id=iteration)
+            if comment.state == 0:
+                pass
+            else:
+                if not comment.app in apps:
+                    comments.append(comment)
+                    apps.append(comment.app)
+
+        except ObjectDoesNotExist:
+            pass
+
+        if len(apps) > 6:
+            break
+
     comments = PowerComment.objects.values('app').distinct()
     comments_count = comments.count() - 5
     try:
@@ -62,8 +92,8 @@ def page_navigation(request):
         pass
 
     conversation = []
-    for comment in comments:
-        app_url = comment['app']
+    for app in apps:
+        app_url = app
         id_content = ''.join(filter(lambda x: x.isdigit(), app_url))
         if "blog" in app_url:
             obj = BlogPost.objects.get(id=id_content)
@@ -88,10 +118,8 @@ def page_navigation(request):
         except UnboundLocalError:
             pass
 
-        if len(conversation) >= 5:
+        if len(conversation) >= 7:
             break
-
-    conversation.reverse()
 
     url = template.loader.get_template("page_navigation/page.html")
     data = {'materials': materials, 
