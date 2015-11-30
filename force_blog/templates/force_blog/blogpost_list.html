@@ -17,27 +17,43 @@
   <div class="panel-heading"><strong>Панель модератора</strong></div>
   <div class="panel-body">
     {% for comment in last_comments %}
-    <div id="comment_{{ comment.id }}">
-      <div class="row">
-        <div class="col-md-1 left">
-          <img src="{{ comment.owner.avatar.url }}" width="45px" height="45px" class="object-fit_cover_radius">
+      <div id="comment_{{ comment.id }}">
+        <div class="col-md-1">
+          <a href="#">
+            <img src="{{ comment.owner.avatar.url }}"  width="64x" height="64x" class="media-object object-fit_cover_radius">
+          </a>
         </div>
-        <div class="col-md-7 left">
-            <strong>
-                <a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">
-                  {{ comment.owner.get_full_name }}
-                </a>
-            </strong> - {{ comment.date_creation|date:"d.E.Y, G:i:s" }}
+        <div class="col-md-9">
+          <h5 class="media-heading">
+            <div class="col-md-8">
+              <a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">
+                <strong>{{ comment.owner.get_full_name }}</strong>
+              </a>
+              <small> {{ comment.date_creation|date:"d E Y" }}</small>
+            </div>
+            <div class="col-md-4" align="right">
+              <span class="glyphicon glyphicon-star"></span> <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong>
+            </div>
+          </h5>
+          <div class="col-md-12">
             <p align="justify">{{ comment.text|safe }}</p>
+          </div>
         </div>
-        <div class="col-md-4">
-          <span class="label label-info"><a href="#"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></span><br>
-          <span class="label label-danger"><a href="#"><span class="glyphicon glyphicon-user"></span> Заблокировать</a></span><br>
-          <span class="label label-default"><a href="#"><span class="glyphicon glyphicon-sunglasses"></span> Скрыть</a></span><br>
+        <div class="col-md-2">
+          <a href="#">
+            <span class="glyphicon glyphicon-pencil"></span> Check</a>
+          <br>
+          <a href="#">
+            <span class="glyphicon glyphicon-user"></span> Block</a>
+          <br>
+          <a href="#">
+            <span class="glyphicon glyphicon-sunglasses"></span> Hined</a>
+          <br>
         </div>
       </div>
-    </div>
-    <hr class="hr_sm"> 
+      <div class="col-md-12">
+        <hr class="hr"> 
+      </div>
     {% endfor %}
 </div>
 </div>
@@ -57,7 +73,7 @@
             <div id="blogpost-{{ blog_post.id }}">
         {% endif %}
 		<div class="col-md-12" align="center">
-			<p style="font-size:16px">
+			<p style="font-size:22px">
 				<a href="{{ blog_post.get_absolute_url }}#title">
 					<strong>{{ blog_post.title }}</strong>
 				</a>

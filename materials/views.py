@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, redirect, render
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, DetailView
-from materials.forms import MaterialForm, AttachedFilesForm
+from materials.forms import MaterialForm
 from materials.models import Material, Dirs
 from hike.models import TypeHike, Region, Difficulty
 from force_blog.models import Category
@@ -117,7 +117,6 @@ def material_new(request, state):
 
     if request.method == "POST":
         form = MaterialForm(request.POST)
-        form_file = AttachedFilesForm(request.POST, request.FILES)
         if form.is_valid():
             try:
                 tags = form.cleaned_data['category']
@@ -133,7 +132,7 @@ def material_new(request, state):
             url = u'/materials/%s' % material_last.id
             return redirect(url)
         else:
-            data = {'form': form, 'form_file': form_file, 'type_hikes': type_hike,
+            data = {'form': form, 'type_hikes': type_hike,
                     'regions': region, 'difficultys': difficulty,
                     'category_material': category_material,
                     'name_material': name_material,
@@ -146,8 +145,7 @@ def material_new(request, state):
 
     else:  # GET
         form = MaterialForm()
-        form_file = AttachedFilesForm()
-        data = {'form': form, 'form_file': form_file, 'type_hikes': type_hike,
+        data = {'form': form, 'type_hikes': type_hike,
                 'regions': region, 'difficultys': difficulty,
                 'category_material': category_material,
                 'name_material': name_material,

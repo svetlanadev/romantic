@@ -8,11 +8,13 @@ class PowerComment(models.Model):
     DISABLE = 0
     ENABLE = 1
     BAD_KARMA = 2
+    CHECK = 3
 
     STATE_CHOICE = (
         (DISABLE, 'Скрыт'),
         (ENABLE, 'Активен'),
         (BAD_KARMA, 'Плохая карма'),
+        (CHECK, 'На проверке'),
     )
 
     date_creation = models.DateTimeField(auto_now_add=True)
@@ -25,7 +27,7 @@ class PowerComment(models.Model):
                                          verbose_name=u'Люди сделали отметки',
                                          related_name="user_karma_comment")
     text = models.TextField(verbose_name=u'Страничка')
-    state = models.SmallIntegerField(default=ENABLE,
+    state = models.SmallIntegerField(default=CHECK,
                                      choices=STATE_CHOICE,
                                      verbose_name=u'Статус')
     app = models.CharField(max_length=1000)

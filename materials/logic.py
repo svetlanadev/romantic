@@ -2,7 +2,7 @@
 # author: dlyapun
 
 from django.core.exceptions import ObjectDoesNotExist
-from materials.forms import MaterialForm, AttachedFilesForm
+from materials.forms import MaterialForm
 from materials.models import Material, Dirs
 from hike.models import TypeHike, Region, Difficulty
 
@@ -34,7 +34,7 @@ def _type_material(state):
     return type_material, name_material, category_material
 
 
-def _get_objects_articles(point):    
+def _get_objects_articles(point):
     articles = []
     materials = Material.objects.filter(state=point, rank=1)
 
@@ -50,7 +50,7 @@ def _get_objects_articles(point):
     return articles
 
 
-def _get_objects_reports(point):    
+def _get_objects_reports(point):
     reports = []
     materials = Material.objects.filter(state=point, rank=0)
 
@@ -64,18 +64,17 @@ def _get_objects_reports(point):
 
 def _material_filter(request, materials):
     try:
-        difficulty_filter = Difficulty.objects.get(id=request.POST['difficulty']) 
+        difficulty_filter = Difficulty.objects.get(id=request.POST['difficulty'])
     except ObjectDoesNotExist:
         difficulty_filter = 0
     try:
-        type_hike_filter = TypeHike.objects.get(id=request.POST['type_hike']) 
+        type_hike_filter = TypeHike.objects.get(id=request.POST['type_hike'])
     except ObjectDoesNotExist:
         type_hike_filter = 0
     try:
-        region_filter = Region.objects.get(id=request.POST['region']) 
+        region_filter = Region.objects.get(id=request.POST['region'])
     except ObjectDoesNotExist:
         region_filter = 0
-        
 
     if type_hike_filter != 0:
         materials = materials.filter(type_hike=type_hike_filter)

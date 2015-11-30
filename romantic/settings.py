@@ -59,6 +59,8 @@ INSTALLED_APPS = (
     'materials',
     'django_summernote',
     'info_pages',
+    'django_cleanup',
+    'redactor',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -177,3 +179,6 @@ EMAIL_HOST_USER = 'support@tkr.od.ua'
 EMAIL_HOST_PASSWORD = 'blasco5454588407'
 EMAIL_PORT = 587
 SERVER_EMAIL = 'support@tkr.od.ua'
+
+REDACTOR_OPTIONS = {'lang': 'ru'}
+REDACTOR_UPLOAD = 'uploads/'

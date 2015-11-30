@@ -7,7 +7,7 @@ from power_comments.models import PowerComment
 
 def contex_profile(request):
 
-    last_comments = PowerComment.objects.exclude(state=0)[:10]
+    last_comments = PowerComment.objects.filter(state=3)
     data = {'last_comments': last_comments}
 
     if request.user.is_authenticated():

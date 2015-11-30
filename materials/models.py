@@ -3,7 +3,7 @@
 from django.db import models
 from django.conf import settings
 from hike.models import *
-from force_blog.models import AttachedFiles, Category
+from force_blog.models import Category
 
 
 class Material(models.Model):
@@ -149,23 +149,7 @@ class Material(models.Model):
                                             self.region,)
 
 
-# class AttachedFiles(models.Model):
-#     file_name = models.CharField(max_length=50)
-#     one_file = models.FileField(upload_to='files_materials/')
-
-#     class Meta:
-#         verbose_name = 'Файл'
-#         verbose_name_plural = 'Файлы'
-
-#     def get_absolute_url(self):
-#         return u'/files/%s' % self.id
-
-#     def __unicode__(self):
-#         return self.file_name
-
-
 class Dirs(models.Model):
-    
     ENABLE = 1
     DISABLE = 0
     DELETE = 2
@@ -196,8 +180,8 @@ class Dirs(models.Model):
                                      verbose_name=u'Статус')
 
     rank = models.SmallIntegerField(default=ENABLE,
-                                     choices=RANK_CHOICE,
-                                     verbose_name=u'Статус')
+                                    choices=RANK_CHOICE,
+                                    verbose_name=u'Статус')
 
     materials = models.ManyToManyField('Material',
                                        blank=True, null=True,

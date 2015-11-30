@@ -1,5 +1,6 @@
 // Магія розпочнеться лише після повного завантаження сторінки
 $(document).ready(function () {
+
 	setCommentsHandlers();
 	
 	$('.response_default').click(function()  {

@@ -25,8 +25,8 @@ urlpatterns = patterns('',
     url(r'^', include('power_comments.urls')),
     url(r'^', include('info_pages.urls')),
     url(r'^', include('materials.urls')),
-    url(r'^__debug__/', include(debug_toolbar.urls)),
     url(r'^summernote/', include('django_summernote.urls')),
+    url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 

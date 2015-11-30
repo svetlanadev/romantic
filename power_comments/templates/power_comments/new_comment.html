@@ -1,115 +1,63 @@
-<div id="power_comments">
-  {% load comments_tags %}
-  <div id="comments">
-    <p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
-    {% for comment in comments %}
-    <div id="comment_{{ comment.id }}">
-      <div class="row">
-        {% count_inc_power_comments comment.count_inc %}
-        <img src="{{ comment.owner.avatar.url }}" width="70px" height="70px" hspace="10" vspace="10" align="left" class="object-fit_cover_radius">
-        <strong>
-        <a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">
-          {{ comment.owner.get_full_name }}
-        </a>
-        </strong> 
-
-        {% if comment.owner.get_status_profile == True %}
-            {% if comment.owner.writer %}
-              <span class="label label-info" title="Писатель"><span class="glyphicon glyphicon-pencil"></span></span>
+{% load comments_tags %}
+<div id="comments">
+  <br>
+  <p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
+  {% for comment in comments %}
+  <div id="comment_{{ comment.id }}">
+    <div class="col-md-1">
+      <a href="#">
+        <img src="{{ comment.owner.avatar.url }}" width="64x" height="64x" class="media-object object-fit_cover_radius">
+      </a>
+    </div>
+    <div class="col-md-11">
+      <h5 class="media-heading">
+          <div class="col-md-9">
+            <a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">
+              <strong>{{ comment.owner.get_full_name }}</strong>
+            </a>
+            {% if comment.owner.get_status_profile == True %}
+              {% if comment.owner.writer %}
+                <span class="glyphicon glyphicon-pencil" title="Писатель"></span>
+              {% endif %}
+              {% if comment.owner.valid_member %}
+                <span class="glyphicon glyphicon-user" title="ДЧ"></span>
+              {% endif %}
+              {% if comment.owner.moderator %}
+                <span class="glyphicon glyphicon-sunglasses" title="Модератор"></span>
+              {% endif %}
+              {% if comment.owner.goverment %}
+                <span class="glyphicon glyphicon-education" title="Правление"></span>
+              {% endif %}
+              {% if comment.owner.instructor %}
+                <span class="glyphicon glyphicon-fire" title="Инструктор"></span>
+              {% endif %}
             {% endif %}
-            {% if comment.owner.valid_member %}
-              <span class="label label-primary" title="Действительный член"><span class="glyphicon glyphicon-user"></span></span>
+            {% if comment.owner.user.is_superuser %}
+              <span class="glyphicon glyphicon-king" title="Администратор"></span>
             {% endif %}
-            {% if comment.owner.moderator %}
-              <span class="label label-default" title="Модератор"><span class="glyphicon glyphicon-sunglasses"></span></span>
-            {% endif %}
-            {% if comment.owner.goverment %}
-              <span class="label label-success" title="Правление"><span class="glyphicon glyphicon-education"></span></span>
-            {% endif %}
-            {% if comment.owner.instructor %}
-              <span class="label label-warning" title="Инструктор"><span class="glyphicon glyphicon-fire"></span></span>
-            {% endif %}
-        {% endif %}
-      {% endif %}
-      {% if comment.owner.user.is_superuser %}
-        <span class="label label-danger" title="Администратор"><span class="glyphicon glyphicon-king"></span></span>
-      {% endif %}
-
-      , {{ comment.date_creation|date:"d.E.Y, G:i:s" }} 
-           
-            
-
-        {% if profile.moderator == True or profile.user.is_superuser %}
-        <div class="btn-group show-on-hover">
-          <button type="button" class="btn btn-link btn-md dropdown-toggle" data-toggle="dropdown">
-            <span class="glyphicon glyphicon-edit"></span> <span class="caret"> </span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <form action="/disable_power_comments/" method="post" role="form">{% csrf_token %}
-                <input type="hidden" name="id_comment" value="{{ comment.id }}" />
-                <button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-trash"></span> Удалить комментарий</button>
-              </form>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <form action="/ban_user_power_comments/" method="post" role="form">{% csrf_token %}
-                <input type="hidden" name="id_user" value="{{ comment.owner.id }}" />
-                <button type="submit" class="btn btn-link">
-                  </span> <span class="glyphicon glyphicon-eye-close"></span> Забанить пользователя</button>
-              </form>
-            </li>
-            {% if profile.user.is_superuser %}
-            <li class="divider"></li>
-            <li><a class="responce_comment" href="#new_comment_link" id="comment-{{ comment.id }}" title="{{ comment.owner.get_full_name }}">
-            <span class="glyphicon glyphicon-share"></span> Ответить</a></li> 
-            <li><a href="{% power_url_edit comment %}"><span class="glyphicon glyphicon-edit"></span> Страница админки</a></li>
-            {% endif %}
-          </ul>
-        </div>
-        {% endif %}
-        <p>{{ comment.text|safe }}</p>
-      </div>
-      <div class="visible-xs visible-sm">
-        <span class="glyphicon glyphicon-star"></span> <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong>
-        <br>
-        <div class="col-xs-3">
-          {% if request.user.is_authenticated %} {% if not request.user == comment.owner.user %}
-          <div class="col-xs-1">
-            <form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
-              <input type="hidden" name="id_comment" value="{{ comment.id }}" />
-              <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
-            </form>
+            <small> {{ comment.date_creation|date:"d E Y" }}</small>
           </div>
-          <div class="col-xs-1">
-            <form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
-              <input type="hidden" name="id_comment" value="{{ comment.id }}" />
-              <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
-            </form>
+          <div class="col-md-3" align="right">
+          {% if request.user.is_authenticated %} 
+            {% if not request.user == comment.owner.user %} 
+              {% if not profile in comment.karma_users.all %}
+                <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a> : 
+                <a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+              {% endif %} 
+            {% endif %} 
+          {% endif %}
+          <span class="glyphicon glyphicon-star"></span> <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong>
           </div>
-          {% endif %} {% endif %}
-        </div>
-      </div>
-      <div class="visible-lg visible-md">
-        <div class="col-xs-2">
-          <span class="glyphicon glyphicon-star"></span> Рейтинг: <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong>
-          <br> {% if request.user.is_authenticated %} {% if not request.user == comment.owner.user %} {% if not profile in comment.karma_users.all %}
-          <div class="col-xs-1">
-            <form action="/ajax_karma_plus/" class="rating_form_plus" method="post" role="form" id="ajax_karma_plus">{% csrf_token %}
-              <input type="hidden" name="id_comment" value="{{ comment.id }}" />
-              <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
-            </form>
-          </div>
-          <div class="col-xs-4">
-            <form action="/ajax_karma_minus/" class="rating_form_minus" method="post" role="form" id="ajax_karma_minus">{% csrf_token %}
-              <input type="hidden" name="id_comment" value="{{ comment.id }}" />
-              <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
-            </form>
-          </div>
-          {% endif %} {% endif %} {% endif %}
-        </div>
+        </h5>
+      <div class="col-md-12">
+        <hr class="hr_sm">
+        <p align="justify">{{ comment.text|safe }}</p>
       </div>
     </div>
   </div>
-  <hr class="hr_sm"> {% endfor %}
+  <div class="col-md-12">
+    <br>
+    <br>
+  </div>
+  {% endfor %}
 </div>

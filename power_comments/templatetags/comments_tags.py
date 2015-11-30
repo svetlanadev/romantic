@@ -20,7 +20,7 @@ def power_comments(request, app_url, if_comment):
         profile = CustomUser.objects.get(user=request.user)
     except:
         profile = request.user
-    comments = PowerComment.objects.all().filter(app=app_url, state=1).order_by('date_creation')
+    comments = PowerComment.objects.all().filter(app=app_url).order_by('date_creation').exclude(state=0)
     count_comments = comments
     form = PowerCommentForm()
     data = {'comments': comments,

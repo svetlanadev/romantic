@@ -4,7 +4,7 @@
 from django import forms
 from django.forms import ModelForm
 from django_summernote.widgets import SummernoteWidget
-from materials.models import Material, AttachedFiles
+from materials.models import Material
 
 
 class MaterialForm(ModelForm):
@@ -21,9 +21,3 @@ class MaterialForm(ModelForm):
         obj.owner = owner
         obj.save()
         return obj
-
-
-class AttachedFilesForm(ModelForm):
-
-    class Meta:
-        model = AttachedFiles

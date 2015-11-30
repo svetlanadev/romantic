@@ -37,8 +37,8 @@ def karma_power_comments(request):
             comment.save()
             user.save()
             comment.karma_users.add(user)
-    else: 
-        return redirect('/')            
+    else:
+        return redirect('/')
     return redirect(comment.app)
 
 
@@ -157,7 +157,7 @@ def ajax_karma_plus(request):
 @login_required
 def new_power_comment(request):
     owner = CustomUser.objects.get(user=request.user)
-    results = {'success': False }
+    results = {'success': False}
 
     if request.is_ajax():
         form = PowerCommentForm(request.POST)
@@ -211,15 +211,15 @@ def new_power_comment(request):
                                        position=position)
                 comment.save()
 
-            comments = PowerComment.objects.all().filter(app=id_app, state=1).order_by('date_creation')
+            comments = PowerComment.objects.all().filter(app=id_app).order_by('date_creation').exclude(state=0)
             new_comment = PowerComment.objects.last()
-            return render_to_response('power_comments/new_comment.html', { 
-                                      'comments': comments },
+            return render_to_response('power_comments/new_comment.html', {
+                                      'comments': comments},
                                       context_instance=RequestContext(request))
 
         else:
-            results = {'success':False, 'message': 'Максимум 1000 символов', 'text': text}
+            results = {'success': False,
+                       'message': 'Максимум 1000 символов',
+                       'text': text}
 
     return JsonResponse(results)
-
-
