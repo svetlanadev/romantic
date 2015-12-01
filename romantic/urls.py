@@ -27,6 +27,9 @@ urlpatterns = patterns('',
     url(r'^', include('materials.urls')),
     url(r'^summernote/', include('django_summernote.urls')),
     url(r'^redactor/', include('redactor.urls')),
+    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
+    # url(r'^grappelli/', include('grappelli.urls')),  # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
 )
 

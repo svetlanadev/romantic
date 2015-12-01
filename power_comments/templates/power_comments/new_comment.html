@@ -1,6 +1,5 @@
 {% load comments_tags %}
 <div id="comments">
-  <br>
   <p style="font-size: 18px;" id="href_power_comments">Комментарии:</p>
   {% for comment in comments %}
   <div id="comment_{{ comment.id }}">
@@ -56,7 +55,6 @@
     </div>
   </div>
   <div class="col-md-12">
-    <br>
     <br>
   </div>
   {% endfor %}

@@ -9,8 +9,6 @@
 {% load comments_tags %}
 
 <div class="col-md-8 left">
-<div class="panel panel-default">
-<div class="panel-body">
 	<div class="col-md-12" align="center">
 		<p style="font-size:24px;" align="center"><strong>{{ name_material_many }}</strong></p>
 	</div>
@@ -80,8 +78,8 @@
 		<a href="{{ material.get_absolute_url }}" class="a_black">
 		<div class="col-md-12">
 			<div class="col-md-6">
-				<p><img src="{{ material.type_hike.image.url }}" width="90px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail">
-		        <br><strong>Тип:</strong> {{ material.type_hike.type_hike }} поход,
+				<p><img src="{{ material.type_hike.image.url }}" width="60px" hspace="5" vspace="5" align="left" class="img-circle img-thumbnail">
+		        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход,
 		        Сложность: {{ material.difficulty }}<br>
 		        <strong>Регион:</strong> {{ material.region }}, 
 		        {{ material.year }} год<br>
@@ -95,8 +93,6 @@
 		</div>	
 		<hr class="hr_sm">
 	{% endfor %}
-</div>
-</div>
 </div>
 
 {% load page_navigation %}

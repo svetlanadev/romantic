@@ -41,6 +41,9 @@ for root, dirs, files in os.walk(PROJECT_ROOT):
         TEMPLATE_DIRS += (os.path.join(root, 'templates'),)
 
 INSTALLED_APPS = (
+    'jet.dashboard',
+    'jet',
+    # 'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -92,17 +95,11 @@ WSGI_APPLICATION = 'romantic.wsgi.application'
 
 DATABASES = {
     "default": {
-        # Add "postgresql_psycopg2", "mysql", "sqlite3" or "oracle".
         "ENGINE": "django.db.backends.mysql",
-        # DB name or path to database file if using sqlite3.
         "NAME": "ukrainem_tkr2",
-        # Not used with sqlite3.
         "USER": "ukrainem_tkr",
-        # Not used with sqlite3.
         "PASSWORD": "qwerty123456",
-        # Set to empty string for localhost. Not used with sqlite3.
         "HOST": "10.0.0.2",
-        # Set to empty string for default. Not used with sqlite3.
         "PORT": "",
     }
 }
