@@ -54,8 +54,8 @@ class Material(models.Model):
                                blank=True, null=True,)
 
     rank = models.SmallIntegerField(default=REPORT,
-                                     choices=RANK_CHOICE,
-                                     verbose_name=u'Тип материала')
+                                    choices=RANK_CHOICE,
+                                    verbose_name=u'Тип материала')
 
     state = models.SmallIntegerField(default=DISABLE,
                                      choices=STATE_CHOICE,
@@ -217,3 +217,31 @@ class MaterialEdit(models.Model):
     def __unicode__(self):
         return u'%s - %s' % (self.date_edit,
                              self.user_edit,)
+
+
+def get_template_materials(self):
+    if self.rank == 0:
+        name_material = "Отчет похода"
+    if self.rank == 1:
+        name_material = "Творчество"
+    if self.rank == 2:
+        name_material = "Паспорт препятствия"
+    if self.rank == 3:
+        name_material = "Документ"
+    if self.rank == 4:
+        name_material = "Статья"
+    return name_material
+
+
+def get_rank_materials(self):
+    if self.rank == 0:
+        name_material = "report"
+    if self.rank == 1:
+        name_material = "art"
+    if self.rank == 2:
+        name_material = "passport"
+    if self.rank == 3:
+        name_material = "doc"
+    if self.rank == 4:
+        name_material = "article"
+    return name_material

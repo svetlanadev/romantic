@@ -68,7 +68,7 @@ def ban_user_power_comments(request):
         if request.method == "POST":
             id_user = request.POST['id_user']
             custom_user = CustomUser.objects.get(id=id_user)
-            custom_user.user.is_active = False # DISABLE
+            custom_user.user.is_active = False  # DISABLE
             custom_user.karma = -999
             custom_user.save()
         else:
@@ -223,3 +223,36 @@ def new_power_comment(request):
                        'text': text}
 
     return JsonResponse(results)
+
+
+@login_required
+def check_comment(request, comment_id):
+    profile = CustomUser.objects.get(user=request.user)
+
+    if not profile.moderator and profile.user.is_superuser:
+        return redirect('/login/')
+
+    comment = PowerComment.objects.get(id=comment_id)
+
+    comment.state = 1
+    comment.save()
+
+    return redirect('/')
+
+
+@login_required
+def hide_comment(request, comment_id):
+    profile = CustomUser.objects.get(user=request.user)
+
+    if not profile.moderator and profile.user.is_superuser:
+        return redirect('/login/')
+
+    comment = PowerComment.objects.get(id=comment_id)
+
+    if comment.owner.user.is_superuser:
+        return redirect('/')
+
+    comment.state = 0
+    comment.save()
+
+    return redirect('/')

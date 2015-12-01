@@ -16,4 +16,6 @@ urlpatterns = patterns('power_comments.views',
     url(r'^ajax_test/$', 'ajax_test'),
     url(r'^ajax_karma_minus/$', 'ajax_karma_minus'),
     url(r'^ajax_karma_plus/$', 'ajax_karma_plus'),
+    url(r'^check_comment/(?P<comment_id>\d+)/$', 'check_comment'),
+    url(r'^hide_comment/(?P<comment_id>\d+)/$', 'hide_comment'),
 )

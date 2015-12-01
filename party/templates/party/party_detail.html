@@ -26,18 +26,10 @@
 
 <div class="col-md-8 left">
 
-<div class="panel panel-default">
-<div class="panel-body">
     {% if blogpost.state == 0 %}
         <span class="label label-danger">НОВОСТЬ СКРЫТА</span>
     {% endif %}
-    <div class="col-md-2">
-{#        {% if party.image %}#}
-{#            <img src="{{ party.image.url }}" class="object-fit_cover_radius" height="100px" width="100px">#}
-{#        {% else %}#}
-{#            <img src="{{ party.default_image.image.url }}" class="object-fit_cover_radius" height="100px" width="100px">#}
-{#        {% endif %}#}
-    </div>
+    <div class="col-md-2"></div>
     <div class="col-md-8" align="center">
         <p style="font-size:20px;" id="title">
             <strong>{{ party.title }}</strong><br>
@@ -69,13 +61,6 @@
             <!-- MODERATOR PANEL -->
             {% if profile.moderator == True or user.is_superuser %}
                 <div class="col-md-12 post-header-line">
-{#                    <a href="/party_edit/{{ party.id }}"><span class="label label-primary">Редактировать</span></a>#}
-{#                    {% if blogpost.state == 0 %}#}
-{#                        <a href="/party_hidden/show/{{ party.id }}"><span class="label label-success">Показать</span></a>#}
-{#                    {% else %}#}
-{#                        <a href="/party_hidden/hide/{{ party.id }}"><span class="label label-danger">Скрыть</span></a>#}
-{#                    {% endif %}#}
-
                     {% if user.is_superuser %}
                         <a href="{% url_edit party %}"><span class="label label-default">Страница админки</span></a>
                     {% endif %}
@@ -87,8 +72,6 @@
         {% power_comments request party.get_absolute_url party.if_comments %}
 
     </div>
-</div>
-</div>
 </div>
 
 {% load page_navigation %}

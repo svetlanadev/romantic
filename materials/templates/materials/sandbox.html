@@ -7,8 +7,6 @@
 {% load urltag %}
 
 <div class="col-md-8 left">
-<div class="panel panel-default">
-<div class="panel-body">
 	<div class="col-md-12" align="center">
 		<h2 class="media-heading">Песочница<br></h2>
 		<h3 class="media-heading"><small>Обязательно проверяйте контент перед публикацией на сайт!</small></h3>
@@ -21,7 +19,7 @@
 			<div class="col-md-6">
 				<p><img src="{{ material.type_hike.image.url }}" width="80px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
 		        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, 
-		        Сложность: {{ material.difficulty }}<br>
+		        {{ material.difficulty }}<br>
 		        <strong>Регион:</strong> {{ material.region }}, 
 		        {{ material.year }} год<br>
 		        <strong>Руководитель</strong> - {{ material.title }}<br>
@@ -50,8 +48,6 @@
 		</div>	
 		<hr class="hr_sm">
 	{% endfor %}
-</div>
-</div>
 </div>
 
 {% load page_navigation %}

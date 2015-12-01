@@ -307,6 +307,7 @@
   </div>
 </div>
 
+<div id="top"><img src="{{ STATIC_URL }}images/up-arrow-icon-top.png" width="70px"></div>
 <div id="goTop"></div>
 
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-2.1.3.min.js"></script>
@@ -315,6 +316,24 @@
 <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/ajax_romantic.js"></script>
 <script src="{{ STATIC_URL }}js/redactor.min.js"></script>
+
+<script type="text/javascript">
+  var top_show = 850; // В каком положении полосы прокрутки начинать показ кнопки "Наверх"
+  var delay = 1000; // Задержка прокрутки
+  $(document).ready(function() {
+    $(window).scroll(function () { // При прокрутке попадаем в эту функцию
+      /* В зависимости от положения полосы прокрукти и значения top_show, скрываем или открываем кнопку "Наверх" */
+      if ($(this).scrollTop() > top_show) $('#top').fadeIn();
+      else $('#top').fadeOut();
+    });
+    $('#top').click(function () { // При клике по кнопке "Наверх" попадаем в эту функцию
+      /* Плавная прокрутка наверх */
+      $('body, html').animate({
+        scrollTop: 0
+      }, delay);
+    });
+  });
+</script>
 
 {% block extra_js %}{% endblock %}
 </body>

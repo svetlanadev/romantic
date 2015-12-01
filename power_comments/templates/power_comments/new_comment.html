@@ -37,7 +37,7 @@
             {% endif %}
             <small> {{ comment.date_creation|date:"d E Y" }}</small>
           </div>
-          <div class="col-md-3" align="right">
+<!--           <div class="col-md-3" align="right">
           {% if request.user.is_authenticated %} 
             {% if not request.user == comment.owner.user %} 
               {% if not profile in comment.karma_users.all %}
@@ -47,7 +47,7 @@
             {% endif %} 
           {% endif %}
           <span class="glyphicon glyphicon-star"></span> <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong>
-          </div>
+          </div> -->
         </h5>
       <div class="col-md-12">
         <hr class="hr_sm">

@@ -9,7 +9,4 @@ register = template.Library()
 
 @register.simple_tag()
 def url_edit(obj):
-    # url = urlresolvers.reverse('admin:%s_%s_change' % (obj._meta.app_label,
-    #                                                    obj._meta.module_name),
-    #                                                    args=[obj.id])
     return 'url'

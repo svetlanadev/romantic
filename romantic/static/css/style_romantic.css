@@ -4,9 +4,7 @@
     border: 0;
     border-top: 1px solid #eee;
 }
-.panel-default {
-    border-color: #000;
-}
+
 .panel {
     border-radius: 0px;
 }
@@ -91,3 +89,12 @@ fieldset[disabled] .btn-admin.active {
 .object-fit_cover_radius { object-fit: cover; border-radius: 50%}
 .object-fit_none { object-fit: none }
 .object-fit_scale-down { object-fit: scale-down }
+
+#top {
+  display: none;
+  cursor: pointer;
+  bottom: 0;
+  font-size: 150%;
+  position: fixed;
+  right: 0px;
+}

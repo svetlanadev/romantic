@@ -1,0 +1,12 @@
+<div class="col-md-12">
+  <p style="font-size:18px; color: #000" align="center"><strong>Активные пользователи</strong></p>
+  {% for active_user in active_users %}
+  <a href="{{ active_user.get_absolute_url }}" id="user_full_name">
+    <img src="{{ active_user.avatar.url }}" width="74px" height="74px" hspace="4" vspace="4" align="left" class="img-rounded">
+  </a>
+  {% endfor %}
+
+</div>
+<div class="col-md-12">
+	<hr>
+</div>

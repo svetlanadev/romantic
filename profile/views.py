@@ -6,8 +6,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm, PasswordResetForm
 from django.core import signing
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect, render
@@ -246,6 +245,29 @@ def _get_reports(materials):
         if material.rank == 0 or material.rank == 2:
             reports.append(material)
         else:
-            pass    
+            pass
 
     return reports
+
+
+@login_required
+def profile_block(request, profile_id):
+    profile = CustomUser.objects.get(user=request.user)
+
+    if not profile.moderator and profile.user.is_superuser:
+        return redirect('/login/')
+
+    custom_user = CustomUser.objects.get(id=profile_id)
+    if custom_user.user.is_superuser:
+        return redirect('/')
+
+    comments = PowerComment.objects.filter(owner=custom_user)
+    for comment in comments:
+        comment.state = 0
+        comment.save()
+
+    custom_user.user.is_active = False
+    custom_user.karma = -999
+    custom_user.save()
+
+    return redirect('/')

@@ -21,39 +21,12 @@ register = template.Library()
 
 @register.simple_tag()
 def page_navigation(request):
-
-    if request.user.is_authenticated():
-        try:
-            custom_user = CustomUser.objects.get(user=request.user)
-        except ObjectDoesNotExist:
-            custom_user = request.user
-    else:
-        custom_user = ""
-
     partys = Party.objects.prefetch_related('category').filter(date_start__gt=datetime.now()).exclude(state=0)[:3]
 
     try:
         materials = Material.objects.filter(state=1)[:5]
     except ObjectDoesNotExist:
         materials = ''
-
-
-    comments_active_users = PowerComment.objects.values('owner').distinct()
-    comments_active_users_count = comments_active_users.count() - 8
-    try:
-        comments_active_users = comments_active_users[comments_active_users_count:]
-    except AssertionError:
-        pass
-
-    active_users = []
-    for x in comments_active_users:
-        active_user = CustomUser.objects.get(id=x['owner'])
-
-        if not active_user in active_users:
-            active_users.append(active_user)
-
-        if len(active_users) >= 8:
-            break
 
     comments = []
     apps = []
@@ -83,13 +56,6 @@ def page_navigation(request):
 
         if len(apps) > 6:
             break
-
-    comments = PowerComment.objects.values('app').distinct()
-    comments_count = comments.count() - 5
-    try:
-        comments = comments[comments_count:]
-    except AssertionError:
-        pass
 
     conversation = []
     for app in apps:
@@ -122,12 +88,10 @@ def page_navigation(request):
             break
 
     url = template.loader.get_template("page_navigation/page.html")
-    data = {'materials': materials, 
+    data = {'materials': materials,
             'partys': partys,
             'conversation': conversation,
-            'active_users': active_users,
-            'request': request,
-            'custom_user': custom_user}
+            'request': request}
 
     return url.render(Context(data))
 
@@ -145,3 +109,41 @@ def sandbox_user_count(request):
         materials = ""
 
     return materials.count()
+
+
+@register.simple_tag()
+def get_active_users():
+    comments_active_users = PowerComment.objects.values('owner').distinct()
+    comments_active_users_count = comments_active_users.count() - 8
+    try:
+        comments_active_users = comments_active_users[comments_active_users_count:]
+    except AssertionError:
+        pass
+
+    active_users = []
+    for x in comments_active_users:
+        active_user = CustomUser.objects.get(id=x['owner'])
+
+        if not active_user in active_users:
+            active_users.append(active_user)
+
+        if len(active_users) >= 8:
+            break
+
+    url = template.loader.get_template("page_navigation/active_users.html")
+    data = {'active_users': active_users}
+    return url.render(Context(data))
+
+
+@register.simple_tag()
+def get_profile_template(request):
+    custom_user = ""
+    try:
+        custom_user = CustomUser.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        custom_user = request.user
+
+    url = template.loader.get_template("page_navigation/profile.html")
+    data = {'custom_user': custom_user,
+            'request': request}
+    return url.render(Context(data))

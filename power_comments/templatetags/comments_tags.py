@@ -46,7 +46,7 @@ def count_inc_power_comments(count_inc):
 
 @register.simple_tag()
 def count_power_comments(app_url):
-    comments = PowerComment.objects.all().filter(app=app_url, state=1)
+    comments = PowerComment.objects.all().filter(app=app_url).exclude(state=0)
     count_power_comments = comments.count()
     return count_power_comments
 

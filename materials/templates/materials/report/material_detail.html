@@ -7,57 +7,44 @@
 {% block main %}
 {% load urltag %}
 {% load comments_tags %}
+{% load materials %}
 
-<div class="col-md-8 left">
-<div class="panel panel-default">
-<div class="panel-body">
-	<div class="row" id="material">
-		<div class="col-md-2">
-			<p align="right"><img src="{{ material.type_hike.image.url }}" class="img-circle img-thumbnail" width="70px"></p>
-		</div>
-		<div class="col-md-4">
-			Тип: {{ material.type_hike.type_hike }} поход,
-	        {{ material.difficulty }}<br><hr class="hr_sm">
-	        Регион: {{ material.region }}, 
-	        {{ material.year }} год<br><hr class="hr_sm">
-	        Руководитель - {{ material.title }}<br><hr class="hr_sm">
-			Опубликовано: {{ material.date_publication|date:"d.m.Y" }}<br>
-            Автор: {{ material.owner.get_full_name }}<br><br>
-		</div>
-		<div class="col-md-6">
-		<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:280 }}
-		
-		<!-- {% if user.is_authenticated %}
-		<form action="/karma_force_blog/" method="post" role="form">{% csrf_token %}
-			Рейтинг:
-	  		<input type="hidden" name="id_blogpost" value="{{ material.id }}" />
-	  		<button type="submit" name="karma" value="minus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-down"></span></button>
-	  		<span class="badge">{{ material.rating }}</span>
-	  		<button type="submit" name="karma" value="plus" class="btn btn-link"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-	  	</form>
-		{% else %}
-		    Рейтинг: <span class="badge"> {{ material.rating }}</span>
-		{% endif %} -->
-		
-		</div>
-	</div>
-	<div class="body">
+<div class="col-md-10 col-md-offset-1">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <ol class="breadcrumb">
+        <li><a href="/blog/">Главная</a></li>
+        <li><a href="/{% get_material_type material.rank %}/">{% get_material_type_ru material.rank %}</a></li>
+        <li class="active">{{ material.title }}</li>
+      </ol>
+      <hr>
+      <div class="row" id="material">
+        <div class="col-md-2">
+          <p align="right"><img src="{{ material.type_hike.image.url }}" class="img-circle img-thumbnail" width="70px"></p>
+        </div>
+        <div class="col-md-4">
+          Тип: {{ material.type_hike.type_hike }} поход, {{ material.difficulty }}<br>
+          <hr class="hr_sm"> Регион: {{ material.region }}, {{ material.year }} год<br>
+          <hr class="hr_sm"> Руководитель - {{ material.title }}<br>
+          <hr class="hr_sm"> Опубликовано: {{ material.date_publication|date:"d.m.Y" }}
+          <br> Автор: {{ material.owner.get_full_name }}<br><br>
+        </div>
+        <div class="col-md-6">
+          <strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:280 }}
+        </div>
+      </div>
+      <div class="body">
         <p><strong>Краткое описание:</strong> {{ material.short_desc }}</p>
-        <hr>
-        {{ material.text|safe }}
-
-        {% include "materials/material_info_panel_detail.html" %}
+        <hr> {{ material.text|safe }} {% include "materials/material_info_panel_detail.html" %}
         <!-- Комментарии -->
         <div id="comments" class="hidden-print">
-            {% power_comments request material.get_absolute_url material.if_comments %}
+          {% power_comments request material.get_absolute_url material.if_comments %}
         </div>
+      </div>
     </div>
-</div>
-</div>
+  </div>
 </div>
 
-{% load page_navigation %}
-{% page_navigation request %}
 
 {% endblock %}
 
