@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.conf import settings
+from redactor.fields import RedactorField
 
 
 class BlogPost(models.Model):
@@ -21,7 +22,7 @@ class BlogPost(models.Model):
 
     owner = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
                               verbose_name=u'Автор')
-    text = models.TextField(verbose_name=u'Страничка')
+    text = RedactorField(verbose_name=u'Страничка')
 
     state = models.SmallIntegerField(default=ENABLE,
                                      choices=STATE_CHOICE,

@@ -24,7 +24,7 @@ class CustomUser(models.Model):
     #                            default="avatars/no_avatar.png",
     #                            verbose_name=u'Аватар')
     avatar = ResizedImageField(default="avatars/no_avatar.png",
-                               size=[200, 200],
+                               size=[500, 500],
                                crop=['middle', 'center'],
                                quality=70, upload_to='avatars/')
 

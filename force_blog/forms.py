@@ -5,10 +5,11 @@ from django import forms
 from django.forms import ModelForm
 from force_blog.models import BlogPost, Category
 from django_summernote.widgets import SummernoteWidget
+from redactor.widgets import RedactorEditor
 
 
 class BlogPostForm(ModelForm):
-    text = forms.CharField(widget=SummernoteWidget())
+    text = forms.CharField(widget=RedactorEditor())
 
     class Meta:
         model = BlogPost

@@ -1,9 +1,7 @@
 # coding: utf-8
 # author: dlyapun
 
-from django.contrib.auth import logout, login
-from django.contrib.auth import authenticate
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import logout, login, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm, PasswordResetForm
@@ -40,19 +38,20 @@ class RegisterFormView(FormView):
     template_name = "registration_form.html"
 
     def form_valid(self, form):
-        form.save()
-        last_user = CustomUser.objects.last()
-        last_user.user.is_active = False
-        last_user.user.save()
-        value = signing.dumps({"id": last_user.user.id})
-        x = value.replace(':', '___')
-        message = _email_message(x)
         try:
+            form.save()
+            last_user = CustomUser.objects.last()
+            last_user.user.is_active = False
+            last_user.user.save()
+            value = signing.dumps({"id": last_user.user.id})
+            x = value.replace(':', '___')
+            message = _email_message(x)
             send_mail("Регистрация на сайте tkr.od.ua",
                       message,
                       'support@tkr.od.ua',
                       [last_user.user.email],
                       fail_silently=False)
+            print "SEND LETTER"
         except BadHeaderError:
             pass
             print "NOW WORKING"

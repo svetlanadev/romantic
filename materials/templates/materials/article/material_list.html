@@ -9,45 +9,52 @@
 {% load urltag %}
 
 <div class="col-md-8 left">
-	<div class="col-md-12" align="center">
-		<p style="font-size:24px;" align="center"><strong>{{ name_material_many }}</strong></p>
-	</div>
-    {#  ОТОБРАЖЕНИЕ ПАПОК  #}
-    <div class="row">
-        {% for dir in dirs %}
-            <div class="col-sm-6 col-md-3" align="center">
-                <a href="{{ dir.get_absolute_url }}">
-                    {% if dir.image %}
-                        <img src="{{ MEDIA_URL }}{{ dir.image }}" width="100">
-                    {% else %}
-                        <img src="{{ STATIC_URL }}images/folder.png" width="100">
-                    {% endif %}
-                    <div class="caption">
-                        <div align="center">
-                            <h4>{{ dir.dir_name }}</h4>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
+  <div class="col-md-12" align="center">
+    <p style="font-size:24px;" align="center"><strong>{{ name_material_many }}</strong></p>
+  </div>
+  {# ОТОБРАЖЕНИЕ ПАПОК #}
+  <div class="row">
+    {% for dir in dirs %}
+    <div class="col-sm-6 col-md-3" align="center">
+    <a href="{{ dir.get_absolute_url }}">
+      {% if dir.image %}
+          <img src="{{ MEDIA_URL }}{{ dir.image }}" width="100">
+      {% else %}
+          <img src="{{ STATIC_URL }}images/folder.png" width="100">
+      {% endif %}
+      <div class="caption">
+          <div align="center">
+              <h4>{{ dir.dir_name }}</h4>
+          </div>
+      </div>
+    </a>
     </div>
-    {#  ОТОБРАЖЕНИЕ СТАТЕЙ  #}
-	{% for material in materials %}
-		<div class="row" align="">
-            <a href="{{ material.get_absolute_url }}" class="a_black">
-                <div class="col-md-12">
-                        <p><img src="{{ material.owner.avatar.url }}" width="75px" height="75px" hspace="12" vspace="5" align="left" class="img-circle">
-                    <strong>Автор:</strong> {{ material.owner.get_full_name }}<br>
-                    <strong>Название:</strong> {{ material.title }}<br>
-                    <strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}</p>
-                </div>
-            </a>
-		</div>	
-		<hr class="hr_sm">
-    {% empty %}
-        <h4 align="center">Простите, но пока никаких материалов нет :(</h4>
-	{% endfor %}
+    {% endfor %}
+  </div>
+  {# ОТОБРАЖЕНИЕ СТАТЕЙ #} {% for material in materials %}
+  <div class="row" align="">
+    <a href="{{ material.get_absolute_url }}" class="a_black">
+      <div class="col-md-12">
+        <p>
+        {% if material.image %}
+          <img src="{{ MEDIA_URL }}{{ material.image }}" width="75px" height="75px" hspace="12" vspace="5" align="left" class="img-circle">
+        {% else %}
+          <img src="{{ material.owner.avatar.url }}" width="75px" height="75px" hspace="12" vspace="5" align="left" class="img-circle">
+        {% endif %}
+          <strong>Опубликовал:</strong> {{ material.owner.get_full_name }}<br>
+          {% if material.rank != 3 %}
+            <strong>Автор:</strong> {{ material.status }}<br>
+          {% endif %}
+          <strong>Название:</strong> {{ material.title }}<br>
+          <strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}</p>
+      </div>
+    </a>
+  </div>
+  <hr class="hr_sm"> {% empty %}
+  <h4 align="center">Простите, но пока никаких материалов нет :(</h4> 
+  {% endfor %}
 </div>
+
 
 {% load page_navigation %}
 {% page_navigation request %}

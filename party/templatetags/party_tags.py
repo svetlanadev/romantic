@@ -15,10 +15,11 @@ import datetime
 
 register = template.Library()
 
+
 @register.simple_tag()
 def party_date_tag(party):
     start_date = party.date_start.date()
-    finish_date =party.data_finish.date()
+    finish_date = party.data_finish.date()
     start_time = str(party.date_start.time())
     finish_time = str(party.data_finish.time())
     x = start_date.strftime("%B")
@@ -30,6 +31,7 @@ def party_date_tag(party):
         s = '<span class="glyphicon glyphicon-time" aria-hidden="true"></span> Начало - %s<br><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Конец - %s' % (start_date, finish_date)
 
     return s
+
 
 def _month_name(number):
     if number == 1:

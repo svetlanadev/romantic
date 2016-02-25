@@ -4,8 +4,9 @@
     {{ blog.title }} - Редактирование
 {% endblock %}
 
+{% load page_navigation %}
 {% block extra_css %}
-    <link href="{{ STATIC_URL }}css/jquery.tokenize.css" rel="stylesheet" type="text/css">
+    {% get_tokenize_template %}
 {% endblock %}
 
 {% block main %}
@@ -26,6 +27,7 @@
                         </select>
                 </div>
             </div>
+            <textarea cols="40" id="id_text" name="text" rows="10">{{form.text.value }}</textarea>
             {{ form.media }}
             {{ form.text }}
 
@@ -65,12 +67,12 @@
 </div>
 {% endblock %}
 
-{% load page_navigation %}
+
 {% page_navigation request %}
 
 {% block extra_js %}
-    <script src="{{ STATIC_URL }}js/jquery.tokenize.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $('#id_category').tokenize();
-    </script>
+{% get_tokenize_template_js %}
+<script type="text/javascript">
+    $('#id_category').tokenize();
+</script>
 {% endblock %}

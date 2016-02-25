@@ -5,6 +5,14 @@
 <div class="col-md-4 hidden-print" style="border-left:1px solid #ccc;">
     {% get_profile_template request %}
 
+
+    <div class="col-md-12">
+      <a href="/photo/competition/">Конкурс</a>
+      <a href="http://www.tkr.od.ua/blog/55/" target="_blank"><img src="http://tkr.od.ua/static/images/photo2.jpg" width="100%"></a>
+      <p style="foon-size:13px;" align="center"><strong> При поддержке <a href="http://www.risk.ru/" target="_blank">Risk.ru</a></strong></p>
+      <a href="http://www.risk.ru/" target="_blank"><img src="http://tkr.od.ua/static/images/risk_logo.jpg" width="100%"></a>
+    </div>
+
     {% if not request.path == "/party/" %}
     {% if partys %}
     <div class="col-md-12">
@@ -42,7 +50,11 @@
           </div>
           {% else %}
           <div class="media-left">
-            <img src="{{ material.owner.avatar.url }}" width="50px" height="50px" class="object-fit_cover_radius">
+            {% if material.image %}
+              <img src="/media/{{ material.image }}"width="50px" height="50px" class="img-circle">
+            {% else %}
+              <img src="{{ material.owner.avatar.url }}" width="50px" height="50px" class="object-fit_cover_radius">
+            {% endif %}
           </div>
           {% endif %}
           <div class="media-body">

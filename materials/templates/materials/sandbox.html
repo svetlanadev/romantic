@@ -7,48 +7,58 @@
 {% load urltag %}
 
 <div class="col-md-8 left">
-	<div class="col-md-12" align="center">
-		<h2 class="media-heading">Песочница<br></h2>
-		<h3 class="media-heading"><small>Обязательно проверяйте контент перед публикацией на сайт!</small></h3>
-		<br>
-	</div>
-		{% for material in reports %}
-		<div class="row" align="">
-		<a href="{{ material.get_absolute_url }}" class="a_black">
-		<div class="col-md-12">
-			<div class="col-md-6">
-				<p><img src="{{ material.type_hike.image.url }}" width="70px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail"> 
-		        <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, 
-		        {{ material.difficulty }}<br>
-		        <strong>Регион:</strong> {{ material.region }}, 
-		        {{ material.year }} год<br>
-		        <strong>Руководитель</strong> - {{ material.title }}<br>
-			</div>
-			<div class="col-md-6">
-				<strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:250 }}</p>
-			</div>
-		</div>
-		</a>
-		</div>	
-		<hr class="hr_sm">
-	{% endfor %}
-	<div class="col-md-12" align="center">
-		<h2 class="media-heading">Статьи</h2><br><br>
-	</div>
-		{% for material in articles %}
-		<div class="row" align="">
-		<a href="{{ material.get_absolute_url }}" class="a_black">
-		<div class="col-md-12">
-				<p><img src="{{ material.owner.avatar.url }}" width="60px" height="60px" hspace="10" vspace="10" align="left" class="img-circle"> 
-  			<strong>Автор:</strong> {{ material.owner.get_full_name }}<br>
-  			<strong>Название:</strong> {{ material.title }}<br>
-			<strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}</p>
-		</div>
-		</a>
-		</div>	
-		<hr class="hr_sm">
-	{% endfor %}
+  <div class="col-md-12" align="center">
+    <h2 class="media-heading">Песочница<br></h2>
+    <h3 class="media-heading"><small>Обязательно проверяйте контент перед публикацией на сайт!</small></h3>
+    <br>
+  </div>
+  {% for material in reports %}
+  <div class="row" align="">
+    <a href="{{ material.get_absolute_url }}" class="a_black">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          <p><img src="{{ material.type_hike.image.url }}" width="70px" hspace="10" vspace="10" align="left" class="img-circle img-thumbnail">
+            <strong>Тип:</strong> {{ material.type_hike.type_hike }} поход, {{ material.difficulty }}
+            <br>
+            <strong>Регион:</strong> {{ material.region }}, {{ material.year }} год
+            <br>
+            <strong>Руководитель</strong> - {{ material.title }}
+            <br>
+        </div>
+        <div class="col-md-6">
+          <strong>Нитка маршрута:</strong> {{ material.status|safe|truncatechars:250 }}</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  <hr class="hr_sm"> {% endfor %}
+  <div class="col-md-12" align="center">
+    <h2 class="media-heading">Статьи</h2>
+    <br>
+    <br>
+  </div>
+  {% for material in articles %}
+  <div class="row" align="">
+    <a href="{{ material.get_absolute_url }}" class="a_black">
+      <div class="col-md-12">
+        <p>
+          {% if material.image %}
+          <img src="{{ MEDIA_URL }}{{ material.image }}" width="60px" height="60px" hspace="10" vspace="10" align="left" class="img-circle"> {% else %}
+          <img src="{{ material.owner.avatar.url }}" width="60px" height="60px" hspace="10" vspace="10" align="left" class="img-circle"> {% endif %}
+          <strong>Опубликовал:</strong> {{ material.owner.get_full_name }}
+          <br>
+          {% if material.rank != 3 %}
+            <strong>Автор:</strong> {{ material.status }}<br>
+          {% endif %}
+          <strong>Название:</strong> {{ material.title }}
+          <br>
+          <strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}</p>
+      </div>
+    </a>
+  </div>
+  <hr class="hr_sm"> {% endfor %}
 </div>
+
 
 {% load page_navigation %}
 {% page_navigation request %}

@@ -9,6 +9,8 @@ from materials.models import Material
 
 class MaterialForm(ModelForm):
     text = forms.CharField(widget=SummernoteWidget())
+    status = forms.CharField(min_length=1,
+                             max_length=1000,)
 
     class Meta:
         model = Material

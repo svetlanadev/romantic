@@ -86,7 +86,6 @@ def blog_detail(request, pk):
                                   context_instance=RequestContext(request))
 
 
-
 @login_required
 def blog_edit(request, blog_id):
     profile = CustomUser.objects.get(user=request.user)

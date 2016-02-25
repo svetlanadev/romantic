@@ -14,83 +14,82 @@
 <!-- Походы -->
 <div class="col-md-3"></div>
 <div class="col-md-6">
-    <div class="main" align="center">
-	<form action="/profile_edit/" method="post" enctype="multipart/form-data" class="dynamic-form">{% csrf_token %}
-		{{ form.non_field_errors }}
-		<div class="row">
-	        <div class="col-xs-5 col-md-5">
-	            {{ form.avatar.errors }}
-	            <img src="{{ profile.avatar.url }}" name="aboutme" class="object-fit_cover_radius" width="150px" height="150px"><br><br>
-	            <input id="id_avatar" name="avatar" title="Изменить аватар" type="file" data-filename-placement="default">
-	        </div>
-	        <div class="col-xs-7 col-md-7">
-	        	{{ form.first_name.errors }}
-	            <label for="id_first_name">Имя</label>
-	            {{ form.first_name }}<br>
-	            {{ form.last_name.errors }}
-	            <label for="id_last_name">Фамилия</label>
-	            {{ form.last_name }}<br>
-	            {{ form.status.errors }}
-	            <label for="id_last_name">Статус</label>
-	            {{ form.status }}
-	        </div>
-	    </div><br>
-
-
-	    {{ form.about.errors }}
-        <label for="id_last_name">Про себя</label>
-        {{ form.about }}<br>
-
-        <div class="row">
-	        <div class="col-xs-6 col-md-6">
-	            {{ form.date_of_birth.errors }}
-	            <label for="id_last_name">Дата рождения</label>
-	            {{ form.date_of_birth }}
-	        </div>
-	        <div class="col-xs-6 col-md-6">
-	        	{{ form.phone.errors }}
-	            <label for="id_first_name">Телефон</label>
-	            {{ form.phone }}<br>
-	        </div>
-	    </div>
-        <p>
-          <button class="btn btn-primary collapsed btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Социальные сети:
-          </button>
-        </p>
-        <div class="collapse" id="collapseExample" aria-expanded="false" style="height: 0px;">
-            {{ form.vk.errors }}
-	        <label for="id_last_name">Вконтакте</label>
-	        {{ form.vk }}<br>
-
-		    {{ form.facebook.errors }}
-	        <label for="id_last_name">Facebook</label>
-	        {{ form.facebook }}<br>
-
-		    {{ form.od_class.errors }}
-	        <label for="id_last_name">Одноклассники</label>
-	        {{ form.od_class }}<br>
+  <div class="main" align="center">
+    <form action="/profile_edit/" method="post" enctype="multipart/form-data" class="dynamic-form">{% csrf_token %} {{ form.non_field_errors }}
+      <div class="row">
+        <div class="col-xs-5 col-md-5">
+          {{ form.avatar.errors }}
+          <img src="{{ profile.avatar.url }}" name="aboutme" class="object-fit_cover_radius" width="150px" height="150px">
+          <br>
+          <br>
+          <input id="id_avatar" name="avatar" title="Изменить аватар" type="file" data-filename-placement="default">
         </div>
-        <hr>
-        <div class="row">
-	        <div class="col-xs-6 col-md-6">
-	            <button type="submit" class="btn btn-success btn-block ">Сохранить изменения</button>
-	        </div>
-	        <div class="col-xs-6 col-md-6">
-	        	<a href="/profile/{{ profile.id }}" class="btn btn-default btn-block ">Назад к профилю</a><br>
-	        </div>
-	    </div>
-		
-	</form>
-	</div>
+        <div class="col-xs-7 col-md-7">
+          {{ form.first_name.errors }}
+          <label for="id_first_name">Имя</label>
+          {{ form.first_name }}
+          <br> {{ form.last_name.errors }}
+          <label for="id_last_name">Фамилия</label>
+          {{ form.last_name }}
+          <br> {{ form.status.errors }}
+          <label for="id_last_name">Статус</label>
+          {{ form.status }}
+        </div>
+      </div>
+      <br> {{ form.about.errors }}
+      <label for="id_last_name">Про себя</label>
+      {{ form.about }}
+      <br>
+      <div class="row">
+        <div class="col-xs-6 col-md-6">
+          {{ form.date_of_birth.errors }}
+          <label for="id_last_name">Дата рождения</label>
+          {{ form.date_of_birth }}
+        </div>
+        <div class="col-xs-6 col-md-6">
+          {{ form.phone.errors }}
+          <label for="id_first_name">Телефон</label>
+          {{ form.phone }}
+          <br>
+        </div>
+      </div>
+      <p>
+        <button class="btn btn-primary collapsed btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          Социальные сети:
+        </button>
+      </p>
+      <div class="collapse" id="collapseExample" aria-expanded="false" style="height: 0px;">
+        {{ form.vk.errors }}
+        <label for="id_last_name">Вконтакте</label>
+        {{ form.vk }}
+        <br> {{ form.facebook.errors }}
+        <label for="id_last_name">Facebook</label>
+        {{ form.facebook }}
+        <br> {{ form.od_class.errors }}
+        <label for="id_last_name">Одноклассники</label>
+        {{ form.od_class }}
+        <br>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-6 col-md-6">
+          <button type="submit" class="btn btn-success btn-block ">Сохранить изменения</button>
+        </div>
+        <div class="col-xs-6 col-md-6">
+          <a href="/profile/{{ profile.id }}" class="btn btn-default btn-block ">Назад к профилю</a>
+          <br>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
 
-</div>
-</div>
 {% endblock %}
 
 
 {% block extra_js %}
-<script src="{{ STATIC_URL }}js/bootstrap.file-input.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.file-input.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('input[type=file]').bootstrapFileInput();

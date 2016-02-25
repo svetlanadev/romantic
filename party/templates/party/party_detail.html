@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block extra_banner %}
+{% endblock %}
 {% if party.image %}
     <div id="events-banner" class="fill hidden-print" style="background-image: url({{ party.image.url }})">
         <div class="header-cone"></div>
@@ -13,10 +14,10 @@
     </div>
 {% endif %}
 <br>
-{% endblock %}
+
 
 {% block meta_title %}
-    Мероприятие - {{ party.name }}
+    Мероприятие - {{ party.title }}
 {% endblock %}
 
 {% block main %}

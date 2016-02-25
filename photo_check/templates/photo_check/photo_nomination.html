@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Фотоконкурс "Кадр в пути"{% endblock %}
+
+{% block main %}
+
+<div class="col-md-12">
+      <div class="materials">
+        <h2 align="center">Номинация - {{ nomination.name }} <br><small><a href="/photo/competition/"><span class="glyphicon glyphicon-share"></span> Назад к выбору категории</a></small></h2>
+        <p></p>
+        <div class="col-md-12">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="{{count_full}}" aria-valuemin="0" aria-valuemax="100" style="width: {{count_full}}%;">
+                {{count_full}}%
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3"></div>
+          <a href="/photo/check/{{ nomination.id }}?win={{photo_one.id}}&lose={{photo_two.id}}">
+          <div class="col-md-6" align="justify">
+            <!-- <h4>{{photo_one.name}}</h4> -->
+            <img src="{{ photo_one.image.url }}" width="100%"border="0"><br><br></a>
+<!--             <p><span class="glyphicon glyphicon-user"></span> Автор - {{photo_one.owner}}</p>
+            {% if photo_one.camera %}
+            <p><span class="glyphicon glyphicon-camera"></span> Камера - {{photo_one.camera}}</p>
+            {% endif %}
+            {% if photo_one.place %}
+            <p><span class="glyphicon glyphicon-picture"></span> Место - {{photo_one.place}}</p>
+            {% endif %}
+            {% if photo_one.text %}
+            <p>Описание снимка: {{photo_one.text}}</p>
+            {% endif %} -->
+          </div>
+          <!-- Че тут лазишь? -->
+          <a href="/photo/check/{{ nomination.id }}?win={{photo_two.id}}&lose={{photo_one.id}}">
+          <div class="col-md-6" align="justify" style="border-left:1px solid #ccc;">
+            <!-- <h4>{{photo_two.name}}</h4> -->
+            <img src="{{ photo_two.image.url }}" width="100%"border="0"><br><br></a>
+<!--             <p><span class="glyphicon glyphicon-user"></span> Автор - {{photo_two.owner}}</p>
+            {% if photo_two.camera %}
+            <p><span class="glyphicon glyphicon-camera"></span> Камера - {{photo_two.camera}}</p>
+            {% endif %}
+            {% if photo_two.place %}
+            <p><span class="glyphicon glyphicon-picture"></span> Место - {{photo_two.place}}</p>
+            {% endif %}
+            {% if photo_two.text %}
+            <p>Описание снимка: {{photo_two.text}}</p>
+            {% endif %} -->
+          </div>
+          
+        </div>
+      </div>
+</div>
+
+{% endblock %}

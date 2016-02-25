@@ -2,7 +2,10 @@
 
 {% block meta_title %}Добавление нового поста{% endblock %}
 
-{% block extra_css %}<link href="{{ STATIC_URL }}css/jquery.tokenize.css" rel="stylesheet" type="text/css">{% endblock %}
+{% load page_navigation %}
+{% block extra_css %}
+    {% get_tokenize_template %}
+{% endblock %}
 
 {% block main %}
 <!-- Походы -->
@@ -76,15 +79,9 @@
 
 {% endblock %}
 
-{% block extra_js %}<script src="{{ STATIC_URL }}js/jquery.tokenize.js" type="text/javascript"></script>
+{% block extra_js %}
+{% get_tokenize_template_js %}
 <script type="text/javascript">
     $('#id_category').tokenize();
- //    var options = {
- //    url  : '/connector.py',
- //    lang : 'en'
-	// }
-	// $('#elfinder').elfinder(options);
 </script>
 {% endblock %}
-
-{{ form.as_p }}

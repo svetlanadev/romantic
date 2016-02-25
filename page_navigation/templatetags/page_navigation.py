@@ -137,13 +137,27 @@ def get_active_users():
 
 @register.simple_tag()
 def get_profile_template(request):
-    custom_user = ""
-    try:
-        custom_user = CustomUser.objects.get(user=request.user)
-    except ObjectDoesNotExist:
+    if request.user.is_authenticated():
+        try:
+            custom_user = CustomUser.objects.get(user=request.user)
+        except TypeError:
+            custom_user = request.user
+    else:
         custom_user = request.user
 
     url = template.loader.get_template("page_navigation/profile.html")
     data = {'custom_user': custom_user,
             'request': request}
     return url.render(Context(data))
+
+
+@register.simple_tag()
+def get_tokenize_template():
+    from django.conf import settings
+    return '<link href="%scss/jquery.tokenize.min.css" rel="stylesheet" type="text/css">' % (settings.STATIC_URL)
+
+
+@register.simple_tag()
+def get_tokenize_template_js():
+    from django.conf import settings
+    return '<script src="%sjs/jquery.tokenize.js" type="text/javascript"></script>' % (settings.STATIC_URL)

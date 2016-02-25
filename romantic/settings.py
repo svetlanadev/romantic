@@ -8,9 +8,13 @@ SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 SECRET_KEY = '=q@eild4ch4mg#lyso0^^gnd4r2bc&@lj*sw=ua1gpe$#ua4x6'
 
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = False
+
+SITE_ID = 1
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 ADMINS = (
     ('Dmitry Lyapun', 'dlyapun@gmail.com'),
@@ -41,8 +45,8 @@ for root, dirs, files in os.walk(PROJECT_ROOT):
         TEMPLATE_DIRS += (os.path.join(root, 'templates'),)
 
 INSTALLED_APPS = (
-    'jet.dashboard',
-    'jet',
+    # 'jet.dashboard',
+    # 'jet',
     # 'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -63,6 +67,7 @@ INSTALLED_APPS = (
     'django_summernote',
     'info_pages',
     'django_cleanup',
+    'photo_check',
     'redactor',
 )
 
@@ -94,13 +99,13 @@ ROOT_URLCONF = 'romantic.urls'
 WSGI_APPLICATION = 'romantic.wsgi.application'
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "ukrainem_tkr2",
-        "USER": "ukrainem_tkr",
-        "PASSWORD": "qwerty123456",
-        "HOST": "10.0.0.2",
-        "PORT": "",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dlyapun_romantic',
+        'USER': 'dlyapun',
+        'PASSWORD': 'vy8yfjx9MPbV',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -115,19 +120,20 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = '/home/ukrainem/domains/tkr.od.ua/public_html/media/'
-STATIC_ROOT = '/home/ukrainem/domains/tkr.od.ua/public_html/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+print MEDIA_ROOT, STATIC_ROOT
 
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'static').replace('\\', '/'),
+    os.path.join(BASE_DIR, 'common_static'),
 )
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 try:
@@ -171,11 +177,17 @@ DEFAULT_BANNER_TITLE = 3
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL = 'support@tkr.od.ua'
 EMAIL_USE_TLS = True
-EMAIL_HOST = '148.251.236.139'
+EMAIL_HOST = 'mail.wservices.ch'
 EMAIL_HOST_USER = 'support@tkr.od.ua'
-EMAIL_HOST_PASSWORD = 'blasco5454588407'
+EMAIL_HOST_PASSWORD = 'Blasco5454588407@'
 EMAIL_PORT = 587
+
 SERVER_EMAIL = 'support@tkr.od.ua'
+DEFAULT_FROM_EMAIL = 'support@tkr.od.ua'
 
 REDACTOR_OPTIONS = {'lang': 'ru'}
 REDACTOR_UPLOAD = 'uploads/'
+
+FORCE_SCRIPT_NAME = ''
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

@@ -60,8 +60,11 @@ def url_with_comment(app_url):
         url = obj.title
     elif "materials" in app_url:
         from materials.models import Material
-        obj = Material.objects.get(id=id_content)
-        url = obj.title
+        try:
+            obj = Material.objects.get(id=id_content)
+            url = obj.title
+        except:
+            url = ""
     elif "party" in app_url:
         from party.models import Party
         obj = Party.objects.get(id=id_content)

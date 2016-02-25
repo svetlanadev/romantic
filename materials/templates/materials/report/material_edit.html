@@ -2,14 +2,14 @@
 
 {% block meta_title %}{{ material.title }} - Редактирование{% endblock %}
 
-{% block extra_css %}<link href="{{ STATIC_URL }}css/jquery.tokenize.css" rel="stylesheet" type="text/css">{% endblock %}
+{% load page_navigation %}
+{% block extra_css %}
+    {% get_tokenize_template %}
+{% endblock %}
 
 {% block main %}
 <!-- Походы -->
-<div class="col-md-2"></div>
-<div class="col-md-8">
-{#<div class="panel panel-default">#}
-{#<div class="panel-body">#}
+<div class="col-md-10 col-md-offset-1">
 <div id="material">
     <h1 align="center">{{ material.title }} - Редактирование</h1>
 	<form action="/material_edit/{{ material.id }}/" method="post">{% csrf_token %}
@@ -102,13 +102,12 @@
 		<a href="/materials/{{ material.id }}"><button class="btn btn-default"> Отмена</button></a>
 	</form>
 </div>
-{#</div>#}
-{#</div>#}
 </div>
 
 {% endblock %}
 
-{% block extra_js %}<script src="{{ STATIC_URL }}js/jquery.tokenize.js" type="text/javascript"></script>
+{% block extra_js %}
+{% get_tokenize_template_js %}
 <script type="text/javascript">
     $('#id_category').tokenize();
 </script>

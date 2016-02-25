@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Фотоконкурс "Кадр в пути"{% endblock %}
+
+{% block main %}
+
+<!-- <div class="col-md-1 left"></div> -->
+<div class="col-md-12 left">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="materials">
+        <h2 align="center">Фотоконкурс "Кадр в пути"</h2>
+        <p></p>
+        <div class="col-md-12">
+          <h3 align="center">Номинации:</h3>
+          <a href="/photo/nomination/1">
+          <div class="col-md-3">
+            <h4 align="center">Пейзаж</h4>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="{{coun1_1_full}}" aria-valuemin="0" aria-valuemax="100" style="width: {{coun1_1_full}}%;">{{coun1_1_full}}%</div>
+            </div>
+            <img src="https://pp.vk.me/c625220/v625220768/6dcc/cpp1V14BO4Y.jpg" width="100%">
+            <p align="justify">Абсолютное большинство кадра - это природа. На фото могут присутствовать люди, рельеф, растения и другое, но значимым и подавляющим героем на фото все же должна быть природа. </p>
+          </div>
+          </a>
+          <a href="/photo/nomination/2">
+          <div class="col-md-3">
+            <h4 align="center">Путешественник</h4>
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{count_2_full}}" aria-valuemin="0" aria-valuemax="100" style="width: {{count_2_full}}%;">{{count_2_full}}%</div>
+            </div>
+            <img src="https://pp.vk.me/c617726/v617726768/21277/_k_0veePt9k.jpg" width="100%">
+            <p align="justify">Главный герой фото - человек в путешествии. Лица, портреты, коллективные и постановочные фото в “out-door” среде, репортажные фото спортивных мероприятий на реальном рельефе.</p>
+          </div>
+          </a>
+          <a href="/photo/nomination/3">
+          <div class="col-md-3">
+            <h4 align="center">Спорт и экстрим</h4>
+            <div class="progress">
+              <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{count_3_full}}" aria-valuemin="0" aria-valuemax="100" style="width: {{count_3_full}}%;">{{count_3_full}}%</div>
+            </div>
+            <img src="https://pp.vk.me/c625330/v625330768/b233/TLNaJi_8gB8.jpg" width="100%">
+            <p align="justify">Главное - динамика кадра. Опасность момента кадра, напряженность героев, сложность ситуации, момент преодоления ключевого препятствия, уникальность момента.</p>
+          </div>
+          </a>
+          <a href="/photo/nomination/4">
+          <div class="col-md-3">
+            <h4 align="center">Деталь путешествия</h4>
+            <div class="progress">
+              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{count_4_full}}" aria-valuemin="0" aria-valuemax="100" style="width: {{count_4_full}}%;">{{count_4_full}}%</div>
+            </div>
+            <img src="https://pp.vk.me/c627727/v627727768/139d1/Kb546-4mFWA.jpg" width="100%">
+            <p align="justify">Походная атрибутика, бытовой или спортивный инвентарь, вещи, снаряжение, макро-съемка. Все неотъемлемое и столь важное в путешествии.</p>
+          </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

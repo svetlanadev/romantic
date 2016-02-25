@@ -101,11 +101,6 @@ def material_new(request, state):
 
     owner = CustomUser.objects.get(user=request.user)
 
-    if state == 'doc':
-        if not owner.moderator and owner.user.is_superuser:
-            return redirect('/login/')
-
-
     type_hike = TypeHike.objects.all()
     region = Region.objects.all()
     difficulty = Difficulty.objects.all()
@@ -113,7 +108,7 @@ def material_new(request, state):
     categorys = Category.objects.all()
 
     if request.method == "POST":
-        form = MaterialForm(request.POST)
+        form = MaterialForm(request.POST, request.FILES)
         if form.is_valid():
             try:
                 tags = form.cleaned_data['category']
@@ -178,10 +173,9 @@ def material_edit(request, material_id):
     difficulty = Difficulty.objects.all()
 
     category_material = material.get_type_material()
-    # type_material, name_material, category_material2 = _type_material(state)
 
     if request.method == "POST":
-        form = MaterialForm(request.POST, instance=material)
+        form = MaterialForm(request.POST, request.FILES, instance=material)
         form.is_valid()
 
         if form.is_valid():
@@ -212,11 +206,11 @@ def material_edit(request, material_id):
     else:
         form = MaterialForm(instance=material)
 
-    data = {'form': form, 'material': material, 
-            'categorys': categorys, 
+    data = {'form': form, 'material': material,
+            'categorys': categorys,
             'type_hikes': type_hike,
-            'regions': region, 
-            'difficultys': difficulty,}
+            'regions': region,
+            'difficultys': difficulty}
     return render_to_response('materials/%s/material_edit.html' % category_material,
                               data,
                               context_instance=RequestContext(request))

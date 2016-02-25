@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load page_navigation %}
 
 {% block meta_title %}
     Добавление нового поста
 {% endblock %}
 
 {% block extra_css %}
-    <link href="{{ STATIC_URL }}css/jquery.tokenize.css" rel="stylesheet" type="text/css">
+    {% get_tokenize_template %}
 {% endblock %}
 
 {% block main %}
@@ -59,16 +60,10 @@
 </div>
 </div>
 </div>
-
-{% load page_navigation %}
 {% page_navigation request %}
-
 {% endblock %}
-
-
-
 {% block extra_js %}
-    <script src="{{ STATIC_URL }}js/jquery.tokenize.js" type="text/javascript"></script>
+{% get_tokenize_template_js %}
     <script type="text/javascript">
         $('#id_category').tokenize();
     </script>

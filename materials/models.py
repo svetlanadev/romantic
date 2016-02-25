@@ -4,6 +4,7 @@ from django.db import models
 from django.conf import settings
 from hike.models import *
 from force_blog.models import Category
+from django_resized import ResizedImageField
 
 
 class Material(models.Model):
@@ -87,10 +88,11 @@ class Material(models.Model):
                                          verbose_name=u'Люди сделали отметки',
                                          related_name="user_karma_materials")
 
-    image = models.ImageField(upload_to='MaterialImage/',
-                              verbose_name=u'Изображение',
-                              blank=True,
-                              null=True)
+    image = ResizedImageField(verbose_name=u'Изображение',
+                              size=[200, 200],
+                              crop=['middle', 'center'],
+                              quality=70, upload_to='MaterialImage/',
+                              blank=True, null=True)
 
     if_comments = models.BooleanField(
         default=True, verbose_name=u'Комментарии включены')
@@ -137,7 +139,6 @@ class Material(models.Model):
         return name_material
 
     def save(self, force_insert=False, force_update=False, using=None):
-        print "asdasdasdasdasdasd=+++++++++++++"
         super(Material, self).save()
 
     def __unicode__(self):
