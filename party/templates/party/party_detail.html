@@ -22,7 +22,6 @@
 
 {% block main %}
 {% load urltag %}
-{% load comments_tags %}
 {% load party_tags %}
 
 <div class="col-md-8 left">
@@ -53,7 +52,7 @@
             <div class="col-md-12 post-header-line">
                 <span class="glyphicon glyphicon-calendar"></span> Опубликовано: {{ party.date_creation|date:"d.m.Y, G:i" }}
                 | <span class="glyphicon glyphicon-comment"></span>
-                Комментарии ({% count_power_comments party.get_absolute_url %})
+                Комментарии (XXX)
                 | <span class="glyphicon glyphicon-tags"></span> Теги :
                 {% for category in party.category.all %}
                     <a href="/party/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>

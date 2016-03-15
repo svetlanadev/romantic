@@ -6,7 +6,6 @@ from imagekit.models.fields import ImageSpecField
 from imagekit.processors import ResizeToFill
 from django_resized import ResizedImageField
 from django.conf import settings
-from power_comments.settings import *
 
 
 class CustomUser(models.Model):
@@ -16,13 +15,9 @@ class CustomUser(models.Model):
     status = models.CharField(max_length=50,
                               verbose_name=u'Статус',
                               blank=True, null=True)
-    karma = models.SmallIntegerField(default=POWER_USER_KARMA_DEFAULT,
+    karma = models.SmallIntegerField(default=50,
                                      verbose_name=u'Карма')
 
-    # avatar = models.ImageField(upload_to='avatars/',
-    #                            blank=True, null=True,
-    #                            default="avatars/no_avatar.png",
-    #                            verbose_name=u'Аватар')
     avatar = ResizedImageField(default="avatars/no_avatar.png",
                                size=[500, 500],
                                crop=['middle', 'center'],

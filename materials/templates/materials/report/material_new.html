@@ -84,7 +84,11 @@
           <br>
         </div>
       </div>
-      {{ form.text.errors }} {{ form.media }} {{ form.text }}
+      {{ form.text.errors }} 
+      <script type="text/javascript" src="http://tkr.od.ua/static/admin/js/jquery.min.js"></script>
+      <script type="text/javascript" src="http://tkr.od.ua/static/admin/js/jquery.init.js"></script>
+      {{ form.media }} 
+      {{ form.text }}
       <button type="submit" class="btn btn-success">Сохранить изменения</button>
       <a href="/blog/{{ blog.id }}">
         <button class="btn btn-default"> Отмена</button>

@@ -3,17 +3,20 @@
 from django.db import models
 from django.conf import settings
 from redactor.fields import RedactorField
+from django_resized import ResizedImageField
 
 
 class BlogPost(models.Model):
     DISABLE = 0
     ENABLE = 1
     HOT_POST = 2
+    BACKUP = 3
 
     STATE_CHOICE = (
         (DISABLE, 'Новость отключена'),
         (ENABLE, 'Обычная Новость'),
         (HOT_POST, 'Важная Новость (На главной)'),
+        (BACKUP, 'Бекап'),
     )
 
     title = models.CharField(max_length=50, verbose_name=u'Заголовок')
@@ -22,6 +25,10 @@ class BlogPost(models.Model):
 
     owner = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
                               verbose_name=u'Автор')
+
+    view_user = models.BooleanField(default=False,
+                                    verbose_name=u'Указать автора?')
+
     text = RedactorField(verbose_name=u'Страничка')
 
     state = models.SmallIntegerField(default=ENABLE,
@@ -32,10 +39,10 @@ class BlogPost(models.Model):
                                       verbose_name=u'Теги',
                                       related_name="blogposts_category")
 
-    blog_edit = models.ManyToManyField('BlogEdit',
-                                       blank=True, null=True,
-                                       verbose_name=u'Редактирование',
-                                       related_name="blogpost_edit")
+    # blog_edit = models.ManyToManyField('BlogEdit',
+    #                                    blank=True, null=True,
+    #                                    verbose_name=u'Редактирование',
+    #                                    related_name="blogpost_edit")
 
     image = models.ImageField(upload_to='BlogImage/',
                               verbose_name=u'Изображение',
@@ -46,7 +53,8 @@ class BlogPost(models.Model):
                                       verbose_name=u'Изображение',
                                       blank=True, null=True)
 
-    if_comments = models.BooleanField(default=True)
+    if_comments = models.BooleanField(default=True,
+                                      verbose_name=u'Включение комментариев')
 
     class Meta:
         ordering = ["-date_creation"]
@@ -67,24 +75,6 @@ class BlogPost(models.Model):
                                 self.state,)
 
 
-class AttachedFiles(models.Model):
-    file_name = models.CharField(max_length=50)
-    one_file = models.FileField(upload_to='AttachedFiles/')
-    category = models.ManyToManyField('Category',
-                                      verbose_name=u'Категории',
-                                      related_name="file_category")
-
-    class Meta:
-        verbose_name = 'Файл'
-        verbose_name_plural = 'Файлы'
-
-    def get_absolute_url(self):
-        return u'/files/%s' % self.id
-
-    def __unicode__(self):
-        return self.file_name
-
-
 class Category(models.Model):
     category = models.CharField(max_length=30)
 
@@ -96,24 +86,25 @@ class Category(models.Model):
         return self.category
 
 
-class BlogEdit(models.Model):
-    date_edit = models.DateTimeField(auto_now_add=True)
-    user_edit = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
-                                  verbose_name=u'Автор')
+# class BlogEdit(models.Model):
+#     date_edit = models.DateTimeField(auto_now_add=True)
+#     user_edit = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
+#                                   verbose_name=u'Автор')
 
-    class Meta:
-        verbose_name = 'Редактирование'
-        verbose_name_plural = 'Редактирование'
+#     class Meta:
+#         verbose_name = 'Редактирование'
+#         verbose_name_plural = 'Редактирование'
 
-    def __unicode__(self):
-        return u'%s - %s' % (self.date_edit,
-                             self.user_edit,)
+#     def __unicode__(self):
+#         return u'%s - %s' % (self.date_edit,
+#                              self.user_edit,)
 
 
 class DefaultImageBlog(models.Model):
     name = models.CharField(max_length=30)
-    image = models.ImageField(upload_to='DefaultImageBlog/',
-                              verbose_name=u'Изображение')
+    image = ResizedImageField(size=[1280, 720],
+                              verbose_name=u'Изображение',
+                              quality=70, upload_to='DefaultImageBlog/')
 
     class Meta:
         verbose_name = 'Изображение по умолчанию'

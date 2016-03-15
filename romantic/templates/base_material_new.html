@@ -7,9 +7,9 @@
     <meta name="description" content="{% block meta_description %}{% endblock %}">
     <title>{% block meta_title %}{% endblock %} |  Романтик v0.1</title>
     <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.png" type="image/png">
-    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}css/style.min.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}css/style_romantic.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://tkr.od.ua/static/css/style.min.css" rel="stylesheet">
+<link href="http://tkr.od.ua/static/css/style_romantic.min.css" rel="stylesheet">
     {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
     <!-- Yandex.Metrika counter -->
@@ -28,42 +28,6 @@
     </script>
 </head>
 <body id="{% block body_id %}body{% endblock %}">
-<div id="footer" class="visible-lg visible-md hidden-print">
-  <div class="center-block" style="padding-bottom: 2px;">
-    <ul class="navigation list-inline list-inline-clear-padding">
-      <li>
-        <a href="/">Главная</a>
-      </li><li>
-        <a href="/about/">О клубе</a>
-        <ul class="submenu">
-          <li><a href="/history/">история</a></li>
-          <li><a href="#">гимн</a></li>
-          <li><a href="/rules/">устав</a></li>
-        </ul>
-      </li><li>
-        <a href="#">Галерея</a>
-      </li><li>
-        <a href="/blog/">Новости</a>
-      </li><li>
-        <a href="/party/">Мероприятия</a>
-      </li><li>
-        <a href="#">Библиотека</a>
-        <ul class="submenu">
-          <li><a href="/passport/">паспорта препятствий</a></li>
-          <li><a href="/doc/">МКК и документация</a></li>
-          <li><a href="/report/">отчёты походов</a></li>
-          <li><a href="/art/">творчество</a></li>
-          <li><a href="/article/">статьи</a></li>
-        </ul>
-      </li><li>
-        <a href="#">Контакты</a>
-      </li>
-    </ul>
-
-  </div>
-</div>
-</div>
-
 <div class="container">
     <div class="row">
         {% block main %}{% endblock %}

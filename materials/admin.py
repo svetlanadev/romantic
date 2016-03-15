@@ -2,12 +2,11 @@
 
 from django.contrib import admin
 from materials.models import *
-from django_summernote.admin import SummernoteModelAdmin
 from django.forms import CharField, ModelForm
 from datetime import datetime
 
 
-class MaterialAdmin(SummernoteModelAdmin):
+class MaterialAdmin(admin.ModelAdmin):
     filter_horizontal = ('category',)
     list_display = ('title', 'id', 'owner', 'year', 'state', 'rank', 'date_publication', 'date_creation')
     list_filter = ('date_creation', 'state', 'rank')

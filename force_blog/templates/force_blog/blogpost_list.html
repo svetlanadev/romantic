@@ -1,104 +1,46 @@
 {% extends "base.html" %} 
 
+{% block meta_description %}
+Новости - Турклуб Романтик - старейший туристический клуб при Одесском Национальном Политехническом Университете, который существует с 1957 года.
+{% endblock %}
+
 {% block meta_title %}
     Новости
 {% endblock %}
 
 {% block main %}
-{% load urltag %}
 {% load bootstrap_pagination %}
-{% load comments_tags %}
 {% load page_navigation %}
 
 <div class="col-md-8 left">
-  <ol class="breadcrumb">
-    <li class="active">Новости</li>
-  </ol>
-  {% if last_comments %}
-  {% if profile.moderator == True or user.is_superuser %}
-  <div class="panel panel-warning" style="border-color: #000000;">
-    <div class="panel-body">
-      {% for comment in last_comments %}
-        <div id="comment_{{ comment.id }}">
-          <div class="col-md-1">
-            <a href="#">
-              <img src="{{ comment.owner.avatar.url }}"  width="64x" height="64x" class="media-object object-fit_cover_radius">
-            </a>
-          </div>
-          <div class="col-md-9">
-            <h5 class="media-heading">
-              <div class="col-md-8">
-                <a href="{{ comment.owner.get_absolute_url }}" id="user_full_name">
-                  <strong>{{ comment.owner.get_full_name }}</strong>
-                </a>
-                <small> {{ comment.date_creation|date:"d E Y" }}</small>
-              </div>
-              <div class="col-md-4" align="right">
-                <span class="glyphicon glyphicon-star"></span> <strong class="comment_rating-{{ comment.id }}">{{ comment.rating }}</strong>
-              </div>
-            </h5>
-            <div class="col-md-12">
-              <p align="justify">{{ comment.text|safe }}</p>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <a href="/check_comment/{{ comment.id }}">
-              <span class="glyphicon glyphicon-pencil"></span> Check</a>
-            <br>
-            <a href="/profile_block/{{ comment.owner.id }}">
-              <span class="glyphicon glyphicon-user"></span> Block</a>
-            <br>
-            <a href="/hide_comment/{{ comment.id }}">
-              <span class="glyphicon glyphicon-sunglasses"></span> Hiden</a>
-            <br>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <hr class="hr"> 
-        </div>
-      {% endfor %}
-  </div>
-  </div>
-  {% endif %}
-  {% endif %}
-
   <div class="col-md-12">
-    {% for blog_post in blog_posts %} {% if blog_post.state == 0 %} {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
-    <div id="blogpost-{{ blog_post.id }}" class="well well-sm" style="margin-bottom: 0px;">
-      <span class="label label-danger">НОВОСТЬ СКРЫТА</span> {% endif %} {% else %}
-      <div id="blogpost-{{ blog_post.id }}">
-        {% endif %}
-        <div class="col-md-12" align="center">
-          <p style="font-size:22px">
-            <a href="{{ blog_post.get_absolute_url }}#title">
-              <strong>{{ blog_post.title }}</strong>
-            </a>
-          </p>
-        </div>
-        {{ blog_post.text|safe }}
-        <br> {% if blog_post.state == 1 or blog_post.state == 2 %}
-        <div class="row">
-          <div class="col-md-12 post-header-line">
-            <span class="glyphicon glyphicon-calendar"></span> {{ blog_post.date_creation|date:"d.m.Y, G:i" }} | <span class="glyphicon glyphicon-user"></span> <a href="{{ blog_post.owner.get_absolute_url }}">{{ blog_post.owner.get_full_name }}</a> | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blog_post.get_absolute_url }}/#comments">Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a> | <span class="glyphicon glyphicon-tags"></span> Теги : {% for category in blog_post.category.all %}
-            <a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> {% endfor %}
-          </div>
-        </div>
-        <br>
+    {% for blog_post in blog_posts %} 
+      {% if blog_post.state == 0 %} 
+        {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
+          <div id="blogpost-{{ blog_post.id }}" class="well well-sm" style="margin-bottom: 0px;">
+          <span class="label label-danger">НОВОСТЬ СКРЫТА</span> 
+        {% endif %} 
+      {% else %}
+        <div id="blogpost-{{ blog_post.id }}">
+      {% endif %}
+      <div class="col-md-12" align="left">
+        <h2>
+          <a href="/blog/{{ blog_post.id }}">{{ blog_post.title }}</a>
+          <br>
+          <small style="font-size:14px;"><span class="glyphicon glyphicon-calendar"></span> Опубликовано: {{ blog_post.date_creation|date:"d.m.Y, G:i" }} | <span class="glyphicon glyphicon-comment"></span>  <a href="http://tkr.od.ua/blog/{{ blog_post.id }}#disqus_thread">Комментарии</a></a>
+          </small>
+        </h2>
       </div>
-      {% else %} {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
-      <div class="row">
-        <div class="col-md-12 post-header-line-disable">
-          <span class="glyphicon glyphicon-calendar"></span> {{ blog_post.date_creation|date:"d.m.Y, G:i" }} | <span class="glyphicon glyphicon-user"></span> <a href="{{ blog_post.owner.get_absolute_url }}">{{ blog_post.owner.get_full_name }}</a> | <span class="glyphicon glyphicon-comment"></span> <a href="{{ blog_post.get_absolute_url }}/#comments">Комментарии ({% count_power_comments blog_post.get_absolute_url %})</a> | <span class="glyphicon glyphicon-tags"></span> Теги : {% for category in blog_post.category.all %}
-          <a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> {% endfor %}
-        </div>
+      {{ blog_post.text|safe }}
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 post-header-line"></div>
-    </div>
-    <br> {% endif %} {% endif %} {% endfor %} {% bootstrap_paginate page_obj %}
+      <hr>
+      {% endfor %} {% bootstrap_pager page_obj %}
   </div>
 </div>
 
 {% page_navigation request %}
+{% endblock %}
+
+{% block extra_js %}
+  <script id="dsq-count-scr" src="//tkromantic.disqus.com/count.js" async></script>
 {% endblock %}

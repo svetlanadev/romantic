@@ -1,14 +1,15 @@
 # coding=utf-8
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os, random
+import os
+import random
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 SECRET_KEY = '=q@eild4ch4mg#lyso0^^gnd4r2bc&@lj*sw=ua1gpe$#ua4x6'
 
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = False
 
@@ -45,27 +46,22 @@ for root, dirs, files in os.walk(PROJECT_ROOT):
         TEMPLATE_DIRS += (os.path.join(root, 'templates'),)
 
 INSTALLED_APPS = (
-    # 'jet.dashboard',
-    # 'jet',
-    # 'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'hike',
     'profile',
     'imagekit',
     'party',
     'force_blog',
     'bootstrap_pagination',
-    'power_comments',
-    'banner',
     'page_navigation',
     'materials',
-    'django_summernote',
-    'info_pages',
+    # 'info_pages',
     'django_cleanup',
     'photo_check',
     'redactor',
@@ -81,7 +77,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.core.context_processors.tz",
     'profile.context_processor.contex_profile',
-    'info_pages.context_processor.contex_info_pages',
+    # 'info_pages.context_processor.contex_info_pages',
     'django.core.context_processors.request',
 )
 
@@ -92,6 +88,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'profile.middleware.AutoLogout',
 )
 
 ROOT_URLCONF = 'romantic.urls'
@@ -123,10 +120,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-print MEDIA_ROOT, STATIC_ROOT
-
-
-# Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'common_static'),
 )
@@ -141,17 +134,6 @@ try:
 except ImportError:
     pass
 
-
-try:
-    from summernote_settings import *
-except ImportError:
-    pass
-
-
-try:
-    from power_comments.settings import *
-except ImportError:
-    pass
 
 SOCIAL_AUTH_FACEBOOK_KEY = '1602017563346275'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'ebc2b04baf9d0421d766d31be62e8e2b'
@@ -191,3 +173,8 @@ REDACTOR_UPLOAD = 'uploads/'
 FORCE_SCRIPT_NAME = ''
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 13600
+
+AUTO_LOGOUT_DELAY = 1

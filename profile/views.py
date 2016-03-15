@@ -13,7 +13,6 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.views.generic.edit import FormView
 from materials.models import Material
-from power_comments.models import PowerComment
 from profile.forms import UserCreateForm, UserLoginForm, CustomUserForm, RestartPasswordForm
 from profile.models import CustomUser
 from django.core.mail import send_mail, BadHeaderError
@@ -203,7 +202,6 @@ def profile_edit(request):
 
 def profile(request, profile_id):
     profile2 = CustomUser.objects.get(id=profile_id)
-    comments = PowerComment.objects.filter(owner=profile2).order_by('-date_creation')[:10]
     materials = Material.objects.filter(owner=profile2).exclude(state=2)
 
     material_enable = Material.objects.filter(owner=profile2, state=1)
@@ -215,7 +213,7 @@ def profile(request, profile_id):
     reports_disable = _get_reports(material_disable)
     reports_enable = _get_reports(material_enable)
 
-    data = {'profile2': profile2, 'comments': comments,
+    data = {'profile2': profile2,
             'articles_disable': articles_disable,
             'articles_enable': articles_enable,
             'reports_disable': reports_disable,
@@ -259,11 +257,6 @@ def profile_block(request, profile_id):
     custom_user = CustomUser.objects.get(id=profile_id)
     if custom_user.user.is_superuser:
         return redirect('/')
-
-    comments = PowerComment.objects.filter(owner=custom_user)
-    for comment in comments:
-        comment.state = 0
-        comment.save()
 
     custom_user.user.is_active = False
     custom_user.karma = -999

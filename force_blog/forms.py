@@ -4,7 +4,6 @@
 from django import forms
 from django.forms import ModelForm
 from force_blog.models import BlogPost, Category
-from django_summernote.widgets import SummernoteWidget
 from redactor.widgets import RedactorEditor
 
 

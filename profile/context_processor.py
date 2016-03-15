@@ -2,13 +2,9 @@
 
 from profile.models import CustomUser
 from django.core.exceptions import ObjectDoesNotExist
-from power_comments.models import PowerComment
 
 
 def contex_profile(request):
-
-    last_comments = PowerComment.objects.filter(state=3)
-    data = {'last_comments': last_comments}
 
     if request.user.is_authenticated():
         try:
@@ -18,6 +14,4 @@ def contex_profile(request):
     else:
         profile = ""
 
-    return {'profile': profile,
-            'last_comments': last_comments,
-            }
+    return {'profile': profile}

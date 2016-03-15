@@ -4,12 +4,11 @@
 
 {% block main %}
 {% load urltag %}
-{% load comments_tags %}
 <div class="col-md-8 left">
     <div class="col-md-4">
         <center>
         <img src="{{ profile2.avatar.url }}" name="aboutme" width="200" height="200" border="0" class="object-fit_cover_radius">
-        <h4 class="media-heading">{{ profile2.get_full_name }} <span class="glyphicon glyphicon-star"></span> {{ profile2.karma }}<br>
+        <h4 class="media-heading"><br>{{ profile2.get_full_name }}<br>
         {% if profile2.status %}
           <small>{{ profile2.status }}</small>
         {% endif %}</h4>
@@ -97,26 +96,6 @@
                   </a>
                 </div>
                 {% endfor %}
-              </div>
-            </div>
-            <div class="panel panel-default" style="border-color: #CFCFCF;">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-comment">
-                    </span> Комментарии</a>
-                </h4>
-              </div>
-              <div id="collapseFour" class="panel-collapse collapse">
-              {% for comment in comments %}
-                <div class="list-group">
-                  <a href="{{ comment.app }}/#comment_{{ comment.id }}" class="list-group-item">
-                    <h5 class="list-group-item-heading" align="center">Тема: {% url_with_comment comment.app %}</h5>
-                    <p class="list-group-item-text">
-                      <span class="glyphicon glyphicon-star text-primary"></span> <strong> {{ comment.rating }}</strong>; {{ comment.date_creation }} <br>{{ comment.text }}
-                    </p>
-                  </a>
-                </div>
-              {% endfor %}
               </div>
             </div>
           </div>

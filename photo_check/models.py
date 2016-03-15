@@ -23,11 +23,15 @@ class Photo(models.Model):
 
     date_creation = models.DateTimeField(auto_now_add=True)
 
-    owner = models.CharField(max_length=100, verbose_name='Автор снимка', blank=True, null=True,)
+    owner = models.CharField(max_length=100,
+                             verbose_name='Автор снимка',
+                             blank=True, null=True,)
     email_owner = models.CharField(max_length=100,
                                    verbose_name='Email автора',
                                    blank=True, null=True,)
-    name = models.CharField(max_length=100, verbose_name='Название снимка', blank=True, null=True,)
+    name = models.CharField(max_length=100,
+                            verbose_name='Название снимка',
+                            blank=True, null=True,)
     text = models.TextField(verbose_name='Описание снимка',
                             blank=True, null=True,)
 
@@ -37,10 +41,8 @@ class Photo(models.Model):
     camera = models.CharField(max_length=300,
                               verbose_name='Параметры камеры',
                               blank=True, null=True,)
-    date_start = models.DateField(verbose_name='Дата сьемки', blank=True, null=True,)
-
-    # image = models.ImageField(upload_to='photos_check/',
-    #                           verbose_name='Снимок')
+    date_start = models.DateField(verbose_name='Дата сьемки',
+                                  blank=True, null=True,)
 
     image = ResizedImageField(size=[1000, 1500],
                               quality=75, upload_to='photos_check/')
@@ -123,19 +125,12 @@ class StatisticsPhto(models.Model):
         verbose_name = 'Статистика'
         verbose_name_plural = 'Статистика'
 
-    # def __unicode__(self):
-    #     return self.ip_address
-
 
 def reset_users(modeladmin, request, queryset):
-    print queryset
     for photo in queryset:
         photo.karma_users.clear()
         photo.rating = 0
         photo.save()
-    # null_list = []
-    # queryset.update(karma_users=null_list)
-    # request.queryset.remove(karma_users)
 reset_users.short_description = "Reset users"
 
 
@@ -154,6 +149,11 @@ class PhotoAdmin(admin.ModelAdmin):
     actions = [reset_users]
 
 
+class StatisticsPhtoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'rating', 'photo_one', 'photo_two', 'user')
+    search_fields = ['photo_one__name', ]
+
+
 admin.site.register(Photo, PhotoAdmin)
 admin.site.register(Nomination)
-admin.site.register(StatisticsPhto)
+admin.site.register(StatisticsPhto, StatisticsPhtoAdmin)

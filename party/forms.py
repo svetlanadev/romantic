@@ -3,13 +3,12 @@
 
 from django import forms
 from django.forms import ModelForm
-from party.models import Party, AttachedFiles
-from django_summernote.widgets import SummernoteWidget
-#from django.forms.extras.widgets import DateTimeInput
+from party.models import Party
+from redactor.widgets import RedactorEditor
 
 
 class PartyForm(ModelForm):
-    text = forms.CharField(widget=SummernoteWidget())
+    text = forms.CharField(widget=RedactorEditor())
     #date_time_start = forms.DateTimeField(widget = DateTimeInput())
     #date_time_finish = forms.DateTimeField(widget = DateTimeInput())
     date_time_start = forms.DateTimeField()

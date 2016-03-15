@@ -1,49 +1,50 @@
 <!doctype html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1; text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="HandheldFriendly" content="true">
-    <meta name="description" content="{% block meta_description %}{% endblock %}Турклуб Романтик - старейший туристический клуб при Одесском Национальном Политехническом Университете, который существует с 1957 года.">
-    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}Турклуб, Романтик, турклуб-романтик, горы, лыжи, горные походы, лыжные походы, пешие походы, сплавы, вело походы, Кавказ, Тянь-Шань, Алтай, Карпаты, Памир, Говерла, Одесский романтик, Романтики,">
+  <meta charset="utf-8">
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8; IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="HandheldFriendly" content="true">
 
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="Турклуб Романтик - походы и не только!" />
-    <meta property="og:description" content="Турклуб Романтик - Походы в горы Карпат, Кавказа, Тянь-Шаня и Памира, сплавы на реках, Спелео туризм и прочий активный отдых!" />
-    <meta property="og:image" content="http://www.tkr.od.ua/static/images/logo.png">
-    <link rel="image_src" href="http://www.tkr.od.ua/static/images/logo.png">
+  <meta name="description" content="{% block meta_description %}{% endblock %}">
+  <meta name="keywords" content="{% block meta_keywords %}{% endblock %}Турклуб, Романтик, турклуб-романтик, горы, лыжи, горные походы, лыжные походы, пешие походы, сплавы, вело походы, Кавказ, Тянь-Шань, Алтай, Карпаты, Памир, Говерла, Одесский романтик, Романтики,">
 
-    <meta property="og:image" content="http://www.tkr.od.ua/static/images/banners/winter.jpg">
-    <link rel="image_src" href="http://www.tkr.od.ua/static/images/banners/winter.jpg">
-    
-    <meta property="og:url" content="http://gromyk.info/" />
-    <meta property="og:image" content="http://www.tkr.od.ua/static/images/logo.png" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Турклуб Романтик - походы и не только!" />
+  <meta property="og:description" content="Турклуб Романтик - Походы в горы Карпат, Кавказа, Тянь-Шаня и Памира, сплавы на реках, Спелео туризм и прочий активный отдых!" />
 
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content="http://www.tkr.od.ua/static/images/logo.png">
+  <link rel="image_src" href="http://www.tkr.od.ua/static/images/logo.png">
 
-    <title>{% block meta_title %}{% endblock %} |  Романтик v0.1</title>
-    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.png" type="image/png">
+  <meta property="og:image" content="http://www.tkr.od.ua/static/images/banners/winter.jpg">
+  <link rel="image_src" href="http://www.tkr.od.ua/static/images/banners/winter.jpg">
+  
+  <meta property="og:url" content="http://www.tkr.od.ua/" />
+  <meta property="og:image" content="http://www.tkr.od.ua/static/images/logo.png" />
 
-    {% block extra_css %}{% endblock %}
-    {% block extra_head %}{% endblock %}
-    {% load banner_tags %}
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-    (function(d,w,c){(w[c]=w[c]||[]).push(function(){try{w.yaCounter33520153=new Ya.Metrika({id:33520153,clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});}catch(e){}});var n=d.getElementsByTagName("script")[0],s=d.createElement("script"),f=function(){n.parentNode.insertBefore(s,n);};s.type="text/javascript";s.async=true;s.src="https://mc.yandex.ru/metrika/watch.js";if(w.opera=="[object Opera]"){d.addEventListener("DOMContentLoaded",f,false);}else{f();}})(document,window,"yandex_metrika_callbacks");
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/33520153" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-70876802-1', 'auto');
-    ga('send', 'pageview');
-    </script>
+  <title>{% block meta_title %}{% endblock %} | Турклуб Романтик</title>
+  <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.png" type="image/png">
+
+  {% block extra_css %}{% endblock %}
+  {% block extra_head %}{% endblock %}
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+  (function(d,w,c){(w[c]=w[c]||[]).push(function(){try{w.yaCounter33520153=new Ya.Metrika({id:33520153,clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});}catch(e){}});var n=d.getElementsByTagName("script")[0],s=d.createElement("script"),f=function(){n.parentNode.insertBefore(s,n);};s.type="text/javascript";s.async=true;s.src="https://mc.yandex.ru/metrika/watch.js";if(w.opera=="[object Opera]"){d.addEventListener("DOMContentLoaded",f,false);}else{f();}})(document,window,"yandex_metrika_callbacks");
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/33520153" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-70876802-1', 'auto');
+  ga('send', 'pageview');
+  </script>
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 <!-- БАННЕР ПОД МАЛЕНЬКИЕ ЭКРАНЫ -->
@@ -88,36 +89,6 @@
                 {% for page in info_pages %}
                     <li><a href="/page/{{ page.url_link }}/">{{ page.title }}</a></li>
                 {% endfor %}
-                {% if user.is_superuser %}
-                  <hr class="hr_red">
-                  <li><a href="/login/">login</a></li>
-                  <li><a href="/profile/1">profile</a></li>
-                  <li><a href="/profile_edit/">profile_edit</a></li>
-                  <li><a href="/register/">register</a></li>
-                  <hr class="hr_red">
-                  <li><a href="/about/">about</a></li>
-                  <li><a href="/history/">history</a></li>
-                  <li><a href="/rules/">rules</a></li>
-                  <li><a href="/contact-only/">contact-only</a></li>
-                  <li><a href="government/">government</a></li>
-                  <hr class="hr_red">
-                  <li><a href="/blog/">blog</a></li>
-                  <li><a href="/blog/1">blog 1</a></li>
-                  <li><a href="/blog_edit/1">blog_edit</a></li>
-                  <li><a href="/blog_new/">blog_new</a></li>
-                  <hr class="hr_red">
-                  <li><a href="/report/">report</a></li>
-                  <li><a href="/passport/">passport</a></li>
-                  <li><a href="/art/">art</a></li>
-                  <li><a href="/article/">article</a></li>
-                  <li><a href="/doc/">doc</a></li>
-                  <li><a href="/material_new/">material_new</a></li>
-                  <li><a href="/sandbox/">sandbox</a></li>
-                  <li><a href="/materials/1">materials 1</a></li>
-                  <li><a href="/material_edit/1">material_edit</a></li>
-                  <li><a href="/material_new/art">materials new art</a></li>
-                  <li><a href="/material_new/report">materials new report</a></li>
-                {% endif %}
               </ul>
           </li>
           <li><a href="https://vk.com/albums-1025962" target="_blank">Галерея</a></li>
@@ -153,7 +124,7 @@
 
           <li class="hover">
           {% if user.is_authenticated %}
-            <li><a href="/profile/{{ profile.id }}">Мой профиль</a></li>
+            <li><a href="/profile/{{ profile.id }}"><img src="{{ profile.avatar.url }}" class="object-fit_cover_radius" width="25px" height="25px"> {{ profile.get_full_name }}</a></li>
           {% else %}
             <li><a href="/register/">Регистрация</a></li>
           {% endif %}
@@ -168,8 +139,12 @@
       <div class="header-cone"></div>
       <div class="header-cone right"></div>
     </div>
-    {% block extra_banner %}{% endblock %}
-    {% banner_template request %}
+
+    <div id="events-banner" class="fill hidden-print" style="background-image: url(http://www.tkr.od.ua/static/images/banners/winter.jpg); height: 235px;" >
+        <div class="header-cone"></div>
+        <div class="header-cone right"></div>
+    </div>
+    <br>
 
 <div class="container">
     <div class="row">

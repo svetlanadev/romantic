@@ -24,6 +24,7 @@ DELETE = 3
 
 
 def materials(request, state):
+    print "Hello, TRACE"
     type_material, name_material, name_material_many, category_material = _type_material(state)
 
     materials = Material.objects.select_related(

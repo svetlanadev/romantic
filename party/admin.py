@@ -2,12 +2,11 @@
 
 from party.models import Party
 from django.contrib import admin
-from django_summernote.admin import SummernoteModelAdmin
 from django.forms import CharField, ModelForm
 
 
-class PartyAdmin(SummernoteModelAdmin):
-    filter_horizontal = ('files', 'category')
+class PartyAdmin(admin.ModelAdmin):
+    filter_horizontal = ('category',)
     list_display = ('title', 'date_creation', 'date_start', 'data_finish', 'state')
 
 

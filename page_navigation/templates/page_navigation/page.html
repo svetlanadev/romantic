@@ -1,17 +1,8 @@
-{% load comments_tags %}
 {% load page_navigation %}
 {% load party_tags %}
 
 <div class="col-md-4 hidden-print" style="border-left:1px solid #ccc;">
     {% get_profile_template request %}
-
-
-    <div class="col-md-12">
-      <a href="/photo/competition/">Конкурс</a>
-      <a href="http://www.tkr.od.ua/blog/55/" target="_blank"><img src="http://tkr.od.ua/static/images/photo2.jpg" width="100%"></a>
-      <p style="foon-size:13px;" align="center"><strong> При поддержке <a href="http://www.risk.ru/" target="_blank">Risk.ru</a></strong></p>
-      <a href="http://www.risk.ru/" target="_blank"><img src="http://tkr.od.ua/static/images/risk_logo.jpg" width="100%"></a>
-    </div>
 
     {% if not request.path == "/party/" %}
     {% if partys %}
@@ -66,22 +57,14 @@
           </div>
         </div>
         <hr class="hr_sm"> {% endfor %}
-        <br>
-        <p style="font-size:18px; color: #000" align="center"><strong>Что обсуждают</strong></p>
-        {% for conversation in conversation %}
-        <p>
-          <a href="{{ conversation.get_absolute_url }}/#comments">
-            <span class="badge">
-              <span class="glyphicon glyphicon-comment"></span> {% count_power_comments conversation.get_absolute_url %}
-            </span>
-            {{ conversation.short_desc|truncatechars:60 }} {{ conversation.title }}
-          </a>
-        </p>
-        {% endfor %}
-        <hr>
     </div>
 
-    {% get_active_users %}
+    <div class="col-md-12">
+      <a href="http://www.tkr.od.ua/blog/55/" target="_blank"><img src="http://tkr.od.ua/static/images/photo2.jpg" width="100%"></a>
+      <p style="foon-size:13px;" align="center"><strong> При поддержке <a href="http://www.risk.ru/" target="_blank">Risk.ru</a></strong></p>
+      <a href="http://www.risk.ru/" target="_blank"><img src="http://tkr.od.ua/static/images/risk_logo.jpg" width="100%"></a>
+    </div>
+
     {% include "page_navigation/sponsors.html" %}
 
 </div>

@@ -8,7 +8,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect, render
 from django.views.generic import ListView, DetailView
 from force_blog.forms import BlogPostForm
-from force_blog.models import BlogPost, BlogEdit, Category
+from force_blog.models import BlogPost, Category
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 import time
@@ -23,7 +23,7 @@ class BlogPostListView(ListView):
     model = BlogPost
     context_object_name = 'blog_posts'
 
-    paginate_by = 5
+    paginate_by = 3
 
     def get_queryset(self):
         if not self.request.user.is_authenticated():
@@ -172,8 +172,9 @@ def blog_backup(blog, user):
     # blog_backup.title = blog.title + ', user: ' + str(user.user) + ', date' + time.ctime()
     # blog_backup.state = 0
     # blog_backup.save()
-    blog_edit = BlogEdit(user_edit=user)
-    blog_edit.save()
+    # blog_edit = BlogEdit(user_edit=user)
+    # blog_edit.save()
+    pass
 
 
 @login_required

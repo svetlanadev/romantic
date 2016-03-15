@@ -4,6 +4,7 @@ from django.conf.urls import patterns, url, include
 from force_blog.views import BlogPostListView, BlogPostListViewTag, BlogPostArhiveListView
 
 urlpatterns = patterns('force_blog.views',
+    url(r'^$', BlogPostListView.as_view()),
     url(r'^blog/$', BlogPostListView.as_view()),
     url(r'^blog/(?P<pk>\d+)/$', 'blog_detail'),
     url(r'^blog_edit/(?P<blog_id>\w+)/$', 'blog_edit', name="blog_edit"),

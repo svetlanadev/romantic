@@ -1,51 +1,112 @@
 {% extends "base.html" %}
 
+{% block meta_description %}
+{{ blogpost.title }} - Новости турклуба Романтик
+{% endblock %}
+
 {% block meta_title %}
     {{ blogpost.title }}
 {% endblock %}
 
 {% block main %}
 {% load urltag %}
-{% load comments_tags %}
+
+      
+<!--         <h4>Recent Posts</h4>
+        <div class="hline"></div>
+          <ul class="popular-posts list-unstyled">
+            <li class="row">
+                <div class="col-md-3">
+                    <a class="thumbnail" href="#"><img src="//placehold.it/75x75" alt="Popular Post"></a>
+                </div>
+                <div class="col-md-9">
+                    <p class="pull-right"><a href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                    </p>
+                    <em class="small">Posted on 02/21/14</em>
+                </div>
+            </li>
+            <li class="row">
+                <div class="col-md-3">
+                    <a class="thumbnail" href="#"><img src="//placehold.it/75x75" alt="Popular Post"></a>
+                </div>
+                <div class="col-md-9">
+                    <p class="pull-right"><a href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                    </p>
+                    <em class="small">Posted on 02/21/14</em>
+                </div>
+            </li>
+            <li class="row">
+                <div class="col-md-3">
+                    <a class="thumbnail" href="#"><img src="//placehold.it/75x75" alt="Popular Post"></a>
+                </div>
+                <div class="col-md-9">
+                    <p class="pull-right"><a href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                    </p>
+                    <em class="small">Posted on 02/21/14</em>
+                </div>
+            </li>
+            <li class="row">
+                <div class="col-md-3">
+                    <a class="thumbnail" href="#"><img src="//placehold.it/75x75" alt="Popular Post"></a>
+                </div>
+                <div class="col-md-9">
+                    <p class="pull-right"><a href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                    </p>
+                    <em class="small">Posted on 02/21/14</em>
+                </div>
+            </li>
+        </ul>
+        <hr> -->
+        <!-- <h4>Popular Tags</h4>
+        <div class="hline"></div>
+          <p>
+                  <a class="label label-default btn btn-theme" href="#" role="button">Design</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">Wordpress</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">Flat</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">Modern</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">Wallpaper</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">HTML5</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">Pre-processor</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">Developer</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">Windows</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">Phothosop</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">UX</a>
+                  <a class="label label-default btn btn-theme" href="#" role="button">Interface</a>                 
+                  <a class="label label-default btn btn-theme" href="#" role="button">UI</a>                  
+                  <a class="label label-default btn btn-theme" href="#" role="button">Blog</a>                  
+          </p> -->
 
 <div class="col-md-8 left">
-  <ol class="breadcrumb">
-    <li><a href="/blog/">Новости</a></li>
-    <li class="active">{{ blogpost.title }}</li>
-  </ol>
   {% if blogpost.state == 0 %}
   <span class="label label-danger">НОВОСТЬ СКРЫТА</span> {% endif %}
   <div class="col-md-12" align="center">
-    <p style="font-size:20px;" id="title">
-      <strong>{{ blogpost.title }}</strong>
-    </p>
+    <h2>
+      {{ blogpost.title }}<br>
+      <small style="font-size:14px;"><span class="glyphicon glyphicon-calendar"></span> Опубликовано: {{ blogpost.date_creation|date:"d.m.Y, G:i" }} | <span class="glyphicon glyphicon-user"></span> <a href="{{ blogpost.owner.get_absolute_url }}">{{ blogpost.owner.get_full_name }}</a>
+      </small>
+    </h2>
   </div>
   <div class="body">
     {{ blogpost.text|safe }}
     <div class="row">
       <div class="col-md-12">
-        <hr class="hr">
-        <span class="glyphicon glyphicon-calendar"></span> {{ blogpost.date_creation|date:"d.m.Y, G:i" }} | <span class="glyphicon glyphicon-user"></span> <a href="{{ blogpost.owner.get_absolute_url }}">{{ blogpost.owner.get_full_name }}</a> | <span class="glyphicon glyphicon-comment"></span> Комментарии ({% count_power_comments blogpost.get_absolute_url %}) | <span class="glyphicon glyphicon-tags"></span> Теги : {% for category in blogpost.category.all %}
+        <hr class="hr_sm">
+        <span class="glyphicon glyphicon-tags"></span> Теги : {% for category in blogpost.category.all %}
         <a href="/blog/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> {% endfor %}
+        <br><br>
       </div>
-      <!-- MODERATOR PANEL -->
-      {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
-      <div class="col-md-12">
-        <a href="/blog_edit/{{ blogpost.id }}"><span class="label label-primary">Редактировать</span></a> 
-        {% if blogpost.state == 0 %}
-        <a href="/blog_hidden/show/{{ blogpost.id }}"><span class="label label-success">Показать</span></a> 
-        {% else %}
-        <a href="/blog_hidden/hide/{{ blogpost.id }}"><span class="label label-danger">Скрыть</span></a> 
-        {% endif %} 
-        {% if user.is_superuser %}
-        <a href="{% url_edit blogpost %}"><span class="label label-default">Страница админки</span></a> 
-        {% endif %}
-        <hr>
-      </div>
-      {% endif %}
-      <!-- MODERATOR PANEL -->
     </div>
-    {% power_comments request blogpost.get_absolute_url blogpost.if_comments %}
+
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'http://www.tkr.od.ua/blog/{{ blogpost.id }}';
+        this.page.identifier = '{{ blogpost.id }}'; };
+      (function() {var d = document, s = d.createElement('script');
+      s.src = '//tkromantic.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s); })();
+    </script>
   </div>
 </div>
 
@@ -54,7 +115,3 @@
 {% page_navigation request %}
 
 {% endblock %}
-
-
-
-

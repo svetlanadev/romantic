@@ -9,7 +9,6 @@ from party.models import Party
 from materials.models import Material
 from profile.models import CustomUser
 from force_blog.models import BlogPost
-from power_comments.models import PowerComment
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 

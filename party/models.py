@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from django.db import models
-from force_blog.models import AttachedFiles, Category
+from force_blog.models import Category
 
 
 class Party(models.Model):
@@ -32,14 +32,13 @@ class Party(models.Model):
                                      verbose_name=u'Статус')
 
     type_party = models.SmallIntegerField(default=MEETING,
-                                     choices=TYPE_CHOICE,
-                                     verbose_name=u'Статус')
+                                          choices=TYPE_CHOICE,
+                                          verbose_name=u'Статус')
 
     text = models.TextField(verbose_name=u'Страничка')
     short_desc = models.CharField(max_length=250,
-                                 verbose_name=u'Краткое описание материала(сноска)')
-    
-    files = models.ManyToManyField(AttachedFiles, blank=True, null=True)
+                                  verbose_name=u'Краткое описание(сноска)')
+
     category = models.ManyToManyField(Category,
                                       verbose_name=u'Категории',
                                       related_name="party_category")

@@ -3,12 +3,12 @@
 
 from django import forms
 from django.forms import ModelForm
-from django_summernote.widgets import SummernoteWidget
+from redactor.widgets import RedactorEditor
 from materials.models import Material
 
 
 class MaterialForm(ModelForm):
-    text = forms.CharField(widget=SummernoteWidget())
+    text = forms.CharField(widget=RedactorEditor())
     status = forms.CharField(min_length=1,
                              max_length=1000,)
 

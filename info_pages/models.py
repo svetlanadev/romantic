@@ -2,7 +2,7 @@
 
 from django.db import models
 from django.conf import settings
-from banner.models import BannerTitle
+# from banner.models import BannerTitle
 
 
 class InfoPage(models.Model):
@@ -40,9 +40,7 @@ class InfoPage(models.Model):
     url_link = models.CharField(max_length=300, verbose_name=u'URL страницы')
     date_creation = models.DateTimeField()
 
-    banner = models.ForeignKey(BannerTitle,
-                               verbose_name=u'Баннер',
-                               blank=True, null=True,)
+    banner = models.ImageField(upload_to='BannerInfoPage/')
 
     owner = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
                               verbose_name=u'Автор')
