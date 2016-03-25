@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% load urltag %}
-
 {% block meta_title %}
     {{ page.title }}
 {% endblock %}
@@ -10,7 +8,7 @@
 <!-- Походы -->
 <div class="col-md-1">
     {% if request.user.is_superuser %}
-    <a href="{% url_edit page %}"><span class="label label-default">EDIT</span></a>
+    <a href="/factory/info_pages/infopage/{{ page.id }}/change/"><span class="label label-default">EDIT</span></a>
     {% endif %}
 </div>
 <div class="col-md-10 left">
@@ -18,8 +16,16 @@
 		<div class="panel-body">
     		{{ page.text|safe }}
             <hr>
-            {% power_comments request page.get_absolute_url page.if_comments %}
-
+            <div id="disqus_thread"></div>
+            <script>
+              var disqus_config = function () {
+                this.page.url = 'http://www.tkr.od.ua/page/{{ page.id }}';
+                this.page.identifier = '{{ blogpost.id }}'; };
+              (function() {var d = document, s = d.createElement('script');
+              s.src = '//tkromantic.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s); })();
+            </script>
 		</div>
 	</div>
 </div>

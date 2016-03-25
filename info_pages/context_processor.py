@@ -24,7 +24,6 @@ MODERATORS = 4
 def contex_info_pages(request):
     info_pages = InfoPage.objects.filter(state=ENABLE, place=NATIVE_PLACE)
     pages = []
-    # conversation.append(obj)
     try:
         profile = CustomUser.objects.get(user=request.user)
     except:

@@ -61,7 +61,7 @@ INSTALLED_APPS = (
     'bootstrap_pagination',
     'page_navigation',
     'materials',
-    # 'info_pages',
+    'info_pages',
     'django_cleanup',
     'photo_check',
     'redactor',
@@ -77,7 +77,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.core.context_processors.tz",
     'profile.context_processor.contex_profile',
-    # 'info_pages.context_processor.contex_info_pages',
+    'info_pages.context_processor.contex_info_pages',
     'django.core.context_processors.request',
 )
 

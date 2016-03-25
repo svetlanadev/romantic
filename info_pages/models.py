@@ -2,7 +2,10 @@
 
 from django.db import models
 from django.conf import settings
-# from banner.models import BannerTitle
+from redactor.fields import RedactorField
+from django.utils.translation import ugettext as _
+from django.utils.translation import (ugettext, ugettext_lazy as _,
+                                      pgettext_lazy as __)
 
 
 class InfoPage(models.Model):
@@ -37,18 +40,19 @@ class InfoPage(models.Model):
     )
 
     title = models.CharField(max_length=300, verbose_name=u'Заголовок')
-    url_link = models.CharField(max_length=300, verbose_name=u'URL страницы')
     date_creation = models.DateTimeField()
 
     banner = models.ImageField(upload_to='BannerInfoPage/')
 
     owner = models.ForeignKey(settings.AUTH_PROFILE_MODULE,
                               verbose_name=u'Автор')
-    text = models.TextField(verbose_name=u'Страничка')
+
+    text = RedactorField(verbose_name=u'Страничка')
 
     state = models.SmallIntegerField(default=ENABLE,
                                      choices=STATE_CHOICE,
                                      verbose_name=u'Статус')
+
     place = models.SmallIntegerField(default=NATIVE_PLACE,
                                      choices=NATIVE_CHOICE,
                                      verbose_name=u'Размещение страницы на сайте:')
@@ -56,7 +60,22 @@ class InfoPage(models.Model):
                                       choices=ACCESS_STATE,
                                       verbose_name=u'Доступ к странице имеют:')
 
-    if_comments = models.BooleanField(default=True)
+    if_comments = models.BooleanField(default=True,
+                                      verbose_name=u'Включение комментариев')
+
+    # ======= META INFORMATION ABOUT PRODUCT ======= #
+    meta_title = models.CharField(max_length=100,
+                                  verbose_name=_('Meta Title'),
+                                  blank=True, null=True,)
+    meta_url = models.CharField(max_length=100,
+                                verbose_name=_('Meta url'),)
+    meta_description = models.CharField(max_length=500,
+                                        verbose_name=_('Meta descriptoin'),
+                                        blank=True, null=True,)
+    meta_keywords = models.CharField(max_length=100,
+                                     verbose_name=_('Meta Keywords'),
+                                     blank=True, null=True,)
+    # ============================================== #
 
     class Meta:
         ordering = ["-date_creation"]

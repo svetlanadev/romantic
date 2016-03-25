@@ -22,7 +22,7 @@ MODERATORS = 4
 
 def info_page(request, page):
     try:
-        page = InfoPage.objects.get(url_link=page)
+        page = InfoPage.objects.get(meta_url=page)
     except ObjectDoesNotExist:
         return redirect('/')
 
