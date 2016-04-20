@@ -2,6 +2,7 @@
 
 from django.db import models
 from force_blog.models import Category
+from redactor.fields import RedactorField
 
 
 class Party(models.Model):
@@ -35,7 +36,7 @@ class Party(models.Model):
                                           choices=TYPE_CHOICE,
                                           verbose_name=u'Статус')
 
-    text = models.TextField(verbose_name=u'Страничка')
+    text = RedactorField(verbose_name=u'Страничка')
     short_desc = models.CharField(max_length=250,
                                   verbose_name=u'Краткое описание(сноска)')
 

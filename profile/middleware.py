@@ -20,7 +20,7 @@ class AutoLogout:
 
         now_time = int(time.time())
 
-        if now_time - 5500 > int(last_touch):
+        if now_time - 25500 > int(last_touch):
             auth.logout(request)
             try:
                 del request.session['last_touch']

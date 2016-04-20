@@ -2,6 +2,7 @@
 
 {% block extra_banner %}
 {% endblock %}
+
 {% if party.image %}
     <div id="events-banner" class="fill hidden-print" style="background-image: url({{ party.image.url }})">
         <div class="header-cone"></div>
@@ -21,7 +22,6 @@
 {% endblock %}
 
 {% block main %}
-{% load urltag %}
 {% load party_tags %}
 
 <div class="col-md-8 left">
@@ -51,25 +51,23 @@
         <div class="row">
             <div class="col-md-12 post-header-line">
                 <span class="glyphicon glyphicon-calendar"></span> Опубликовано: {{ party.date_creation|date:"d.m.Y, G:i" }}
-                | <span class="glyphicon glyphicon-comment"></span>
-                Комментарии (XXX)
                 | <span class="glyphicon glyphicon-tags"></span> Теги :
                 {% for category in party.category.all %}
                     <a href="/party/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a>
                 {% endfor %}
             </div>
-            <!-- MODERATOR PANEL -->
-            {% if profile.moderator == True or user.is_superuser %}
-                <div class="col-md-12 post-header-line">
-                    {% if user.is_superuser %}
-                        <a href="{% url_edit party %}"><span class="label label-default">Страница админки</span></a>
-                    {% endif %}
-                </div>
-            {% endif %}
-            <!-- MODERATOR PANEL -->
         </div>
 
-        {% power_comments request party.get_absolute_url party.if_comments %}
+        <div id="disqus_thread"></div>
+        <script>
+          var disqus_config = function () {
+            this.page.url = 'http://www.tkr.od.ua/party/{{ party.id }}';
+            this.page.identifier = '{{ party.id }}'; };
+          (function() {var d = document, s = d.createElement('script');
+          s.src = '//tkromantic.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s); })();
+        </script>
 
     </div>
 </div>

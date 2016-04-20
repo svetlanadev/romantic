@@ -9,18 +9,16 @@ from redactor.widgets import RedactorEditor
 
 class PartyForm(ModelForm):
     text = forms.CharField(widget=RedactorEditor())
-    #date_time_start = forms.DateTimeField(widget = DateTimeInput())
-    #date_time_finish = forms.DateTimeField(widget = DateTimeInput())
     date_time_start = forms.DateTimeField()
     date_time_finish = forms.DateTimeField()
 
     class Meta:
         model = Party
-        exclude = [ 'date_creation', 'files', 'category', 'image', 'files', ]
+        exclude = ['date_creation', 'files', 'category', 'image', 'files', ]
 
-    #def save_with_owner(self, *args, **kwargs):
-    #    owner = kwargs.pop('owner')
-    #    obj = super(BlogPostForm, self).save(commit=False)
-    #    obj.owner = owner
-    #    obj.save()
-    #    return obj
+    def save_with_owner(self, *args, **kwargs):
+        owner = kwargs.pop('owner')
+        obj = super(BlogPostForm, self).save(commit=False)
+        obj.owner = owner
+        obj.save()
+        return obj
