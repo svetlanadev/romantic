@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^', include('profile.urls')),
     url(r'^', include('party.urls')),
     url(r'^', include('info_pages.urls')),
-    url(r'^', include('photo_check.urls')),
+    # url(r'^', include('photo_check.urls')),
     url(r'^redactor/', include('redactor.urls')),
 ]
 

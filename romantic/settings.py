@@ -3,13 +3,13 @@
 import os
 import random
 
+SECRET_KEY = '=q@eild4ch4mg#lyso0^^gnd4r2bc&@lj*sw=ua1gpe$#ua4x6'
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 
-SECRET_KEY = '=q@eild4ch4mg#lyso0^^gnd4r2bc&@lj*sw=ua1gpe$#ua4x6'
-
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = False
 
@@ -63,7 +63,7 @@ INSTALLED_APPS = (
     'materials',
     'info_pages',
     'django_cleanup',
-    'photo_check',
+    # 'photo_check',
     'redactor',
 )
 
@@ -95,16 +95,7 @@ ROOT_URLCONF = 'romantic.urls'
 
 WSGI_APPLICATION = 'romantic.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dlyapun_romantic',
-        'USER': 'dlyapun',
-        'PASSWORD': 'vy8yfjx9MPbV',
-        'HOST': '',
-        'PORT': '',
-    }
-}
+
 
 
 LANGUAGE_CODE = 'ru-RU'
