@@ -11,33 +11,28 @@
     <div class="panel-body">
         {% if user.is_authenticated %}
         Что такое, {{ user.username }}? Вы же уже зарегистрированы!. 
-        Впрочем, всегда можно <a href="#">выйти</a>.<br/><br/>
+        Впрочем, всегда можно <a href="/logout/">выйти</a>.<br/><br/>
         {% else %}
-        <h3 align="center">Регистрация</h3>
+        <h3 align="center">Регистрация временно отключена</h3>
 
-        <div class="login-or">
+        <!-- <div class="login-or">
             <hr class="hr-or">
             <span class="span-or"></span>
-        </div>
+        </div> -->
         <form method="post" action="" role="form">
             {{ form.non_field_errors }}
               {{ form.username.errors }}
               <label for="id_username">Логин</label>
-              <!-- <input id="id_username" maxlength="30" name="username" type="text" class="form-control"> -->
               {{ form.username }}<br>
               {{ form.password1.errors }}
               <label for="id_password1">Пароль</label>
-              <!-- <input id="id_password1" name="password1" type="password" class="form-control"> -->
               {{ form.password1 }}<br>
               {{ form.password2.errors }}
               <label for="id_password2">Повторите пароль</label>
-              <!-- <input id="id_password2" name="password2" type="password" class="form-control"> -->
               {{ form.password2 }}<br>
               {{ form.email.errors }}
               
               <label for="email">Email</label>
-              <!-- <input id="id_email" name="email" type="email"  class="form-control"> -->
-              <!-- <input type="email" id="inputEmail" class="form-control" placeholder="example@mail.com"> -->
               {{ form.email }}
               <br>
             <div class="row">

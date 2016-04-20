@@ -3,7 +3,10 @@
 import os
 import random
 
-SECRET_KEY = '=q@eild4ch4mg#lyso0^^gnd4r2bc&@lj*sw=ua1gpe$#ua4x6'
+try:
+    from secret_key_settings import *
+except ImportError:
+    pass
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -122,35 +125,15 @@ try:
 except ImportError:
     pass
 
-
-SOCIAL_AUTH_FACEBOOK_KEY = '1602017563346275'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'ebc2b04baf9d0421d766d31be62e8e2b'
-
-SOCIAL_AUTH_TWITTER_KEY = 'eYzXFuk4K4L0siJwp7w9wm1Yt'
-SOCIAL_AUTH_TWITTER_SECRET = 'qfHHktIzkvToq1dQeYxZY8udhUzVlMFtjBa9TzOTc5NnTimyoU'
-
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/login/'
 LOGIN_REDIRECT_URL = '/profile/'
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/blog/'
 
-SOCIAL_AUTH_VK_APP_KEY = '4816303'
-SOCIAL_AUTH_VK_OAUTH2_KEY = '4816303'
-SOCIAL_AUTH_VK_APP_SECRET = '5HO4lXQiwRRfuoAFI4mh'
-SOCIAL_AUTH_VK_OAUTH2_SECRET = '5HO4lXQiwRRfuoAFI4mh'
-
 AUTH_PROFILE_MODULE = "profile.CustomUser"
 
 DEFAULT_BANNER_TITLE = 3
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'support@tkr.od.ua'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'mail.wservices.ch'
-EMAIL_HOST_USER = 'support@tkr.od.ua'
-EMAIL_HOST_PASSWORD = 'Blasco5454588407@'
-EMAIL_PORT = 587
 
 SERVER_EMAIL = 'support@tkr.od.ua'
 DEFAULT_FROM_EMAIL = 'support@tkr.od.ua'

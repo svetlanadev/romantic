@@ -15,17 +15,19 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
     		{{ page.text|safe }}
-            <hr>
-            <div id="disqus_thread"></div>
-            <script>
-              var disqus_config = function () {
-                this.page.url = 'http://www.tkr.od.ua/page/{{ page.id }}';
-                this.page.identifier = '{{ blogpost.id }}'; };
-              (function() {var d = document, s = d.createElement('script');
-              s.src = '//tkromantic.disqus.com/embed.js';
-              s.setAttribute('data-timestamp', +new Date());
-              (d.head || d.body).appendChild(s); })();
-            </script>
+        {% if page.if_comment %}
+        <hr>
+        <div id="disqus_thread"></div>
+        <script>
+          var disqus_config = function () {
+            this.page.url = 'http://www.tkr.od.ua/page/{{ page.id }}';
+            this.page.identifier = '{{ page.id }}'; };
+          (function() {var d = document, s = d.createElement('script');
+          s.src = '//tkromantic.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s); })();
+        </script>
+        {% endif %}
 		</div>
 	</div>
 </div>

@@ -12,3 +12,6 @@ romantic/static/debug_toolbar/*
 .idea/*
 *.sqlite3
 db.sqlite3
+*settings_deployment.py
+*local_settings.py
+*secret_key_settings.py

@@ -17,6 +17,7 @@ from profile.forms import UserCreateForm, UserLoginForm, CustomUserForm, Restart
 from profile.models import CustomUser
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
+from django.contrib.auth.hashers import is_password_usable
 import random
 import string
 
@@ -42,14 +43,15 @@ class RegisterFormView(FormView):
             last_user = CustomUser.objects.last()
             last_user.user.is_active = False
             last_user.user.save()
-            value = signing.dumps({"id": last_user.user.id})
+            value = signing.dumps({"id": last_user.user.id,
+                                   'password': form.cleaned_data['password1']})
             x = value.replace(':', '___')
             message = _email_message(x)
             send_mail("Регистрация на сайте tkr.od.ua",
                       message,
                       'support@tkr.od.ua',
                       [last_user.user.email],
-                      fail_silently=False)
+                      fail_silently=True)
             print "SEND LETTER"
         except BadHeaderError:
             pass
@@ -68,10 +70,13 @@ def complete_registration(request, value):
     x = value.replace('___', ':')
     decript_string = signing.loads(x)
     user_id = decript_string['id']
-    user = User.objects.get(id=user_id)
-    user.is_active = True
-    user.save()
-    return redirect('/login/')
+    user_pass = decript_string['password']
+    new_user = User.objects.get(id=user_id)
+    new_user.is_active = True
+    new_user.save()
+    user = authenticate(username=new_user.username, password=user_pass)
+    login(request, user)
+    return redirect('/blog/')
 
 
 class PasswordChangeView(FormView):
