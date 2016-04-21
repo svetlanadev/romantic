@@ -22,6 +22,7 @@ urlpatterns = [
     # url(r'^', include('photo_check.urls')),
     url(r'^redactor/', include('redactor.urls')),
     url(r'^contacts/$', TemplateView.as_view(template_name="contacts.html")),
+    url(r'^about/$', TemplateView.as_view(template_name="about.html")),
 ]
 
 # urlpatterns += [
