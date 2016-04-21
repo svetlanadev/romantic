@@ -62,9 +62,11 @@
           <li class="hover">
               <a href="#" >О клубе<span class="arrow"></span></a>
               <ul class="submenu">
+                <li><a href="/contacts/">Контакты</a><li>
                 {% for page in info_pages %}
                     <li><a href="/page/{{ page.meta_url }}/">{{ page.title }}</a></li>
                 {% endfor %}
+                  
               </ul>
           </li>
           <li><a href="https://vk.com/albums-1025962" target="_blank">Галерея</a></li>
@@ -226,7 +228,7 @@
         {% endfor %}
         </ul>
       </li><li>
-        <a href="#">Галерея</a>
+        <a href="https://vk.com/albums-1025962">Галерея</a>
       </li><li>
         <a href="/blog/">Новости</a>
       </li><li>
@@ -241,7 +243,7 @@
           <li><a href="/article/">статьи</a></li>
         </ul>
       </li><li>
-        <a href="#">Контакты</a>
+        <a href="/contacts/">Контакты</a>
       </li>
     </ul>
 
