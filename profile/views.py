@@ -18,6 +18,7 @@ from profile.models import CustomUser
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
 from django.contrib.auth.hashers import is_password_usable
+from django.core.mail import EmailMessage
 import random
 import string
 
@@ -206,6 +207,16 @@ def profile_edit(request):
 
 
 def profile(request, profile_id):
+    # message = _email_message('asdasdasd')
+
+    # msg = EmailMessage("Регистрация на сайте tkr.od.ua", message, 'support@tkr.od.ua', ["dlyapun@gmail.com"])
+    # msg.content_subtype = "html"  # Main content is now text/html
+    # msg.send()
+    # send_mail("Регистрация на сайте tkr.od.ua",
+    #           message,
+    #           'support@tkr.od.ua',
+    #           ["dlyapun@gmail.com"],
+    #           fail_silently=True)
     profile2 = CustomUser.objects.get(id=profile_id)
     materials = Material.objects.filter(owner=profile2).exclude(state=2)
 
