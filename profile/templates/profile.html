@@ -8,10 +8,7 @@
     <div class="col-md-4">
         <center>
         <img src="{{ profile2.avatar.url }}" name="aboutme" width="200" height="200" border="0" class="object-fit_cover_radius">
-        <h4 class="media-heading"><br>{{ profile2.get_full_name }}<br>
-        {% if profile2.status %}
-          <small>{{ profile2.status }}</small>
-        {% endif %}</h4>
+        <h4 class="media-heading"><br>{{ profile2.get_full_name }}</h4>
         {% if profile.get_status_profile == True %}
         <span><strong>Состоит в: </strong></span>
           {% if profile2.writer %}
@@ -41,12 +38,6 @@
         {% endif %}
         {% if user.is_authenticated %} 
           <p><strong>Email: </strong> <a href="mailto:{{ profile2.user.email }}">{{ profile2.user.email }}</a></p>
-          {% if profile2.phone %}
-            <p><strong>Телефон: </strong> {{ profile2.phone }}</p>
-          {% endif %}
-        {% endif %}
-        {% if profile2.about %}
-          <p><strong>О себе: </strong> {{ profile2.about }}</p>
         {% endif %}
         {% if profile == profile2 %}
           <a href="/logout/" class="btn btn-danger btn-block">Выход</a><br>

@@ -10,7 +10,6 @@ except ImportError:
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 DEBUG = True
 
@@ -66,7 +65,6 @@ INSTALLED_APPS = (
     'materials',
     'info_pages',
     'django_cleanup',
-    # 'photo_check',
     'redactor',
 )
 
@@ -109,21 +107,17 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'romantic/media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'common_static'),
-)
+STATIC_ROOT = os.path.join(BASE_DIR, 'romantic/static')
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
+STATICFILES_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'static').replace('\\', '/'),
+)
 
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/login/'
@@ -149,3 +143,9 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_AGE = 13600
 
 AUTO_LOGOUT_DELAY = 1
+
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

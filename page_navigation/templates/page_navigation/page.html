@@ -1,7 +1,7 @@
 {% load page_navigation %}
 {% load party_tags %}
 
-<div class="col-md-4 hidden-print" style="border-left:1px solid #ccc;">
+<div class="col-md-4 hidden-print">
     {% get_profile_template request %}
 
     {% if not request.path == "/party/" %}

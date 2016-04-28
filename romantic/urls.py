@@ -28,14 +28,22 @@ urlpatterns = [
 # urlpatterns += [
 # ]
 
+# if settings.DEBUG:
+#     urlpatterns += [
+#         url(r'^media/(?P<path>.*)$', views.serve),
+#     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#     urlpatterns += [
+#         url(r'^static/(?P<path>.*)$', views.serve),
+#     ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)
+
 if settings.DEBUG:
     urlpatterns += [
-        url(r'^static/(?P<path>.*)$', views.serve),
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+if settings.DEBUG:
     urlpatterns += [
-        url(r'^static/(?P<path>.*)$', views.serve),
-    ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
 # python -m smtpd -n -c DebuggingServer localhost:1025

@@ -23,7 +23,7 @@ class BlogPostListView(ListView):
     model = BlogPost
     context_object_name = 'blog_posts'
 
-    paginate_by = 5
+    paginate_by = 6
 
     def get_queryset(self):
         if not self.request.user.is_authenticated():

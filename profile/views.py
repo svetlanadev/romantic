@@ -53,10 +53,8 @@ class RegisterFormView(FormView):
                       'support@tkr.od.ua',
                       [last_user.user.email],
                       fail_silently=True)
-            print "SEND LETTER"
         except BadHeaderError:
             pass
-            print "NOW WORKING"
 
         return super(RegisterFormView, self).form_valid(form)
 
@@ -185,7 +183,7 @@ def profile_edit(request):
         form = CustomUserForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():     # All validation rules pass
             form.save()
-            url = u'/profile/%s' % profile.id
+            url = u'/profile/%s' % profile.user.username
             return redirect(url)
         else:
             return render_to_response(template, {
@@ -206,18 +204,8 @@ def profile_edit(request):
                               context_instance=RequestContext(request))
 
 
-def profile(request, profile_id):
-    # message = _email_message('asdasdasd')
-
-    # msg = EmailMessage("Регистрация на сайте tkr.od.ua", message, 'support@tkr.od.ua', ["dlyapun@gmail.com"])
-    # msg.content_subtype = "html"  # Main content is now text/html
-    # msg.send()
-    # send_mail("Регистрация на сайте tkr.od.ua",
-    #           message,
-    #           'support@tkr.od.ua',
-    #           ["dlyapun@gmail.com"],
-    #           fail_silently=True)
-    profile2 = CustomUser.objects.get(id=profile_id)
+def profile(request, profile_username):
+    profile2 = CustomUser.objects.get(user__username=profile_username)
     materials = Material.objects.filter(owner=profile2).exclude(state=2)
 
     material_enable = Material.objects.filter(owner=profile2, state=1)

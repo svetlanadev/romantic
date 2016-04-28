@@ -12,9 +12,97 @@
 {% load bootstrap_pagination %}
 {% load page_navigation %}
 
+<style type="text/css">
+      .post
+    {
+        background-color: #FFF;
+        overflow: hidden;
+        box-shadow: 0 0 1px #CCC;
+        margin-bottom: 20px;
+    }
+    .post img
+    {
+        filter: blur(1px);
+        -webkit-filter: blur(1px);
+        -moz-filter: blur(1px);
+        -o-filter: blur(1px);
+        -ms-filter: blur(1px);
+    }
+    .post .content
+    {
+        padding: 15px;
+    }
+    .post .author
+    {
+        font-size: 11px;
+        color: #737373;
+        padding: 0px 30px 4px;
+    }
+    .post .post-img-content
+    {
+        height: 196px;
+        position: relative;
+    }
+    .post .post-img-content img
+    {
+        position: absolute;
+    }
+    .post .post-title
+    {
+        display: table-cell;
+        vertical-align: bottom;
+        z-index: 2;
+        position: relative;
+        padding: 10px 0px;
+    }
+    .post .post-title b
+    {
+        background-color: rgba(51, 51, 51, 0.75);
+        display: inline-block;
+        margin-bottom: 5px;
+        color: #FFF;
+        padding: 10px 15px;
+        margin-top: 5px;
+        font-size: 14px;
+    }
+</style>
+
 <div class="col-md-8 left">
   <div class="col-md-12">
     {% for blog_post in blog_posts %} 
+    <div class="col-md-6">
+        <div class="post">
+            <div class="post-img-content">
+                {% if blog_post.image %}
+                  <img src="{{ blog_post.image.url }}" class="img-responsive">
+                {% endif %}
+                {% if not blog_post.image %}
+                    {% if blog_post.default_image %}
+                      <img src="{{ blog_post.default_image.image.url }}" class="img-responsive">
+                    {% else %}
+                      {% load staticfiles %}
+                      <img src="{% static "images/post_default.png" %}" class="img-responsive">
+                    {% endif %}
+                {% endif %}
+                <span class="post-title"><b>{{ blog_post.title }}</b><br /></span>
+            </div>
+            <div class="content">
+                <div class="author">
+                <br>
+                    By <b>{{ blog_post.owner }}</b> |
+                    <time datetime="2014-01-20"><span class="glyphicon glyphicon-calendar"></span> {{ blog_post.date_creation|date:"d.m.Y, G:i" }}</time>
+                </div>
+                <div align="justify">
+                    {{ blog_post.text|safe|truncatechars_html:145 }}
+                </div>
+                <div>
+                    <a href="/blog/{{ blog_post.id }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>  Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %} 
+    <!-- {% for blog_post in blog_posts %} 
       {% if blog_post.state == 0 %} 
         {% if profile.moderator == True or profile.goverment == True or user.is_superuser %}
           <div id="blogpost-{{ blog_post.id }}" class="well well-sm" style="margin-bottom: 0px;">
@@ -24,17 +112,23 @@
         <div id="blogpost-{{ blog_post.id }}">
       {% endif %}
       <div class="col-md-12" align="left">
-        <h2>
-          <a href="/blog/{{ blog_post.id }}">{{ blog_post.title }}</a>
-          <br>
-          <small style="font-size:14px;"><span class="glyphicon glyphicon-calendar"></span> Опубликовано: {{ blog_post.date_creation|date:"d.m.Y, G:i" }} | <span class="glyphicon glyphicon-comment"></span>  <a href="http://tkr.od.ua/blog/{{ blog_post.id }}#disqus_thread">Комментарии</a></a>
-          </small>
-        </h2>
+        <h2><a href="/blog/{{ blog_post.id }}">{{ blog_post.title }}</a></h2>
+        <h4 align="center"><small><span class="glyphicon glyphicon-calendar"></span> Опубликовано: {{ blog_post.date_creation|date:"d.m.Y, G:i" }} | <span class="glyphicon glyphicon-comment"></span>  <a href="http://tkr.od.ua/blog/{{ blog_post.id }}#disqus_thread">Комментарии</a></a>
+          </small></h4>
       </div>
+      {% if blog_post.image %}
+        <img src="{{ blog_post.image.url }}" width="30%">
+      {% endif %}
+      {% if not blog_post.image %}
+          {% if blog_post.default_image %}
+            <img src="{{ blog_post.default_image.image.url }}" width="30%">
+          {% endif %}
+      {% endif %}
       {{ blog_post.text|safe }}
       </div>
       <hr>
-      {% endfor %} {% bootstrap_pager page_obj %}
+      {% endfor %}  -->
+      {% bootstrap_pager page_obj %}
   </div>
 </div>
 

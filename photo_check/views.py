@@ -82,15 +82,7 @@ def photo_nomination_view(request, nomination_id):
 
     photo_twos = Photo.objects.filter(nomination__id=nomination_id).exclude(karma_users=profile)
     count_photos_two = len(Photo.objects.filter(nomination__id=nomination_id).exclude(karma_users=profile))
-    print count_photos_two
 
-    # for photo_old in Photo.objects.filter(nomination__id=nomination_id).exclude(karma_users=profile):
-    #     if photo_one != photo_old:
-    #         photo_two = photo_old
-    #         status = True
-    #         break
-    #     else:
-    #         status = False
     i = 0
     while 1:
         photo_two = random.choice(photo_twos)

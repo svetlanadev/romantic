@@ -30,7 +30,5 @@ class TemplateContextTest(TestCase):
 #     def test_banner(self):
 #         self.mountain.state = 1
 #         self.mountain.save()
-#         print self.mountain.state
-#         print self.water.state
 #         self.assertEqual(self.water.state, 0)
 #         self.assertEqual(self.mountain.state, 1)

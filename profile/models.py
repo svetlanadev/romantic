@@ -57,7 +57,7 @@ class CustomUser(models.Model):
     objects = UserManager()
 
     def get_absolute_url(self):
-        return u'/profile/%s' % self.id
+        return u'/profile/%s' % self.user.username
 
     def get_full_name(self):
         return u'%s %s' % (self.user.first_name, self.user.last_name)
