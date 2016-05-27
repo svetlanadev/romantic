@@ -20,7 +20,7 @@ cd .\romantic\Scripts\
 For Linux:
 ```sh
 virtualenv romantic --no-site-packages
-cd source romanitc/bin/activate
+source romanitc/bin/activate
 ```
 The third step - you need install the packages. If you are using pip version 7.1.2, you need upgrade pip
 ```sh
