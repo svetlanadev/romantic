@@ -19,6 +19,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
 from django.contrib.auth.hashers import is_password_usable
 from django.core.mail import EmailMessage
+from django.core.exceptions import ObjectDoesNotExist
 import random
 import string
 
@@ -205,7 +206,13 @@ def profile_edit(request):
 
 
 def profile(request, profile_username):
-    profile2 = CustomUser.objects.get(user__username=profile_username)
+
+    print profile_username
+    try:
+        profile2 = CustomUser.objects.get(user__username=profile_username)
+    except ObjectDoesNotExist:
+        profile2 = CustomUser.objects.get(user__id=profile_username)
+
     materials = Material.objects.filter(owner=profile2).exclude(state=2)
 
     material_enable = Material.objects.filter(owner=profile2, state=1)
