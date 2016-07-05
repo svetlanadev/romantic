@@ -28,7 +28,7 @@ python -m pip install --upgrade pip
 
 pip install -r requirements.txt
 ```
-The last step - create file "local_settings.py" and paste this blog:
+Create file "local_settings.py" and paste this blog:
 ```sh
 import os
 
@@ -48,10 +48,32 @@ DEBUG = True
 MEDIA_ROOT = os.path.normpath(os.path.join(SITE_ROOT, "./media"))
 STATIC_ROOT = os.path.normpath(os.path.join(SITE_ROOT, "./static"))
 ```
+
+Create file "secret_key_settings.py" with the SECRET_KEY, or generate one:
+```sh
+SECRET_KEY='romantik9)4hi36z21fiqz@mht9%&n)-oljgiv6l)a*ayrda$0^a))zig(local'
+```
+
 Create database and run server
 ```sh
 python manage.py migrate
 python manage.py runserver
+```
+
+### Troubleshooting
+
+* Troubles installing **Pillow** module:
+
+```sh
+apt-get install libjpeg-dev libjpeg8-dev
+pip install --no-cache-dir -I pillow
+```
+
+* Problems with greenlet
+Try this (sorry, no idea what helped exactly:
+```sh
+sudo apt-get install build-essential autoconf libtool pkg-config python-opengl python-imaging python-pyrex python-pyside.qtopengl idle-python2.7  libgle3 python-dev
+sudo pip install greenlet
 ```
 
 Good luck!
