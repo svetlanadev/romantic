@@ -198,7 +198,7 @@ def material_edit(request, material_id):
                 except TypeError:
                     pass
 
-            material_edit_backup(old_material, profile, material_id)
+            # material_edit_backup(old_material, profile, material_id)
             form.save()
             url = u'/materials/%s' % material_id
             return redirect(url)

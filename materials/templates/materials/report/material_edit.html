@@ -40,8 +40,18 @@
 			<div class="col-xs-2">
 				<label for="id_category">Категория:</label>
 				<select id="id_difficulty" name="difficulty" class="form-control">
-					{% for difficulty in difficultys %}
-				    	<option value="{{ difficulty.id }}">{{ difficulty.difficulty }}</option>
+				    {% for difficulty in difficultys %}
+                        {% if difficulty.id == material.difficulty.id %}
+                            <option value="{{ difficulty.id }}" checked>{{ difficulty.difficulty }}</option>
+                        {% endif %}
+
+				    {% endfor %}
+                    {% for difficulty in difficultys %}
+                        {% if difficulty.id == material.difficulty.id %}
+                        {% else %}
+                            <option value="{{ difficulty.id }}">{{ difficulty.difficulty }}</option>
+                        {% endif %}
+
 				    {% endfor %}
 				</select>
 				<input type="hidden" checked="checked" id="id_if_comments" name="if_comments" type="checkbox">
@@ -49,8 +59,18 @@
 			<div class="col-xs-2">
 				<label for="id_category">Район:</label>
 				<select id="id_region" name="region" class="form-control">
-					{% for region in regions %}
-				    	<option value="{{ region.id }}">{{ region.region }}</option>
+				    {% for region in regions %}
+                        {% if region.id == material.region.id %}
+                            <option value="{{ region.id }}" checked>{{ region.region }}</option>
+                        {% endif %}
+
+				    {% endfor %}
+                    {% for region in regions %}
+                        {% if region.id == material.region.id %}
+                        {% else %}
+                            <option value="{{ region.id }}">{{ region.region }}</option>
+                        {% endif %}
+
 				    {% endfor %}
 				</select>
 			</div>
