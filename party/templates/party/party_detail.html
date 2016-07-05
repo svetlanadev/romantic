@@ -35,7 +35,9 @@
             <strong>{{ party.title }}</strong><br>
         </p>
         <p style="font-size:17px;">
-            <small>{% party_date_tag party %}</small>
+            <small>{% autoescape off %}
+            {% party_date_tag party %}
+          {% endautoescape %}</small>
         </p>
     </div>
     <div class="col-md-2"></div>

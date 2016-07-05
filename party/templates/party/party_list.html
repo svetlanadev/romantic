@@ -37,7 +37,9 @@
                 <div class="caption">
                     <div align="center">
                         <p style="font-size: 18px;"><strong>{{ party.title }}</strong></p>
-                        {% party_date_tag party %}
+                        {% autoescape off %}
+            {% party_date_tag party %}
+          {% endautoescape %}
                     </div><br>
                     <div align="center">
                         <a href="/party/{{ party.id }}"><button type="button" class="btn btn-success btn-sm">Подробнее/Обсудить</button></a>
