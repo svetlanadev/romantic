@@ -79,12 +79,12 @@ class Material(models.Model):
                                       related_name="material_category")
 
     material_edit = models.ManyToManyField('MaterialEdit',
-                                           blank=True, null=True,
+                                           blank=True,
                                            verbose_name=u'Редактирование',
                                            related_name="material_edit")
 
     karma_users = models.ManyToManyField(settings.AUTH_PROFILE_MODULE,
-                                         blank=True, null=True,
+                                         blank=True,
                                          verbose_name=u'Люди сделали отметки',
                                          related_name="user_karma_materials")
 
@@ -185,7 +185,7 @@ class Dirs(models.Model):
                                     verbose_name=u'Статус')
 
     materials = models.ManyToManyField('Material',
-                                       blank=True, null=True,
+                                       blank=True,
                                        verbose_name=u'Материалы',
                                        related_name="Materials")
 
