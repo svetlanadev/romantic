@@ -77,6 +77,11 @@
           </p> -->
 
 <div class="col-md-8 left">
+  <ol class="breadcrumb">
+    <li>Главная</li>
+    <li><a href="/blog/">Новости</a></li>
+    <li class="active">{{ blogpost.title }}</li>
+  </ol>
   {% if blogpost.state == 0 %}
   <span class="label label-danger">НОВОСТЬ СКРЫТА</span> {% endif %}
   <div class="col-md-12" align="center">

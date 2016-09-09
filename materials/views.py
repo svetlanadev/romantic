@@ -57,6 +57,28 @@ def materials(request, state):
                               context_instance=RequestContext(request))
 
 
+def material_category(request, category_id):
+    state = 'article'
+    type_material, name_material, name_material_many, category_material = _type_material(state)
+    tag_category = Category.objects.get(id=category_id)
+
+    materials = Material.objects.select_related(
+        'owner', 'owner__user'
+        ).prefetch_related(
+        'category').filter(rank=type_material, state=ENABLE, category=tag_category)
+
+    categorys = Category.objects.all()
+
+    data = {'materials': materials,
+            'name_material': name_material,
+            'name_material_many': name_material_many,
+            'tag_category': tag_category,
+            'categorys': categorys}
+    return render_to_response('materials/%s/material_list.html' % category_material,
+                              data,
+                              context_instance=RequestContext(request))
+
+
 def material_detail(request, material_id):
     material = Material.objects.get(id=material_id)
 

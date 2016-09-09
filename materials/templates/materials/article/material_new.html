@@ -48,7 +48,9 @@
           </select>
           <label for="id_category">Краткое описание</label>
           {{ form.short_desc.errors }}
-          <textarea id="id_short_desc" name="short_desc" type="text" class="form-control">{{ form.short_desc.value }}</textarea>
+          <textarea id="id_short_desc" name="short_desc" type="text" class="form-control">
+              {{ form.short_desc.value }}
+          </textarea>
           <br> 
           {{ form.text.errors }} 
           <script type="text/javascript" src="http://tkr.od.ua/static/admin/js/jquery.min.js"></script>
@@ -78,7 +80,9 @@
             </div>
             <div class="col-md-12">
               <label>Доступные теги:</label>
-              {% for category in categorys %} {{ category.category }}, {% endfor %}
+                {% for category in categorys %} 
+                  {{ category.category }}, 
+                {% endfor %}
             </div>
           </div>
           <br>
@@ -91,8 +95,6 @@
     </div>
   </div>
 </div>
-
-
 
 {% endblock %}
 
@@ -110,4 +112,3 @@ $(document).ready(function() {
 })
 </script>
 {% endblock %}
-

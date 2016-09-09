@@ -24,7 +24,7 @@
             {% endif %}
             <a href="/material_delete/{{ material.id }}"><span class="label label-danger">Удалить</span></a>
             {% if profile.user.is_superuser %}
-                <a href="/admin/materials/material/{{ material.id }}"><span class="label label-default">Страница админки</span></a>
+                <a href="/factory/materials/material/{{ material.id }}"><span class="label label-default">Страница админки</span></a>
             {% endif %}
         </div>
     {% endif %}

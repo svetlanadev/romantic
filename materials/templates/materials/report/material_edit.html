@@ -1,4 +1,4 @@
-{% extends "base_material_new.html" %}
+{% extends "base.html" %}
 
 {% block meta_title %}{{ material.title }} - Редактирование{% endblock %}
 
@@ -11,7 +11,6 @@
 <!-- Походы -->
 <div class="col-md-10 col-md-offset-1">
 <div id="material">
-    <h1 align="center">{{ material.title }} - Редактирование</h1>
 	<form action="/material_edit/{{ material.id }}/" method="post">{% csrf_token %}
 		<div class="row">
 			<div class="col-xs-4">
@@ -115,6 +114,8 @@
 			</div>
 		</div>
 		{{ form.text.errors }}
+		<script type="text/javascript" src="http://tkr.od.ua/static/admin/js/jquery.min.js"></script>
+      <script type="text/javascript" src="http://tkr.od.ua/static/admin/js/jquery.init.js"></script>
 		{{ form.media }}
 		{{ form.text }}
 		<hr style="margin-top: 1px; margin-bottom: 14px;">

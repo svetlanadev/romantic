@@ -39,13 +39,8 @@ class BlogPost(models.Model):
                                       verbose_name=u'Теги',
                                       related_name="blogposts_category")
 
-    # blog_edit = models.ManyToManyField('BlogEdit',
-    #                                    blank=True, null=True,
-    #                                    verbose_name=u'Редактирование',
-    #                                    related_name="blogpost_edit")
-
-    image = models.ImageField(upload_to='BlogImage/',
-                              verbose_name=u'Изображение',
+    image = ResizedImageField(size=[720, 480],
+                              quality=75, upload_to='BlogImage/',
                               blank=True,
                               null=True)
 

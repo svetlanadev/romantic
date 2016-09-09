@@ -31,26 +31,47 @@
     </div>
     {% endfor %}
   </div>
-  {# ОТОБРАЖЕНИЕ СТАТЕЙ #} {% for material in materials %}
+  {# ОТОБРАЖЕНИЕ СТАТЕЙ #} 
+
+  <ol class="breadcrumb">
+    <li><a href="/">Главная</a></li>
+    
+    {% if tag_category %}
+    <li><a href="/article/">Статьи</a></li>
+    <li class="active">{{ tag_category }}</li>
+    {% else %}
+    <li class="active">Статьи</li>
+    {% endif %}
+  </ol>
+  {% for material in materials %}
   <div class="row" align="">
     <a href="{{ material.get_absolute_url }}" class="a_black">
       <div class="col-md-12">
         <p>
         {% if material.image %}
-          <img src="{{ MEDIA_URL }}{{ material.image }}" width="75px" height="75px" hspace="12" vspace="5" align="left" class="img-circle">
+          <img src="{{ MEDIA_URL }}{{ material.image }}" width="60px" height="60px" hspace="12" vspace="5" align="left" class="img-circle">
         {% else %}
-          <img src="{{ material.owner.avatar.url }}" width="75px" height="75px" hspace="12" vspace="5" align="left" class="img-circle">
+          <img src="{{ material.owner.avatar.url }}" width="60px" height="60px" hspace="12" vspace="5" align="left" class="img-circle">
         {% endif %}
-          <strong>Опубликовал:</strong> {{ material.owner.get_full_name }}<br>
+          <strong>Опубликовал:</strong> {{ material.owner.get_full_name }}, 
           {% if material.rank != 3 %}
+            {% if material.status %}
             <strong>Автор:</strong> {{ material.status }}<br>
+            {% endif %}
           {% endif %}
           <strong>Название:</strong> {{ material.title }}<br>
           <strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}</p>
       </div>
     </a>
   </div>
-  <hr class="hr_sm"> {% empty %}
+  <div class="row">
+    <div class="col-md-12">
+      <span class="glyphicon glyphicon-tags"></span>  {% for category in material.category.all %}
+      <a href="/material/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> {% endfor %}
+    </div>
+  </div>
+  <hr> 
+  {% empty %}
   <h4 align="center">Простите, но пока никаких материалов нет :(</h4> 
   {% endfor %}
 </div>
