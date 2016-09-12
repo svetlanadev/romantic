@@ -31,11 +31,11 @@
     </div>
     {% endfor %}
   </div>
-  {# ОТОБРАЖЕНИЕ СТАТЕЙ #} 
+  {# ОТОБРАЖЕНИЕ СТАТЕЙ #}
 
   <ol class="breadcrumb">
     <li><a href="/">Главная</a></li>
-    
+
     {% if tag_category %}
     <li><a href="/article/">Статьи</a></li>
     <li class="active">{{ tag_category }}</li>
@@ -46,21 +46,21 @@
   {% for material in materials %}
   <div class="row" align="">
     <a href="{{ material.get_absolute_url }}" class="a_black">
-      <div class="col-md-12">
-        <p>
+      <p class="col-md-12">
+        <br>
         {% if material.image %}
           <img src="{{ MEDIA_URL }}{{ material.image }}" width="60px" height="60px" hspace="12" vspace="5" align="left" class="img-circle">
         {% else %}
           <img src="{{ material.owner.avatar.url }}" width="60px" height="60px" hspace="12" vspace="5" align="left" class="img-circle">
         {% endif %}
-          <strong>Опубликовал:</strong> {{ material.owner.get_full_name }}, 
+          <span style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 165%;">{{ material.title }}</span><br>
+          <strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}<br>
+          <strong>Опубликовал:</strong> {{ material.owner.get_full_name }}<br>
           {% if material.rank != 3 %}
             {% if material.status %}
             <strong>Автор:</strong> {{ material.status }}<br>
             {% endif %}
           {% endif %}
-          <strong>Название:</strong> {{ material.title }}<br>
-          <strong>Краткое описание:</strong> - {{ material.short_desc|truncatechars:200 }}</p>
       </div>
     </a>
   </div>
@@ -70,7 +70,7 @@
       <a href="/material/category/{{ category.id }}"><span class="label label-default">{{ category.category }}</span></a> {% endfor %}
     </div>
   </div>
-  <hr> 
+  <hr>
   {% empty %}
   <h4 align="center">Простите, но пока никаких материалов нет :(</h4> 
   {% endfor %}

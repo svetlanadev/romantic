@@ -15,7 +15,8 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800|Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=cyrillic-ext,latin' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
-		
+
+{% block main %}
 		<div id="header">
 			<ul id="header-menu" class="center-block list-inline list-inline-clear-padding link-like-text">
 				<li class="menu-list">
@@ -87,45 +88,45 @@
 					<div class="disabled prev-btn"></div>
 					<div class="next-btn"></div>
 					<ul class="center-block list-inline scrolled-area">
-						<li class="item" style="background-image: url(https://pp.vk.me/c622927/v622927768/20081/GRKVlt3faNc.jpg)">
+						<li class="item" style="background-image: url(https://pp.vk.me/c622927/v622927768/20081/GRKVlt3faNc.jpg); 100% no-repeat; background-size: cover;">
 							<div class="descr">
 								<div class="position">Председатель</div>
 								<div class="name">Виталий Голев</div>
 								<div class="phone">тел. 0932543288</div>
 							</div>
-						</li><li class="item" style="background-image: url(https://pp.vk.me/c630420/v630420949/2806f/hqhXvRNOQuw.jpg)">
-							<div class="descr">
+						</li><li class="item" style="background-image: url(https://pp.vk.me/c630420/v630420949/2806f/hqhXvRNOQuw.jpg); 100% no-repeat; background-size: cover;" >
+                            <div class="descr">
 								<div class="position">Спорт. сектор</div>
 								<div class="name">Сергей Евтушенко</div>
 								<!-- <div class="phone">тел. +38 (093) 002-05-87</div> -->
 							</div>
-						</li><li class="item" style="background-image: url(https://pp.vk.me/c630921/v630921361/2181c/fNob3uuoe5c.jpg)">
+						</li><li class="item" style="background-image: url(https://pp.vk.me/c630921/v630921361/2181c/fNob3uuoe5c.jpg); 100% no-repeat; background-size: cover;">
 							<div class="descr">
 								<div class="position">Хоз. сектор</div>
 								<div class="name">Никита Бондарь</div>
 							</div>
-						</li><li class="item" style="background-image: url(https://pp.vk.me/c625728/v625728389/45e58/F0E9YxRWS_0.jpg)">
+						</li><li class="item" style="background-image: url(https://pp.vk.me/c625728/v625728389/45e58/F0E9YxRWS_0.jpg); 100% no-repeat; background-size: cover;">
 							<div class="descr">
 								<div class="position">Сектор учета</div>
 								<div class="name">Зоя Балецкая</div>
 							</div>
-						</li><li class="item" style="background-image: url(https://pp.vk.me/c624918/v624918417/55d8f/kVgnAzFjIYY.jpg)">
+						</li><li class="item" style="background-image: url(https://pp.vk.me/c624918/v624918417/55d8f/kVgnAzFjIYY.jpg); 100% no-repeat; background-size: cover;">
 							<div class="descr">
 								<div class="position">Агит. сектор</div>
 								<div class="name">Татьяна Майструк</div>
 							</div>
-						</li><li class="item" style="background-image: url(https://pp.vk.me/c619520/v619520368/22f41/v4mGE15Omxo.jpg)">
+						</li><li class="item" style="background-image: url(https://pp.vk.me/c619520/v619520368/22f41/v4mGE15Omxo.jpg); 100% no-repeat; background-size: cover;">
 							<div class="descr">
 								<div class="position">Орг. сектор</div>
 								<div class="name">Кира Родкина</div>
 							</div>
-						</li><li class="item" style="background-image: url(https://pp.vk.me/c629314/v629314593/4682e/NoJcmNf2W1c.jpg)">
+						</li><li class="item" style="background-image: url(https://pp.vk.me/c629314/v629314593/4682e/NoJcmNf2W1c.jpg); 100% no-repeat; background-size: cover;">
 							<div class="descr">
 								<div class="position">Культ. сектор</div>
 								<div class="name">Света Нигредская</div>
 							</div>
 						</li>
-						</li><li class="item" style="background-image: url(https://pp.vk.me/c633523/v633523908/14748/cCfeICv86TM.jpgg)">
+						</li><li class="item" style="background-image: url(https://pp.vk.me/c633523/v633523908/14748/cCfeICv86TM.jpgg); 100% no-repeat; background-size: cover;">
 							<div class="descr">
 								<div class="position">Сектор школы</div>
 								<div class="name">Настя Ащук</div>
@@ -137,7 +138,7 @@
 				</div>
 			</div>
 		</div>
-
+{% endblock %}
 		<div id="footer">
 			<div class="center-block">
 				<ul class="navigation list-inline list-inline-clear-padding">
